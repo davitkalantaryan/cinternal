@@ -5,13 +5,11 @@
     <artifactRoot>$(ProjectDir)..\..\..\sys</artifactRoot>
     <SYSTEM_PATH>win_$(PlatformTarget)\$(Configuration)</SYSTEM_PATH>
   </PropertyGroup>
-  <PropertyGroup>
-    <IntDir>$(artifactRoot)\$(SYSTEM_PATH)\.other\objects\$(ProjectName)\</IntDir>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>DMSG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)..\..\..\include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

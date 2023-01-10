@@ -1,52 +1,52 @@
 #
 # name:			flags_common.pri
 # path:			${repositoryRoot}/prj/common/common_qt/flags_common.pri
-# created on:		2022 Oct 19
-# created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
+# created on:	2022 Oct 19
+# created by:	Davit Kalantaryan (davit.kalantaryan@gmail.com)
 # usage:		Use this qt include file to calculate some platform specific stuff
 #
 
 
 message("!!! $${PWD}/flags_common.pri")
 
-isEmpty( cpputilsRepoRoot ){
-        cpputilsRepoRoot=$${PWD}/../../..
+isEmpty( cinternalRepoRoot ){
+        cinternalRepoRoot=$${PWD}/../../..
 }
 
-INCLUDEPATH += $${cpputilsRepoRoot}/include
+INCLUDEPATH += $${cinternalRepoRoot}/include
 
 
 macx {
-        message ("!!!!!!!!!! mac")
+    message ("!!!!!!!!!! mac")
 	QMAKE_CXXFLAGS += -Werror
 	#LIBS += -framework SystemConfiguration -framework AppKit
 } else:win32 {
 	QMAKE_CXXFLAGS += /Wall /WX
 	contains(QMAKE_TARGET.arch, x86_64) {
-	        message ("!!!!!!!!!! windows 64")
+	    message ("!!!!!!!!!! windows 64")
 	} else {
-	        message ("!!!!!!!!!! windows 32")
+	    message ("!!!!!!!!!! windows 32")
 	}
 	CONFIG(debug, debug|release) {
-	        #LIBS += -lcomsuppwd
+	    #LIBS += -lcomsuppwd
 	} else:CONFIG(release, debug|release) {
-	        #LIBS += -lcomsuppw
+	    #LIBS += -lcomsuppw
 	}
 
 } else:linux {
-        message ("!!!!!!!!!! linux")
+    message ("!!!!!!!!!! linux")
 	QMAKE_CXXFLAGS += -Wall
 	QMAKE_CXXFLAGS += -Werror
 	QMAKE_CXXFLAGS += -Wno-attributes
 } else:android {
-        message ("!!!!!!!!!! android")
+    message ("!!!!!!!!!! android")
 	QMAKE_CXXFLAGS += -Wall
 	QMAKE_CXXFLAGS += -Werror
 } else:ios {
-        message ("!!!!!!!!!! ios")
+    message ("!!!!!!!!!! ios")
 	QMAKE_CXXFLAGS += -Werror
 } else {
-        message ("!!!!!!!!!! wasm")
+    message ("!!!!!!!!!! wasm")
 	QT -= sql
 	#DEFINES += USE_DLOPEN_FROM_WASM
 	QMAKE_CXXFLAGS += -Wall

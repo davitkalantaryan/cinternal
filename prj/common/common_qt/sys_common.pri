@@ -15,12 +15,12 @@ STATIC_LIB_EXTENSION	= a
 LIB_PREFIX		= lib
 TARGET_PATH_EXTRA	=
 
-isEmpty( cpputilsRepoRoot ) {
-	cpputilsRepoRoot = $${PWD}/../../..
+isEmpty( cinternalRepoRoot ) {
+	cinternalRepoRoot = $${PWD}/../../..
 }
 
 isEmpty( repositoryRoot ) {
-	repositoryRoot = $${cpputilsRepoRoot}
+	repositoryRoot = $${cinternalRepoRoot}
 }
 
 isEmpty( TARGET_PATH ) {
