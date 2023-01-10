@@ -1,25 +1,26 @@
 #
 # name:			sys_common.pri
 # path:			${repositoryRoot}/prj/common/common_qt/sys_common.pri
-# created on:		2017 Feb 12
-# created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)  
+# created on:	2017 Feb 12
+# created by:	Davit Kalantaryan (davit.kalantaryan@desy.de)  
 # usage:		Use this qt include file to calculate some platform specific stuff
 #
 
 #QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter
 
 
+message("!!! $${PWD}/sys_common.pri")
+
 STATIC_LIB_EXTENSION	= a
 LIB_PREFIX		= lib
 TARGET_PATH_EXTRA	=
 
-isEmpty( repositoryRoot ) {
-	repositoryRoot = $${PWD}/../../..
-}
-
-
 isEmpty( cpputilsRepoRoot ) {
 	cpputilsRepoRoot = $${PWD}/../../..
+}
+
+isEmpty( repositoryRoot ) {
+	repositoryRoot = $${cpputilsRepoRoot}
 }
 
 isEmpty( TARGET_PATH ) {
@@ -29,7 +30,6 @@ isEmpty( TARGET_PATH ) {
 	    TARGET_PATH=bin
 	}
 }
-
 
 isEmpty(artifactRoot) {
     artifactRoot = $${repositoryRoot}
@@ -99,7 +99,7 @@ message("!!! sys_common.pri: SYSTEM_PATH/CONFIGURATION=$${artifactRoot}/$${SYSTE
 # Debug:DESTDIR = debug1
 SYSTEM_PATH=$$SYSTEM_PATH/$$CONFIGURATION
 MAKEFILE = Makefile.$${TARGET}.$${CODENAME}.$$CONFIGURATION
-DESTDIR     = $${artifactRoot}/$${SYSTEM_PATH}/$${TARGET_PATH}$${TARGET_PATH_EXTRA}
-OBJECTS_DIR = $${artifactRoot}/$${SYSTEM_PATH}/.other/objects/$${TARGET}
-MOC_DIR     = $${artifactRoot}/$${SYSTEM_PATH}/.other/mocs/$${TARGET}
-UI_DIR      = $${artifactRoot}/$${SYSTEM_PATH}/.other/uics/$${TARGET}
+DESTDIR     = $${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/$${TARGET_PATH}$${TARGET_PATH_EXTRA}
+OBJECTS_DIR = $${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/.other/objects/$${TARGET}
+MOC_DIR     = $${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/.other/mocs/$${TARGET}
+UI_DIR      = $${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/.other/uics/$${TARGET}
