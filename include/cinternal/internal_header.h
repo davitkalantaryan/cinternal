@@ -197,6 +197,11 @@
 #define CINTERNAL_CONSTEXPR_STACK_ARRAY(_type,_name,_count)	_type * _name = CINTERNAL_STATIC_CAST(  _type *,cinternal_alloca((_count)*sizeof(_type))  )
 #endif
 
+#ifndef __cplusplus
+#undef CINTERNAL_NOEXCEPT
+#define CINTERNAL_NOEXCEPT
+#endif
+
 #ifdef CINTERNAL_CPP_14_DEFINED
 #define CINTERNAL_CONSTEXPR_FNC_CPP14     constexpr
 #else
