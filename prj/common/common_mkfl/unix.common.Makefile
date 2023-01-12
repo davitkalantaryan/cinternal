@@ -2,9 +2,9 @@
 
 mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir		=  $(shell dirname $(mkfile_path))
-repoRootPathCppUtils	:= $(shell curDir=`pwd` && cd $(mkfile_dir)/../../.. && pwd && cd ${curDir})
+cinternalRepoRoot	:= $(shell curDir=`pwd` && cd $(mkfile_dir)/../../.. && pwd && cd ${curDir})
 ifndef repoRootPath
-	repoRootPath	:= $(repoRootPathCppUtils)
+        repoRootPath	= $(cinternalRepoRoot)
 endif
 osSystem		:= $(shell uname)
 ifeq ($(osSystem),Darwin)
@@ -80,7 +80,7 @@ endif
 EMXX=em++
 EMCC=em
 
-COMMON_FLAGS	+= -I$(repoRootPathCppUtils)/include
+COMMON_FLAGS	+= -I$(cinternalRepoRoot)/include
 
 CPPFLAGS	+=  $(COMMON_FLAGS)
 CFLAGS		+=  $(COMMON_FLAGS)

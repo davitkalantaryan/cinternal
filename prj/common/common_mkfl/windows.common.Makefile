@@ -18,7 +18,7 @@ CFLAGS				= $(CFLAGS) /MDd /Fd"$(PDB_FILE_PATH)"
 LibrariesExtension              = d
 ObjectsExtension		= d
 !ELSE
-CFLAGS				= $(CFLAGS) /MD
+CFLAGS				= $(CFLAGS) /I"$(cinternalRepoRoot)\include" /MD
 LibrariesExtension              =
 ObjectsExtension		= r
 !ENDIF
