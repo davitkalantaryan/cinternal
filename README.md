@@ -1,2 +1,9 @@
-# cinternal
-This repository will provide couple of headers to analyze compilers and platforms
+# cinternal  
+  
+  
+## Introduction  
+  
+If you are doing C development then you will find here some stuff (headers some tools as well example files) to help with it (C development).  
+  
+  
+## What is available 
