@@ -76,6 +76,12 @@ jobs:
             - name: Compiling ZLIB and tools
               run: cmd /C .\scripts\windows_build_all.bat
 
+            - name: testing test apps
+              run: >
+                .\sys\win_x64\Debug\test\any_quick_test.exe
+                .\sys\win_x64\Debug\test\c_raii_test.exe
+                .\sys\win_x64\Debug\test\lhash_test.exe
+
     mac:
         #needs: prepare-ubuntu18-host
         runs-on: macos-latest
