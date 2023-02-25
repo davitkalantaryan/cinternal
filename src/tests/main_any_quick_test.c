@@ -11,6 +11,14 @@
 #include <stdio.h>
 #include <assert.h>
 
+#define CINTERNALS_GLB_CONS_DSGN_VAL	1
+
+static int s_nData = 0;
+
+CPPUTILS_C_CODE_INITIALIZER(code_init) {
+	s_nData = CINTERNALS_GLB_CONS_DSGN_VAL;
+}
+
 int main(void)
 {
 	const int key1 = 1;
@@ -18,6 +26,9 @@ int main(void)
 	int nNumber;
 	CInternalLHashIterator pItem;
 	CinternalLHash_t aHash = CInternalLHashCreate(1024);
+
+	printf("s_nData = %d\n", s_nData);
+	assert(s_nData == CINTERNALS_GLB_CONS_DSGN_VAL);
 
 	if (!aHash) {
 		perror("\n");
