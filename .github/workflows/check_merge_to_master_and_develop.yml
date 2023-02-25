@@ -81,6 +81,7 @@ jobs:
                 .\sys\win_x64\Debug\test\any_quick_test.exe
                 .\sys\win_x64\Debug\test\c_raii_test.exe
                 .\sys\win_x64\Debug\test\lhash_test.exe
+                .\sys\win_x64\Debug\test\llist_test.exe
 
     mac:
         #needs: prepare-ubuntu18-host

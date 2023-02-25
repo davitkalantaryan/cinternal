@@ -25,6 +25,7 @@ int main(void)
 
 	CInternalLHashAddDataEvenIfExist(aHash, (void*)2, &key1, sizeof(int));
 	CInternalLHashAddDataEvenIfExist(aHash, (void*)4, &key2, sizeof(int));
+	assert(CInternalLHashSize(aHash)==2);
 
 	nNumber = 0;
 	pItem = CInternalLHashFirstItem(aHash);
