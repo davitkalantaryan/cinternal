@@ -121,8 +121,8 @@ This file can be used directly, or one can check and use it in a custom way (for
   
 As you know there is no standard way to make global initialization in the case of C (like C++ global constructors). 
 This tool (C++ global constructors) are very useful for initializing code blocks (static lib, dynamic lib, or just a bunch of sources).
-In the case of C, there is a __attribute__ ((__constructor__)), but this is GCC and family (clang, WASM, CYGWIN).
-Here you will find approaches for all major compilers and the good thing is that they are unified.
+In the case of GCC, there is a `__attribute__ ((__constructor__))`, but this is available only for GCC and family (clang, WASM, CYGWIN).
+Here you will find approaches for all major compilers and the good thing is that they are unified by the macros `CPPUTILS_C_CODE_INITIALIZER`.
 Below is the code snippet from the file [main_c_global_initer_test.c](src/tests/main_c_global_initer_test.c).  
   
 ```C  
