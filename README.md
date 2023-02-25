@@ -167,6 +167,7 @@ CPPUTILS_C_CODE_INITIALIZER(code_init) {
 ### RAII in C  
   
 Another very useful thing in C++ is RAII (Resource Acquisition Is initialization). There is no standard in C also for this.
+For this purpose stuff was prepared.
 In the case of Windows, it will handle also exceptions (even C++ throw will be handled).
 Below is the snippet of the file [main_c_raii_test.c](src/tests/c_raii_test/main_c_raii_test.c).  
   
