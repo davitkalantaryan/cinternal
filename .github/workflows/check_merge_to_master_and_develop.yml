@@ -73,8 +73,14 @@ jobs:
             - name: Repository preparation
               run: cmd /C .\scripts\windows_prepare_repository.bat
 
-            - name: Compiling ZLIB and tools
+            - name: Compiling cinternal all tests
               run: cmd /C .\scripts\windows_build_all.bat
+
+            - name: testing test apps
+              run: >
+                .\sys\win_x64\Debug\test\any_quick_test.exe
+                .\sys\win_x64\Debug\test\c_raii_test.exe
+                .\sys\win_x64\Debug\test\lhash_test.exe
 
     mac:
         #needs: prepare-ubuntu18-host
