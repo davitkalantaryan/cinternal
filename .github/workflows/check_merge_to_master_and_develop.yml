@@ -73,7 +73,7 @@ jobs:
             - name: Repository preparation
               run: cmd /C .\scripts\windows_prepare_repository.bat
 
-            - name: Compiling ZLIB and tools
+            - name: Compiling cinternal all tests
               run: cmd /C .\scripts\windows_build_all.bat
 
             - name: testing test apps
