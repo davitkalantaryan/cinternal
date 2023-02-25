@@ -25,10 +25,19 @@
     <Filter Include="files\scripts">
       <UniqueIdentifier>{dda0acc1-843a-48bf-8206-d783f9f8af9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="files\src">
+      <UniqueIdentifier>{98325e77-e799-4323-95ab-2d3975ebd80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files\src\tests">
+      <UniqueIdentifier>{49322167-70df-4652-bfb6-a1726f763067}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\utils\entry_cinternal_all.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tests\main_c_global_initer_test.c">
+      <Filter>files\src\tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
