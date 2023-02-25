@@ -9,7 +9,7 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_HASH_LHASH_H
 
 #include <cinternal/export_symbols.h>
-#include <stddef.h>
+#include <cinternal/common_data01.h>
 #include <stdbool.h>
 
 
@@ -25,8 +25,6 @@ struct SCinternalLHashItem {
 
 typedef const struct SCinternalLHashItem* CInternalLHashIterator;
 typedef struct SCinternalLHash* CinternalLHash_t;
-typedef size_t(*TypeCinternalHasher)(const void* key, size_t keySize);
-typedef void(*TypeCinternalDataCleaner)(void*);
 
 
 CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateEx(size_t a_numberOfBaskets, TypeCinternalHasher a_hasher);
@@ -39,6 +37,7 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFind(CinternalLHash_t a_ha
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFirstItem(CinternalLHash_t a_hashTbl);
 CINTERNAL_EXPORT void	CInternalLHashRemoveDataEx(CinternalLHash_t a_hashTbl, CInternalLHashIterator a_iterator);
 CINTERNAL_EXPORT bool	CInternalLHashRemoveData(CinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize);
+CINTERNAL_EXPORT size_t CInternalLHashSize(CinternalLHash_t a_hashTbl);
 
 
 CPPUTILS_END_C

@@ -1,6 +1,6 @@
 //
-// file:            main_lhash_test.c
-// path:			src/tests/main_lhash_test.c
+// file:            cinternal_core_hash_lhash.c
+// path:			src/core/cinternal_core_hash_lhash.c
 // created on:		2023 Feb 25
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
@@ -34,6 +34,8 @@ struct CPPUTILS_DLL_PRIVATE SCinternalLHash {
 	size_t							numberOfBaskets;
 	TypeCinternalHasher				hasher;
 	struct SCinternalLHashItem*		first;
+	size_t							m_size;
+	size_t							reserved01;
 };
 
 
@@ -158,6 +160,7 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataWithKnownHash(Cinte
 		a_hashTbl->ppTable[a_hash]->prevInTbl = pItem;
 	}
 	a_hashTbl->ppTable[a_hash] = pItem;
+	++(a_hashTbl->m_size);
 
 	return pItem;
 }
@@ -171,6 +174,12 @@ CINTERNAL_EXPORT bool CInternalLHashRemoveData(CinternalLHash_t a_hashTbl, const
 		return true;
 	}
 	return false;
+}
+
+
+CINTERNAL_EXPORT size_t CInternalLHashSize(CinternalLHash_t a_hashTbl)
+{
+	return a_hashTbl->m_size;
 }
 
 
@@ -201,6 +210,7 @@ CINTERNAL_EXPORT void CInternalLHashRemoveDataEx(CinternalLHash_t a_hashTbl, CIn
 		a_hashTbl->first = a_iterator->nextInList;
 	}
 
+	--(a_hashTbl->m_size);
 	free(a_iterator->key);
 	free(CPPUTILS_CONST_CAST(struct SCinternalLHashItem* ,a_iterator));
 }
