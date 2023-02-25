@@ -16,6 +16,7 @@
 static int s_nData = 0;
 
 CPPUTILS_C_CODE_INITIALIZER(code_init) {
+    printf("Hello from C global constructor\n");
 	s_nData = CINTERNALS_GLB_CONS_DSGN_VAL;
 }
 
