@@ -1,6 +1,6 @@
 //
-// file:            main_any_quick_test.c
-// path:			src/tests/main_any_quick_test.c
+// file:            main_c_global_initer_test.c
+// path:			src/tests/main_c_global_initer_test.c
 // created on:		2023 Feb 25
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
