@@ -28,7 +28,7 @@ typedef void (*TypeCInternalCRaii)(void** CPPUTILS_ARG_NO_NULL);
 
 #else
 
-#define CINTERNAL_C_RAII_CODE_START(_func,_ud)	{ void* __attribute__ ((__cleanup__(_func))) ___ud = (_ud);
+#define CINTERNAL_C_RAII_CODE_START(_func,_ud)	{ void* __attribute__ ((__cleanup__(_func))) ___ud = (_ud); CPPUTILS_STATIC_CAST(void,___ud);
 #define CINTERNAL_C_RAII_CODE_END               }
 
 #endif
