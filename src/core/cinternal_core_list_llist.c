@@ -19,8 +19,6 @@
 
 #endif
 
-static size_t cinternal_hash1_(const void* a_pKey, size_t a_unKeySize) CPPUTILS_NOEXCEPT;
-
 
 CPPUTILS_BEGIN_C
 
