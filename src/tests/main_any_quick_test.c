@@ -32,11 +32,16 @@ int main(void)
 	//	}b;
 	//}flags;
 	
-	printf("s_nData = %d\n", s_nData);
 	assert(s_nData == CINTERNALS_GLB_CONS_DSGN_VAL);
+	printf("s_nData = %d\n", s_nData);
 
 	flags.all = CPPUTILS_INIT_BITS;
 	assert(flags.b.nm1_false == 1);
+	printf("flags.b.nm1_false = %d\n", (int)flags.b.nm1_false);
+
+	flags.b2.nm1_both = CPPUTILS_MAKE_BITS_TRUE;
+	assert(flags.b.nm1_false == 0);
+	printf("flags.b.nm1_false = %d\n", (int)flags.b.nm1_false);
 
 	return 0;
 }

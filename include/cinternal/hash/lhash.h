@@ -44,6 +44,8 @@ CPPUTILS_END_C
 
 #define CInternalLHashCreate(_size)			CInternalLHashCreateEx(_size,CPPUTILS_NULL,CPPUTILS_NULL,CPPUTILS_NULL)
 #define CInternalLHashDestroy(_hashTbl)		CInternalLHashDestroyEx(_hashTbl,CPPUTILS_NULL)
+#define CInternalStringKeyPair(_string)		(_string),strlen(_string)  // to use this string.h should be included
+#define CInternalAnyDataHPair(_data)		(&(_data)), sizeof(_data)
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_HASH_LHASH_H
