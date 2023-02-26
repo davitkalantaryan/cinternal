@@ -313,4 +313,37 @@
 #define CPPUTILS_ARG_NONULL
 
 
+#if defined(__APPLE__) && (defined(__GNUC__)  || defined(__xlC__)  || defined(__xlc__))
+    #include <TargetConditionals.h>
+    #if defined(TARGET_OS_MAC) && TARGET_OS_MAC
+        #define CPPUTILS_OS_DARWIN
+        #define CPPUTILS_OS_BSD4
+        #ifdef LP64
+            #define CPPUTILS_OS_DARWIN64
+        #else
+            #define CPPUTILS_OS_DARWIN32
+        #endif
+        #if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
+            #define CPPUTILS_PLATFORM_UIKIT
+            #if defined(TARGET_OS_WATCH) && TARGET_OS_WATCH
+                #define CPPUTILS_OS_WATCHOS
+            #elif defined(TARGET_OS_TV) && TARGET_OS_TV
+                #define CPPUTILS_OS_TVOS
+            #else
+                // TARGET_OS_IOS is only available in newer SDKs,
+                // so assume any other iOS-based platform is iOS for now
+                #define CPPUTILS_OS_IOS
+            #endif
+        #else
+            // TARGET_OS_OSX is only available in newer SDKs,
+            // so assume any non iOS-based platform is macOS for now
+            #define CPPUTILS_OS_MACOS
+            #define CPPUTILS_OS_MAC 1
+        #endif
+    #else
+        #error "CPPUTILS has not been ported to this Apple platform"
+    #endif
+#endif  //  #if defined(__APPLE__) && (defined(__GNUC__)  defined(__xlC__)  defined(__xlc__))
+
+
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
