@@ -4,6 +4,8 @@
 // created on:		2021 Nov 13
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
+// if CPPUTILS_FLAGS_UN_RAW macros is used, then for uint64_t include #include <stdint.h>
+//
 
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_H
 #define CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_H
@@ -31,8 +33,8 @@
 #define CPPUTILS_BOTH_BITS2(_a,_name)  CPPUTILS_BOTH_BITS(_name) ;
 
 
-#define CPPUTILS_BITS_B(...) CPPUTILS_MACRO02_APPY(CPPUTILS_POS_NEG_BITS2,;,__VA_ARGS__)
-#define CPPUTILS_BITS_B2(...) CPPUTILS_MACRO02_APPY(CPPUTILS_BOTH_BITS2,;,__VA_ARGS__)
+#define CPPUTILS_BITS_B(...) CPPUTILS_MACRO02_APPY(CPPUTILS_POS_NEG_BITS2,,__VA_ARGS__)
+#define CPPUTILS_BITS_B2(...) CPPUTILS_MACRO02_APPY(CPPUTILS_BOTH_BITS2,,__VA_ARGS__)
 
 
 #define CPPUTILS_FLAGS_UN_RAW(_name, _numberOfReserved,...)  \

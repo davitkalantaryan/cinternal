@@ -7,6 +7,8 @@
 
 
 #include <cinternal/export_symbols.h>
+#include <cinternal/flagshelper.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <assert.h>
 
@@ -21,7 +23,20 @@ CPPUTILS_C_CODE_INITIALIZER(code_init) {
 
 int main(void)
 {
+	CPPUTILS_FLAGS_UN(nm1, nm2)flags;
+	//union {
+	//	uint64_t all;
+	//	struct {
+	//		uint64_t nm1_true : 1;
+	//		uint64_t nm1_false : 1;
+	//	}b;
+	//}flags;
+	
 	printf("s_nData = %d\n", s_nData);
 	assert(s_nData == CINTERNALS_GLB_CONS_DSGN_VAL);
+
+	flags.all = CPPUTILS_INIT_BITS;
+	assert(flags.b.nm1_false == 1);
+
 	return 0;
 }
