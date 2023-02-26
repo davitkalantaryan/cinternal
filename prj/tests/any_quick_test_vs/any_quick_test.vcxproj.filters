@@ -33,6 +33,9 @@
     <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_list_llist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\c_raii.h">

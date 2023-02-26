@@ -27,8 +27,8 @@ typedef const struct SCinternalLHashItem* CInternalLHashIterator;
 typedef struct SCinternalLHash* CinternalLHash_t;
 
 
-CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateEx(size_t a_numberOfBaskets, TypeCinternalHasher a_hasher);
-CINTERNAL_EXPORT void	CInternalLHashDestroyEx(CinternalLHash_t a_hashTbl, TypeCinternalDataCleaner a_cleaner);
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateEx(size_t a_numberOfBaskets, TypeCinternalHasher a_hasher, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator);
+CINTERNAL_EXPORT void	CInternalLHashDestroyEx(CinternalLHash_t a_hashTbl, TypeCinternalDeallocator a_remainingDataCleaner);
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataEvenIfExist(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize);
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExists(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize);
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataWithKnownHash(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash);
@@ -42,7 +42,7 @@ CINTERNAL_EXPORT size_t CInternalLHashSize(CinternalLHash_t a_hashTbl);
 
 CPPUTILS_END_C
 
-#define CInternalLHashCreate(_size)			CInternalLHashCreateEx(_size,CPPUTILS_NULL)
+#define CInternalLHashCreate(_size)			CInternalLHashCreateEx(_size,CPPUTILS_NULL,CPPUTILS_NULL,CPPUTILS_NULL)
 #define CInternalLHashDestroy(_hashTbl)		CInternalLHashDestroyEx(_hashTbl,CPPUTILS_NULL)
 
 

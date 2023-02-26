@@ -293,6 +293,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_list_llist.c" />
     <ClCompile Include="..\..\..\src\tests\main_any_quick_test.c" />
   </ItemGroup>
   <ItemGroup>
