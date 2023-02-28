@@ -366,18 +366,33 @@
 #define CPPUTILS_NAME_WITH_CNTR(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__COUNTER__)
 #define CPPUTILS_NAME_WITH_LINE(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__LINE__)
 
+
 #ifdef _MSC_VER
+
 #define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
 	__pragma(section(_sectionName,read))														\
 	CPPUTILS_EXTERN_C __declspec(allocate(_sectionName)) const char _sectionVar[] = _comment;	\
 	__pragma(comment(linker, "/include:" CPPUTILS_STRVAL(_sectionVar)))
+
+#elif defined(__APPLE__)
+
+#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+    const char __attribute__((section("__DATA," _sectionName),used)) _sectionVar[] = _comment;
+
 #elif defined(CPPUTILS_GCC_FAMILY)
+
 #define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
-	const char _sectionVar[] __attribute__((section(_sectionName))) = _comment;
+    const char _sectionVar[] __attribute__((section(_sectionName))) = _comment;
+
 #else
+
 #define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
-	const char _sectionVar[] = _comment;
-#endif
+    _Pragma("GCC diagnostic ignored \"-Wunused-const-variable\"")                               \
+    _Pragma("GCC diagnostic push")                                                              \
+    const char _sectionVar[] = _comment;                                                        \
+    _Pragma("GCC diagnostic pop")
+
+#endif  // #ifdef _MSC_VER
 
 
 #ifdef __cplusplus
