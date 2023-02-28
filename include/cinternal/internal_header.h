@@ -387,8 +387,8 @@
 #else
 
 #define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+	_Pragma("GCC diagnostic push")                                                              \
     _Pragma("GCC diagnostic ignored \"-Wunused-const-variable\"")                               \
-    _Pragma("GCC diagnostic push")                                                              \
     const char _sectionVar[] = _comment;                                                        \
     _Pragma("GCC diagnostic pop")
 
