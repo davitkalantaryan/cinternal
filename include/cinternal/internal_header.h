@@ -363,7 +363,8 @@
 
 #define CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)		_var ## _num
 #define CPPUTILS_NAME_WITH_NUM_RAW(_var,_num)		CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)
-#define CPPUTILS_NAME_WITH_NUM(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__COUNTER__)
+#define CPPUTILS_NAME_WITH_CNTR(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__COUNTER__)
+#define CPPUTILS_NAME_WITH_LINE(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__LINE__)
 
 #ifdef _MSC_VER
 #define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\

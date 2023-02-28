@@ -134,7 +134,7 @@ Below is the code snippet from the file [main_c_global_initer_test.c](src/tests/
 
 static int s_nData = 0;
 
-CPPUTILS_C_CODE_INITIALIZER(code_init) {
+CPPUTILS_CODE_INITIALIZER(code_init) {
     printf("Hello from C global constructor\n");
 	s_nData = CINTERNALS_GLB_CONS_DSGN_VAL;
 }
@@ -154,7 +154,7 @@ This text is there because of below global initialization
 
 ...
 
-CPPUTILS_C_CODE_INITIALIZER(code_init) {
+CPPUTILS_CODE_INITIALIZER(code_init) {
     printf("Hello from C global constructor\n");
 	s_nData = CINTERNALS_GLB_CONS_DSGN_VAL;
 }
@@ -218,6 +218,83 @@ int main(void)
  2. List in the C. See: [llist.h](include/cinternal/list/llist.h)  
    
    
+### Info insertion into binary  
+  
+In case there is a necessity to insert custom info into binary, you can use macros `CPPUTILS_INSERT_COMMENT_TO_BIN_RAW`
+defined in the file [insert_info_to_bin.h](include/cinternal/insert_info_to_bin.h).
+An example of usage one can find in the file [main_insert_custom_info_into_bin_test_exe.cpp](src/tests/insert_custom_info_into_bin_test/main_insert_custom_info_into_bin_test_exe.cpp).  
+  
+```cpp  
+#include <cinternal/insert_info_to_bin.h>
+
+#define COMMIT_ID	e6ae7a2e4e7100532b6884d1534f4c8399067413
+
+CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(".cintr", "__commit-id02=" CPPUTILS_STRVAL(COMMIT_ID))
+
+int main(int a_argc, char* a_argv[])
+{
+	(void)a_argc;
+	(void)a_argv;
+	return 0;
+}
+```  
+  
+To examine custom data in the binary later on one can use `dumpbin.exe` in the Windows and `objdump` in Linux.
+Examples of the see commands with possible outputs are below  
+  
+```bat  
+...\cinternal>dumpbin /rawdata /section:.cintr sys\win_x64\Debug\test\any_quick_test.exe
+Microsoft (R) COFF/PE Dumper Version 14.29.30147.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file sys\win_x64\Debug\test\any_quick_test.exe
+
+File Type: EXECUTABLE IMAGE
+
+SECTION HEADER #8
+  .cintr name
+     126 virtual size
+   25000 virtual address (0000000140025000 to 0000000140025125)
+     200 size of raw data
+   10C00 file pointer to raw data (00010C00 to 00010DFF)
+       0 file pointer to relocation table
+       0 file pointer to line numbers
+       0 number of relocations
+       0 number of line numbers
+40000040 flags
+         Initialized Data
+         Read Only
+
+RAW DATA #8
+  0000000140025000: 74 65 73 74 20 63 6F 6D 6D 65 6E 74 20 30 31 00  test comment 01.
+  0000000140025010: 74 65 73 74 20 63 6F 6D 6D 65 6E 74 20 30 32 00  test comment 02.
+  0000000140025020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  00000001400250A0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  00000001400250B0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  00000001400250C0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  00000001400250D0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  00000001400250E0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  00000001400250F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025110: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  0000000140025120: 00 00 00 00 00 00                                ......
+
+  Summary
+
+        1000 .cintr
+```  
+  
+```bash  
+# todo:
+```  
 ## Conclusion  
   
 The expectation is that these codes are good examples (starting points) for clean C development. 
