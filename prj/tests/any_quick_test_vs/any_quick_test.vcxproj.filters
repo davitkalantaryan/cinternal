@@ -27,7 +27,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\tests\main_any_quick_test.cpp">
+    <ClCompile Include="..\..\..\src\tests\main_any_quick_test.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c">

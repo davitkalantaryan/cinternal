@@ -357,26 +357,41 @@
 #define CPPUTILS_CATCH()	__except (EXCEPTION_EXECUTE_HANDLER)
 #endif
 
-//#define CPPUTILS_STRINGIZER(_arg)		#_arg
-//#define CPPUTILS_STRVAL(_var)			CPPUTILS_STRINGIZER(_var)
-//
-//
-//#define CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)		_var ## _num
-//#define CPPUTILS_NAME_WITH_NUM_RAW(_var,_num)		CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)
-//#define CPPUTILS_NAME_WITH_NUM(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__COUNTER__)
-//
-//#ifdef _MSC_VER
-//#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
-//	__pragma(section(_sectionName,read))														\
-//	CPPUTILS_EXTERN_C __declspec(allocate(_sectionName)) const char _sectionVar[] = _comment;	\
-//	__pragma(comment(linker, "/include:" CPPUTILS_STRVAL(_sectionVar)))
-//#elif defined(CPPUTILS_GCC_FAMILY)
-//#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
-//	const char _sectionVar[] __attribute__((section(_sectionName))) = _comment;
-//#else
-//#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
-//	const char _sectionVar[] = _comment;
-//#endif
+#define CPPUTILS_STRINGIZER(_arg)		#_arg
+#define CPPUTILS_STRVAL(_var)			CPPUTILS_STRINGIZER(_var)
+
+
+#define CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)		_var ## _num
+#define CPPUTILS_NAME_WITH_NUM_RAW(_var,_num)		CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)
+#define CPPUTILS_NAME_WITH_NUM(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__COUNTER__)
+
+#ifdef _MSC_VER
+#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+	__pragma(section(_sectionName,read))														\
+	CPPUTILS_EXTERN_C __declspec(allocate(_sectionName)) const char _sectionVar[] = _comment;	\
+	__pragma(comment(linker, "/include:" CPPUTILS_STRVAL(_sectionVar)))
+#elif defined(CPPUTILS_GCC_FAMILY)
+#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+	const char _sectionVar[] __attribute__((section(_sectionName))) = _comment;
+#else
+#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+	const char _sectionVar[] = _comment;
+#endif
+
+
+#ifdef __cplusplus
+#define CPPUTILS_CODE_INITIALIZER(_func)					\
+	static void _func(void);								\
+	class CPPUTILS_DLL_PRIVATE ___IniterClass_ ## _func{	\
+		public:												\
+			___IniterClass_ ## _func (){					\
+				_func();									\
+			}												\
+	}static ___initerMember_ ## _func;						\
+	void _func(void)
+#else
+#define CPPUTILS_CODE_INITIALIZER			CPPUTILS_C_CODE_INITIALIZER
+#endif
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H

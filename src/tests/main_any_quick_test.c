@@ -16,12 +16,12 @@
 #define CINTERNALS_GLB_CONS_DSGN_VAL	1
 
 
-//CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(".cintr","test comment 01")
-//CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(".cintr", "test comment 02")
+CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(".cintr","test comment 01")
+CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(".cintr", "test comment 02")
 
 static int s_nData = 0;
 
-CPPUTILS_C_CODE_INITIALIZER(code_init) {
+CPPUTILS_CODE_INITIALIZER(code_init) {
     printf("Hello from C global constructor\n");
 	s_nData = CINTERNALS_GLB_CONS_DSGN_VAL;
 }
