@@ -12,6 +12,8 @@ SUBDIRS		+=	"$${repositoryRoot}/prj/tests/c_raii_test_qt/c_raii_test.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/c_raii_test_unix_qt/c_raii_test_unix.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/lhash_test_qt/lhash_test.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/llist_test_qt/llist_test.pro"
+SUBDIRS		+=	"$${repositoryRoot}/prj/tests/insert_custom_info_into_bin_test_exe_qt/insert_custom_info_into_bin_test_exe.pro"
+SUBDIRS		+=	"$${repositoryRoot}/prj/tests/insert_custom_info_into_bin_test_lib_qt/insert_custom_info_into_bin_test_lib.pro"
 
 OTHER_FILES += $$files($${repositoryRoot}/docs/*.md,true)
 OTHER_FILES += $$files($${repositoryRoot}/docs/*.txt,true)
