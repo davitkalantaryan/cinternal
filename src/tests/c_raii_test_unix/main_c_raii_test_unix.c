@@ -34,7 +34,7 @@ int main(void)
 
     sigemptyset(&(newAction.sa_mask));
     newAction.sa_flags = 0;
-    newAction.sa_restorer = CPPUTILS_NULL;
+    //newAction.sa_restorer = CPPUTILS_NULL;
     newAction.sa_handler = &SignalHadler;
 
     for(i=0; i<32;++i){
