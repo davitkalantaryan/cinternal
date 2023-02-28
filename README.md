@@ -243,7 +243,7 @@ To examine custom data in the binary later on one can use `dumpbin.exe` in the W
 Examples of the see commands with possible outputs are below  
   
 ```bat  
-...\cinternal>dumpbin /rawdata /section:.cintr sys\win_x64\Debug\test\any_quick_test.exe
+...\cinternal>dumpbin /rawdata /section:.cintr any_quick_test.exe
 Microsoft (R) COFF/PE Dumper Version 14.29.30147.0
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
@@ -293,8 +293,36 @@ RAW DATA #8
 ```  
   
 ```bash  
-# todo:
+.../cinternal$ objdump -s -j .cintr insert_custom_info_into_bin_test_exe
+
+insert_custom_info_into_bin_test_exe:     file format elf64-x86-64
+
+Contents of section .cintr:
+ 2020 5f5f636f 6d6d6974 2d696430 323d6536  __commit-id02=e6
+ 2030 61653761 32653465 37313030 35333262  ae7a2e4e7100532b
+ 2040 36383834 64313533 34663463 38333939  6884d1534f4c8399
+ 2050 30363734 31330000 00000000 00000000  067413..........
+ 2060 5f5f636f 6d6d6974 2d69643d 65366165  __commit-id=e6ae
+ 2070 37613265 34653731 30303533 32623638  7a2e4e7100532b68
+ 2080 38346431 35333466 34633833 39393036  84d1534f4c839906
+ 2090 37343133 00                          7413.
 ```  
+  
+Custom information also can be added to dynamic libraries. Output on Linux will be the following:  
+  
+```bash  
+.../$objdump -s -j .cintr libinsert_custom_info_into_bin_test_lib.so
+
+libinsert_custom_info_into_bin_test_lib.so:     file format elf64-x86-64
+
+Contents of section .cintr:
+ 2000 5f5f636f 6d6d6974 2d69643d 65366165  __commit-id=e6ae
+ 2010 37613265 34653731 30303533 32623638  7a2e4e7100532b68
+ 2020 38346431 35333466 34633833 39393036  84d1534f4c839906
+ 2030 37343133 00                          7413.
+```  
+  
+  
 ## Conclusion  
   
 The expectation is that these codes are good examples (starting points) for clean C development. 
