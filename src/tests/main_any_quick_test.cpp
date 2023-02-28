@@ -8,11 +8,16 @@
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/flagshelper.h>
+#include <cinternal/insert_info_to_bin.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <assert.h>
 
 #define CINTERNALS_GLB_CONS_DSGN_VAL	1
+
+
+//CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(".cintr","test comment 01")
+//CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(".cintr", "test comment 02")
 
 static int s_nData = 0;
 

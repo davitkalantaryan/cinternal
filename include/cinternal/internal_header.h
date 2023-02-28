@@ -60,6 +60,7 @@
 	#endif
 #elif defined(__GNUC__) || defined(__clang__) || defined(LINUX_GCC)
 
+	#define CPPUTILS_GCC_FAMILY		1
 	#define CPPUTILS_C_CODE_INITIALIZER(f)	static void __attribute__ ((__constructor__)) f(void)
 
     #define CPPUTILS_MAY_ALIAS  __attribute__ ((__may_alias__))
@@ -82,6 +83,7 @@
 	#define CPPUTILS_THREAD_LOCAL		__thread
 #elif defined(__CYGWIN__)
 
+	#define CPPUTILS_GCC_FAMILY		1
 	#define CPPUTILS_C_CODE_INITIALIZER(f)	static void __attribute__ ((__constructor__)) f(void)
 
 	#define CPPUTILS_UNREACHABLE_CODE(_code)	_code ;
@@ -91,6 +93,7 @@
     #define CPPUTILS_IMPORT_FROM_DLL	__attribute__((dllimport))
 #elif defined(__MINGW64__) || defined(__MINGW32__)
 
+	#define CPPUTILS_GCC_FAMILY		1
 	#define CPPUTILS_C_CODE_INITIALIZER(f)	static void __attribute__ ((__constructor__)) f(void)
 
 	#define CPPUTILS_UNREACHABLE_CODE(_code)	_code ;
@@ -344,6 +347,36 @@
         #error "CPPUTILS has not been ported to this Apple platform"
     #endif
 #endif  //  #if defined(__APPLE__) && (defined(__GNUC__)  defined(__xlC__)  defined(__xlc__))
+
+
+#if defined(_CPPUNWIND) || !defined(_MSC_VER)
+#define CPPUTILS_TRY		try
+#define CPPUTILS_CATCH()	catch(...)
+#else
+#define CPPUTILS_TRY		__try
+#define CPPUTILS_CATCH()	__except (EXCEPTION_EXECUTE_HANDLER)
+#endif
+
+//#define CPPUTILS_STRINGIZER(_arg)		#_arg
+//#define CPPUTILS_STRVAL(_var)			CPPUTILS_STRINGIZER(_var)
+//
+//
+//#define CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)		_var ## _num
+//#define CPPUTILS_NAME_WITH_NUM_RAW(_var,_num)		CPPUTILS_NAME_WITH_NUM_RAWEX(_var,_num)
+//#define CPPUTILS_NAME_WITH_NUM(_var)				CPPUTILS_NAME_WITH_NUM_RAW(_var,__COUNTER__)
+//
+//#ifdef _MSC_VER
+//#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+//	__pragma(section(_sectionName,read))														\
+//	CPPUTILS_EXTERN_C __declspec(allocate(_sectionName)) const char _sectionVar[] = _comment;	\
+//	__pragma(comment(linker, "/include:" CPPUTILS_STRVAL(_sectionVar)))
+//#elif defined(CPPUTILS_GCC_FAMILY)
+//#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+//	const char _sectionVar[] __attribute__((section(_sectionName))) = _comment;
+//#else
+//#define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
+//	const char _sectionVar[] = _comment;
+//#endif
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
