@@ -242,6 +242,7 @@ int main(int a_argc, char* a_argv[])
 To examine custom data in the binary later on one can use `dumpbin.exe` in the Windows and `objdump` in Linux.
 Examples of the see commands with possible outputs are below  
   
+Windows  
 ```bat  
 ...\cinternal>dumpbin /rawdata /section:.cintr any_quick_test.exe
 Microsoft (R) COFF/PE Dumper Version 14.29.30147.0
@@ -292,6 +293,24 @@ RAW DATA #8
         1000 .cintr
 ```  
   
+Mac  
+```bash  
+.../cinternal% otool insert_custom_info_into_bin_test_exe -s __DATA .cintr -v
+insert_custom_info_into_bin_test_exe.app/Contents/MacOS/insert_custom_info_into_bin_test_exe:
+Contents of (__DATA,.cintr) section
+0000000100004000 5f 5f 63 6f 6d 6d 69 74 2d 69 64 30 32 3d 65 36 
+0000000100004010 61 65 37 61 32 65 34 65 37 31 30 30 35 33 32 62 
+0000000100004020 36 38 38 34 64 31 35 33 34 66 34 63 38 33 39 39 
+0000000100004030 30 36 37 34 31 33 00 00 00 00 00 00 00 00 00 00 
+0000000100004040 5f 5f 63 6f 6d 6d 69 74 2d 69 64 3d 65 36 61 65 
+0000000100004050 37 61 32 65 34 65 37 31 30 30 35 33 32 62 36 38 
+0000000100004060 38 34 64 31 35 33 34 66 34 63 38 33 39 39 30 36 
+0000000100004070 37 34 31 33 00
+```  
+I do not know how to force `otool` to display content as ascii string  
+  
+  
+Linux
 ```bash  
 .../cinternal$ objdump -s -j .cintr insert_custom_info_into_bin_test_exe
 
