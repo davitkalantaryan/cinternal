@@ -372,7 +372,7 @@
 #define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW_RAW(_sectionVar,_sectionName,_comment)				\
 	__pragma(section(_sectionName,read))														\
 	CPPUTILS_EXTERN_C __declspec(allocate(_sectionName)) const char _sectionVar[] = _comment;	\
-	__pragma(comment(linker, "/include:" CPPUTILS_STRVAL(_sectionVar)))
+	__pragma(comment(linker, "/include:" CPPUTILS_FNAME_PREFIX CPPUTILS_STRVAL(_sectionVar)))
 
 #elif defined(__APPLE__)
 
