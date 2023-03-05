@@ -25,6 +25,7 @@ struct SCinternalLHashItem {
 
 typedef const struct SCinternalLHashItem* CInternalLHashIterator;
 typedef struct SCinternalLHash* CinternalLHash_t;
+typedef const struct SCinternalLHash* ConstCinternalLHash_t;
 
 
 CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateEx(size_t a_numberOfBaskets, TypeCinternalHasher a_hasher, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator);
@@ -32,12 +33,12 @@ CINTERNAL_EXPORT void	CInternalLHashDestroyEx(CinternalLHash_t a_hashTbl, TypeCi
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataEvenIfExist(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize);
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExists(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize);
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataWithKnownHash(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash);
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFindEx(CinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize,size_t* CPPUTILS_ARG_NO_NULL a_pHash);
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFind(CinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize);
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFirstItem(CinternalLHash_t a_hashTbl);
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFindEx(ConstCinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize,size_t* CPPUTILS_ARG_NO_NULL a_pHash);
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFind(ConstCinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize);
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFirstItem(ConstCinternalLHash_t a_hashTbl);
 CINTERNAL_EXPORT void	CInternalLHashRemoveDataEx(CinternalLHash_t a_hashTbl, CInternalLHashIterator a_iterator);
 CINTERNAL_EXPORT bool	CInternalLHashRemoveData(CinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize);
-CINTERNAL_EXPORT size_t CInternalLHashSize(CinternalLHash_t a_hashTbl);
+CINTERNAL_EXPORT size_t CInternalLHashSize(ConstCinternalLHash_t a_hashTbl);
 
 
 CPPUTILS_END_C

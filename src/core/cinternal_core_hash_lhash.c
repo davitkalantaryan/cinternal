@@ -117,7 +117,7 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExists(Cintern
 }
 
 
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFindEx(CinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NO_NULL a_pHash)
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFindEx(ConstCinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NO_NULL a_pHash)
 {
 	struct SCinternalLHashItem* pItem;
 	
@@ -135,14 +135,14 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFindEx(CinternalLHash_t a_
 }
 
 
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFind(CinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize)
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFind(ConstCinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize)
 {
 	size_t unHash;
 	return CInternalLHashFindEx(a_hashTbl,a_key,a_keySize,&unHash);
 }
 
 
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFirstItem(CinternalLHash_t a_hashTbl)
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFirstItem(ConstCinternalLHash_t a_hashTbl)
 {
 	return a_hashTbl->first;
 }
@@ -197,7 +197,7 @@ CINTERNAL_EXPORT bool CInternalLHashRemoveData(CinternalLHash_t a_hashTbl, const
 }
 
 
-CINTERNAL_EXPORT size_t CInternalLHashSize(CinternalLHash_t a_hashTbl)
+CINTERNAL_EXPORT size_t CInternalLHashSize(ConstCinternalLHash_t a_hashTbl)
 {
 	return a_hashTbl->m_size;
 }

@@ -95,7 +95,7 @@ CINTERNAL_EXPORT CInternalLListIterator CInternalLListAddDataToFront(CinternalLL
 }
 
 
-CINTERNAL_EXPORT CInternalLListIterator CInternalLListFirstItem(CinternalLList_t a_list)
+CINTERNAL_EXPORT CInternalLListIterator CInternalLListFirstItem(ConstCinternalLList_t a_list)
 {
 	return a_list->first;
 }
@@ -121,7 +121,7 @@ CINTERNAL_EXPORT void CInternalLListRemoveData(CinternalLList_t a_list, CInterna
 }
 
 
-CINTERNAL_EXPORT size_t CInternalLListSize(CinternalLList_t a_list)
+CINTERNAL_EXPORT size_t CInternalLListSize(ConstCinternalLList_t a_list)
 {
 	return a_list->m_size;
 }
