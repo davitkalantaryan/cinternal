@@ -10,11 +10,13 @@
 
 #include <cinternal/export_symbols.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 
 CPPUTILS_BEGIN_C
 
 typedef size_t(*TypeCinternalHasher)(const void* key, size_t keySize);
+typedef bool(*TypeCinternalIsMemoriesIdentical)(const void* key1, size_t keySize1, const void* key2, size_t keySize2);
 typedef void(*TypeCinternalDeallocator)(void*);
 typedef void*(*TypeCinternalAllocator)(size_t);
 

@@ -32,32 +32,39 @@ static void CinternalDefaultDataCleaner(void* a_pData) {
 
 
 struct CPPUTILS_DLL_PRIVATE SCinternalLHash {
-	struct SCinternalLHashItem**	ppTable;
-	size_t							numberOfBaskets;
-	TypeCinternalHasher				hasher;
-	TypeCinternalAllocator			allocator;
-	TypeCinternalDeallocator		deallocator;
-	struct SCinternalLHashItem*		first;
-	size_t							m_size;
-	size_t							reserved01;
+	struct SCinternalLHashItem**		ppTable;
+	size_t								numberOfBaskets;
+	TypeCinternalHasher					hasher;
+	TypeCinternalAllocator				allocator;
+	TypeCinternalDeallocator			deallocator;
+	TypeCinternalIsMemoriesIdentical	isEq;
+	struct SCinternalLHashItem*			first;
+	size_t								m_size;
+	size_t								reserved01;
 };
 
 
-CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateEx(size_t a_numberOfBaskets2, TypeCinternalHasher a_hasher, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
+static bool CinternaldefaultIsMemoriesIdentical(const void* a_key1, size_t a_keySize1, const void* a_key2, size_t a_keySize2)
+{
+	return (a_keySize1 == a_keySize2) && (memcmp(a_key1, a_key2, a_keySize1) == 0);
+}
+
+
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExRaw(size_t a_numberOfBaskets2, TypeCinternalHasher a_hasher, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator, TypeCinternalIsMemoriesIdentical a_isEq)
 {
 	CinternalLHash_t pRet;
 	size_t tableMemorySize;
 
 	a_allocator = a_allocator ? a_allocator : (&malloc);
 
-	pRet = CPPUTILS_STATIC_CAST(CinternalLHash_t,(*a_allocator)(sizeof(struct SCinternalLHash)));
+	pRet = CPPUTILS_STATIC_CAST(CinternalLHash_t, (*a_allocator)(sizeof(struct SCinternalLHash)));
 	if (!pRet) {
 		return CPPUTILS_NULL;
 	}
 
 	pRet->allocator = a_allocator;
 	pRet->deallocator = a_deallocator ? a_deallocator : (&free);
-	pRet->numberOfBaskets = a_numberOfBaskets2? a_numberOfBaskets2: CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS;
+	pRet->numberOfBaskets = a_numberOfBaskets2 ? a_numberOfBaskets2 : CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS;
 
 	tableMemorySize = pRet->numberOfBaskets * sizeof(struct SCinternalLHashItem*);
 	pRet->ppTable = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem**, (*a_allocator)(tableMemorySize));
@@ -65,12 +72,13 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateEx(size_t a_numberOfBasket
 		(*(pRet->deallocator))(pRet);
 		return CPPUTILS_NULL;
 	}
-	memset(pRet->ppTable,0, tableMemorySize);
+	memset(pRet->ppTable, 0, tableMemorySize);
 
 	pRet->first = CPPUTILS_NULL;
 	pRet->m_size = 0;
 
 	pRet->hasher = a_hasher ? a_hasher : (&cinternal_hash1_);
+	pRet->isEq = a_isEq ? a_isEq : (&CinternaldefaultIsMemoriesIdentical);
 	return pRet;
 }
 
