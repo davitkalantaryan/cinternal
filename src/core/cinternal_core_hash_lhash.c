@@ -115,7 +115,7 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExists(Cintern
 	struct SCinternalLHashItem * pItem = a_hashTbl->ppTable[hash];
 
 	while (pItem) {
-		if ((pItem->keySize == a_keySize) && (memcmp(pItem->key, a_key, a_keySize) == 0)) {
+		if( (*(a_hashTbl->isEq))(pItem->key,pItem->keySize, a_key, a_keySize) ){
 			return CPPUTILS_NULL;
 		}
 		pItem = pItem->nextInTbl;
@@ -133,7 +133,7 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFindEx(ConstCinternalLHash
 	pItem = a_hashTbl->ppTable[*a_pHash];
 
 	while (pItem) {
-		if ((pItem->keySize == a_keySize) && (memcmp(pItem->key, a_key, a_keySize) == 0)) {
+		if ((*(a_hashTbl->isEq))(pItem->key, pItem->keySize, a_key, a_keySize)) {
 			return pItem;
 		}
 		pItem = pItem->nextInTbl;
