@@ -28,7 +28,12 @@ typedef struct SCinternalLHash* CinternalLHash_t;
 typedef const struct SCinternalLHash* ConstCinternalLHash_t;
 
 
-CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExRaw(size_t a_numberOfBaskets, TypeCinternalHasher a_hasher, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator, TypeCinternalIsMemoriesIdentical a_isEq);
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAny(size_t a_numberOfBaskets, 
+	TypeCinternalHasher CPPUTILS_ARG_NONULL a_hasher, TypeCinternalIsMemoriesIdentical CPPUTILS_ARG_NONULL a_isEq,
+	TypeCinternalStoreKey CPPUTILS_ARG_NONULL a_keyStore, TypeCinternalUnstoreKey CPPUTILS_ARG_NONULL a_keyUnstore,
+	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator);
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExRawMem(size_t a_numberOfBaskets, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator);
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExSmlInt(size_t a_numberOfBaskets,TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator);
 CINTERNAL_EXPORT void	CInternalLHashDestroyEx(CinternalLHash_t a_hashTbl, TypeCinternalDeallocator a_remainingDataCleaner);
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataEvenIfExist(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize);
 CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExists(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize);
@@ -43,12 +48,11 @@ CINTERNAL_EXPORT size_t CInternalLHashSize(ConstCinternalLHash_t a_hashTbl);
 
 CPPUTILS_END_C
 
-#define CInternalLHashCreateEx(_numberOfBaskets, _hasher, _allocator, _deallocator)	\
-	CInternalLHashCreateExRaw(_numberOfBaskets, _hasher, _allocator, _deallocator,CPPUTILS_NULL)
-#define CInternalLHashCreate(_size)			CInternalLHashCreateEx(_size,CPPUTILS_NULL,CPPUTILS_NULL,CPPUTILS_NULL)
+#define CInternalLHashCreateRawMem(_size)	CInternalLHashCreateExRawMem(_size,CPPUTILS_NULL,CPPUTILS_NULL)
+#define CInternalLHashCreateSmlInt(_size)	CInternalLHashCreateExSmlInt(_size,CPPUTILS_NULL,CPPUTILS_NULL)
 #define CInternalLHashDestroy(_hashTbl)		CInternalLHashDestroyEx(_hashTbl,CPPUTILS_NULL)
 #define CInternalStringKeyPair(_string)		(_string),strlen(_string)  // to use this string.h should be included
-#define CInternalAnyDataHPair(_data)		(&(_data)), sizeof(_data)
+#define CInternalSmallIntHPair(_data)		((void*)((size_t)(_data))), 0
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_HASH_LHASH_H
