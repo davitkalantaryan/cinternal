@@ -165,8 +165,8 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAnyDefRawMem(size_t a_nu
 
 
 CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAnyDefSmlInt(size_t a_numberOfBaskets,
-	TypeCinternalHasher CPPUTILS_ARG_NONULL a_hasher, TypeCinternalIsMemoriesIdentical CPPUTILS_ARG_NONULL a_isEq,
-	TypeCinternalStoreKey CPPUTILS_ARG_NONULL a_keyStore, TypeCinternalUnstoreKey CPPUTILS_ARG_NONULL a_keyUnstore,
+	TypeCinternalHasher a_hasher, TypeCinternalIsMemoriesIdentical a_isEq,
+	TypeCinternalStoreKey a_keyStore, TypeCinternalUnstoreKey a_keyUnstore,
 	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
 {
 	return CInternalLHashCreateExAny(a_numberOfBaskets,
