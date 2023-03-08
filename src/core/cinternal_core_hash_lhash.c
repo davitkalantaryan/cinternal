@@ -146,7 +146,10 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAny(size_t a_numberOfBas
 }
 
 
-CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExRawMem(size_t a_numberOfBaskets, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAnyDefRawMem(size_t a_numberOfBaskets,
+	TypeCinternalHasher a_hasher, TypeCinternalIsMemoriesIdentical a_isEq,
+	TypeCinternalStoreKey a_keyStore, TypeCinternalUnstoreKey a_keyUnstore,
+	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
 {
 #ifdef __cplusplus
 #ifdef _MSC_VER
@@ -154,6 +157,27 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExRawMem(size_t a_numberOf
 #pragma warning (disable:5039)
 #endif
 #endif
+	return CInternalLHashCreateExAny(a_numberOfBaskets,
+		a_hasher ? a_hasher : (&cinternal_hash1_raw_mem), a_isEq ? a_isEq :(&CinternalIsMemoriesIdenticalRawMemory),
+		a_keyStore ? a_keyStore : (&CinternalStoreKeyRawMemory), a_keyUnstore ? a_keyUnstore :(&CinternalUnstoreKeyRawMemory),
+		a_allocator, a_deallocator);
+}
+
+
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAnyDefSmlInt(size_t a_numberOfBaskets,
+	TypeCinternalHasher CPPUTILS_ARG_NONULL a_hasher, TypeCinternalIsMemoriesIdentical CPPUTILS_ARG_NONULL a_isEq,
+	TypeCinternalStoreKey CPPUTILS_ARG_NONULL a_keyStore, TypeCinternalUnstoreKey CPPUTILS_ARG_NONULL a_keyUnstore,
+	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
+{
+	return CInternalLHashCreateExAny(a_numberOfBaskets,
+		a_hasher ? a_hasher : (&cinternal_hash1_small_int), a_isEq ? a_isEq : (&CinternalIsMemoriesIdenticalSmallInt),
+		a_keyStore ? a_keyStore : (&CinternalStoreKeySmallInt), a_keyUnstore ? a_keyUnstore : (&CinternalUnstoreKeySmallInt),
+		a_allocator, a_deallocator);
+}
+
+
+CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExRawMem(size_t a_numberOfBaskets, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
+{
 	return CInternalLHashCreateExAny(a_numberOfBaskets,
 		&cinternal_hash1_raw_mem, &CinternalIsMemoriesIdenticalRawMemory,
 		&CinternalStoreKeyRawMemory, &CinternalUnstoreKeyRawMemory,
