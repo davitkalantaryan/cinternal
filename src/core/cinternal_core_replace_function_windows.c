@@ -17,7 +17,6 @@
 #include <WS2tcpip.h>
 #include <Windows.h>
 #include <Psapi.h>
-#include <winternl.h>
 
 
 CPPUTILS_BEGIN_C

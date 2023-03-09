@@ -46,6 +46,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "insert_custom_info_into_bin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win_function_changer", "..\..\prj\tests\win_function_changer_vs\win_function_changer.vcxproj", "{EA46614F-34AA-458F-8ACF-6C22734081C5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "function_changer_test", "..\..\prj\tests\function_changer_test_vs\function_changer_test.vcxproj", "{3794BAEB-F827-4636-B0DA-FA40D1445541}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -198,6 +200,22 @@ Global
 		{EA46614F-34AA-458F-8ACF-6C22734081C5}.Release|x64.Build.0 = Release|x64
 		{EA46614F-34AA-458F-8ACF-6C22734081C5}.Release|x86.ActiveCfg = Release|Win32
 		{EA46614F-34AA-458F-8ACF-6C22734081C5}.Release|x86.Build.0 = Release|Win32
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|ARM.ActiveCfg = Debug|ARM
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|ARM.Build.0 = Debug|ARM
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|ARM64.Build.0 = Debug|ARM64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|x64.ActiveCfg = Debug|x64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|x64.Build.0 = Debug|x64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|x86.ActiveCfg = Debug|Win32
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Debug|x86.Build.0 = Debug|Win32
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|ARM.ActiveCfg = Release|ARM
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|ARM.Build.0 = Release|ARM
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|ARM64.ActiveCfg = Release|ARM64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|ARM64.Build.0 = Release|ARM64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|x64.ActiveCfg = Release|x64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|x64.Build.0 = Release|x64
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|x86.ActiveCfg = Release|Win32
+		{3794BAEB-F827-4636-B0DA-FA40D1445541}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -212,6 +230,7 @@ Global
 		{C8974B1A-7BBC-4D09-BBAC-E575E5249D9F} = {A67E2EA3-C913-48BD-8749-47737436D14E}
 		{A2065559-B068-4BD5-9A3D-FE6EEAD48E1F} = {A67E2EA3-C913-48BD-8749-47737436D14E}
 		{EA46614F-34AA-458F-8ACF-6C22734081C5} = {A67E2EA3-C913-48BD-8749-47737436D14E}
+		{3794BAEB-F827-4636-B0DA-FA40D1445541} = {A67E2EA3-C913-48BD-8749-47737436D14E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88068648-8FEA-4B04-ADBE-8FB52F1EC032}

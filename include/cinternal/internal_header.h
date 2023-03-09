@@ -54,7 +54,6 @@
     #define CPPUTILS_DLL_PUBLIC		__declspec(dllexport)
     #define CPPUTILS_DLL_PRIVATE
     #define CPPUTILS_IMPORT_FROM_DLL	__declspec(dllimport)
-	#define CPPUTILS_THREAD_LOCAL		__declspec(thread)
 	#if !defined(_WIN64) && !defined(_M_ARM64)
 		#define CPPUTLS_32_BIT
 	#endif
@@ -80,7 +79,6 @@
     #define CPPUTILS_DLL_PUBLIC
     #define CPPUTILS_DLL_PRIVATE		__attribute__((visibility("hidden")))
     #define CPPUTILS_IMPORT_FROM_DLL
-	#define CPPUTILS_THREAD_LOCAL		__thread
 #elif defined(__CYGWIN__)
 
 	#define CPPUTILS_GCC_FAMILY		1

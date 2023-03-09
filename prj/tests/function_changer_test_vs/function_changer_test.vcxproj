@@ -292,7 +292,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\core\windows\cinternal_core_replace_function_windows.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_replace_function_windows.c" />
     <ClCompile Include="..\..\..\src\tests\main_function_changer_test.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
