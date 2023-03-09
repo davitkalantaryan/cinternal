@@ -402,7 +402,7 @@
 				_func();									\
 			}												\
 	}static ___initerMember_ ## _func;						\
-	void _func(void)
+	static void _func(void)
 #else
 #define CPPUTILS_CODE_INITIALIZER			CPPUTILS_C_CODE_INITIALIZER
 #endif
