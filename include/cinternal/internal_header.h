@@ -410,4 +410,17 @@
 #endif
 
 
+#ifdef CPPUTILS_CPP_11_DEFINED
+	#define CPPUTILS_THREAD_LOCAL			thread_local
+#else
+	#ifdef _MSC_VER
+		#define CPPUTILS_THREAD_LOCAL		__declspec(thread)
+	#elif defined(CPPUTILS_GCC_FAMILY)
+		#define CPPUTILS_THREAD_LOCAL		__thread
+	#else
+		#define CPPUTILS_THREAD_LOCAL		__thread
+	#endif
+#endif
+
+
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H

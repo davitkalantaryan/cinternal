@@ -70,9 +70,9 @@ static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID
         for (; !(pITD->u1.Ordinal & IMAGE_ORDINAL_FLAG) && pITD->u1.AddressOfData; ++pITD) {
             pIIBM = (PIMAGE_IMPORT_BY_NAME)(a_pAddress + pITD->u1.AddressOfData);
             if (!strcmp(a_replaceData[ind].funcname, (const char*)(pIIBM->Name))) {
-                VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(ULONGLONG), PAGE_READWRITE, &dwOld);
+                VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), PAGE_READWRITE, &dwOld);
                 pFirstThunkTest->u1.Function = (size_t)a_replaceData[ind].newFuncAddress;
-                VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(ULONGLONG), dwOld, &dwOldTmp);
+                VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), dwOld, &dwOldTmp);
                 a_replaceData[ind].bFound = true;
                 break;
             }  //  if (!strcmp(a_replaceData->funcname, (const char*)(pIIBM->Name))) {
