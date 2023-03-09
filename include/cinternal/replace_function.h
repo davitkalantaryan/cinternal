@@ -27,6 +27,7 @@ struct SCInternalReplaceFunctionData {
 
 
 CINTERNAL_EXPORT void CInternalReplaceFunctions(size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData);
+CINTERNAL_EXPORT void CInternalReplaceFunctionsAllModules(size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData);
 
 
 CPPUTILS_END_C

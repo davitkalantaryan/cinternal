@@ -20,36 +20,77 @@
 
 
 CPPUTILS_BEGIN_C
+
+
+struct CPPUTILS_DLL_PRIVATE SReplaceDataInitial {
+    LPBYTE                      pAddress;
+    PIMAGE_DOS_HEADER           pIDH;
+    PIMAGE_NT_HEADERS           pINH;
+    PIMAGE_OPTIONAL_HEADER      pIOH;
+    PIMAGE_IMPORT_DESCRIPTOR    pIID;
+};
+
 static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID, size_t a_count,struct SCInternalReplaceFunctionData* a_replaceData);
 
 
-CINTERNAL_EXPORT void CInternalReplaceFunctions(size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData) 
-{
+static inline void CInternalReplaceFunctionsForModulePrepareDataInline(HMODULE a_hModule, struct SReplaceDataInitial* CPPUTILS_ARG_NONULL a_pData,size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData) {
     size_t ind;
     MODULEINFO modInfo = { 0 };
-    HMODULE hModule = GetModuleHandleA(0);
-
     // Find the base address
-    GetModuleInformation(GetCurrentProcess(), hModule, &modInfo, sizeof(MODULEINFO));
-
+    GetModuleInformation(GetCurrentProcess(), a_hModule, &modInfo, sizeof(MODULEINFO));
     // Find Import Directory
-    LPBYTE pAddress = (LPBYTE)modInfo.lpBaseOfDll;
-    PIMAGE_DOS_HEADER pIDH = (PIMAGE_DOS_HEADER)pAddress;
-
-    PIMAGE_NT_HEADERS pINH = (PIMAGE_NT_HEADERS)(pAddress + pIDH->e_lfanew);
-    PIMAGE_OPTIONAL_HEADER pIOH = (PIMAGE_OPTIONAL_HEADER) & (pINH->OptionalHeader);
-    PIMAGE_IMPORT_DESCRIPTOR pIID = (PIMAGE_IMPORT_DESCRIPTOR)(pAddress + pIOH->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
+    a_pData->pAddress = (LPBYTE)(modInfo.lpBaseOfDll);
+    a_pData->pIDH = (PIMAGE_DOS_HEADER)(a_pData->pAddress);
+    a_pData->pINH = (PIMAGE_NT_HEADERS)(a_pData->pAddress + a_pData->pIDH->e_lfanew);
+    a_pData->pIOH = (PIMAGE_OPTIONAL_HEADER) & (a_pData->pINH->OptionalHeader);
+    a_pData->pIID = (PIMAGE_IMPORT_DESCRIPTOR)(a_pData->pAddress + a_pData->pIOH->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
 
     for (ind = 0; ind < a_count; ++ind) {
         a_replaceData[ind].bFound = false;
     }
+}
 
-    // Find ntdll.dll
-    for (; pIID->Characteristics; ++pIID) {
-        //if (!strcmp("ntdll.dll", (char*)(pAddress + pIID->Name)))
-        //    break;
-        MakeHookForModule(pAddress, pIID, a_count, a_replaceData);
+
+static inline void CInternalReplaceFunctionsForModuleInline(HMODULE a_hModule,size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData) {
+    struct SReplaceDataInitial moduleData;
+
+    CInternalReplaceFunctionsForModulePrepareDataInline(a_hModule, &moduleData, a_count, a_replaceData);
+
+    if ((moduleData.pIID->Name) != 0xffff) {
+        for (; moduleData.pIID->Characteristics; ++(moduleData.pIID)) {
+            // Find ntdll.dll
+            //if (!strcmp("ntdll.dll", (char*)(pAddress + pIID->Name)))
+            //    break;
+            MakeHookForModule(moduleData.pAddress, moduleData.pIID, a_count, a_replaceData);
+        }  //  for (; moduleData.pIID->Characteristics; ++(moduleData.pIID)) {
+    }  // if ((moduleData.pIID->Name) != 0xffff) {
+}
+
+
+CINTERNAL_EXPORT void CInternalReplaceFunctionsAllModules(size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData)
+{
+    DWORD cbNeeded;
+    HMODULE hMods[1024];
+    DWORD dwFinalSize, i;
+    const HANDLE curProcHandle = GetCurrentProcess();
+    
+    if (!EnumProcessModules(curProcHandle, hMods, sizeof(hMods), &cbNeeded)) {
+        return;
     }
+
+    cbNeeded /= sizeof(HMODULE);
+    dwFinalSize = (cbNeeded < 1024) ? cbNeeded : 1024;
+
+    for (i = 0; i < dwFinalSize; ++i) {
+        CInternalReplaceFunctionsForModuleInline(hMods[i], a_count, a_replaceData);
+    }
+}
+
+
+CINTERNAL_EXPORT void CInternalReplaceFunctions(size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData) 
+{
+    HMODULE hModule = GetModuleHandleA(0);
+    CInternalReplaceFunctionsForModuleInline(hModule, a_count, a_replaceData);
 }
 
 
@@ -73,7 +114,7 @@ static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID
                 pFirstThunkTest->u1.Function = (size_t)a_replaceData[ind].newFuncAddress;
                 VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), dwOld, &dwOldTmp);
                 a_replaceData[ind].bFound = true;
-                break;
+                break; 
             }  //  if (!strcmp(a_replaceData->funcname, (const char*)(pIIBM->Name))) {
             pFirstThunkTest++;
         }  //  for (; !(pITD->u1.Ordinal & IMAGE_ORDINAL_FLAG) && pITD->u1.AddressOfData; pITD++) {
