@@ -6,6 +6,8 @@
 //
 
 
+//#define CINTERNAL_WINDOWS_LD_PRELOAD_WAIT_FOR_DEBUGGER		1
+
 #include <cinternal/export_symbols.h>
 #include <stdio.h>
 #include <string.h>
@@ -53,13 +55,14 @@ int main(int a_argc, char* a_argv[])
 	STARTUPINFOA aStartInfo;
 	PROCESS_INFORMATION aProcInf = { 0 };
 
-	//fprintf(stdout, "Press any key then enter to continue "); fflush(stdout);
-	//nRet = getchar();
-	//CPPUTILS_STATIC_CAST(void, nRet);
-
-	while (!IsDebuggerPresent()) {
-		Sleep(1000);
-	}
+#if defined(CINTERNAL_WINDOWS_LD_PRELOAD_WAIT_FOR_DEBUGGER)
+	fprintf(stdout, "Press any key then enter to continue "); fflush(stdout);
+	nRet = getchar();
+	CPPUTILS_STATIC_CAST(void, nRet);
+	//while (!IsDebuggerPresent()) {
+	//	Sleep(1000);
+	//}
+#endif
 
 	for (i = 1; i < a_argc; ++i) {
 		if (strcmp("---no-wait", a_argv[i]) == 0) {
