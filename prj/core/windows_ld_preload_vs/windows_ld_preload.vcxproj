@@ -300,7 +300,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\core\windows_ld_preload\main_cinternal_core_windows_ld_preload.cpp" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_load_lib_on_remote_process_sys_windows.c" />
+    <ClCompile Include="..\..\..\src\core\windows_ld_preload\main_cinternal_core_windows_ld_preload.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

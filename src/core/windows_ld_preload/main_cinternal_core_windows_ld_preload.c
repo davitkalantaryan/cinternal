@@ -14,10 +14,7 @@
 #include <assert.h>
 #include <fcntl.h>
 #include <io.h>
-#include <cinternal/disable_compiler_warnings.h>
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#include <Windows.h>
+#include <cinternal/load_lib_on_remote_process_sys.h>
 
 
 #define MAX_BUFFER_SIZE		4095
@@ -42,6 +39,11 @@ CPPUTILS_CODE_INITIALIZER(main_cinternal_core_windows_ld_preload_init) {
 
 int main(int a_argc, char* a_argv[])
 {
+	ptrdiff_t strLen;
+	char* pcTemp;
+	char* pcNext;
+	DWORD dwEnvLen;
+	char vcLdPreloadEnvBuffer[1024];
 	const char* cpcAppToStart;
 	bool bShouldWaitForProcess = true;
 	BOOL bCrtPrcRet;
@@ -55,9 +57,9 @@ int main(int a_argc, char* a_argv[])
 	//nRet = getchar();
 	//CPPUTILS_STATIC_CAST(void, nRet);
 
-	//while (!IsDebuggerPresent()) {
-	//	Sleep(1000);
-	//}
+	while (!IsDebuggerPresent()) {
+		Sleep(1000);
+	}
 
 	for (i = 1; i < a_argc; ++i) {
 		if (strcmp("---no-wait", a_argv[i]) == 0) {
@@ -114,9 +116,35 @@ int main(int a_argc, char* a_argv[])
 	}
 
 
+
 	{
 		// before resuming thread/process we should read 'LD_PRELOAD' and preload all libraries
+		dwEnvLen = GetEnvironmentVariableA("LD_PRELOAD", vcLdPreloadEnvBuffer, 1023);
+		if ((dwEnvLen > 0) && (dwEnvLen < 1023)) {
+			pcNext = vcLdPreloadEnvBuffer;
+			pcTemp = strchr(pcNext, ';');
+			while (pcTemp) {
+				strLen = (pcTemp-pcNext);
+				if (strLen > 0) {
+					*pcTemp = 0;
+					if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
+						fprintf(stderr,"Unable load library \"%s\"\n", pcNext);
+					}  //  if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
+				}  //  if (strLen > 0) {
+				pcNext = pcTemp + 1;
+				pcTemp = strchr(pcNext, ';');
+			}  //  while (pcTemp) {
+			
+			if (*pcNext) {
+				// let's handle last library
+				if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
+					fprintf(stderr, "Unable load library \"%s\"\n", pcNext);
+				}  //  if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
+			}  // if (strlen(pcNext) > 0) {
+		}  //  if ((dwEnvLen > 0) && (dwEnvLen < 1023)) {
 	}
+
+
 
 	ResumeThread(aProcInf.hThread);
 	if (bShouldWaitForProcess) {
@@ -150,37 +178,4 @@ static void SignalHandler(int a_signal)
 {
 	assert(a_signal == SIGINT);
 	QueueUserAPC(&InterruptFunctionStatic, s_mainThreadHandle, 0);
-}
-
-
-static bool LoadLibraryToRemoteProcess(HANDLE a_hProcess, const char* a_libraryName)
-{
-	DWORD dwThreadId;
-	HANDLE hThread;
-	SIZE_T szWritten;
-	void* pRemoteMem;
-	const size_t cunDllNameLenPlus1 = strlen(a_libraryName) + 1;
-	
-	
-	pRemoteMem = VirtualAllocEx(a_hProcess, CPPUTILS_NULL, CPPUTILS_STATIC_CAST(SIZE_T, cunDllNameLenPlus1), MEM_COMMIT, PAGE_READWRITE);
-	if (!pRemoteMem) {
-		return false;
-	}
-
-	if (!WriteProcessMemory(a_hProcess, pRemoteMem, a_libraryName, cunDllNameLenPlus1, &szWritten)) {
-		VirtualFreeEx(a_hProcess, pRemoteMem, 0, MEM_RELEASE);
-		return false;
-	}
-
-	hThread = CreateRemoteThread(a_hProcess, CPPUTILS_NULL, 0,(LPTHREAD_START_ROUTINE)LoadLibraryA,	pRemoteMem, 0, &dwThreadId);
-	if (!hThread) {
-		VirtualFreeEx(a_hProcess, pRemoteMem, 0, MEM_RELEASE);
-		return false;
-	}
-
-	WaitForSingleObject(hThread, INFINITE);
-	GetExitCodeThread(hThread, &dwThreadId);
-	CloseHandle(hThread);
-
-	return dwThreadId ? true : false;  // return code is somehow HMODULE of LoadLibrary
 }
