@@ -5,44 +5,65 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
 
+
 #include <cinternal/export_symbols.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <signal.h>
 #include <assert.h>
+#include <fcntl.h>
+#include <io.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
 
-#define MAX_BUFFER_SIZE		4095
 
+#define MAX_BUFFER_SIZE		4095
 
 static HANDLE	s_mainThreadHandle;
 
 static void SignalHandler(int a_signal);
 
 
+
+CPPUTILS_CODE_INITIALIZER(main_cinternal_core_windows_ld_preload_init) {
+	FILE* fpFile;
+	FreeConsole();
+	AttachConsole(ATTACH_PARENT_PROCESS);
+	if (GetConsoleWindow()) {
+		freopen_s(&fpFile, "CONOUT$", "w", stdout); // redirect stdout to console
+		freopen_s(&fpFile, "CONOUT$", "w", stderr); // redirect stderr to console
+		freopen_s(&fpFile, "CONIN$", "r", stdin); // redirect stdin to console
+	}
+}
+
+
 int main(int a_argc, char* a_argv[])
 {
+	const char* cpcAppToStart;
 	bool bShouldWaitForProcess = true;
 	BOOL bCrtPrcRet;
 	int i, nRet;
 	size_t unOffset = 0;
-	char vcCmdLine[MAX_BUFFER_SIZE+1];
+	char vcCmdLine[MAX_BUFFER_SIZE + 1];
 	STARTUPINFOA aStartInfo;
-	PROCESS_INFORMATION aProcInf = {0};
+	PROCESS_INFORMATION aProcInf = { 0 };
 
-	fprintf(stdout, "Press any key then enter to continue "); fflush(stdout);
-	nRet = getchar();
-	CPPUTILS_STATIC_CAST(void, nRet);
+	//fprintf(stdout, "Press any key then enter to continue "); fflush(stdout);
+	//nRet = getchar();
+	//CPPUTILS_STATIC_CAST(void, nRet);
+
+	//while (!IsDebuggerPresent()) {
+	//	Sleep(1000);
+	//}
 
 	for (i = 1; i < a_argc; ++i) {
-		if (strcmp("---no-wait", a_argv[i])==0) {
+		if (strcmp("---no-wait", a_argv[i]) == 0) {
 			bShouldWaitForProcess = false;
 			if (i < (a_argc - 1)) {
-				memmove(&a_argv[i], a_argv[i] + 1, (CPPUTILS_STATIC_CAST(size_t, a_argc)- CPPUTILS_STATIC_CAST(size_t,i)) * sizeof(char*));
+				memmove(&a_argv[i], a_argv[i] + 1, (CPPUTILS_STATIC_CAST(size_t, a_argc) - CPPUTILS_STATIC_CAST(size_t, i)) * sizeof(char*));
 			}
 			else {
 				a_argv[i] = CPPUTILS_NULL;
@@ -53,25 +74,30 @@ int main(int a_argc, char* a_argv[])
 	}  //  for (i = 2; i < a_argc; ++i) {
 
 	if (a_argc < 2) {
-		fprintf(stderr, "name of application to start is not specified!\n");
-		return 1;
+		//fprintf(stderr, "name of application to start is not specified!\n");
+		//return 1;
+		cpcAppToStart = ".\\..\\test\\any_quick_test.exe";
+	}
+	else {
+		cpcAppToStart = a_argv[1];
 	}
 
 	vcCmdLine[0] = 0;
 
 	for (i = 2; i < a_argc; ++i) {
-		nRet = snprintf(vcCmdLine + unOffset, MAX_BUFFER_SIZE - unOffset, " %s",a_argv[i]);
+		nRet = snprintf(vcCmdLine + unOffset, MAX_BUFFER_SIZE - unOffset, " %s", a_argv[i]);
 		unOffset += CPPUTILS_STATIC_CAST(size_t, nRet);
 		if (unOffset >= MAX_BUFFER_SIZE) {
 			break;
 		}
 	}  //  for (i = 2; i < a_argc; ++i) {
 
+
 	ZeroMemory(&aStartInfo, sizeof(aStartInfo));
 	aStartInfo.wShowWindow = SW_SHOWNOACTIVATE;
 
 	bCrtPrcRet = CreateProcessA(
-		a_argv[1],			// lpApplicationName
+		cpcAppToStart,			// lpApplicationName
 		vcCmdLine,			// lpCommandLine
 		CPPUTILS_NULL,		// lpProcessAttributes
 		CPPUTILS_NULL,		// lpThreadAttributes
@@ -83,7 +109,7 @@ int main(int a_argc, char* a_argv[])
 		&aProcInf			// lpProcessInformation
 	);
 	if (!bCrtPrcRet) {
-		fprintf(stderr,"Unable to create process with the name %s\n", a_argv[0]);
+		fprintf(stderr, "Unable to create process with the name %s\n", cpcAppToStart);
 		return 1;
 	}
 
