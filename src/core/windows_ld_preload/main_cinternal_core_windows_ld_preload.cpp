@@ -113,6 +113,11 @@ int main(int a_argc, char* a_argv[])
 		return 1;
 	}
 
+
+	{
+		// before resuming thread/process we should read 'LD_PRELOAD' and preload all libraries
+	}
+
 	ResumeThread(aProcInf.hThread);
 	if (bShouldWaitForProcess) {
 		DWORD dwWaitResult;
@@ -145,4 +150,37 @@ static void SignalHandler(int a_signal)
 {
 	assert(a_signal == SIGINT);
 	QueueUserAPC(&InterruptFunctionStatic, s_mainThreadHandle, 0);
+}
+
+
+static bool LoadLibraryToRemoteProcess(HANDLE a_hProcess, const char* a_libraryName)
+{
+	DWORD dwThreadId;
+	HANDLE hThread;
+	SIZE_T szWritten;
+	void* pRemoteMem;
+	const size_t cunDllNameLenPlus1 = strlen(a_libraryName) + 1;
+	
+	
+	pRemoteMem = VirtualAllocEx(a_hProcess, CPPUTILS_NULL, CPPUTILS_STATIC_CAST(SIZE_T, cunDllNameLenPlus1), MEM_COMMIT, PAGE_READWRITE);
+	if (!pRemoteMem) {
+		return false;
+	}
+
+	if (!WriteProcessMemory(a_hProcess, pRemoteMem, a_libraryName, cunDllNameLenPlus1, &szWritten)) {
+		VirtualFreeEx(a_hProcess, pRemoteMem, 0, MEM_RELEASE);
+		return false;
+	}
+
+	hThread = CreateRemoteThread(a_hProcess, CPPUTILS_NULL, 0,(LPTHREAD_START_ROUTINE)LoadLibraryA,	pRemoteMem, 0, &dwThreadId);
+	if (!hThread) {
+		VirtualFreeEx(a_hProcess, pRemoteMem, 0, MEM_RELEASE);
+		return false;
+	}
+
+	WaitForSingleObject(hThread, INFINITE);
+	GetExitCodeThread(hThread, &dwThreadId);
+	CloseHandle(hThread);
+
+	return dwThreadId ? true : false;  // return code is somehow HMODULE of LoadLibrary
 }
