@@ -180,5 +180,6 @@ static VOID NTAPI InterruptFunctionStatic(_In_ ULONG_PTR a_parameter)
 static void SignalHandler(int a_signal)
 {
 	assert(a_signal == SIGINT);
+	CPPUTILS_STATIC_CAST(void, a_signal);
 	QueueUserAPC(&InterruptFunctionStatic, s_mainThreadHandle, 0);
 }
