@@ -9,6 +9,8 @@
 //#define CINTERNAL_WINDOWS_LD_PRELOAD_WAIT_FOR_DEBUGGER		1
 
 #include <cinternal/export_symbols.h>
+#include <cinternal/load_lib_on_remote_process_sys.h>
+#include <private/cinternal/parser/tokenizer01_windows_p.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -16,7 +18,6 @@
 #include <assert.h>
 #include <fcntl.h>
 #include <io.h>
-#include <cinternal/load_lib_on_remote_process_sys.h>
 
 
 #define MAX_BUFFER_SIZE		4095
@@ -41,9 +42,6 @@ CPPUTILS_CODE_INITIALIZER(main_cinternal_core_windows_ld_preload_init) {
 
 int main(int a_argc, char* a_argv[])
 {
-	ptrdiff_t strLen;
-	char* pcTemp;
-	char* pcNext;
 	DWORD dwEnvLen;
 	char vcLdPreloadEnvBuffer[1024];
 	const char* cpcAppToStart;
@@ -124,26 +122,7 @@ int main(int a_argc, char* a_argv[])
 		// before resuming thread/process we should read 'LD_PRELOAD' and preload all libraries
 		dwEnvLen = GetEnvironmentVariableA("LD_PRELOAD", vcLdPreloadEnvBuffer, 1023);
 		if ((dwEnvLen > 0) && (dwEnvLen < 1023)) {
-			pcNext = vcLdPreloadEnvBuffer;
-			pcTemp = strchr(pcNext, ';');
-			while (pcTemp) {
-				strLen = (pcTemp-pcNext);
-				if (strLen > 0) {
-					*pcTemp = 0;
-					if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
-						fprintf(stderr,"Unable load library \"%s\"\n", pcNext);
-					}  //  if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
-				}  //  if (strLen > 0) {
-				pcNext = pcTemp + 1;
-				pcTemp = strchr(pcNext, ';');
-			}  //  while (pcTemp) {
-			
-			if (*pcNext) {
-				// let's handle last library
-				if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
-					fprintf(stderr, "Unable load library \"%s\"\n", pcNext);
-				}  //  if (!CInternalLoadLibOnRemoteProcessSys(aProcInf.hProcess, pcNext)) {
-			}  // if (strlen(pcNext) > 0) {
+			CInternalTokenizerWindows01a(vcLdPreloadEnvBuffer, aProcInf.hProcess);
 		}  //  if ((dwEnvLen > 0) && (dwEnvLen < 1023)) {
 	}
 

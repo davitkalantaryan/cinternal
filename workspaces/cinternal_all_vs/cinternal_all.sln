@@ -48,7 +48,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win_function_changer", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "function_changer_test", "..\..\prj\tests\function_changer_test_vs\function_changer_test.vcxproj", "{3794BAEB-F827-4636-B0DA-FA40D1445541}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{FBEACEE6-0F26-4749-A8F2-0C683D2434BE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{FBEACEE6-0F26-4749-A8F2-0C683D2434BE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "windows_ld_preload", "..\..\prj\core\windows_ld_preload_vs\windows_ld_preload.vcxproj", "{92447115-3EEB-47C4-A251-310E122ACD9C}"
 EndProject
