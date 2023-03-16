@@ -6,7 +6,7 @@
 //
 
 
-#define CINTERNAL_WINDOWS_LD_POSTLOAD_WAIT_FOR_DEBUGGER		1
+//#define CINTERNAL_WINDOWS_LD_POSTLOAD_WAIT_FOR_DEBUGGER		1
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/load_lib_on_remote_process_sys.h>

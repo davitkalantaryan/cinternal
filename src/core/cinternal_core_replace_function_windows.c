@@ -10,12 +10,8 @@
 
 #ifdef _WIN32
 
-#include <cinternal/replace_function.h>
+#include <cinternal/replace_function_sys.h>
 #include <string.h>
-#include <cinternal/disable_compiler_warnings.h>
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#include <Windows.h>
 #include <Psapi.h>
 
 
@@ -64,6 +60,12 @@ static inline void CInternalReplaceFunctionsForModuleInline(HMODULE a_hModule,si
             MakeHookForModule(moduleData.pAddress, moduleData.pIID, a_count, a_replaceData);
         }  //  for (; moduleData.pIID->Characteristics; ++(moduleData.pIID)) {
     }  // if ((moduleData.pIID->Name) != 0xffff) {
+}
+
+
+CINTERNAL_EXPORT void CInternalReplaceFunctionsForModule(HMODULE a_hModule, size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData)
+{
+    CInternalReplaceFunctionsForModuleInline(a_hModule, a_count, a_replaceData);
 }
 
 

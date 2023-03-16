@@ -39,15 +39,25 @@ CINTERNAL_EXPORT const char* CInternalFindEndTakeArg(
 		}  // if (unStrLen > keyStrLen) {
 		else if (unStrLen == keyStrLen) {
 			if (memcmp(a_key, a_argv[i], keyStrLen) == 0) {
-				if (a_pLastArg) { *a_pLastArg = i+1; }
+				if (a_pLastArg) { *a_pLastArg = i; }
 				cpcReturn = a_argv[i];
 				if (i < ((*a_argc_p) - 1)) {
 					memmove(&a_argv[i], &a_argv[i+1], (CPPUTILS_STATIC_CAST(size_t, *a_argc_p) - CPPUTILS_STATIC_CAST(size_t, i)) * sizeof(char*));
+					if (a_hasArg) {
+						cpcReturn = a_argv[i];
+						--(*a_argc_p);
+						if (i < ((*a_argc_p) - 1)) {
+							memmove(&a_argv[i], &a_argv[i + 1], (CPPUTILS_STATIC_CAST(size_t, *a_argc_p) - CPPUTILS_STATIC_CAST(size_t, i)) * sizeof(char*));
+						}
+						else {
+							a_argv[i] = CPPUTILS_NULL;
+						}
+					}  //  if (a_hasArg) {
 				}
 				else {
 					a_argv[i] = CPPUTILS_NULL;
+					if (a_hasArg) { cpcReturn = CPPUTILS_NULL; }
 				}
-				if (a_hasArg) { cpcReturn = a_argv[i];--(*a_argc_p); }
 				--(*a_argc_p);
 				return cpcReturn;
 			}  // if (memcmp(a_key, a_argv[i], keyStrLen) == 0) {

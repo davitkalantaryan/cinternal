@@ -47,10 +47,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win_function_changer", "..\..\prj\tests\win_function_changer_vs\win_function_changer.vcxproj", "{EA46614F-34AA-458F-8ACF-6C22734081C5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "function_changer_test", "..\..\prj\tests\function_changer_test_vs\function_changer_test.vcxproj", "{3794BAEB-F827-4636-B0DA-FA40D1445541}"
+	ProjectSection(ProjectDependencies) = postProject
+		{887447C4-8988-4451-9D32-60EE9C5C0E4E} = {887447C4-8988-4451-9D32-60EE9C5C0E4E}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{FBEACEE6-0F26-4749-A8F2-0C683D2434BE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_lib01", "..\..\prj\tests\test_lib01_vs\test_lib01.vcxproj", "{AAFD3E3C-158A-4356-83A2-2B2E6F146D2E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{887447C4-8988-4451-9D32-60EE9C5C0E4E} = {887447C4-8988-4451-9D32-60EE9C5C0E4E}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{D1F33845-9BD7-47AA-86DE-37DD472C0AD8}"
 EndProject
@@ -60,6 +66,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "app_to_hack", "..\..\prj\te
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "windows_ld_preload", "..\..\prj\tools\windows_ld_preload_vs\windows_ld_preload.vcxproj", "{92447115-3EEB-47C4-A251-310E122ACD9C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{887447C4-8988-4451-9D32-60EE9C5C0E4E} = {887447C4-8988-4451-9D32-60EE9C5C0E4E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "windows_ld_postload", "..\..\prj\tools\windows_ld_postload_vs\windows_ld_postload.vcxproj", "{DC0421A2-4C92-4071-AC15-28ACCCB3C190}"
+	ProjectSection(ProjectDependencies) = postProject
+		{887447C4-8988-4451-9D32-60EE9C5C0E4E} = {887447C4-8988-4451-9D32-60EE9C5C0E4E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -277,6 +291,22 @@ Global
 		{92447115-3EEB-47C4-A251-310E122ACD9C}.Release|x64.Build.0 = Release|x64
 		{92447115-3EEB-47C4-A251-310E122ACD9C}.Release|x86.ActiveCfg = Release|Win32
 		{92447115-3EEB-47C4-A251-310E122ACD9C}.Release|x86.Build.0 = Release|Win32
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|ARM.ActiveCfg = Debug|ARM
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|ARM.Build.0 = Debug|ARM
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|ARM64.Build.0 = Debug|ARM64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|x64.ActiveCfg = Debug|x64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|x64.Build.0 = Debug|x64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|x86.ActiveCfg = Debug|Win32
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Debug|x86.Build.0 = Debug|Win32
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|ARM.ActiveCfg = Release|ARM
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|ARM.Build.0 = Release|ARM
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|ARM64.ActiveCfg = Release|ARM64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|ARM64.Build.0 = Release|ARM64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|x64.ActiveCfg = Release|x64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|x64.Build.0 = Release|x64
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|x86.ActiveCfg = Release|Win32
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -297,6 +327,7 @@ Global
 		{D1F33845-9BD7-47AA-86DE-37DD472C0AD8} = {A67E2EA3-C913-48BD-8749-47737436D14E}
 		{36BE6FE6-291D-48BB-99E4-D0096EB1A126} = {A67E2EA3-C913-48BD-8749-47737436D14E}
 		{92447115-3EEB-47C4-A251-310E122ACD9C} = {FBEACEE6-0F26-4749-A8F2-0C683D2434BE}
+		{DC0421A2-4C92-4071-AC15-28ACCCB3C190} = {FBEACEE6-0F26-4749-A8F2-0C683D2434BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88068648-8FEA-4B04-ADBE-8FB52F1EC032}

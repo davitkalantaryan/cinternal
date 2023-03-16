@@ -12,8 +12,11 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
+#define CINT_APP_TO_HACK_GETPID()	(int)GetCurrentProcessId()
 #else
 #include <signal.h>
+#include <unistd.h>
+#define CINT_APP_TO_HACK_GETPID()	(int)getpid()
 #endif
 
 int main(void)
@@ -24,7 +27,7 @@ int main(void)
 	sigemptyset(&mask);
 #endif
 	
-	printf("App to hack started. Going to infinite loop\n");
+	printf("App to hack started. Pid is: %d. Going to infinite loop\n", CINT_APP_TO_HACK_GETPID());
 
 #ifdef _WIN32
 	SleepEx(INFINITE, TRUE);
