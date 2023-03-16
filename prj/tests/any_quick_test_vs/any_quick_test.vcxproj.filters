@@ -63,6 +63,9 @@
     <ClCompile Include="..\..\..\src\core\cinternal_core_load_lib_on_remote_process_sys_windows.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_parser_argparser01.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\c_raii.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\include\private\cinternal\parser\tokenizer01_windows_p.h">
       <Filter>Header Files\src\include\private\cinternal\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\parser\argparser01.h">
+      <Filter>Header Files\include\cinternal\parser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
