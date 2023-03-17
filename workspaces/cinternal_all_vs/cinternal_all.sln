@@ -45,6 +45,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "insert_custom_info_into_bin
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win_function_changer", "..\..\prj\tests\win_function_changer_vs\win_function_changer.vcxproj", "{EA46614F-34AA-458F-8ACF-6C22734081C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{887447C4-8988-4451-9D32-60EE9C5C0E4E} = {887447C4-8988-4451-9D32-60EE9C5C0E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "function_changer_test", "..\..\prj\tests\function_changer_test_vs\function_changer_test.vcxproj", "{3794BAEB-F827-4636-B0DA-FA40D1445541}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -71,6 +74,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "windows_ld_preload", "..\..
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "windows_ld_postload", "..\..\prj\tools\windows_ld_postload_vs\windows_ld_postload.vcxproj", "{DC0421A2-4C92-4071-AC15-28ACCCB3C190}"
+	ProjectSection(ProjectDependencies) = postProject
+		{887447C4-8988-4451-9D32-60EE9C5C0E4E} = {887447C4-8988-4451-9D32-60EE9C5C0E4E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "free_libs_by_names_on_remote_proc", "..\..\prj\tools\free_libs_by_names_on_remote_proc_vs\free_libs_by_names_on_remote_proc.vcxproj", "{5871817E-31F4-4487-AFCA-4042E821D432}"
 	ProjectSection(ProjectDependencies) = postProject
 		{887447C4-8988-4451-9D32-60EE9C5C0E4E} = {887447C4-8988-4451-9D32-60EE9C5C0E4E}
 	EndProjectSection
@@ -307,6 +315,22 @@ Global
 		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|x64.Build.0 = Release|x64
 		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|x86.ActiveCfg = Release|Win32
 		{DC0421A2-4C92-4071-AC15-28ACCCB3C190}.Release|x86.Build.0 = Release|Win32
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|ARM.ActiveCfg = Debug|ARM
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|ARM.Build.0 = Debug|ARM
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|ARM64.Build.0 = Debug|ARM64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|x64.ActiveCfg = Debug|x64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|x64.Build.0 = Debug|x64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|x86.ActiveCfg = Debug|Win32
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Debug|x86.Build.0 = Debug|Win32
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|ARM.ActiveCfg = Release|ARM
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|ARM.Build.0 = Release|ARM
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|ARM64.ActiveCfg = Release|ARM64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|ARM64.Build.0 = Release|ARM64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|x64.ActiveCfg = Release|x64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|x64.Build.0 = Release|x64
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|x86.ActiveCfg = Release|Win32
+		{5871817E-31F4-4487-AFCA-4042E821D432}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -328,6 +352,7 @@ Global
 		{36BE6FE6-291D-48BB-99E4-D0096EB1A126} = {A67E2EA3-C913-48BD-8749-47737436D14E}
 		{92447115-3EEB-47C4-A251-310E122ACD9C} = {FBEACEE6-0F26-4749-A8F2-0C683D2434BE}
 		{DC0421A2-4C92-4071-AC15-28ACCCB3C190} = {FBEACEE6-0F26-4749-A8F2-0C683D2434BE}
+		{5871817E-31F4-4487-AFCA-4042E821D432} = {FBEACEE6-0F26-4749-A8F2-0C683D2434BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88068648-8FEA-4B04-ADBE-8FB52F1EC032}

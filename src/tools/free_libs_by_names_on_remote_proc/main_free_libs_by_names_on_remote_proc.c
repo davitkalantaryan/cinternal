@@ -1,18 +1,17 @@
 //
-// file:            main_cinternal_core_windows_ld_postload.c
-// path:			src/tools/windows_ld_postload/main_cinternal_core_windows_ld_postload.c
-// created on:		2023 Mar 16
+// file:            main_free_library_by_name_on_remote.c
+// path:			src/tools/free_libs_by_names_on_remote_proc/main_free_library_by_name_on_remote.c
+// created on:		2023 Mar 17
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
 
-
-//#define CINTERNAL_WINDOWS_LD_POSTLOAD_WAIT_FOR_DEBUGGER		1
+//#define CINTERNAL_WINDOWS_LD_POSTFREE_WAIT_FOR_DEBUGGER
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/load_lib_on_remote_process_sys.h>
 #include <cinternal/parser/argparser01.h>
 #include <cinternal/list/llist.h>
-#include <private/cinternal/parser/tokenizer01_windows_p.h>
+#include <private/cinternal/parser/tokenizer02_windows_p.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -32,7 +31,7 @@ int main(int a_argc, char* a_argv[])
 	DWORD dwPid = 0;
 	int nRet;
 
-#if defined(CINTERNAL_WINDOWS_LD_POSTLOAD_WAIT_FOR_DEBUGGER)
+#if defined(CINTERNAL_WINDOWS_LD_POSTFREE_WAIT_FOR_DEBUGGER)
 	fprintf(stdout, "Press any key then enter to continue "); fflush(stdout);
 	nRet = getchar();
 	CPPUTILS_STATIC_CAST(void, nRet);
@@ -43,13 +42,13 @@ int main(int a_argc, char* a_argv[])
 
 	aList = CInternalLListCreate();
 	if (!aList) {
-		fprintf(stderr,"Unable create a list\n");
+		fprintf(stderr, "Unable create a list\n");
 		return 1;
 	}
 
 	cpcNextArg = CInternalFindEndTakeArg(&nArgc, ppcArgv, "---pid", &nRet, true);
 	if (cpcNextArg) {
-		dwPid = CPPUTILS_STATIC_CAST(DWORD,atoi(cpcNextArg));
+		dwPid = CPPUTILS_STATIC_CAST(DWORD, atoi(cpcNextArg));
 	}
 
 	ppcArgvTmp = ppcArgv;
@@ -87,20 +86,20 @@ int main(int a_argc, char* a_argv[])
 	hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwPid);
 	if (!hProcess) {
 		CInternalLListDestroy(aList);
-		fprintf(stderr, "Unable to access process with the PID: %d!\n",(int)dwPid);
+		fprintf(stderr, "Unable to access process with the PID: %d!\n", (int)dwPid);
 		return 1;
 	}
 
 	listIter = CInternalLListFirstItem(aList);
 	while (listIter) {
-		CInternalTokenizerWindows01a((char*)(listIter->data), hProcess);
+		CInternalTokenizerWindows02a((char*)(listIter->data), hProcess);
 		listIter = listIter->nextInList;
 	}
 	CInternalLListDestroy(aList);
 
-	dwEnvLen = GetEnvironmentVariableA("LD_POSTLOAD", vcLdPpostloadEnvBuffer, 1023);
+	dwEnvLen = GetEnvironmentVariableA("LD_POSTFREE", vcLdPpostloadEnvBuffer, 1023);
 	if ((dwEnvLen > 0) && (dwEnvLen < 1023)) {
-		CInternalTokenizerWindows01a(vcLdPpostloadEnvBuffer, hProcess);
+		CInternalTokenizerWindows02a(vcLdPpostloadEnvBuffer, hProcess);
 	}  //  if ((dwEnvLen > 0) && (dwEnvLen < 1023)) {
 
 	CloseHandle(hProcess);

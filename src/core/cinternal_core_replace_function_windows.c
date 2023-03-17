@@ -72,21 +72,33 @@ CINTERNAL_EXPORT void CInternalReplaceFunctionsForModule(HMODULE a_hModule, size
 
 CINTERNAL_EXPORT void CInternalReplaceFunctionsAllModules(size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData)
 {
-    DWORD cbNeeded;
-    HMODULE hMods[1024];
+    DWORD cbNeededIn, cbNeededOut;
+    HMODULE hMod;
+    HMODULE* pMods;
     DWORD dwFinalSize, i;
+    const HANDLE curProcHeap = GetProcessHeap();
     const HANDLE curProcHandle = GetCurrentProcess();
     
-    if (!EnumProcessModules(curProcHandle, hMods, sizeof(hMods), &cbNeeded)) {
+    if (!EnumProcessModules(curProcHandle, &hMod, 0, &cbNeededIn)) {
         return;
     }
 
-    cbNeeded /= sizeof(HMODULE);
-    dwFinalSize = (cbNeeded < 1024) ? cbNeeded : 1024;
+    pMods = HeapAlloc(curProcHeap, 0, (SIZE_T)cbNeededIn);
+    if (!pMods) {
+        return;
+    }
+
+    if (!EnumProcessModules(curProcHandle, pMods, cbNeededIn, &cbNeededOut)) {
+        return;
+    }
+
+    dwFinalSize = (cbNeededIn < cbNeededOut) ? (cbNeededIn/ sizeof(HMODULE)) : (cbNeededOut / sizeof(HMODULE));
 
     for (i = 0; i < dwFinalSize; ++i) {
-        CInternalReplaceFunctionsForModuleInline(hMods[i], a_count, a_replaceData);
+        CInternalReplaceFunctionsForModuleInline(pMods[i], a_count, a_replaceData);
     }
+
+    HeapFree(curProcHeap, 0, pMods);
 }
 
 
