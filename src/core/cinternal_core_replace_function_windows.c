@@ -29,7 +29,8 @@ struct CPPUTILS_DLL_PRIVATE SReplaceDataInitial {
 static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID, size_t a_count,struct SCInternalReplaceFunctionData* a_replaceData);
 
 
-static inline void CInternalReplaceFunctionsForModulePrepareDataInline(HMODULE a_hModule, struct SReplaceDataInitial* CPPUTILS_ARG_NONULL a_pData,size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData) {
+static inline void CInternalReplaceFunctionsForModulePrepareDataInline(HMODULE a_hModule, struct SReplaceDataInitial* CPPUTILS_ARG_NONULL a_pData,
+                size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData) {
     size_t ind;
     MODULEINFO modInfo = { 0 };
     // Find the base address
@@ -113,9 +114,12 @@ static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID
             pIIBM = (PIMAGE_IMPORT_BY_NAME)(a_pAddress + pITD->u1.AddressOfData);
             if (!strcmp(a_replaceData[ind].funcname, (const char*)(pIIBM->Name))) {
                 VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), PAGE_READWRITE, &dwOld);
-                pFirstThunkTest->u1.Function = (size_t)a_replaceData[ind].newFuncAddress;
+                if ((((const void*)(pFirstThunkTest->u1.Function)) == a_replaceData[ind].replaceIfAddressIs) || (!(a_replaceData[ind].replaceIfAddressIs))) {
+                    a_replaceData[ind].replaceIfAddressIs = (const void*)pFirstThunkTest->u1.Function;
+                    pFirstThunkTest->u1.Function = (size_t)a_replaceData[ind].newFuncAddress;
+                    a_replaceData[ind].bFound = true;
+                }
                 VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), dwOld, &dwOldTmp);
-                a_replaceData[ind].bFound = true;
                 break; 
             }  //  if (!strcmp(a_replaceData->funcname, (const char*)(pIIBM->Name))) {
             pFirstThunkTest++;
