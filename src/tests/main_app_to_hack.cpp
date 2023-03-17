@@ -21,6 +21,8 @@
 
 int main(void)
 {
+    int nCounter = 0;
+
 #ifdef _WIN32
 #else
 	sigset_t mask;
@@ -32,8 +34,15 @@ int main(void)
 #ifdef _WIN32
 	SleepEx(INFINITE, TRUE);
 #else
-	sigsuspend(&mask);
+    //sigsuspend(&mask);
 #endif
+
+
+    while(1){
+        printf("nCounter = %d\n",++nCounter);
+        sleep(2);
+    }
+
 
 	return 0;
 }
