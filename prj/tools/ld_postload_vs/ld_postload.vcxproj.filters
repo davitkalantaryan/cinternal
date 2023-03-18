@@ -15,10 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\intern\cinternal_core_intern_tokenizer01_windows.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_load_lib_on_remote_process_sys_windows.c">
+    <ClCompile Include="..\..\..\src\core\cinternal_core_loadlib_on_remote_process_windows.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\core\cinternal_core_parser_tokenizer01.c">
@@ -31,6 +28,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\tools\ld_postload\main_cinternal_tools_ld_postload.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\intern\cinternal_core_intern_tokenizer01_common.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

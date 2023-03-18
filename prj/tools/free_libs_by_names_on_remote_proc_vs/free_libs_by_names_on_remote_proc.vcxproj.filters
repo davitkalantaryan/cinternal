@@ -27,7 +27,7 @@
     <ClCompile Include="..\..\..\src\intern\cinternal_core_intern_tokenizer02_windows.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_free_lib_on_remote_process_sys_windows.c">
+    <ClCompile Include="..\..\..\src\core\cinternal_core_freelib_on_remote_process_windows.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\core\cinternal_core_parser_tokenizer01.c">

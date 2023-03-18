@@ -138,6 +138,32 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessSys(HANDLE a_hProcess, HMOD
 }
 
 
+CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcess(int a_pid, const char* a_libraryName)
+{
+	bool bRet;
+	const HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, (DWORD)a_pid);
+	if (!hProcess) {
+		return false;
+	}
+	bRet = CInternalLoadLibOnRemoteProcessSysInline(hProcess, a_libraryName) ? true : false;
+	CloseHandle(hProcess);
+	return bRet;
+}
+
+
+CINTERNAL_EXPORT void* CInternalLoadLibOnRemoteProcessAnGetModule(int a_pid, const char* a_libraryName)
+{
+	void* pRet;
+	const HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, (DWORD)a_pid);
+	if (!hProcess) {
+		return CPPUTILS_NULL;
+	}
+	pRet = CInternalLoadLibOnRemoteProcessAnGetModuleSys(hProcess, a_libraryName);
+	CloseHandle(hProcess);
+	return pRet;
+}
+
+
 CPPUTILS_END_C
 
 
