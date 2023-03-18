@@ -10,7 +10,7 @@
 
 #ifdef _WIN32
 
-#include <cinternal/load_lib_on_remote_process_sys.h>
+#include <cinternal/loadlib_on_remote_process_sys.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -54,6 +54,20 @@ static inline DWORD CInternalLoadLibOnRemoteProcessSysInline(HANDLE a_hProcess, 
 }
 
 
+static inline const char* FileNameFromFilePathInline(const char* a_path) {
+	const char* cpcRet = strrchr(a_path, '\\');
+	if (cpcRet) {
+		return cpcRet + 1;
+	}
+	else {
+		cpcRet = strrchr(a_path, '/');
+		if (cpcRet) { return cpcRet + 1; }
+	}
+
+	return a_path;
+}
+
+
 CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcessSys(HANDLE a_hProcess, const char* a_libraryName)
 {
 	return CInternalLoadLibOnRemoteProcessSysInline(a_hProcess, a_libraryName) ? true : false;
@@ -91,7 +105,7 @@ CINTERNAL_EXPORT HMODULE CInternalLoadLibOnRemoteProcessAnGetModuleSys(HANDLE a_
 		dwHmoduleOnremoteLow = (DWORD)((size_t)pMods[i]);
 		if (dwHmoduleOnremoteLow == dwThreadId) {
 			if (GetModuleFileNameExA(a_hProcess, pMods[i], vcModuleNameBuff, 1023) > 0) {
-				if (_strcmpi(a_libraryName, vcModuleNameBuff) == 0) {
+				if (_strcmpi(a_libraryName, FileNameFromFilePathInline(vcModuleNameBuff)) == 0) {
 					hModule = pMods[i];
 					free(pMods);
 					return hModule;

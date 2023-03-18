@@ -8,8 +8,9 @@
 
 #include <private/cinternal/parser/tokenizer01_common_p.h>
 #include <cinternal/parser/tokenizer01.h>
-#include <cinternal/load_lib_on_remote_process.h>
+#include <cinternal/loadlib_on_remote_process.h>
 #include <stddef.h>
+#include <stdio.h>
 
 
 CPPUTILS_BEGIN_C
@@ -18,7 +19,13 @@ CPPUTILS_BEGIN_C
 static int CinternalTokenizerForDllInject01b(void* a_clbkData, const char* a_cpcNextString)
 {
 	const int pid = (int)((size_t)a_clbkData);
-	return CInternalLoadLibOnRemoteProcess(pid, a_cpcNextString)?0:-2;
+	void* pModule = CInternalLoadLibOnRemoteProcessAnGetModule(pid, a_cpcNextString);
+	if (pModule) {
+		printf("libName:\"%s\", moduleAddr: %p\n", a_cpcNextString, pModule);
+		return 0;
+	}
+	fprintf(stderr,"Unable to load library with the name:\"%s\" into the process %d\n", a_cpcNextString, pid);
+	return -2;
 }
 
 

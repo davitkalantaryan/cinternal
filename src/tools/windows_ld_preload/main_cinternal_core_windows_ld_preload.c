@@ -9,7 +9,7 @@
 //#define CINTERNAL_WINDOWS_LD_PRELOAD_WAIT_FOR_DEBUGGER		1
 
 #include <cinternal/export_symbols.h>
-#include <cinternal/load_lib_on_remote_process_sys.h>
+#include <cinternal/loadlib_on_remote_process_sys.h>
 #include <cinternal/parser/argparser01.h>
 #include <private/cinternal/parser/tokenizer01_windows_p.h>
 #include <stdio.h>

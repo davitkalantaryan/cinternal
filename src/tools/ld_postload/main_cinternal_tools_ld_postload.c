@@ -9,7 +9,7 @@
 #define CINTERNAL_LD_POSTLOAD_WAIT_FOR_DEBUGGER		1
 
 #include <cinternal/export_symbols.h>
-#include <cinternal/load_lib_on_remote_process.h>
+#include <cinternal/loadlib_on_remote_process.h>
 #include <cinternal/parser/argparser01.h>
 #include <cinternal/list/llist.h>
 #include <private/cinternal/parser/tokenizer01_common_p.h>

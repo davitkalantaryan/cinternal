@@ -116,9 +116,6 @@
     <ClInclude Include="..\..\..\include\cinternal\endian.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\load_lib_on_remote_process_sys.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\replace_function.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>

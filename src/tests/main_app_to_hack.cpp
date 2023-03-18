@@ -13,7 +13,7 @@
 #include <WS2tcpip.h>
 #include <Windows.h>
 #define CINT_APP_TO_HACK_GETPID()	(int)GetCurrentProcessId()
-#define CIntrSleepExIntrp(_x)       SleepEx((DWORD)(_x))
+#define CIntrSleepExIntrp(_x)       SleepEx((DWORD)(_x),TRUE)
 #else
 #include <signal.h>
 #include <unistd.h>

@@ -312,7 +312,6 @@
     <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />
     <ClInclude Include="..\..\..\include\cinternal\list\llist.h" />
-    <ClInclude Include="..\..\..\include\cinternal\load_lib_on_remote_process_sys.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses02.h" />
     <ClInclude Include="..\..\..\include\cinternal\parser\argparser01.h" />

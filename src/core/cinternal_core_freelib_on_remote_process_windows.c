@@ -52,6 +52,32 @@ static inline const char* FileNameFromFilePathInline(const char* a_path) {
 }
 
 
+CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByName(int a_pid, const char* a_libraryName)
+{
+	bool bRet;
+	const HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, (DWORD)a_pid);
+	if (!hProcess) {
+		return false;
+	}
+	bRet = CInternalFreeLibOnRemoteProcessSys(hProcess, a_libraryName);
+	CloseHandle(hProcess);
+	return bRet;
+}
+
+
+CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a_libraryHandle)
+{
+	bool bRet;
+	const HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, (DWORD)a_pid);
+	if (!hProcess) {
+		return false;
+	}
+	bRet = CInternalFreeLibOnRemoteProcessSysInline(hProcess, (HMODULE)a_libraryHandle);
+	CloseHandle(hProcess);
+	return bRet;
+}
+
+
 CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByModuleSys(HANDLE a_hProcess, HMODULE a_libraryModule)
 {
 	return CInternalFreeLibOnRemoteProcessSysInline(a_hProcess, a_libraryModule);
