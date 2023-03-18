@@ -34,14 +34,14 @@ int main(void)
 #ifdef _WIN32
 	SleepEx(INFINITE, TRUE);
 #else
-    //sigsuspend(&mask);
+    sigsuspend(&mask);
 #endif
 
 
-    while(1){
-        printf("nCounter = %d\n",++nCounter);
-        sleep(10);
-    }
+    //while(1){
+    //    printf("nCounter = %d\n",++nCounter);
+    //    sleep(10);
+    //}
 
 
 	return 0;
