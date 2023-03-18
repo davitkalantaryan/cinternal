@@ -23,8 +23,10 @@ CPPUTILS_BEGIN_C
 
 
 
-CINTERNAL_EXPORT bool	CInternalFreeLibOnRemoteProcessSys(HANDLE a_hProcess, const char* a_libraryName);
-CINTERNAL_EXPORT bool	CInternalFreeLibOnRemoteProcessByModuleSys(HANDLE a_hProcess, HMODULE a_libraryModule);
+CINTERNAL_EXPORT bool		CInternalLoadLibOnRemoteProcessSys(HANDLE a_hProcess, const char* a_libraryName);
+CINTERNAL_EXPORT HMODULE	CInternalLoadLibOnRemoteProcessAnGetModuleSys(HANDLE a_hProcess, const char* a_libraryName);
+CINTERNAL_EXPORT bool       CInternalFreeLibOnRemoteProcessSys(HANDLE a_hProcess, const char* a_libraryName);
+CINTERNAL_EXPORT bool       CInternalFreeLibOnRemoteProcessByModuleSys(HANDLE a_hProcess, HMODULE a_libraryModule);
 
 
 CPPUTILS_END_C

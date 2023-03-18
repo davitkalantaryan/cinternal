@@ -10,7 +10,7 @@
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/parser/argparser01.h>
-#include <cinternal/freelib_on_remote_process.h>
+#include <cinternal/loadfreelib_on_remote_process.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
