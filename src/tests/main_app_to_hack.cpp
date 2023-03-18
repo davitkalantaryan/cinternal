@@ -40,7 +40,7 @@ int main(void)
 
     while(1){
         printf("nCounter = %d\n",++nCounter);
-        sleep(2);
+        sleep(10);
     }
 
 
