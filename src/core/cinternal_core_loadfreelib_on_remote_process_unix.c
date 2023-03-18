@@ -118,9 +118,15 @@ static inline bool WriteDataToProcess(int a_pid, unsigned long a_addr, const uns
 
 CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByName(int a_pid, const char* a_libraryName)
 {
-    CPPUTILS_STATIC_CAST(void,a_pid);
-    CPPUTILS_STATIC_CAST(void,a_libraryName);
-    return false;
+    void*const pLib = CInternalLoadLibOnRemoteProcessAndGetModule(a_pid,a_libraryName);
+    if(!pLib){return false;}
+
+    if(!CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib)){
+        return false;
+    }
+
+    // we have to decrement reference 2 times
+    return CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib);
 }
 
 
