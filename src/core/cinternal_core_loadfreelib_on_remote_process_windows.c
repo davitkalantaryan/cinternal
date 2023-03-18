@@ -10,7 +10,7 @@
 
 #ifdef _WIN32
 
-#include <cinternal/loadlib_on_remote_process_sys.h>
+#include <cinternal/loadfreelib_on_remote_process_sys.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -54,6 +54,23 @@ static inline DWORD CInternalLoadLibOnRemoteProcessSysInline(HANDLE a_hProcess, 
 }
 
 
+static inline bool CInternalFreeLibOnRemoteProcessSysInline(HANDLE a_hProcess, HMODULE a_libraryModule) {
+	DWORD dwThreadId;
+	HANDLE hThread;
+
+	hThread = CreateRemoteThread(a_hProcess, CPPUTILS_NULL, 0, (LPTHREAD_START_ROUTINE)((void*)FreeLibrary), a_libraryModule, 0, &dwThreadId);
+	if (!hThread) {
+		return false;
+	}
+
+	WaitForSingleObject(hThread, INFINITE);
+	GetExitCodeThread(hThread, &dwThreadId);
+	CloseHandle(hThread);
+
+	return true;
+}
+
+
 static inline const char* FileNameFromFilePathInline(const char* a_path) {
 	const char* cpcRet = strrchr(a_path, '\\');
 	if (cpcRet) {
@@ -74,7 +91,7 @@ CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcessSys(HANDLE a_hProcess, cons
 }
 
 
-CINTERNAL_EXPORT HMODULE CInternalLoadLibOnRemoteProcessAnGetModuleSys(HANDLE a_hProcess, const char* a_libraryName)
+CINTERNAL_EXPORT HMODULE CInternalLoadLibOnRemoteProcessAndGetModuleSys(HANDLE a_hProcess, const char* a_libraryName)
 {
 	char vcModuleNameBuff[1024];
 	BOOL secondEnumRes;
@@ -132,16 +149,89 @@ CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcess(int a_pid, const char* a_l
 }
 
 
-CINTERNAL_EXPORT void* CInternalLoadLibOnRemoteProcessAnGetModule(int a_pid, const char* a_libraryName)
+CINTERNAL_EXPORT void* CInternalLoadLibOnRemoteProcessAndGetModule(int a_pid, const char* a_libraryName)
 {
 	void* pRet;
 	const HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, (DWORD)a_pid);
 	if (!hProcess) {
 		return CPPUTILS_NULL;
 	}
-	pRet = CInternalLoadLibOnRemoteProcessAnGetModuleSys(hProcess, a_libraryName);
+	pRet = CInternalLoadLibOnRemoteProcessAndGetModuleSys(hProcess, a_libraryName);
 	CloseHandle(hProcess);
 	return pRet;
+}
+
+
+CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByName(int a_pid, const char* a_libraryName)
+{
+	bool bRet;
+	const HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, (DWORD)a_pid);
+	if (!hProcess) {
+		return false;
+	}
+	bRet = CInternalFreeLibOnRemoteProcessSys(hProcess, a_libraryName);
+	CloseHandle(hProcess);
+	return bRet;
+}
+
+
+CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a_libraryHandle)
+{
+	bool bRet;
+	const HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, (DWORD)a_pid);
+	if (!hProcess) {
+		return false;
+	}
+	bRet = CInternalFreeLibOnRemoteProcessSysInline(hProcess, (HMODULE)a_libraryHandle);
+	CloseHandle(hProcess);
+	return bRet;
+}
+
+
+CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByModuleSys(HANDLE a_hProcess, HMODULE a_libraryModule)
+{
+	return CInternalFreeLibOnRemoteProcessSysInline(a_hProcess, a_libraryModule);
+}
+
+
+CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessSys(HANDLE a_hProcess, const char* a_libraryName)
+{
+	bool bRet = false;
+	char vcModulePath[1024];
+	DWORD dwNameLenRet;
+	DWORD dwFinalSize, i;
+	DWORD cbNeededIn, cbNeededOut;
+	HMODULE hMod;
+	HMODULE* pMods;
+	const HANDLE curProcHeap = GetProcessHeap();
+
+	if (!EnumProcessModules(a_hProcess, &hMod, 0, &cbNeededIn)) {
+		return false;
+	}
+
+	pMods = HeapAlloc(curProcHeap, 0, (SIZE_T)cbNeededIn);
+	if (!pMods) {
+		return false;
+	}
+
+	if (!EnumProcessModules(a_hProcess, pMods, cbNeededIn, &cbNeededOut)) {
+		return false;
+	}
+
+	dwFinalSize = (cbNeededIn < cbNeededOut) ? (cbNeededIn / sizeof(HMODULE)) : (cbNeededOut / sizeof(HMODULE));
+
+	for (i = 0; i < dwFinalSize; ++i) {
+		dwNameLenRet = GetModuleFileNameExA(a_hProcess, pMods[i], vcModulePath, 1023);
+		if ((dwNameLenRet > 0) && (dwNameLenRet < 1023)) {
+			if (_stricmp(a_libraryName, FileNameFromFilePathInline(vcModulePath)) == 0) {
+				bRet = CInternalFreeLibOnRemoteProcessSysInline(a_hProcess, pMods[i]);
+				break;
+			}  //  if (stricmp(a_libraryName, vcModulePath) == 0) {
+		}  //  if ((dwNameLenRet > 0) && (dwNameLenRet < 1023)) {
+	}  //  for (i = 0; i < dwFinalSize; ++i) {
+
+	HeapFree(curProcHeap, 0, pMods);
+	return bRet;
 }
 
 

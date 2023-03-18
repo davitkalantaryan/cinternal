@@ -8,7 +8,7 @@
 
 #include <private/cinternal/parser/tokenizer01_windows_p.h>
 #include <cinternal/parser/tokenizer01.h>
-#include <cinternal/loadlib_on_remote_process_sys.h>
+#include <cinternal/loadfreelib_on_remote_process_sys.h>
 #include <stdio.h>
 
 
