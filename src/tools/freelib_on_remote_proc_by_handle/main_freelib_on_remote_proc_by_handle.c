@@ -6,7 +6,7 @@
 //
 
 
-#define CINTERNAL_FREE_LIB_ON_REMOTE_BY_HANDLE_WAIT_FOR_DEBUGGER
+//#define CINTERNAL_FREE_LIB_ON_REMOTE_BY_HANDLE_WAIT_FOR_DEBUGGER
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/parser/argparser01.h>
