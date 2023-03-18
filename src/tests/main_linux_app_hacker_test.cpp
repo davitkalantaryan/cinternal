@@ -148,7 +148,8 @@ int main(int argc, char *argv[])
 
     //unsigned char injectCode[] = {0xe8,0x6a,0xea,0xff,0xff};
 
-    unsigned char injectCode[] = {0xff,0xd0,0xcd,0x03};
+    //unsigned char injectCode[] = {0xff,0xd0,0xcd,0x03};
+    const unsigned char injectCode[] = {0xff,0xd0};
     const size_t injectCodeSize = sizeof(injectCode);
 
     //unsigned char* injectCode = (unsigned char*)(&injectme)+4;

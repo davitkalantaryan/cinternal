@@ -8,7 +8,6 @@
 include ( "$${PWD}/../../common/common_qt/sys_common.pri" )
 include ( "$${PWD}/../../common/common_qt/flags_common.pri" )
 
-DESTDIR     = "$${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/test"
 
 QT -= gui
 QT -= core
@@ -21,12 +20,18 @@ LIBS += -ldl
 repoRootPath=$${PWD}/../../..
 
 INCLUDEPATH += "$${PWD}/../../../include"
+INCLUDEPATH += "$${PWD}/../../../src/include"
 DEFINES += CPPUTILS_USING_STATIC_LIB_OR_OBJECTS
 
 
-SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
+#SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
 SOURCES	+=		\
-        "$${PWD}/../../../src/tests/main_any_quick_test.c"
+        "$${PWD}/../../../src/tools/ld_postload/main_cinternal_tools_ld_postload.c"     \
+        "$${PWD}/../../../src/core/cinternal_core_parser_tokenizer01.c"                 \
+        "$${PWD}/../../../src/core/cinternal_core_list_llist.c"                         \
+        "$${PWD}/../../../src/core/cinternal_core_parser_argparser01.c"                 \
+        "$${PWD}/../../../src/intern/cinternal_core_intern_tokenizer01_common.c"        \
+        "$${PWD}/../../../src/core/cinternal_core_loadlib_on_remote_process_unix.c"
 
 COMMON_HDRS	= $$files($${repoRootPath}/include/*.h,true)
 COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)

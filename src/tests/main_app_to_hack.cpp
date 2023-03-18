@@ -13,15 +13,17 @@
 #include <WS2tcpip.h>
 #include <Windows.h>
 #define CINT_APP_TO_HACK_GETPID()	(int)GetCurrentProcessId()
+#define CIntrSleepExIntrp(_x)       SleepEx((DWORD)(_x))
 #else
 #include <signal.h>
 #include <unistd.h>
 #define CINT_APP_TO_HACK_GETPID()	(int)getpid()
+#define CIntrSleepExIntrp(_x)       usleep((useconds_t)(_x)*1000)
 #endif
 
 int main(void)
 {
-    int nCounter = 0;
+    //int nCounter = 0;
 
 #ifdef _WIN32
 #else
@@ -32,16 +34,16 @@ int main(void)
 	printf("App to hack started. Pid is: %d. Going to infinite loop\n", CINT_APP_TO_HACK_GETPID());
 
 #ifdef _WIN32
-	SleepEx(INFINITE, TRUE);
+    //SleepEx(INFINITE, TRUE);
 #else
-    sigsuspend(&mask);
+    //sigsuspend(&mask);
 #endif
 
 
-    //while(1){
-    //    printf("nCounter = %d\n",++nCounter);
-    //    sleep(10);
-    //}
+    while(1){
+        //printf("nCounter = %d\n",++nCounter);
+        CIntrSleepExIntrp(20000);
+    }
 
 
 	return 0;

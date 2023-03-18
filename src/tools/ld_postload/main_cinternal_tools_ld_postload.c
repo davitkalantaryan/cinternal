@@ -6,7 +6,7 @@
 //
 
 
-//#define CINTERNAL_WINDOWS_LD_POSTLOAD_WAIT_FOR_DEBUGGER		1
+#define CINTERNAL_LD_POSTLOAD_WAIT_FOR_DEBUGGER		1
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/load_lib_on_remote_process.h>
@@ -20,6 +20,8 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
+#include <stdlib.h>
+#include <stdio.h>
 static char* GetEnvironmentVariableACint(const char* a_cpcName, char* a_pBuffer, size_t a_bufLen, size_t* a_pBytesReturned)
 {
 	*a_pBytesReturned = (size_t)GetEnvironmentVariableA(a_cpcName, a_pBuffer, (DWORD)a_bufLen);
@@ -30,9 +32,12 @@ static char* GetEnvironmentVariableACint(const char* a_cpcName, char* a_pBuffer,
 #define _GNU_SOURCE
 #endif
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 static char* GetEnvironmentVariableACint(const char* a_cpcName, char* a_pBuffer, size_t a_bufLen, size_t* a_pBytesReturned)
 {
-	char* pRet = secure_getenv(a_cpcName);
+    //char* pRet = secure_getenv(a_cpcName);
+    char* pRet = getenv(a_cpcName);
 	if (!pRet) {
 		*a_pBytesReturned = 0;
 		return CPPUTILS_NULL;
@@ -47,9 +52,6 @@ static char* GetEnvironmentVariableACint(const char* a_cpcName, char* a_pBuffer,
 	return pRet;
 }
 #endif
-
-#include <stdlib.h>
-#include <stdio.h>
 
 
 
@@ -68,7 +70,7 @@ int main(int a_argc, char* a_argv[])
 	int nPid = 0;
 	int nRet;
 
-#if defined(CINTERNAL_WINDOWS_LD_POSTLOAD_WAIT_FOR_DEBUGGER)
+#if defined(CINTERNAL_LD_POSTLOAD_WAIT_FOR_DEBUGGER)
 	fprintf(stdout, "Press any key then enter to continue "); fflush(stdout);
 	nRet = getchar();
 	CPPUTILS_STATIC_CAST(void, nRet);
@@ -129,7 +131,7 @@ int main(int a_argc, char* a_argv[])
 
 	pcEnvVar = GetEnvironmentVariableACint("LD_POSTLOAD", vcLdPpostloadEnvBuffer, 1023,&szEnvLen);
 	if ((szEnvLen > 0) && (szEnvLen < 1023)) {
-		CInternalTokenizer01b(vcLdPpostloadEnvBuffer, nPid);
+        CInternalTokenizer01b(pcEnvVar, nPid);
 	}  //  if ((szEnvLen > 0) && (szEnvLen < 1023)) {
 
 	return 0;
