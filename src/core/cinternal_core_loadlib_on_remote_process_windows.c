@@ -105,39 +105,6 @@ CINTERNAL_EXPORT HMODULE CInternalLoadLibOnRemoteProcessAnGetModuleSys(HANDLE a_
 }
 
 
-CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessSys(HANDLE a_hProcess, HMODULE a_module)
-{
-	SIZE_T szWritten;
-	DWORD dwThreadId;
-	HANDLE hThread;
-	void* pRemoteMem;
-	const SIZE_T cunSizeToAlloc = sizeof(HMODULE);
-
-	pRemoteMem = VirtualAllocEx(a_hProcess, CPPUTILS_NULL, cunSizeToAlloc, MEM_COMMIT, PAGE_READWRITE);
-	if (!pRemoteMem) {
-		return false;
-	}
-
-	if (!WriteProcessMemory(a_hProcess, pRemoteMem, &a_module, cunSizeToAlloc, &szWritten)) {
-		VirtualFreeEx(a_hProcess, pRemoteMem, 0, MEM_RELEASE);
-		return false;
-	}
-
-	hThread = CreateRemoteThread(a_hProcess, CPPUTILS_NULL, 0, (LPTHREAD_START_ROUTINE)((void*)LoadLibraryA), pRemoteMem, 0, &dwThreadId);
-	if (!hThread) {
-		VirtualFreeEx(a_hProcess, pRemoteMem, 0, MEM_RELEASE);
-		return false;
-	}
-
-	WaitForSingleObject(hThread, INFINITE);
-	GetExitCodeThread(hThread, &dwThreadId);
-	CloseHandle(hThread);
-	VirtualFreeEx(a_hProcess, pRemoteMem, 0, MEM_RELEASE);
-
-	return dwThreadId ? true : false; // dwThreadId is the return from FreeLibrary
-}
-
-
 CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcess(int a_pid, const char* a_libraryName)
 {
 	bool bRet;
