@@ -1,5 +1,5 @@
 
-targetName=insert_custom_info_into_bin_test_lib
+targetName=test_lib01
 
 mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir		=  $(shell dirname $(mkfile_path))
@@ -11,8 +11,7 @@ COMMON_FLAGS += -fPIC
 include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
-SOURCES += $(repoRootPath)/src/tests/insert_custom_info_into_bin_test/entry_insert_custom_info_into_bin_test_lib.c
-SOURCES += $(repoRootPath)/src/tests/insert_custom_info_into_bin_test/insert_custom_info_into_bin_test.c
+SOURCES += $(repoRootPath)/src/tests/entry_test_lib01.cpp
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).so.1
 

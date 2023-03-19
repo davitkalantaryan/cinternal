@@ -24,7 +24,7 @@ INCLUDEPATH += "$${PWD}/../../../include"
 DEFINES += CPPUTILS_USING_STATIC_LIB_OR_OBJECTS
 
 
-SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
+#SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
 SOURCES	+=		\
         "$${PWD}/../../../src/tests/entry_test_lib01.cpp"
 
@@ -33,3 +33,5 @@ COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)
 
 HEADERS += $$COMMON_HDRS
 HEADERS += $$COMMON_HDRSPP
+
+OTHER_FILES += $$files($${PWD}/../test_lib01_mkfl/*.Makefile,false)

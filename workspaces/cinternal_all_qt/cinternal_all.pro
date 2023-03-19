@@ -25,6 +25,7 @@ OTHER_FILES += $$files($${repositoryRoot}/docs/*.md,true)
 OTHER_FILES += $$files($${repositoryRoot}/docs/*.txt,true)
 OTHER_FILES += $$files($${repositoryRoot}/scripts/*.sh,true)
 OTHER_FILES += $$files($${repositoryRoot}/scripts/*.bat,true)
+OTHER_FILES += $$files($${repositoryRoot}/.github/*.yml,true)
 
 OTHER_FILES	+=	\
         "$${repositoryRoot}/.gitattributes"						\

@@ -38,3 +38,5 @@ COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)
 
 HEADERS += $$COMMON_HDRS
 HEADERS += $$COMMON_HDRSPP
+
+OTHER_FILES += $$files($${PWD}/../ld_postload_mkfl/*.Makefile,false)

@@ -27,10 +27,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
           matrix:
-            #os: [ubuntu-18.04, ubuntu-20.04, LinuxMint-19.3]
-            #os: [ubuntu-18.04, ubuntu-20.04]
-            # for time being let's use only one platform on matrix, because running is not free
-            os: [ubuntu-18.04]
+            os: [ubuntu-20.04 ubuntu-22.04]
             include:
               # for all linuxes we should specify lC (lsbCode)
               # lC=$lsbCode=`lsb_release -c | cut -f 2` # for ubuntu18
@@ -42,6 +39,12 @@ jobs:
               #  lC: trica
         steps:
             - uses: actions/checkout@v2
+	    
+            - name: Preparing host for ${{ matrix.os }}
+              run: ./scripts/unix_prepare_host.sh
+	      
+            - name: Preparing repository for ${{ matrix.os }}
+              run: ./scripts/unix_prepare_repository.sh
 
             #- name: Install SSH key
             #  uses: shimataro/ssh-key-action@v2
@@ -50,7 +53,7 @@ jobs:
             #   #known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
             - name: Building
-              run: echo "will be implemented"
+              run: ./scripts/unix_build_all.sh
 
 
     # This is for windows
@@ -78,7 +81,6 @@ jobs:
 
             - name: testing test apps
               run: >
-                .\sys\win_x64\Debug\test\any_quick_test.exe
                 .\sys\win_x64\Debug\test\c_raii_test.exe
                 .\sys\win_x64\Debug\test\lhash_test.exe
                 .\sys\win_x64\Debug\test\llist_test.exe

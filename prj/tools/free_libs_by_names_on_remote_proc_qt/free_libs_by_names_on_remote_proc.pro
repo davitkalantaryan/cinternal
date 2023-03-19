@@ -38,3 +38,5 @@ COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)
 
 HEADERS += $$COMMON_HDRS
 HEADERS += $$COMMON_HDRSPP
+
+OTHER_FILES += $$files($${PWD}/../free_libs_by_names_on_remote_proc_mkfl/*.Makefile,false)
