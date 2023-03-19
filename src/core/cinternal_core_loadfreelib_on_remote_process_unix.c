@@ -118,23 +118,145 @@ static inline bool WriteDataToProcess(int a_pid, unsigned long a_addr, const uns
 }
 
 
-CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByName(int a_pid, const char* a_libraryName)
+static inline void* CInternalLoadLibOnRemoteProcessAndGetModuleInline(int a_pid, const char* a_libraryName,  int a_flag)
 {
-    void*const pLib = CInternalLoadLibOnRemoteProcessAndGetModule(a_pid,a_libraryName);
-    if(!pLib){return false;}
+    void* pRemoteLibHandle = CPPUTILS_NULL;
+    struct user_regs_struct oldregs, regs;
+    siginfo_t info;
+    int status;
+    const char *error;
+    void* handle;
+    size_t itr;
+    unsigned long long int save[1024];
+    unsigned long long int addr,fn_addr,data_addr,dlopen_address_here,dlopen_address_on_remote,lib_dl_address_on_remote, lib_dl_address_here;
+    const unsigned char injectCode[] = {0xff,0xd0,0xcd,0x03};
+    const size_t injectCodeSize = sizeof(injectCode);
+    const size_t strLenPlus1 = strlen(a_libraryName) + 1;
+    const size_t itersCount = ((strLenPlus1 + injectCodeSize)/8)+1;
 
-    if(!CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib)){
-        return false;
+
+    handle = dlopen(s_vcLibDlName, RTLD_LAZY);
+    if (!handle) {
+        return CPPUTILS_NULL;
+    }
+    dlopen_address_here = (unsigned long long int)dlsym(handle, "dlopen");
+    if ((error = dlerror()) != CPPUTILS_NULL)  {
+        CPPUTILS_STATIC_CAST(void,error);
+        return CPPUTILS_NULL;
+    }
+    dlclose(handle);
+
+    lib_dl_address_on_remote = FindLibraryOffsetByPid(s_vcLibDlName, a_pid);
+    if(!lib_dl_address_on_remote){
+        return CPPUTILS_NULL;
+    }
+    lib_dl_address_here = FindLibraryOffsetByPid(s_vcLibDlName, -1);
+    if(!lib_dl_address_here){
+        return CPPUTILS_NULL;
     }
 
-    // we have to decrement reference 2 times
-    return CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib);
+    addr = FindFreeAddressSpaceOnRemoteProcess(a_pid);
+    if ((!addr) || (addr & 7)) {
+        return CPPUTILS_NULL;
+    }
+
+
+    fn_addr= addr;
+    data_addr = addr + injectCodeSize;
+    dlopen_address_on_remote = lib_dl_address_on_remote + (dlopen_address_here - lib_dl_address_here);
+
+    /* Attach to the target process. */
+    if (ptrace(PTRACE_ATTACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL)) {
+        return CPPUTILS_NULL;
+    }
+
+    /* Wait for attaching to complete. */
+    waitid(P_PID, (pid_t)a_pid, &info, WSTOPPED);
+
+    /* Get target process (main thread) register state. */
+    if (ptrace(PTRACE_GETREGS, (pid_t)a_pid, NULL, &oldregs)) {
+        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
+        return CPPUTILS_NULL;
+    }
+
+    /* Save the bytes at the specified address in the target process. */
+    for(itr=0;itr<itersCount;++itr){
+        save[itr] = ptrace(PTRACE_PEEKTEXT, (pid_t)a_pid, (void *)(addr + itr*8), CPPUTILS_NULL);
+    }
+
+    /* Replace the bytes */
+    if(!WriteDataToProcess(a_pid,fn_addr,injectCode,injectCodeSize)){
+        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
+        return CPPUTILS_NULL;
+    }
+    if(!WriteDataToProcess(a_pid,data_addr,(const unsigned char*)a_libraryName,strLenPlus1)){
+        /* Revert the bytes we modified. */
+        for(itr=0;itr<itersCount;++itr){
+            ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
+        }
+        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
+        return CPPUTILS_NULL;
+    }
+
+    /* Modify process registers, to execute the inserted code. */
+    regs = oldregs;
+    regs.rip = (unsigned long long int)fn_addr;
+    regs.rax = (unsigned long long int)dlopen_address_on_remote;
+    regs.rdi = (unsigned long long int)data_addr;
+    regs.rsi = (unsigned long long int)a_flag;
+    if (ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &regs)) {
+        /* Revert the bytes we modified. */
+        for(itr=0;itr<itersCount;++itr){
+            ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
+        }
+        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
+        return CPPUTILS_NULL;
+    }
+
+    /* Execute inserted code */
+    if (ptrace(PTRACE_CONT, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL)) {
+        /* Revert the registers, too, to the old state. */
+        ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &oldregs);
+        /* Revert the bytes we modified. */
+        for(itr=0;itr<itersCount;++itr){
+            ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
+        }
+        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
+        return CPPUTILS_NULL;
+    }
+
+    /* Wait for the client to execute the syscall, and stop. */
+    waitpid((pid_t)a_pid, &status, WUNTRACED);
+    if (WIFSTOPPED(status) && WSTOPSIG(status) == SIGTRAP) {
+        // Get process registers, indicating if the injection suceeded
+        ptrace(PTRACE_GETREGS, (pid_t)a_pid, CPPUTILS_NULL, &regs);
+        pRemoteLibHandle = (void*)(regs.rax);
+    }
+
+    /* Revert the registers, too, to the old state. */
+    ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &oldregs);
+    /* Revert the bytes we modified. */
+    for(itr=0;itr<itersCount;++itr){
+        ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
+    }
+    ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
+
+    return pRemoteLibHandle;
 }
+
+
+CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByName(int a_pid, const char* a_libraryName)
+{
+    void*const pLib = CInternalLoadLibOnRemoteProcessAndGetModuleInline(a_pid,a_libraryName,RTLD_NOLOAD|RTLD_NOW);
+    if(!pLib){return false;}
+    if(!CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib)){return false;}
+    return CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib);    
+ }
 
 
 CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcess(int a_pid, const char* a_libraryName)
 {
-    return CInternalLoadLibOnRemoteProcessAndGetModule(a_pid,a_libraryName) ? true : false;
+    return CInternalLoadLibOnRemoteProcessAndGetModuleInline(a_pid,a_libraryName,RTLD_NOW) ? true : false;
 }
 
 
@@ -255,128 +377,7 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a
 
 CINTERNAL_EXPORT void* CInternalLoadLibOnRemoteProcessAndGetModule(int a_pid, const char* a_libraryName)
 {
-    void* pRemoteLibHandle = CPPUTILS_NULL;
-    struct user_regs_struct oldregs, regs;
-    siginfo_t info;
-    int status;
-    const char *error;
-    void* handle;
-    size_t itr;
-    unsigned long long int save[1024];
-    unsigned long long int addr,fn_addr,data_addr,dlopen_address_here,dlopen_address_on_remote,lib_dl_address_on_remote, lib_dl_address_here;
-    const unsigned char injectCode[] = {0xff,0xd0,0xcd,0x03};
-    const size_t injectCodeSize = sizeof(injectCode);
-    const size_t strLenPlus1 = strlen(a_libraryName) + 1;
-    const size_t itersCount = ((strLenPlus1 + injectCodeSize)/8)+1;
-
-
-    handle = dlopen(s_vcLibDlName, RTLD_LAZY);
-    if (!handle) {
-        return CPPUTILS_NULL;
-    }
-    dlopen_address_here = (unsigned long long int)dlsym(handle, "dlopen");
-    if ((error = dlerror()) != CPPUTILS_NULL)  {
-        CPPUTILS_STATIC_CAST(void,error);
-        return CPPUTILS_NULL;
-    }
-    dlclose(handle);
-
-    lib_dl_address_on_remote = FindLibraryOffsetByPid(s_vcLibDlName, a_pid);
-    if(!lib_dl_address_on_remote){
-        return CPPUTILS_NULL;
-    }
-    lib_dl_address_here = FindLibraryOffsetByPid(s_vcLibDlName, -1);
-    if(!lib_dl_address_here){
-        return CPPUTILS_NULL;
-    }
-
-    addr = FindFreeAddressSpaceOnRemoteProcess(a_pid);
-    if ((!addr) || (addr & 7)) {
-        return CPPUTILS_NULL;
-    }
-
-
-    fn_addr= addr;
-    data_addr = addr + injectCodeSize;
-    dlopen_address_on_remote = lib_dl_address_on_remote + (dlopen_address_here - lib_dl_address_here);
-
-    /* Attach to the target process. */
-    if (ptrace(PTRACE_ATTACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL)) {
-        return CPPUTILS_NULL;
-    }
-
-    /* Wait for attaching to complete. */
-    waitid(P_PID, (pid_t)a_pid, &info, WSTOPPED);
-
-    /* Get target process (main thread) register state. */
-    if (ptrace(PTRACE_GETREGS, (pid_t)a_pid, NULL, &oldregs)) {
-        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
-        return CPPUTILS_NULL;
-    }
-
-    /* Save the bytes at the specified address in the target process. */
-    for(itr=0;itr<itersCount;++itr){
-        save[itr] = ptrace(PTRACE_PEEKTEXT, (pid_t)a_pid, (void *)(addr + itr*8), CPPUTILS_NULL);
-    }
-
-    /* Replace the bytes */
-    if(!WriteDataToProcess(a_pid,fn_addr,injectCode,injectCodeSize)){
-        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
-        return CPPUTILS_NULL;
-    }
-    if(!WriteDataToProcess(a_pid,data_addr,(const unsigned char*)a_libraryName,strLenPlus1)){
-        /* Revert the bytes we modified. */
-        for(itr=0;itr<itersCount;++itr){
-            ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
-        }
-        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
-        return CPPUTILS_NULL;
-    }
-
-    /* Modify process registers, to execute the inserted code. */
-    regs = oldregs;
-    regs.rip = (unsigned long long int)fn_addr;
-    regs.rax = (unsigned long long int)dlopen_address_on_remote;
-    regs.rdi = (unsigned long long int)data_addr;
-    regs.rsi = (unsigned long long int)RTLD_NOW;
-    if (ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &regs)) {
-        /* Revert the bytes we modified. */
-        for(itr=0;itr<itersCount;++itr){
-            ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
-        }
-        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
-        return CPPUTILS_NULL;
-    }
-
-    /* Execute inserted code */
-    if (ptrace(PTRACE_CONT, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL)) {
-        /* Revert the registers, too, to the old state. */
-        ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &oldregs);
-        /* Revert the bytes we modified. */
-        for(itr=0;itr<itersCount;++itr){
-            ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
-        }
-        ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
-        return CPPUTILS_NULL;
-    }
-
-    /* Wait for the client to execute the syscall, and stop. */
-    waitpid((pid_t)a_pid, &status, WUNTRACED);
-    if (WIFSTOPPED(status) && WSTOPSIG(status) == SIGTRAP) {
-        // Get process registers, indicating if the injection suceeded
-        ptrace(PTRACE_GETREGS, (pid_t)a_pid, CPPUTILS_NULL, &regs);
-        pRemoteLibHandle = (void*)(regs.rax);
-    }
-
-    /* Revert the registers, too, to the old state. */
-    ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &oldregs);
-    /* Revert the bytes we modified. */
-    for(itr=0;itr<itersCount;++itr){
-        ptrace(PTRACE_POKETEXT, (pid_t)a_pid, (void *)(addr + 8*itr), (void *)save[itr]);
-    }
-    ptrace(PTRACE_DETACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL);
-
-    return pRemoteLibHandle;
+    return CInternalLoadLibOnRemoteProcessAndGetModuleInline(a_pid, a_libraryName,RTLD_NOW);
 }
 
 
