@@ -43,7 +43,7 @@ jobs:
     
             - name: Preparing host for ${{ matrix.os }}
               run: ./scripts/unix_prepare_host.sh
-	      
+      
             - name: Preparing repository for ${{ matrix.os }}
               run: ./scripts/unix_prepare_repository.sh
 
