@@ -40,7 +40,7 @@ jobs:
         steps:
             - name: Checking out repository
               uses: actions/checkout@v2
-	    
+    
             - name: Preparing host for ${{ matrix.os }}
               run: ./scripts/unix_prepare_host.sh
 	      
