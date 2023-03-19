@@ -38,7 +38,8 @@ jobs:
               #- os: LinuxMint-19.3
               #  lC: trica
         steps:
-            - uses: actions/checkout@v2
+            - name: Checking out repository
+              uses: actions/checkout@v2
 	    
             - name: Preparing host for ${{ matrix.os }}
               run: ./scripts/unix_prepare_host.sh
