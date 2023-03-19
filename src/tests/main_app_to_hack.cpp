@@ -31,19 +31,17 @@ int main(void)
 	sigemptyset(&mask);
 #endif
 	
-	printf("App to hack started. Pid is: %d. Going to infinite loop\n", CINT_APP_TO_HACK_GETPID());
+    printf("App to hack started. Pid is: %d  . Going to infinite loop\n", CINT_APP_TO_HACK_GETPID());
 
 #ifdef _WIN32
-    //SleepEx(INFINITE, TRUE);
+    SleepEx(INFINITE, TRUE);
 #else
     //sigsuspend(&mask);
-#endif
-
-
     while(1){
         //printf("nCounter = %d\n",++nCounter);
         CIntrSleepExIntrp(20000);
     }
+#endif
 
 
 	return 0;

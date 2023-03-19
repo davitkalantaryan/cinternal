@@ -6,7 +6,7 @@
 #
 
 include ( "$${PWD}/../../common/common_qt/sys_common.pri" )
-include ( "$${PWD}/../../common/common_qt/flags_common.pri" )
+#include ( "$${PWD}/../../common/common_qt/flags_common.pri" )
 
 DESTDIR     = "$${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/test"
 
@@ -16,7 +16,7 @@ QT -= widgets
 CONFIG -= qt
 
 LIBS += -pthread
-#LIBS += -ldl
+LIBS += -ldl
 
 repoRootPath=$${PWD}/../../..
 
@@ -24,9 +24,9 @@ INCLUDEPATH += "$${PWD}/../../../include"
 DEFINES += CPPUTILS_USING_STATIC_LIB_OR_OBJECTS
 
 
-#SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
+SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
 SOURCES	+=		\
-        "$${PWD}/../../../src/tests/main_app_to_hack.cpp"
+        "$${PWD}/../../../src/tests/main_linux_mprotect_test.c"
 
 COMMON_HDRS	= $$files($${repoRootPath}/include/*.h,true)
 COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)

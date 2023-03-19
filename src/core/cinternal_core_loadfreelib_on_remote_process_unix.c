@@ -35,7 +35,9 @@ CPPUTILS_BEGIN_C
 #include <sys/wait.h>
 #include <sys/user.h>
 
-#define LIBDL_DLL_NAME  "libdl-2.31.so"
+#define CINTR_BUFFER_MAX_SIZE   1024
+
+static char  s_vcLibDlName[CINTR_BUFFER_MAX_SIZE];
 
 
 static inline unsigned long long int FindLibraryOffsetByPid(const char* a_library, int a_pid) {
@@ -151,7 +153,7 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a
     const size_t injectCodeSize = sizeof(injectCode);
     const size_t itersCount = (injectCodeSize/8)+1;
 
-    handle = dlopen(LIBDL_DLL_NAME, RTLD_LAZY);
+    handle = dlopen(s_vcLibDlName, RTLD_LAZY);
     if (!handle) {
         return false;
     }
@@ -162,11 +164,11 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a
     }
     dlclose(handle);
 
-    lib_dl_address_on_remote = FindLibraryOffsetByPid(LIBDL_DLL_NAME, a_pid);
+    lib_dl_address_on_remote = FindLibraryOffsetByPid(s_vcLibDlName, a_pid);
     if(!lib_dl_address_on_remote){
         return false;
     }
-    lib_dl_address_here = FindLibraryOffsetByPid(LIBDL_DLL_NAME, -1);
+    lib_dl_address_here = FindLibraryOffsetByPid(s_vcLibDlName, -1);
     if(!lib_dl_address_here){
         return false;
     }
@@ -268,7 +270,7 @@ CINTERNAL_EXPORT void* CInternalLoadLibOnRemoteProcessAndGetModule(int a_pid, co
     const size_t itersCount = ((strLenPlus1 + injectCodeSize)/8)+1;
 
 
-    handle = dlopen(LIBDL_DLL_NAME, RTLD_LAZY);
+    handle = dlopen(s_vcLibDlName, RTLD_LAZY);
     if (!handle) {
         return CPPUTILS_NULL;
     }
@@ -279,11 +281,11 @@ CINTERNAL_EXPORT void* CInternalLoadLibOnRemoteProcessAndGetModule(int a_pid, co
     }
     dlclose(handle);
 
-    lib_dl_address_on_remote = FindLibraryOffsetByPid(LIBDL_DLL_NAME, a_pid);
+    lib_dl_address_on_remote = FindLibraryOffsetByPid(s_vcLibDlName, a_pid);
     if(!lib_dl_address_on_remote){
         return CPPUTILS_NULL;
     }
-    lib_dl_address_here = FindLibraryOffsetByPid(LIBDL_DLL_NAME, -1);
+    lib_dl_address_here = FindLibraryOffsetByPid(s_vcLibDlName, -1);
     if(!lib_dl_address_here){
         return CPPUTILS_NULL;
     }
@@ -376,6 +378,48 @@ CINTERNAL_EXPORT void* CInternalLoadLibOnRemoteProcessAndGetModule(int a_pid, co
 
     return pRemoteLibHandle;
 }
+
+
+
+CPPUTILS_CODE_INITIALIZER(cinternal_core_loadfreelib_on_remote_process_unix){
+    char mapFilename[1024];
+    char buffer[9076];
+    FILE* fdMaps;
+    size_t unStrLenMin1;
+
+    snprintf(mapFilename, sizeof(mapFilename), "/proc/self/maps");
+
+    fdMaps = fopen(mapFilename, "r");
+    if(!fdMaps){
+        exit(1);
+    }
+
+    while(fgets(buffer, sizeof(buffer), fdMaps)) {
+        if (strstr(buffer, "libdl")) {
+            char* pcFileName = strrchr(buffer,'/');
+            if(pcFileName){
+                ++pcFileName;
+            }
+            else{
+                pcFileName = buffer;
+            }
+            unStrLenMin1 = strlen(pcFileName)-1;
+            if(pcFileName[unStrLenMin1]=='\n'){
+                pcFileName[unStrLenMin1] = 0;
+            }
+            else{
+                ++unStrLenMin1;
+            }
+            memcpy(s_vcLibDlName,pcFileName,unStrLenMin1);
+            fclose(fdMaps);
+            return;
+        }
+    }
+
+    fclose(fdMaps);
+    exit(1);
+}
+
 
 
 CPPUTILS_END_C

@@ -9,6 +9,7 @@
 #include <private/cinternal/parser/tokenizer02_common_p.h>
 #include <cinternal/parser/tokenizer01.h>
 #include <cinternal/loadfreelib_on_remote_process.h>
+#include <stdio.h>
 
 
 CPPUTILS_BEGIN_C
@@ -17,7 +18,11 @@ CPPUTILS_BEGIN_C
 static int CinternalTokenizerForWindowsDllUnload02a(void* a_clbkData, const char* a_cpcNextString)
 {
 	const int pid = (int)((size_t)a_clbkData);
-	return CInternalFreeLibOnRemoteProcessByName(pid, a_cpcNextString)?0:-2;
+    if(CInternalFreeLibOnRemoteProcessByName(pid, a_cpcNextString)){
+        return 0;
+    }
+    fprintf(stderr,"Library with the name \"%s\" is not possible to unload from the process with the pid %d\n",a_cpcNextString,pid);
+    return -2;
 }
 
 
