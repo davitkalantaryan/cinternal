@@ -23,11 +23,14 @@ SUBDIRS		+=	"$${repositoryRoot}/prj/tests/test_lib01_qt/test_lib01.pro"
 
 OTHER_FILES += $$files($${repositoryRoot}/docs/*.md,true)
 OTHER_FILES += $$files($${repositoryRoot}/docs/*.txt,true)
+OTHER_FILES += $$files($${repositoryRoot}/scripts/*.sh,true)
+OTHER_FILES += $$files($${repositoryRoot}/scripts/*.bat,true)
 
 OTHER_FILES	+=	\
-        "$${repositoryRoot}/.gitattributes"					\
-	"$${repositoryRoot}/.gitignore"						\
-	"$${repositoryRoot}/LICENSE"						\
-	"$${repositoryRoot}/README.md"						\
-	"$${PWD}/../../prj/common/common_mkfl/unix.common.Makefile"		\
+        "$${repositoryRoot}/.gitattributes"						\
+	"$${repositoryRoot}/.gitignore"							\
+	"$${repositoryRoot}/LICENSE"							\
+	"$${repositoryRoot}/README.md"							\
+	"$${repositoryRoot}/workspaces/cinternal_all_mkfl/cinternal_all.unix.Makefile"	\
+	"$${PWD}/../../prj/common/common_mkfl/unix.common.Makefile"			\
 	"$${PWD}/../../prj/common/common_mkfl/windows.common.Makefile"
