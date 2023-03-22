@@ -87,10 +87,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    //if (sscanf(argv[2], " %lx %c", &addr, &dummy) != 1) {
-    //    fprintf(stderr, "%s: Invalid address.\n", argv[2]);
-    //    return 1;
-    //}
     addr = freeAddressSpaceOnRemoteProcess(pid);
     if ((!addr)||(addr & 7)) {
         fprintf(stderr, "%s: Address is not a multiple of 8.\n", argv[2]);

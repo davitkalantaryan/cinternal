@@ -31,7 +31,7 @@ int main(void)
 	sigemptyset(&mask);
 #endif
 	
-    printf("App to hack started. Pid is: %d  . Going to infinite loop\n", CINT_APP_TO_HACK_GETPID());
+    printf("App to hack version 06 started. Pid is: %d  . Going to infinite loop\n", CINT_APP_TO_HACK_GETPID());
 
 #ifdef _WIN32
     SleepEx(INFINITE, TRUE);

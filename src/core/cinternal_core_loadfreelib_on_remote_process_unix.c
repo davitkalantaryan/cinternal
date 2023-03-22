@@ -137,6 +137,7 @@ static inline void* CInternalLoadLibOnRemoteProcessAndGetModuleInline(int a_pid,
     }
     dlopen_address_here = (unsigned long long int)dlsym(handle, "dlopen");
     if ((error = dlerror()) != CPPUTILS_NULL)  {
+		dlclose(handle);
         CPPUTILS_STATIC_CAST(void,error);
         return CPPUTILS_NULL;
     }

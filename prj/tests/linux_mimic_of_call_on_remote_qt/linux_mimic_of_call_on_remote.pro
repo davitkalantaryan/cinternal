@@ -26,7 +26,7 @@ DEFINES += CPPUTILS_USING_STATIC_LIB_OR_OBJECTS
 
 #SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
 SOURCES	+=		\
-        "$${PWD}/../../../src/tests/main_app_to_hack.cpp"
+        "$${PWD}/../../../src/tests/main_linux_mimic_of_call_on_remote.cpp"
 
 COMMON_HDRS	= $$files($${repoRootPath}/include/*.h,true)
 COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)
