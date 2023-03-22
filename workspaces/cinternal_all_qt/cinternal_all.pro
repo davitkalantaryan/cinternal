@@ -10,6 +10,8 @@ SUBDIRS		+=	"$${repositoryRoot}/prj/tools/freelib_on_remote_proc_by_handle_qt/fr
 SUBDIRS		+=	"$${repositoryRoot}/prj/tools/free_libs_by_names_on_remote_proc_qt/free_libs_by_names_on_remote_proc.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tools/ld_postload_qt/ld_postload.pro"
 
+SUBDIRS		+=	"$${repositoryRoot}/prj/core/cintr_init_libdl_qt/cintr_init_libdl.pro"
+
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/any_quick_test_qt/any_quick_test.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/app_to_hack_qt/app_to_hack.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/c_global_initer_test_qt/c_global_initer_test.pro"

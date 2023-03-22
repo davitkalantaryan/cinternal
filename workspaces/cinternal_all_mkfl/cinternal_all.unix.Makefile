@@ -12,6 +12,8 @@ all:
 	make -f $(cinternalRepoRoot)/prj/tools/free_libs_by_names_on_remote_proc_mkfl/free_libs_by_names_on_remote_proc.unix.Makefile
 	make -f $(cinternalRepoRoot)/prj/tools/ld_postload_mkfl/ld_postload.unix.Makefile
 	
+	make -f $(cinternalRepoRoot)/prj/core/cintr_init_libdl_mkfl/cintr_init_libdl.unix.Makefile
+	
 	make -f $(cinternalRepoRoot)/prj/tests/any_quick_test_mkfl/any_quick_test.unix.Makefile
 	make -f $(cinternalRepoRoot)/prj/tests/app_to_hack_mkfl/app_to_hack.unix.Makefile
 	make -f $(cinternalRepoRoot)/prj/tests/c_global_initer_test_mkfl/c_global_initer_test.unix.Makefile
@@ -29,6 +31,8 @@ clean:
 	make -f $(cinternalRepoRoot)/prj/tools/freelib_on_remote_proc_by_handle_mkfl/freelib_on_remote_proc_by_handle.unix.Makefile clean
 	make -f $(cinternalRepoRoot)/prj/tools/free_libs_by_names_on_remote_proc_mkfl/free_libs_by_names_on_remote_proc.unix.Makefile clean
 	make -f $(cinternalRepoRoot)/prj/tools/ld_postload_mkfl/ld_postload.unix.Makefile clean
+	
+	make -f $(cinternalRepoRoot)/prj/core/cintr_init_libdl_mkfl/cintr_init_libdl.unix.Makefile clean
 	
 	make -f $(cinternalRepoRoot)/prj/tests/any_quick_test_mkfl/any_quick_test.unix.Makefile clean
 	make -f $(cinternalRepoRoot)/prj/tests/app_to_hack_mkfl/app_to_hack.unix.Makefile clean

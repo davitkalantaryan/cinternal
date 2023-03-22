@@ -89,6 +89,7 @@ int main(int a_argc, char* a_argv[])
 	
 	handle = dlopen(s_vcLibDlName, RTLD_LAZY);
 	if (!handle) {
+		fprintf(stderr,"Unable to open libdl\n");
 		return 1;
 	}
 	
@@ -96,6 +97,7 @@ int main(int a_argc, char* a_argv[])
 	if ((error = dlerror()) != CPPUTILS_NULL)  {
 		dlclose(handle);
 		CPPUTILS_STATIC_CAST(void,error);
+		fprintf(stderr,"Unable to get address for dlopen\n");
 		return 1;
 	}
 	
@@ -103,9 +105,10 @@ int main(int a_argc, char* a_argv[])
 	if ((error = dlerror()) != CPPUTILS_NULL)  {
 		dlclose(handle);
 		CPPUTILS_STATIC_CAST(void,error);
+		fprintf(stderr,"Unable to get address for dlclose\n");
 		return 1;
 	}
-	
+		
 	dlclose(handle);
 	
 	lib_dl_address_on_remote = FindLibraryOffsetByPid(s_vcLibDlName, pid);

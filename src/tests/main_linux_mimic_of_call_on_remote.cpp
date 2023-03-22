@@ -13,6 +13,8 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include <dlfcn.h>
+
 typedef void* (*TypeDlopen)(const char *filename, int flags);
 typedef char* (*TypeDlerror)(void);
 
@@ -20,7 +22,22 @@ static int TryCallsStatic(void);
 
 int main(void)
 {
+	void* pRet;
     printf("linux_mimic_of_call_on_remote version 01 started. Pid is: %d  . Going to infinite loop\n", (int)getpid());
+	
+	fprintf(stdout,"Press any key then enter to continue  ");
+	(void)getchar();
+	
+	pRet = dlopen("libtest_lib01.so.1",2);
+	printf("pRet = %p\n",pRet);
+	
+	if(pRet){
+		dlclose(pRet);
+	}
+	else{
+		char* pcDlError = dlerror();
+		printf("pcDlError = \"%s\"\n",pcDlError?pcDlError:"nil");
+	}
 	
 	while(1){
 		if(TryCallsStatic()){
