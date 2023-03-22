@@ -9,9 +9,9 @@ firstTarget: all
 include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
-SOURCES += $(repoRootPath)/src/tools/freelib_on_remote_proc_by_handle/main_freelib_on_remote_proc_by_handle.c
-SOURCES += $(repoRootPath)/src/core/cinternal_core_parser_argparser01.c
-SOURCES += $(repoRootPath)/src/core/cinternal_core_loadfreelib_on_remote_process_unix.c
+SOURCES += $(cinternalRepoRoot)/src/tools/freelib_on_remote_proc_by_handle/main_freelib_on_remote_proc_by_handle.c
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_parser_argparser01.c
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_loadfreelib_on_remote_process_unix.c
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/bin/$(targetName)
 

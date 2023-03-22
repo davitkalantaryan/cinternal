@@ -12,12 +12,12 @@ COMMON_FLAGS	+= -I$(cinternalRepoRoot)/src/include
 include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
-SOURCES += $(repoRootPath)/src/tools/free_libs_by_names_on_remote_proc/main_free_libs_by_names_on_remote_proc.c
-SOURCES += $(repoRootPath)/src/core/cinternal_core_parser_argparser01.c
-SOURCES += $(repoRootPath)/src/core/cinternal_core_loadfreelib_on_remote_process_unix.c
-SOURCES += $(repoRootPath)/src/core/cinternal_core_list_llist.c                                       
-SOURCES += $(repoRootPath)/src/intern/cinternal_core_intern_tokenizer02_common.c                            
-SOURCES += $(repoRootPath)/src/core/cinternal_core_parser_tokenizer01.c
+SOURCES += $(cinternalRepoRoot)/src/tools/free_libs_by_names_on_remote_proc/main_free_libs_by_names_on_remote_proc.c
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_parser_argparser01.c
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_loadfreelib_on_remote_process_unix.c
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_list_llist.c                                       
+SOURCES += $(cinternalRepoRoot)/src/intern/cinternal_core_intern_tokenizer02_common.c                            
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_parser_tokenizer01.c
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/bin/$(targetName)
 

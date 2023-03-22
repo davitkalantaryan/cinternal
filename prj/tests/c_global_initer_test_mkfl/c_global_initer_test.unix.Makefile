@@ -9,7 +9,7 @@ firstTarget: all
 include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
-SOURCES += $(repoRootPath)/src/tests/main_c_global_initer_test.c
+SOURCES += $(cinternalRepoRoot)/src/tests/main_c_global_initer_test.c
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 

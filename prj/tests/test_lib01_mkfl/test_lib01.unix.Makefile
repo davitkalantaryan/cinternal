@@ -11,7 +11,7 @@ COMMON_FLAGS += -fPIC
 include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
-SOURCES += $(repoRootPath)/src/tests/entry_test_lib01.cpp
+SOURCES += $(cinternalRepoRoot)/src/tests/entry_test_lib01.cpp
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).so.1
 

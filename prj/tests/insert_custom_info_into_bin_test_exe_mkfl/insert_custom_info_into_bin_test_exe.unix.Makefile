@@ -9,8 +9,8 @@ firstTarget: all
 include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
-SOURCES += $(repoRootPath)/src/tests/insert_custom_info_into_bin_test/main_insert_custom_info_into_bin_test_exe.cpp
-SOURCES += $(repoRootPath)/src/tests/insert_custom_info_into_bin_test/insert_custom_info_into_bin_test.c
+SOURCES += $(cinternalRepoRoot)/src/tests/insert_custom_info_into_bin_test/main_insert_custom_info_into_bin_test_exe.cpp
+SOURCES += $(cinternalRepoRoot)/src/tests/insert_custom_info_into_bin_test/insert_custom_info_into_bin_test.c
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 

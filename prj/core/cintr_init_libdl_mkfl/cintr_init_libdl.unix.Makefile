@@ -11,7 +11,7 @@ COMMON_FLAGS += -fPIC
 include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
-SOURCES += $(repoRootPath)/src/core/init_libdl/entry_cinternal_core_init_libdl.c
+SOURCES += $(cinternalRepoRoot)/src/core/init_libdl/entry_cinternal_core_init_libdl.c
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).so.1
 
