@@ -38,6 +38,7 @@ CPPUTILS_BEGIN_C
 #define CINTR_BUFFER_MAX_SIZE   1024
 
 static char  s_vcLibDlName[CINTR_BUFFER_MAX_SIZE];
+static unsigned long long int s_lib_dl_address_here;
 
 
 static inline unsigned long long int FindLibraryOffsetByPid(const char* a_library, int a_pid) {
@@ -46,11 +47,7 @@ static inline unsigned long long int FindLibraryOffsetByPid(const char* a_librar
     FILE* fdMaps;
     unsigned long long int addr = 0;
 
-    if (a_pid == -1) {
-        snprintf(mapFilename, sizeof(mapFilename), "/proc/self/maps");
-    } else {
-        snprintf(mapFilename, sizeof(mapFilename), "/proc/%d/maps", a_pid);
-    }
+    snprintf(mapFilename, sizeof(mapFilename), "/proc/%d/maps", a_pid);
 
     fdMaps = fopen(mapFilename, "r");
     if(!fdMaps){
@@ -128,12 +125,11 @@ static inline void* CInternalLoadLibOnRemoteProcessAndGetModuleInline(int a_pid,
     void* handle;
     size_t itr;
     unsigned long long int save[1024];
-    unsigned long long int addr,fn_addr,data_addr,dlopen_address_here,dlopen_address_on_remote,lib_dl_address_on_remote, lib_dl_address_here;
+    unsigned long long int addr,fn_addr,data_addr,dlopen_address_here,dlopen_address_on_remote,lib_dl_address_on_remote;
     const unsigned char injectCode[] = {0xff,0xd0,0xcd,0x03};
     const size_t injectCodeSize = sizeof(injectCode);
     const size_t strLenPlus1 = strlen(a_libraryName) + 1;
     const size_t itersCount = ((strLenPlus1 + injectCodeSize)/8)+1;
-
 
     handle = dlopen(s_vcLibDlName, RTLD_LAZY);
     if (!handle) {
@@ -150,20 +146,15 @@ static inline void* CInternalLoadLibOnRemoteProcessAndGetModuleInline(int a_pid,
     if(!lib_dl_address_on_remote){
         return CPPUTILS_NULL;
     }
-    lib_dl_address_here = FindLibraryOffsetByPid(s_vcLibDlName, -1);
-    if(!lib_dl_address_here){
-        return CPPUTILS_NULL;
-    }
 
     addr = FindFreeAddressSpaceOnRemoteProcess(a_pid);
     if ((!addr) || (addr & 7)) {
         return CPPUTILS_NULL;
     }
 
-
     fn_addr= addr;
     data_addr = addr + injectCodeSize;
-    dlopen_address_on_remote = lib_dl_address_on_remote + (dlopen_address_here - lib_dl_address_here);
+    dlopen_address_on_remote = lib_dl_address_on_remote + (dlopen_address_here - s_lib_dl_address_here);
 
     /* Attach to the target process. */
     if (ptrace(PTRACE_ATTACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL)) {
@@ -262,7 +253,7 @@ CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcess(int a_pid, const char* a_l
 
 CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a_libraryHandle)
 {
-    unsigned long long int addr,fn_addr,dlclose_address_here, dlclose_address_on_remote, lib_dl_address_on_remote, lib_dl_address_here;
+    unsigned long long int addr,fn_addr,dlclose_address_here, dlclose_address_on_remote, lib_dl_address_on_remote;
     unsigned long long int save[1024];
     struct user_regs_struct oldregs, regs;
     siginfo_t info;
@@ -290,10 +281,6 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a
     if(!lib_dl_address_on_remote){
         return false;
     }
-    lib_dl_address_here = FindLibraryOffsetByPid(s_vcLibDlName, -1);
-    if(!lib_dl_address_here){
-        return false;
-    }
 
     addr = FindFreeAddressSpaceOnRemoteProcess(a_pid);
     if ((!addr) || (addr & 7)) {
@@ -301,7 +288,7 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a
     }
 
     fn_addr= addr;
-    dlclose_address_on_remote = lib_dl_address_on_remote + (dlclose_address_here - lib_dl_address_here);
+    dlclose_address_on_remote = lib_dl_address_on_remote + (dlclose_address_here - s_lib_dl_address_here);
 
     /* Attach to the target process. */
     if (ptrace(PTRACE_ATTACH, (pid_t)a_pid, CPPUTILS_NULL, CPPUTILS_NULL)) {
@@ -398,6 +385,7 @@ CPPUTILS_CODE_INITIALIZER(cinternal_core_loadfreelib_on_remote_process_unix){
     while(fgets(buffer, sizeof(buffer), fdMaps)) {
         if (strstr(buffer, "libdl")) {
             char* pcFileName = strrchr(buffer,'/');
+			fclose(fdMaps);
             if(pcFileName){
                 ++pcFileName;
             }
@@ -412,7 +400,10 @@ CPPUTILS_CODE_INITIALIZER(cinternal_core_loadfreelib_on_remote_process_unix){
                 ++unStrLenMin1;
             }
             memcpy(s_vcLibDlName,pcFileName,unStrLenMin1);
-            fclose(fdMaps);
+			s_lib_dl_address_here = strtoull(buffer, CPPUTILS_NULL, 16);
+			if(!s_lib_dl_address_here){
+				exit(1);
+			}
             return;
         }
     }
