@@ -242,7 +242,7 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByName(int a_pid, const cha
     if(!pLib){return false;}
     if(!CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib)){return false;}
     return CInternalFreeLibOnRemoteProcessByHandle(a_pid,pLib);    
- }
+}
 
 
 CINTERNAL_EXPORT bool CInternalLoadLibOnRemoteProcess(int a_pid, const char* a_libraryName)

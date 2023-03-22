@@ -16,26 +16,26 @@
 
 static unsigned long freeAddressSpaceOnRemoteProcess(pid_t a_pid)
 {
-    FILE *fp;
-    char filename[30];
-    char line[850];
-    unsigned long addr = 0;
-    char str[20];
-    char perms[5];
-
-    sprintf(filename, "/proc/%d/maps", a_pid);
-    if ((fp = fopen(filename, "r")) == NULL) {
-        printf("[!] Error, could not open maps file for process %d\n", a_pid);
-        return 0;
-    }
-
-    while(fgets(line, 850, fp) != NULL) {
-        sscanf(line, "%lx-%*lx %s %*s %s %*d", &addr, perms, str);
-        if(strstr(perms, "x") != NULL) {break;}
-    }
-
-    fclose(fp);
-    return addr;
+	FILE *fp;
+	char filename[30];
+	char line[850];
+	unsigned long long int addr = 0;
+	char str[20];
+	char perms[5];
+	
+	sprintf(filename, "/proc/%d/maps", a_pid);
+	if ((fp = fopen(filename, "r")) == NULL) {
+		printf("[!] Error, could not open maps file for process %d\n", a_pid);
+		return 0;
+	}
+	
+	while(fgets(line, 850, fp) != NULL) {
+		sscanf(line, "%llx-%*x %s %*s %s %*d", &addr, perms, str);
+		if(strstr(perms, "x") != NULL) {break;}
+	}
+	
+	fclose(fp);
+	return addr;
 }
 
 
