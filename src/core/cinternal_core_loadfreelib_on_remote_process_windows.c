@@ -122,7 +122,9 @@ CINTERNAL_EXPORT HMODULE CInternalLoadLibOnRemoteProcessAndGetModuleSys(HANDLE a
 		dwHmoduleOnremoteLow = (DWORD)((size_t)pMods[i]);
 		if (dwHmoduleOnremoteLow == dwThreadId) {
 			if (GetModuleFileNameExA(a_hProcess, pMods[i], vcModuleNameBuff, 1023) > 0) {
-				if (_strcmpi(a_libraryName, FileNameFromFilePathInline(vcModuleNameBuff)) == 0) {
+				if (   (_strcmpi(a_libraryName, vcModuleNameBuff) == 0) ||
+					   (_strcmpi(a_libraryName, FileNameFromFilePathInline(vcModuleNameBuff)) == 0)   ) 
+				{
 					hModule = pMods[i];
 					free(pMods);
 					return hModule;
