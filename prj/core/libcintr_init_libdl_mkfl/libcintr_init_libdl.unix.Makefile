@@ -28,4 +28,4 @@ clean:
 	@rm -rf $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)
 	@rm -f  $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).so.1
 	@rm -f  $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/lib/lib$(targetName).so
-	@echo "  " cleaning of googletest complete !!!
+	@echo "  " cleaning of $(targetName) complete !!!
