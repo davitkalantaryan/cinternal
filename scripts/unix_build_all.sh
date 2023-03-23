@@ -26,7 +26,6 @@ repositoryRoot=`pwd`
 echo repositoryRoot=$repositoryRoot
 
 cd workspaces/cinternal_all_mkfl
-
 unset CPPUTILS_DEBUG
 make -f cinternal_all.unix.Makefile
 make -f cinternal_all.unix.Makefile CPPUTILS_DEBUG=1

@@ -24,7 +24,8 @@ INCLUDEPATH += "$${PWD}/../../../include"
 DEFINES += CPPUTILS_USING_STATIC_LIB_OR_OBJECTS
 
 
-SOURCES += $$files($${PWD}/../../../src/core/*.c*,true)
+SOURCES += $$files($${PWD}/../../../src/core/*.c,true)
+SOURCES += $$files($${PWD}/../../../src/core/*.cpp,true)
 SOURCES	+=		\
         "$${PWD}/../../../src/tests/main_any_quick_test.c"
 

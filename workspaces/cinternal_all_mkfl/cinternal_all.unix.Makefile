@@ -1,6 +1,6 @@
 
 
-targetName=cinternal_all.unix
+targetName=cinternal_all
 
 mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir		=  $(shell dirname $(mkfile_path))

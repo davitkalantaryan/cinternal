@@ -196,9 +196,7 @@ static inline void* CInternalLoadLibOnRemoteProcessAndGetModuleInline(int a_pid,
     regs.rax = (unsigned long long int)dlopen_address_on_remote;
     regs.rdi = (unsigned long long int)data_addr;
     regs.rsi = (unsigned long long int)a_flag;
-	//regs.rsp = (regs.rsp - 1) & ~(0xFULL);
-	regs.rdx = regs.rsp;
-	regs.rsp -= 8;
+	regs.rsp = regs.rsp & (~(0xFULL)); // let's make stack pointer to have 16 Byte boundary
     if (ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &regs)) {
         /* Revert the bytes we modified. */
         for(itr=0;itr<itersCount;++itr){
@@ -325,6 +323,7 @@ CINTERNAL_EXPORT bool CInternalFreeLibOnRemoteProcessByHandle(int a_pid, void* a
     regs.rip = (unsigned long long int)fn_addr;
     regs.rax = (unsigned long long int)dlclose_address_on_remote;
     regs.rdi = (unsigned long long int)a_libraryHandle;
+    regs.rsp = regs.rsp & (~(0xFULL)); // let's make stack pointer to have 16 Byte boundary
     if (ptrace(PTRACE_SETREGS, (pid_t)a_pid, CPPUTILS_NULL, &regs)) {
         /* Revert the bytes we modified. */
         for(itr=0;itr<itersCount;++itr){
