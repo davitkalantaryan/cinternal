@@ -67,7 +67,7 @@ static inline bool CInternalFreeLibOnRemoteProcessSysInline(HANDLE a_hProcess, H
 	GetExitCodeThread(hThread, &dwThreadId);
 	CloseHandle(hThread);
 
-	return true;
+	return dwThreadId?true:false;
 }
 
 
