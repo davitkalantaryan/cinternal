@@ -365,6 +365,19 @@ CINTERNAL_EXPORT size_t CInternalLHashSize(ConstCinternalLHash_t a_hashTbl)
 }
 
 
+CINTERNAL_EXPORT void* CInternalLHashGetDefaultFunctions(int a_function)
+{
+	switch (a_function) {
+	case CINTERNAL_HASH_DEFAULT_FUNC_MMEM_HASH:
+		return (void*)(&cinternal_hash1_raw_mem);
+	case CINTERNAL_HASH_DEFAULT_FUNC_SML_INT_HASH:
+		return (void*)(&cinternal_hash1_small_int);
+	default:
+		return CPPUTILS_NULL;
+	}  //  switch (a_function) {
+}
+
+
 CPPUTILS_END_C
 
 

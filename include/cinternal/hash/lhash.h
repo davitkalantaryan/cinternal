@@ -15,6 +15,9 @@
 
 CPPUTILS_BEGIN_C
 
+#define CINTERNAL_HASH_DEFAULT_FUNC_MMEM_HASH		1
+#define CINTERNAL_HASH_DEFAULT_FUNC_SML_INT_HASH	2
+
 struct SCinternalLHashItem {
 	struct SCinternalLHashItem* prevInTbl, * nextInTbl, * prevIList, * nextInList;
 	void*				data;
@@ -52,6 +55,9 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashFirstItem(ConstCinternalLH
 CINTERNAL_EXPORT void	CInternalLHashRemoveDataEx(CinternalLHash_t a_hashTbl, CInternalLHashIterator a_iterator);
 CINTERNAL_EXPORT bool	CInternalLHashRemoveData(CinternalLHash_t a_hashTbl, const void* a_key, size_t a_keySize);
 CINTERNAL_EXPORT size_t CInternalLHashSize(ConstCinternalLHash_t a_hashTbl);
+
+
+CINTERNAL_EXPORT void* CInternalLHashGetDefaultFunctions(int a_function);
 
 
 CPPUTILS_END_C
