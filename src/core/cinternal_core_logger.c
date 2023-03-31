@@ -40,10 +40,10 @@ static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogTy
         vprintf(a_fmtStr, a_argptr);
         break;
     case CinternalLogTypeDebug:
-#if defined(NDEBUG) || defined(CINTERNAL_NO_DEBUG_LOGS)
-        vprintf(a_fmtStr, a_argptr);
-#else
+#if defined(NDEBUG) || (defined(CINTERNAL_NO_DEBUG_LOGS) && defined(CINTERNAL_NO_DEBUG_LOGS_FOR_LIB))
         CPPUTILS_STATIC_CAST(void, a_userData);
+#else
+        vprintf(a_fmtStr, a_argptr);
 #endif
         break;
     default:
