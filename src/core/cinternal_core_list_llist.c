@@ -73,25 +73,41 @@ CINTERNAL_EXPORT void	CInternalLListDestroyEx(CinternalLList_t a_list, TypeCinte
 }
 
 
-CINTERNAL_EXPORT CInternalLListIterator CInternalLListAddDataToFront(CinternalLList_t a_list, const void* a_data)
+CINTERNAL_EXPORT CInternalLListIterator CInternalLListAddDataBeforeIterator(CinternalLList_t a_list, CInternalLListIterator a_iter, const void* a_data)
 {
-	struct SCinternalLListItem* pItem = CPPUTILS_STATIC_CAST(struct SCinternalLListItem*, (*(a_list->allocator))(sizeof(struct SCinternalLListItem)));
-	if (!pItem) {
+	struct SCinternalLListItem* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalLListItem*, a_iter);
+	struct SCinternalLListItem*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLListItem*, (*(a_list->allocator))(sizeof(struct SCinternalLListItem)));
+	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
 
-	pItem->prevIList = CPPUTILS_NULL;
+	pNewItem->nextInList = pIterInp;
+	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
 
-	pItem->data = CPPUTILS_CONST_CAST(void*, a_data);
+	if(a_iter){
+		pNewItem->prevInList = a_iter->prevInList;
+		if (a_iter->prevInList) {
+			a_iter->prevInList->nextInList = pNewItem;
+		}
 
-	pItem->nextInList = a_list->first;
-	if (a_list->first) {
-		a_list->first->prevIList = pItem;
 	}
-	a_list->first = pItem;
-	++(a_list->m_size);
+	else {
+		pNewItem->prevInList = CPPUTILS_NULL;
+	}
+
+	if (pIterInp == a_list->first) {
+		a_list->first = pNewItem;
+	}
 	
-	return pItem;
+	++(a_list->m_size);
+
+	return pNewItem;
+}
+
+
+CINTERNAL_EXPORT CInternalLListIterator CInternalLListAddDataAfterIterator(CinternalLList_t a_list, CInternalLListIterator CPPUTILS_ARG_NO_NULL a_iter, const void* a_data)
+{
+	return CInternalLListAddDataBeforeIterator(a_list, a_iter->nextInList, a_data);
 }
 
 
@@ -103,12 +119,12 @@ CINTERNAL_EXPORT CInternalLListIterator CInternalLListFirstItem(ConstCinternalLL
 
 CINTERNAL_EXPORT void CInternalLListRemoveData(CinternalLList_t a_list, CInternalLListIterator a_iterator)
 {
-	if (a_iterator->prevIList) {
-		a_iterator->prevIList->nextInList = a_iterator->nextInList;
+	if (a_iterator->prevInList) {
+		a_iterator->prevInList->nextInList = a_iterator->nextInList;
 	}
 
 	if (a_iterator->nextInList) {
-		a_iterator->nextInList->prevIList = a_iterator->prevIList;
+		a_iterator->nextInList->prevInList = a_iterator->prevInList;
 	}
 
 	if (a_iterator == a_list->first) {
