@@ -75,7 +75,7 @@ CINTERNAL_EXPORT void	CInternalLListDestroyEx(CinternalLList_t a_list, TypeCinte
 
 CINTERNAL_EXPORT CInternalLListIterator CInternalLListAddDataBeforeIterator(CinternalLList_t a_list, CInternalLListIterator a_iter, const void* a_data)
 {
-	struct SCinternalLListItem* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalLListItem*, a_iter);
+	struct SCinternalLListItem* const pIterInp = a_iter?CPPUTILS_CONST_CAST(struct SCinternalLListItem*, a_iter):(a_list->first);
 	struct SCinternalLListItem*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLListItem*, (*(a_list->allocator))(sizeof(struct SCinternalLListItem)));
 	if (!pNewItem) {
 		return CPPUTILS_NULL;
@@ -84,18 +84,19 @@ CINTERNAL_EXPORT CInternalLListIterator CInternalLListAddDataBeforeIterator(Cint
 	pNewItem->nextInList = pIterInp;
 	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
 
-	if(a_iter){
-		pNewItem->prevInList = a_iter->prevInList;
-		if (a_iter->prevInList) {
-			a_iter->prevInList->nextInList = pNewItem;
+	if(pIterInp){
+		pNewItem->prevInList = pIterInp->prevInList;
+		if (pIterInp->prevInList) {
+			pIterInp->prevInList->nextInList = pNewItem;
+		}
+
+		if (pIterInp == a_list->first) {
+			a_list->first = pNewItem;
 		}
 
 	}
 	else {
 		pNewItem->prevInList = CPPUTILS_NULL;
-	}
-
-	if (pIterInp == a_list->first) {
 		a_list->first = pNewItem;
 	}
 	

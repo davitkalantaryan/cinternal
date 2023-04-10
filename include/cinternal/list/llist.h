@@ -38,7 +38,8 @@ CPPUTILS_END_C
 
 #define CInternalLListCreate()						CInternalLListCreateEx(CPPUTILS_NULL,CPPUTILS_NULL)
 #define CInternalLListDestroy(_hashTbl)				CInternalLListDestroyEx(_hashTbl,CPPUTILS_NULL)
-#define CInternalLListAddDataToFront(_list, _data)	CInternalLListAddDataBeforeIterator(_list,CInternalLListFirstItem(_list),_data)
+//#define CInternalLListAddDataToFront(_list, _data)	CInternalLListAddDataBeforeIterator(_list,CInternalLListFirstItem(_list),_data)
+#define CInternalLListAddDataToFront(_list, _data)	CInternalLListAddDataBeforeIterator(_list,CPPUTILS_NULL,_data)
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_LIST_LLIST_H
