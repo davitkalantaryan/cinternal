@@ -218,14 +218,14 @@ CINTERNAL_EXPORT void CInternalLHashDestroyEx(CinternalLHash_t a_hashTbl, TypeCi
 }
 
 
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataEvenIfExist(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize)
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataEvenIfExistBeforeIterator(CinternalLHash_t a_hashTbl, CInternalLHashIterator a_iter, const void* a_data, const void* a_key, size_t a_keySize)
 {
 	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
-	return CInternalLHashAddDataWithKnownHash(a_hashTbl,a_data,a_key, a_keySize, hash);
+	return CInternalLHashAddDataWithKnownHashBeforeIterator(a_hashTbl, a_iter, a_data, a_key, a_keySize, hash);
 }
 
 
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExists(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize)
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExistsBeforeIterator(CinternalLHash_t a_hashTbl, CInternalLHashIterator a_iter, const void* a_data, const void* a_key, size_t a_keySize)
 {
 	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
 	struct SCinternalLHashItem * pItem = a_hashTbl->ppTable[hash];
@@ -237,49 +237,81 @@ CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExists(Cintern
 		pItem = pItem->nextInTbl;
 	}
 
-	return CInternalLHashAddDataWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, hash);
+	return CInternalLHashAddDataWithKnownHashBeforeIterator(a_hashTbl, a_iter,a_data, a_key, a_keySize, hash);
 }
 
 
-CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataWithKnownHash(CinternalLHash_t a_hashTbl, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataEvenIfExistAfterIterator(CinternalLHash_t a_hashTbl, CInternalLHashIterator CPPUTILS_ARG_NO_NULL a_iter, const void* a_data, const void* a_key, size_t a_keySize)
 {
-	struct SCinternalLHashItem* pItem = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalLHashItem)));
-	if (!pItem) {
+	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
+	return CInternalLHashAddDataWithKnownHashAfterIterator(a_hashTbl, a_iter, a_data, a_key, a_keySize, hash);
+}
+
+
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataIfNotExistsAfterIterator(CinternalLHash_t a_hashTbl, CInternalLHashIterator CPPUTILS_ARG_NO_NULL a_iter, const void* a_data, const void* a_key, size_t a_keySize)
+{
+	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
+	struct SCinternalLHashItem* pItem = a_hashTbl->ppTable[hash];
+
+	while (pItem) {
+		if ((*(a_hashTbl->isEq))(pItem->key, pItem->keySize, a_key, a_keySize)) {
+			return CPPUTILS_NULL;
+		}
+		pItem = pItem->nextInTbl;
+	}
+
+	return CInternalLHashAddDataWithKnownHashAfterIterator(a_hashTbl, a_iter, a_data, a_key, a_keySize, hash);
+}
+
+
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataWithKnownHashAfterIterator(CinternalLHash_t a_hashTbl, CInternalLHashIterator CPPUTILS_ARG_NO_NULL a_iter, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
+{
+	return CInternalLHashAddDataWithKnownHashBeforeIterator(a_hashTbl, a_iter->nextInList, a_data, a_key,a_keySize,a_hash);
+}
+
+
+CINTERNAL_EXPORT CInternalLHashIterator CInternalLHashAddDataWithKnownHashBeforeIterator(CinternalLHash_t a_hashTbl, CInternalLHashIterator a_iter, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
+{
+	struct SCinternalLHashItem* const pIterInp = a_iter ? CPPUTILS_CONST_CAST(struct SCinternalLHashItem*, a_iter) : (a_hashTbl->first);
+	struct SCinternalLHashItem*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalLHashItem)));
+	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
 
-	//pItem->key = (*(a_hashTbl->allocator))(a_keySize);
-	//if (!(pItem->key)) {
-	//	(*(a_hashTbl->deallocator))(pItem);
-	//	return CPPUTILS_NULL;
-	//}
-	//memcpy(pItem->key, a_key, a_keySize);
-	//pItem->keySize = a_keySize;
-	if (!(*(a_hashTbl->keyStore))(a_hashTbl->allocator, &(pItem->key), &(pItem->keySize), a_key, a_keySize)) {
-		(*(a_hashTbl->deallocator))(pItem);
+	if (!(*(a_hashTbl->keyStore))(a_hashTbl->allocator, &(pNewItem->key), &(pNewItem->keySize), a_key, a_keySize)) {
+		(*(a_hashTbl->deallocator))(pNewItem);
 		return CPPUTILS_NULL;
 	}
 
-	pItem->prevIList = CPPUTILS_NULL;
-	pItem->prevInTbl = CPPUTILS_NULL;
-
-	pItem->hash = a_hash;
-	pItem->data = CPPUTILS_CONST_CAST(void*, a_data);
-
-	pItem->nextInList = a_hashTbl->first;
-	if (a_hashTbl->first) {
-		a_hashTbl->first->prevIList = pItem;
+	// list related part
+	pNewItem->nextInList = pIterInp;
+	if (pIterInp) {
+		pNewItem->prevInList = pIterInp->prevInList;
+		if (pIterInp->prevInList) {
+			pIterInp->prevInList->nextInList = pNewItem;
+		}
+		if (pIterInp == a_hashTbl->first) {
+			a_hashTbl->first = pNewItem;
+		}
 	}
-	a_hashTbl->first = pItem;
+	else {
+		pNewItem->prevInList = CPPUTILS_NULL;
+		a_hashTbl->first = pNewItem;
+	}
+	// end list related part
 
-	pItem->nextInTbl = a_hashTbl->ppTable[a_hash];
+	pNewItem->prevInTbl = CPPUTILS_NULL;
+	pNewItem->hash = a_hash;
+	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
+
+	pNewItem->nextInTbl = a_hashTbl->ppTable[a_hash];
 	if (a_hashTbl->ppTable[a_hash]) {
-		a_hashTbl->ppTable[a_hash]->prevInTbl = pItem;
+		a_hashTbl->ppTable[a_hash]->prevInTbl = pNewItem;
 	}
-	a_hashTbl->ppTable[a_hash] = pItem;
+	a_hashTbl->ppTable[a_hash] = pNewItem;
 	++(a_hashTbl->m_size);
 
-	return pItem;
+	return pNewItem;
 }
 
 
@@ -340,12 +372,12 @@ CINTERNAL_EXPORT void CInternalLHashRemoveDataEx(CinternalLHash_t a_hashTbl, CIn
 	}
 
 	//
-	if (a_iterator->prevIList) {
-		a_iterator->prevIList->nextInList = a_iterator->nextInList;
+	if (a_iterator->prevInList) {
+		a_iterator->prevInList->nextInList = a_iterator->nextInList;
 	}
 
 	if (a_iterator->nextInList) {
-		a_iterator->nextInList->prevIList = a_iterator->prevIList;
+		a_iterator->nextInList->prevInList = a_iterator->prevInList;
 	}
 
 	if (a_iterator == a_hashTbl->first) {

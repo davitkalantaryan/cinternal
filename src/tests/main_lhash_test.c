@@ -38,9 +38,9 @@ int main(void)
 		perror("\n");
 		return 1;
 	}
-	CInternalLHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, CInternalSmallIntHPair(1));
-	CInternalLHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA2, CInternalSmallIntHPair(2));
-	TestHash(aHash, CInternalSmallIntHPair(1), CInternalSmallIntHPair(2));
+	CInternalLHashAddDataEvenIfExistSmlInt(aHash, (void*)CINTR_TEST_HASH_DATA1, 1);
+	CInternalLHashAddDataEvenIfExistSmlInt(aHash, (void*)CINTR_TEST_HASH_DATA2, 2);
+	TestHash(aHash, CInternalSmallIntHPairFn(1), CInternalSmallIntHPairFn(2));
 	CInternalLHashDestroy(aHash);
 
 	return 0;
