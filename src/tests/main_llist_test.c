@@ -30,18 +30,18 @@ int main(void)
 	pItem = CInternalLListFirstItem(aList);
 	while (pItem) {
 		++nNumber;
-		pItem = pItem->nextInList;
+		pItem = pItem->next;
 	}
 
 	assert(nNumber==3);
 	
 	pItem = CInternalLListFirstItem(aList);
 	assert(pItem);
-	assert(((size_t)pItem->data)==3);
+	assert(((size_t)CInternalListDataFromIter(pItem))==3);
 
-	pItem = pItem->nextInList;
+	pItem = pItem->next;
 	assert(pItem);
-	assert(((size_t)pItem->data) == 2);
+	assert(((size_t)CInternalListDataFromIter(pItem)) == 2);
 
 	CInternalLListDestroy(aList);
 

@@ -6,18 +6,10 @@
 //
 
 
+#include <cinternal/internal_header.h>
+#define CINTERNAL_SRC_CORE_CINTERNAL_CORE_LIST_DLLIST_IMPL_H_NEEDED
+#include "cinternal_core_list_dllist.impl.h"
 #include <cinternal/hash/lhash.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-
-#ifdef _MSC_VER
-
-#elif defined(__GNUC__) 
-
-#pragma GCC diagnostic ignored "-Wattributes"
-
-#endif
 
 #define CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS	4096
 
@@ -26,23 +18,19 @@ static size_t cinternal_hash1_raw_mem(const void* a_pKey, size_t a_unKeySize) CP
 
 CPPUTILS_BEGIN_C
 
-static void CinternalDefaultDataCleaner(void* a_pData) {
-	CPPUTILS_STATIC_CAST(void, a_pData);
-}
-
 
 struct CPPUTILS_DLL_PRIVATE SCinternalLHash {
+	TypeCinternalAllocator				allocator;
+	TypeCinternalDeallocator			deallocator;
+	struct SCinternalLHashItem			*first, *last;
+	size_t								m_size;
+	
 	struct SCinternalLHashItem**		ppTable;
 	size_t								numberOfBaskets;
 	TypeCinternalHasher					hasher;
-	TypeCinternalAllocator				allocator;
-	TypeCinternalDeallocator			deallocator;
 	TypeCinternalIsMemoriesIdentical	isEq;
 	TypeCinternalStoreKey				keyStore;
 	TypeCinternalUnstoreKey				keyUnstore;
-	struct SCinternalLHashItem*			first;
-	size_t								m_size;
-	size_t								reserved01;
 };
 
 
