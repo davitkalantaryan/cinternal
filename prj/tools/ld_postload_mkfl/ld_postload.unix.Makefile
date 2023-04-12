@@ -15,7 +15,7 @@ include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 SOURCES += $(cinternalRepoRoot)/src/tools/ld_postload/main_cinternal_tools_ld_postload.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_parser_argparser01.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_loadfreelib_on_remote_process_unix.c
-SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_list_llist.c                                       
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_list_dllist.c
 SOURCES += $(cinternalRepoRoot)/src/intern/cinternal_core_intern_tokenizer01_common.c                            
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_parser_tokenizer01.c
 

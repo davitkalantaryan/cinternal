@@ -10,7 +10,7 @@ include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
 
 
 SOURCES += $(cinternalRepoRoot)/src/tests/main_llist_test.c
-SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_list_llist.c
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_list_dllist.c
 
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 
