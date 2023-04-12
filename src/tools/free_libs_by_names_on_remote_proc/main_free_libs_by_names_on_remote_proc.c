@@ -11,7 +11,7 @@
 #include <cinternal/export_symbols.h>
 #include <cinternal/loadfreelib_on_remote_process.h>
 #include <cinternal/parser/argparser01.h>
-#include <cinternal/list/llist.h>
+#include <cinternal/list/dllist.h>
 #include <private/cinternal/parser/tokenizer02_common_p.h>
 #include <stddef.h>
 
@@ -65,8 +65,8 @@ int main(int a_argc, char* a_argv[])
 	size_t szEnvLen;
 	char vcLdPpostloadEnvBuffer[1024];
 	const char* cpcNextArg;
-	CinternalLList_t aList;
-	CInternalLListIterator listIter;
+	CinternalDLList_t aList;
+	CinternalIterator_t listIter;
 	int nPid = 0;
 	int nRet;
 
@@ -79,7 +79,7 @@ int main(int a_argc, char* a_argv[])
 	//}
 #endif
 
-	aList = CInternalLListCreate();
+	aList = CInternalDLListCreate();
 	if (!aList) {
 		fprintf(stderr, "Unable create a list\n");
 		return 1;
@@ -97,7 +97,7 @@ int main(int a_argc, char* a_argv[])
 		nArgcTmpTmp = nArgcTmp;
 		cpcNextArg = CInternalFindEndTakeArg(&nArgcTmp, ppcArgvTmp, "--libs", &nRet, true);
 		if (cpcNextArg) {
-			CInternalLListAddDataToFront(aList, cpcNextArg);
+			CInternalDLListAddDataToFront(aList, cpcNextArg);
 			nArgc -= (nArgcTmpTmp - nArgcTmp);
 			ppcArgvTmp += nRet;
 			nArgcTmp -= nRet;
@@ -110,24 +110,24 @@ int main(int a_argc, char* a_argv[])
 
 	if (nPid < 1) {
 		if (nArgc < 1) {
-			CInternalLListDestroy(aList);
+			CInternalDLListDestroy(aList);
 			fprintf(stderr, "PID of running application to inject DLL is not specified!\n");
 			return 1;
 		}
 		nPid = atoi(ppcArgv[0]);
 		if (nPid < 1) {
-			CInternalLListDestroy(aList);
+			CInternalDLListDestroy(aList);
 			fprintf(stderr, "PID of running application to inject DLL is not specified!\n");
 			return 1;
 		}
 	}  //  if (dwPid < 1) {
 
-	listIter = CInternalLListFirstItem(aList);
+	listIter = CInternalDLListFirstItem(aList);
 	while (listIter) {
-		CInternalTokenizer02b((char*)CInternalListDataFromIter(listIter), nPid);
+		CInternalTokenizer02b((char*)CInternalDataFromIterator(listIter), nPid);
 		listIter = listIter->next;
 	}
-	CInternalLListDestroy(aList);
+	CInternalDLListDestroy(aList);
 
 	pcEnvVar = GetEnvironmentVariableACint("LD_POSTFREE", vcLdPpostloadEnvBuffer, 1023, &szEnvLen);
 	if ((szEnvLen > 0) && (szEnvLen < 1023)) {

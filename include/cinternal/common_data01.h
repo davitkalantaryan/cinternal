@@ -15,14 +15,6 @@
 
 CPPUTILS_BEGIN_C
 
-struct SCinternalLListItemIter {
-	struct SCinternalLListItemIter	*prev, *next;
-};
-
-struct SCinternalLListItem {
-	struct SCinternalLListItemIter	itr;
-	void*							data;
-};
 
 typedef void(*TypeCinternalDeallocator)(void*);
 typedef void* (*TypeCinternalAllocator)(size_t);
@@ -34,8 +26,6 @@ typedef void(*TypeCinternalUnstoreKey)(TypeCinternalDeallocator a_deallocator, v
 
 CPPUTILS_END_C
 
-
-#define CInternalListDataFromIter(_iter_ptr)	CPPUTILS_REINTERPRET_CAST(const struct SCinternalLListItem*,_iter_ptr)->data
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_COMMON_DATA01_H
