@@ -31,10 +31,12 @@ jobs:
             include:
               # for all linuxes we should specify lC (lsbCode)
               # lC=$lsbCode=`lsb_release -c | cut -f 2` # for ubuntu18
-              - os: ubuntu-18.04
-                lC: bionic
-              #- os: ubuntu-20.04
-              #  lC: focal
+              #- os: ubuntu-18.04
+              #  lC: bionic
+              - os: ubuntu-20.04
+                lC: focal
+              - os: ubuntu-22.04
+                lC: jammy
               #- os: LinuxMint-19.3
               #  lC: trica
         steps:
