@@ -27,7 +27,8 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
           matrix:
-            os: [ubuntu-20.04 ubuntu-22.04]
+            #os: [ubuntu-20.04 ubuntu-22.04]
+            os: []
             include:
               # for all linuxes we should specify lC (lsbCode)
               # lC=$lsbCode=`lsb_release -c | cut -f 2` # for ubuntu18
