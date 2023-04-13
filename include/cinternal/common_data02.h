@@ -13,26 +13,25 @@
 
 CPPUTILS_BEGIN_C
 
-struct SCinternalIterator {
-	struct SCinternalIterator	*prev, *next;
+struct SCinternalListIterator {
+	struct SCinternalListIterator	*prev, *next;
 };
 
-struct SCinternalIteratorWithData {
-	struct SCinternalIterator		itr;
+struct SCinternalListIteratorWithData {
+	struct SCinternalListIterator	itr;
 	void*							data;
 };
 
 struct SCinternalDLList;
-
-
 typedef struct SCinternalDLList* CinternalDLList_t;
 typedef const struct SCinternalDLList* ConstCinternalDLList_t;
-typedef const struct SCinternalIterator* CinternalIterator_t;
+
+typedef const struct SCinternalListIterator* CinternalListIterator_t;
+
+#define CInternalDataFromIterator(_iter_ptr)	CPPUTILS_REINTERPRET_CAST(const struct SCinternalListIteratorWithData*,_iter_ptr)->data
 
 CPPUTILS_END_C
 
-
-#define CInternalDataFromIterator(_iter_ptr)	CPPUTILS_REINTERPRET_CAST(const struct SCinternalIteratorWithData*,_iter_ptr)->data
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_COMMON_DATA02_H

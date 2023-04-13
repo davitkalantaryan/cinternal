@@ -19,7 +19,7 @@
 #include <stdint.h>
 #include <string.h>
 
-//#define CInternalListItemToIter(_item_ptr)		CPPUTILS_REINTERPRET_CAST(struct SCinternalIterator*,_item_ptr)
+//#define CInternalListItemToIter(_item_ptr)		CPPUTILS_REINTERPRET_CAST(struct SCinternalListIterator*,_item_ptr)
 #define CInternalItemToIterator(_item_ptr)			(&((_item_ptr)->itr))
 
 #ifdef _MSC_VER
@@ -44,7 +44,7 @@ static void CinternalDefaultDataCleaner(void* a_pData) CPPUTILS_NOEXCEPT  {
 struct CPPUTILS_DLL_PRIVATE SCinternalDLList {
 	TypeCinternalAllocator			allocator;
 	TypeCinternalDeallocator		deallocator;
-	struct SCinternalIterator		*first, *last;
+	struct SCinternalListIterator	*first, *last;
 	size_t							m_size;
 };
 
@@ -58,7 +58,7 @@ static inline void CInternalDLListInitializeInline(CinternalDLList_t a_list, Typ
 
 
 static inline void CInternalDLListDestroyExInline(CinternalDLList_t a_list, TypeCinternalDeallocator a_remainingDataCleaner) CPPUTILS_NOEXCEPT {
-	struct SCinternalIterator *pItemTmp, *pItem = a_list->first;
+	struct SCinternalListIterator *pItemTmp, *pItem = a_list->first;
 	a_remainingDataCleaner = a_remainingDataCleaner ? a_remainingDataCleaner : (&CinternalDefaultDataCleaner); // if null, then data should not be cleaned
 	while (pItem) {
 		pItemTmp = pItem->next;
@@ -70,8 +70,8 @@ static inline void CInternalDLListDestroyExInline(CinternalDLList_t a_list, Type
 }
 
 
-static inline CinternalIterator_t CInternalDLListAddDataBeforeIteratorInline(CinternalDLList_t a_list, CinternalIterator_t a_iter, const void* a_data) CPPUTILS_NOEXCEPT  {
-	struct SCinternalIteratorWithData*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalIteratorWithData)));
+static inline CinternalListIterator_t CInternalDLListAddDataBeforeIteratorInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data) CPPUTILS_NOEXCEPT  {
+	struct SCinternalListIteratorWithData*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalListIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalListIteratorWithData)));
 	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
@@ -79,7 +79,7 @@ static inline CinternalIterator_t CInternalDLListAddDataBeforeIteratorInline(Cin
 	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
 
 	if(a_iter){
-		struct SCinternalIterator* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalIterator*, a_iter);
+		struct SCinternalListIterator* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalListIterator*, a_iter);
 		pNewItem->itr.next = pIterInp;
 		pNewItem->itr.prev = pIterInp->prev;
 		if (pIterInp->prev) {
@@ -109,8 +109,8 @@ static inline CinternalIterator_t CInternalDLListAddDataBeforeIteratorInline(Cin
 }
 
 
-static inline CinternalIterator_t CInternalDLListAddDataAfterIteratorInline(CinternalDLList_t a_list, CinternalIterator_t a_iter, const void* a_data) CPPUTILS_NOEXCEPT  {
-	struct SCinternalIteratorWithData* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalIteratorWithData)));
+static inline CinternalListIterator_t CInternalDLListAddDataAfterIteratorInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data) CPPUTILS_NOEXCEPT  {
+	struct SCinternalListIteratorWithData* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalListIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalListIteratorWithData)));
 	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
@@ -118,7 +118,7 @@ static inline CinternalIterator_t CInternalDLListAddDataAfterIteratorInline(Cint
 	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
 
 	if (a_iter) {
-		struct SCinternalIterator* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalIterator*, a_iter);
+		struct SCinternalListIterator* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalListIterator*, a_iter);
 		pNewItem->itr.prev = pIterInp;
 		pNewItem->itr.next = pIterInp->prev;
 		if (pIterInp->next) {
@@ -148,7 +148,7 @@ static inline CinternalIterator_t CInternalDLListAddDataAfterIteratorInline(Cint
 }
 
 
-static inline void CInternalDLListRemoveDataInline(CinternalDLList_t a_list, CinternalIterator_t a_iterator) CPPUTILS_NOEXCEPT {
+static inline void CInternalDLListRemoveDataInline(CinternalDLList_t a_list, CinternalListIterator_t a_iterator) CPPUTILS_NOEXCEPT {
 	if (a_iterator->prev) {
 		a_iterator->prev->next = a_iterator->next;
 	}
@@ -167,7 +167,7 @@ static inline void CInternalDLListRemoveDataInline(CinternalDLList_t a_list, Cin
 
 	--(a_list->m_size);
 
-	(*(a_list->deallocator))(CPPUTILS_REINTERPRET_CAST(struct SCinternalIteratorWithData*,CPPUTILS_CONST_CAST(struct SCinternalIterator*, a_iterator)));
+	(*(a_list->deallocator))(CPPUTILS_REINTERPRET_CAST(struct SCinternalListIteratorWithData*,CPPUTILS_CONST_CAST(struct SCinternalListIterator*, a_iterator)));
 }
 
 

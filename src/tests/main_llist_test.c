@@ -13,7 +13,7 @@
 int main(void)
 {
 	int nNumber;
-	CinternalIterator_t pItem;
+	CinternalListIterator_t pItem;
 	CinternalDLList_t aList = CInternalDLListCreate();
 
 	if (!aList) {

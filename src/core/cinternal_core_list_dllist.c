@@ -35,31 +35,31 @@ CINTERNAL_EXPORT void CInternalDLListDestroyEx(CinternalDLList_t a_list, TypeCin
 }
 
 
-CINTERNAL_EXPORT CinternalIterator_t CInternalDLListAddDataBeforeIterator(CinternalDLList_t a_list, CinternalIterator_t a_iter, const void* a_data)
+CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListAddDataBeforeIterator(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data)
 {
 	return CInternalDLListAddDataBeforeIteratorInline(a_list, a_iter, a_data);
 }
 
 
-CINTERNAL_EXPORT CinternalIterator_t CInternalDLListAddDataAfterIterator(CinternalDLList_t a_list, CinternalIterator_t a_iter, const void* a_data)
+CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListAddDataAfterIterator(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data)
 {
 	return CInternalDLListAddDataAfterIteratorInline(a_list, a_iter, a_data);
 }
 
 
-CINTERNAL_EXPORT CinternalIterator_t CInternalDLListFirstItem(ConstCinternalDLList_t a_list)
+CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListFirstItem(ConstCinternalDLList_t a_list)
 {
 	return a_list->first;
 }
 
 
-CINTERNAL_EXPORT CinternalIterator_t CInternalDLListLastItem(ConstCinternalDLList_t a_list)
+CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListLastItem(ConstCinternalDLList_t a_list)
 {
 	return a_list->last;
 }
 
 
-CINTERNAL_EXPORT void CInternalDLListRemoveData(CinternalDLList_t a_list, CinternalIterator_t a_iterator)
+CINTERNAL_EXPORT void CInternalDLListRemoveData(CinternalDLList_t a_list, CinternalListIterator_t a_iterator)
 {
 	CInternalDLListRemoveDataInline(a_list, a_iterator);
 }

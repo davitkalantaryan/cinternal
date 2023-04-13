@@ -66,7 +66,7 @@ int main(int a_argc, char* a_argv[])
 	char vcLdPpostloadEnvBuffer[1024];
 	const char* cpcNextArg;
 	CinternalDLList_t aList;
-	CinternalIterator_t listIter;
+	CinternalListIterator_t listIter;
 	int nPid = 0;
 	int nRet;
 
