@@ -158,14 +158,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_dllhash.c" />
     <ClCompile Include="..\..\..\src\tests\main_lhash_test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h" />
     <ClInclude Include="..\..\..\include\cinternal\export_symbols.h" />
-    <ClInclude Include="..\..\..\include\cinternal\hash\lhash.h" />
+    <ClInclude Include="..\..\..\include\cinternal\hash\dllhash.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />
+    <ClInclude Include="..\..\..\src\core\cinternal_core_list_dllist.impl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

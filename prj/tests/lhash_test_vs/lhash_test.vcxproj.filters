@@ -18,7 +18,7 @@
     <ClCompile Include="..\..\..\src\tests\main_lhash_test.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c">
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_dllhash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,10 +29,13 @@
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\hash\lhash.h">
+    <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h">
+    <ClInclude Include="..\..\..\include\cinternal\hash\dllhash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\cinternal_core_list_dllist.impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

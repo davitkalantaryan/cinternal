@@ -1,12 +1,12 @@
 //
-// file:            lhash.h
-// path:			include/cinternal/hash/lhash.h
+// file:            dllhash.h
+// path:			include/cinternal/hash/dllhash.h
 // created on:		2023 Feb 25
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
 
-#ifndef CINTERNAL_INCLUDE_CINTERNAL_HASH_LHASH_H
-#define CINTERNAL_INCLUDE_CINTERNAL_HASH_LHASH_H
+#ifndef CINTERNAL_INCLUDE_CINTERNAL_HASH_DLLHASH_H
+#define CINTERNAL_INCLUDE_CINTERNAL_HASH_DLLHASH_H
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/common_data01.h>
@@ -92,4 +92,4 @@ CPPUTILS_END_C
 #define CInternalLHashAddDataEvenIfExistAfterIteratorStr(_hashTbl,_iter,_data,_str)		CInternalLHashAddDataEvenIfExistAfterIterator(_hashTbl,_iter,_data,(_str),strlen(_str))
 
 
-#endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_HASH_LHASH_H
+#endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_HASH_DLLHASH_H

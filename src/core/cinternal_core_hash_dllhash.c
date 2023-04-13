@@ -1,15 +1,14 @@
 //
-// file:            cinternal_core_hash_lhash.c
-// path:			src/core/cinternal_core_hash_lhash.c
+// file:            cinternal_core_hash_dllhash.c
+// path:			src/core/cinternal_core_hash_dllhash.c
 // created on:		2023 Feb 25
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
 
 
-#include <cinternal/internal_header.h>
+#include <cinternal/hash/dllhash.h>
 #define CINTERNAL_SRC_CORE_CINTERNAL_CORE_LIST_DLLIST_IMPL_H_NEEDED
 #include "cinternal_core_list_dllist.impl.h"
-#include <cinternal/hash/lhash.h>
 
 #define CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS	4096
 

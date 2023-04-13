@@ -22,8 +22,8 @@ env:
 
 jobs:
 
-    # matrix for debian linuxes (for now ubuntu-18.04 and ubuntu-20.04)
-    debian-linuxes:
+    # matrix for unix systems (for now ubuntu-20.04 and ubuntu-22.04, and macos)
+    unixes:
         runs-on: ${{ matrix.os }}
         strategy:
           matrix:

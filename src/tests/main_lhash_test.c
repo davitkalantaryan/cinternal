@@ -6,7 +6,7 @@
 //
 
 
-#include <cinternal/hash/lhash.h>
+#include <cinternal/hash/dllhash.h>
 #include <stdio.h>
 #include <assert.h>
 
