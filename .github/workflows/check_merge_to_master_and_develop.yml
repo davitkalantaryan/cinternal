@@ -37,6 +37,8 @@ jobs:
                 lC: focal
               - os: ubuntu-22.04
                 lC: jammy
+              - os: macos-latest
+                lC: mac
               #- os: LinuxMint-19.3
               #  lC: trica
         steps:
