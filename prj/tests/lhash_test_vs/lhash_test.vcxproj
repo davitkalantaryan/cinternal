@@ -162,6 +162,8 @@
     <ClCompile Include="..\..\..\src\tests\main_lhash_test.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\cinternal\common_data01.h" />
+    <ClInclude Include="..\..\..\include\cinternal\common_data02.h" />
     <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h" />
     <ClInclude Include="..\..\..\include\cinternal\export_symbols.h" />
     <ClInclude Include="..\..\..\include\cinternal\hash\dllhash.h" />

@@ -29,9 +29,17 @@ CINTERNAL_EXPORT CinternalDLList_t CInternalDLListCreateEx(TypeCinternalAllocato
 }
 
 
+static void CinternalDLListItemExtraCleaner(CinternalDLList_t a_list, struct SCinternalListIterator* a_iter)
+{
+	CPPUTILS_STATIC_CAST(void, a_list);
+	CPPUTILS_STATIC_CAST(void, a_iter);
+}
+
+
 CINTERNAL_EXPORT void CInternalDLListDestroyEx(CinternalDLList_t a_list, TypeCinternalDeallocator a_remainingDataCleaner)
 {
-	CInternalDLListDestroyExInline(a_list, a_remainingDataCleaner);
+	CInternalListCleanInline(a_list, a_remainingDataCleaner,&CinternalDLListItemExtraCleaner);
+	(*(a_list->deallocator))(a_list);
 }
 
 
@@ -61,7 +69,8 @@ CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListLastItem(ConstCinternalD
 
 CINTERNAL_EXPORT void CInternalDLListRemoveData(CinternalDLList_t a_list, CinternalListIterator_t a_iterator)
 {
-	CInternalDLListRemoveDataInline(a_list, a_iterator);
+	CInternalDLListRemoveDataNoFreeInline(a_list, a_iterator);
+	(*(a_list->deallocator))(CPPUTILS_REINTERPRET_CAST(struct SCinternalListIteratorWithData*, CPPUTILS_CONST_CAST(struct SCinternalListIterator*, a_iterator)));
 }
 
 
