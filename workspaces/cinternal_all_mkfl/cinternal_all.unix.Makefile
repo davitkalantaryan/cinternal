@@ -8,14 +8,14 @@ cinternalRepoRoot	:= $(shell curDir=`pwd` && cd $(mkfile_dir)/../.. && pwd && cd
 
 
 all:
-        ifneq ($(osSystem),Darwin)
-	        make -f $(cinternalRepoRoot)/prj/tools/freelib_on_remote_proc_by_handle_mkfl/freelib_on_remote_proc_by_handle.unix.Makefile
+	ifneq ($(osSystem),Darwin)
+		make -f $(cinternalRepoRoot)/prj/tools/freelib_on_remote_proc_by_handle_mkfl/freelib_on_remote_proc_by_handle.unix.Makefile
 		make -f $(cinternalRepoRoot)/prj/tools/free_libs_by_names_on_remote_proc_mkfl/free_libs_by_names_on_remote_proc.unix.Makefile
 		make -f $(cinternalRepoRoot)/prj/tools/ld_postload_mkfl/ld_postload.unix.Makefile
 
-                make -f $(cinternalRepoRoot)/prj/core/libcintr_init_libdl_mkfl/libcintr_init_libdl.unix.Makefile
+		make -f $(cinternalRepoRoot)/prj/core/libcintr_init_libdl_mkfl/libcintr_init_libdl.unix.Makefile
 
-                make -f $(cinternalRepoRoot)/prj/tests/any_quick_test_mkfl/any_quick_test.unix.Makefile
+		make -f $(cinternalRepoRoot)/prj/tests/any_quick_test_mkfl/any_quick_test.unix.Makefile
 		make -f $(cinternalRepoRoot)/prj/tests/app_to_hack_mkfl/app_to_hack.unix.Makefile
 	endif
 	
@@ -31,14 +31,14 @@ all:
 
 .PHONY: clean
 clean:
-        ifneq ($(osSystem),Darwin)
-	        make -f $(cinternalRepoRoot)/prj/tools/freelib_on_remote_proc_by_handle_mkfl/freelib_on_remote_proc_by_handle.unix.Makefile clean
+	ifneq ($(osSystem),Darwin)
+		make -f $(cinternalRepoRoot)/prj/tools/freelib_on_remote_proc_by_handle_mkfl/freelib_on_remote_proc_by_handle.unix.Makefile clean
 		make -f $(cinternalRepoRoot)/prj/tools/free_libs_by_names_on_remote_proc_mkfl/free_libs_by_names_on_remote_proc.unix.Makefile clean
 		make -f $(cinternalRepoRoot)/prj/tools/ld_postload_mkfl/ld_postload.unix.Makefile clean
 
-                make -f $(cinternalRepoRoot)/prj/core/libcintr_init_libdl_mkfl/libcintr_init_libdl.unix.Makefile clean
+		make -f $(cinternalRepoRoot)/prj/core/libcintr_init_libdl_mkfl/libcintr_init_libdl.unix.Makefile clean
 	
-                make -f $(cinternalRepoRoot)/prj/tests/any_quick_test_mkfl/any_quick_test.unix.Makefile clean
+		make -f $(cinternalRepoRoot)/prj/tests/any_quick_test_mkfl/any_quick_test.unix.Makefile clean
 		make -f $(cinternalRepoRoot)/prj/tests/app_to_hack_mkfl/app_to_hack.unix.Makefile clean
 	endif
 
