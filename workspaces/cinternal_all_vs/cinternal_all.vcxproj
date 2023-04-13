@@ -327,6 +327,7 @@
     <None Include="..\..\scripts\windows_build_all.bat" />
     <None Include="..\..\scripts\windows_prepare_host.bat" />
     <None Include="..\..\scripts\windows_prepare_repository.bat" />
+    <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

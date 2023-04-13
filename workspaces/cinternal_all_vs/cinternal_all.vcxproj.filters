@@ -40,6 +40,12 @@
     <Filter Include="files\prj\common\common_mkfl">
       <UniqueIdentifier>{3523a8f0-311c-4b04-9896-f0ffa21a061c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="files\workspaces">
+      <UniqueIdentifier>{552d1b0a-9473-48d5-9175-61ee1c4e0df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files\workspaces\cinternal_all_mkfl">
+      <UniqueIdentifier>{0b6aa459-2216-421e-988e-9338101e2cc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\utils\entry_cinternal_all.cpp">
@@ -88,6 +94,9 @@
     </None>
     <None Include="..\..\prj\common\common_mkfl\windows.common.Makefile">
       <Filter>files\prj\common\common_mkfl</Filter>
+    </None>
+    <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile">
+      <Filter>files\workspaces\cinternal_all_mkfl</Filter>
     </None>
   </ItemGroup>
 </Project>
