@@ -21,12 +21,19 @@ int main(void)
 	const int key1 = 1;
 	const int key2 = 2;
 	CinternalLHash_t aHash;
+	CinternalListIterator_t pItem;
 
 	aHash = CInternalLHashCreateRawMem(1024);
 	if (!aHash) {
 		perror("\n");
 		return 1;
 	}
+
+	CInternalLHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, &key1, sizeof(int));
+	pItem = CInternalLHashFind(aHash, &key1, sizeof(int));
+	assert(pItem);
+	CInternalLHashRemoveDataEx(aHash, pItem);
+
 	CInternalLHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, &key1, sizeof(int));
 	CInternalLHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA2, &key2, sizeof(int));
 	TestHash(aHash, &key1, sizeof(int), &key2, sizeof(int));

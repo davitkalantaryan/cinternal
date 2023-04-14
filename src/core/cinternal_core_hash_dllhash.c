@@ -32,7 +32,7 @@ struct CPPUTILS_DLL_PRIVATE SCinternalLHash {
 #define CInternalDLLHashFromDLLList(_list_ptr)		CPPUTILS_REINTERPRET_CAST(struct SCinternalLHash*,_list_ptr)
 #define CInternalDLLListFromDLLHash(_dllhash_ptr)	CPPUTILS_REINTERPRET_CAST(struct SCinternalDLList*,_dllhash_ptr)
 
-#define CInternalHashItemFromTableIterator(_iter_ptr)	cpputils_container_of(_iter_ptr,const struct SCinternalLHashItem,tbl)
+#define CInternalHashItemFromTableIterator(_iter_ptr)	cpputils_container_of(_iter_ptr,struct SCinternalLHashItem,tbl)
 
 
 static size_t cinternal_hash1_small_int(const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT
@@ -214,8 +214,13 @@ static inline struct SCinternalListIterator* CInternalHashFindItemInline(ConstCi
 	*a_pHash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
 	pItem = a_hashTbl->ppTable[*a_pHash];
 	while (pItem) {
+		// todo: delete below line
+		const size_t cunOffset = cpputils_offsetof(const struct SCinternalLHashItem, tbl);
+		const struct SCinternalLHashItem* pItemC = CInternalHashItemFromTableIterator(pItem);
+		(void)pItemC;
+		(void)cunOffset;
 		if ((*(a_hashTbl->isEq))(CInternalHashItemFromTableIterator(pItem)->key, CInternalHashItemFromTableIterator(pItem)->keySize, a_key, a_keySize)) {
-			return pItem;
+			return &(CInternalHashItemFromTableIterator(pItem)->lst.itr);
 		}
 		pItem = pItem->next;
 	}

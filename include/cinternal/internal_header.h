@@ -432,7 +432,8 @@
 #if defined(container_of) || defined(container_of_defined)
 #define	cpputils_container_of					container_of
 #else
-#define cpputils_container_of(_p,_tp,_mem)		CPPUTILS_REINTERPRET_CAST(_tp*,CPPUTILS_CONST_CAST(const char*,CPPUTILS_REINTERPRET_CAST(char*,_p)) + cpputils_offsetof(_tp,_mem))
+//#define cpputils_container_of(_p,_tp,_mem)		CPPUTILS_REINTERPRET_CAST(_tp*,CPPUTILS_CONST_CAST(const char*,CPPUTILS_REINTERPRET_CAST(char*,_p)) + cpputils_offsetof(_tp,_mem))
+#define cpputils_container_of(_p,_tp,_mem)		((_tp*)(((char*)_p)-offsetof(_tp,_mem)))
 #endif
 
 
