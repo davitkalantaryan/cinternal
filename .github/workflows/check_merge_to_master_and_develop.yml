@@ -60,7 +60,7 @@ jobs:
             - name: Building
               run: ./scripts/unix_build_all.sh
 
-            - name: Building
+            - name: testing test apps
               run: ./scripts/unix_run_tests.sh
 
 
