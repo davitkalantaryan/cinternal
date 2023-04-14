@@ -29,10 +29,10 @@ CINTERNAL_EXPORT CinternalDLList_t CInternalDLListCreateEx(TypeCinternalAllocato
 }
 
 
-static void CinternalDLListItemExtraCleaner(CinternalDLList_t a_list, struct SCinternalListIterator* a_iter)
+static void CinternalDLListItemExtraCleaner(CinternalDLList_t a_list, struct SCinternalListIterator* a_iter, TypeCinternalDeallocator a_remainingDataCleaner)
 {
 	CPPUTILS_STATIC_CAST(void, a_list);
-	CPPUTILS_STATIC_CAST(void, a_iter);
+	(*a_remainingDataCleaner)(CInternalDataFromDLListIterator(a_iter));
 }
 
 

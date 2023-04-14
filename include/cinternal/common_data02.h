@@ -28,8 +28,6 @@ typedef const struct SCinternalDLList* ConstCinternalDLList_t;
 
 typedef const struct SCinternalListIterator* CinternalListIterator_t;
 
-#define CInternalDataFromListIterator(_iter_ptr)	CPPUTILS_REINTERPRET_CAST(const struct SCinternalListIteratorWithData*,_iter_ptr)->data
-
 CPPUTILS_END_C
 
 

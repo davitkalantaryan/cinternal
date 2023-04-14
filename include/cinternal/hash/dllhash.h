@@ -31,7 +31,7 @@ typedef struct SCinternalLHash* CinternalLHash_t;
 typedef const struct SCinternalLHash* ConstCinternalLHash_t;
 
 
-#define CInternalDLLHashItemFromListIterator(_iter_ptr)	CPPUTILS_REINTERPRET_CAST(const struct SCinternalLHashItem*,_iter_ptr)
+#define CInternalDLLHashItemFromListIterator2(_iter_ptr)	CPPUTILS_REINTERPRET_CAST(const struct SCinternalLHashItem*,_iter_ptr)
 
 
 CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAny(size_t a_numberOfBaskets, 

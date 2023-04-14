@@ -16,6 +16,7 @@
 
 CPPUTILS_BEGIN_C
 
+#define CInternalDataFromDLListIterator(_iter_ptr)	CPPUTILS_REINTERPRET_CAST(const struct SCinternalListIteratorWithData*,_iter_ptr)->data
 
 CINTERNAL_EXPORT CinternalDLList_t CInternalDLListCreateEx(TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator);
 CINTERNAL_EXPORT void	CInternalDLListDestroyEx(CinternalDLList_t a_list, TypeCinternalDeallocator a_remainingDataCleaner);

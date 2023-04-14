@@ -37,11 +37,11 @@ int main(void)
 	
 	pItem = CInternalDLListFirstItem(aList);
 	assert(pItem);
-	assert(((size_t)CInternalDataFromListIterator(pItem))==3);
+	assert(((size_t)CInternalDataFromDLListIterator(pItem))==3);
 
 	pItem = pItem->next;
 	assert(pItem);
-	assert(((size_t)CInternalDataFromListIterator(pItem)) == 2);
+	assert(((size_t)CInternalDataFromDLListIterator(pItem)) == 2);
 
 	CInternalDLListDestroy(aList);
 

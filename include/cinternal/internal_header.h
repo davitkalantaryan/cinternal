@@ -421,4 +421,19 @@
 #endif
 
 
+#if defined(offsetof) || defined(offsetof_defined)
+	//#define	cpputils_offsetof		offsetof
+	#define cpputils_offsetof(_tp,_mem)		CPPUTILS_REINTERPRET_CAST(size_t,CPPUTILS_REINTERPRET_CAST(char*,&(CPPUTILS_STATIC_CAST(_tp*,CPPUTILS_NULL)->_mem)))
+#else
+	#define cpputils_offsetof(_tp,_mem)		CPPUTILS_REINTERPRET_CAST(size_t,CPPUTILS_REINTERPRET_CAST(char*,&(CPPUTILS_STATIC_CAST(_tp*,CPPUTILS_NULL)->_mem))) 
+#endif
+
+
+#if defined(container_of) || defined(container_of_defined)
+#define	cpputils_container_of					container_of
+#else
+#define cpputils_container_of(_p,_tp,_mem)		CPPUTILS_REINTERPRET_CAST(_tp*,CPPUTILS_CONST_CAST(const char*,CPPUTILS_REINTERPRET_CAST(char*,_p)) + cpputils_offsetof(_tp,_mem))
+#endif
+
+
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H

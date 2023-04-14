@@ -124,7 +124,7 @@ int main(int a_argc, char* a_argv[])
 
 	listIter = CInternalDLListFirstItem(aList);
 	while (listIter) {
-		CInternalTokenizer02b((char*)CInternalDataFromListIterator(listIter), nPid);
+		CInternalTokenizer02b((char*)CInternalDataFromDLListIterator(listIter), nPid);
 		listIter = listIter->next;
 	}
 	CInternalDLListDestroy(aList);

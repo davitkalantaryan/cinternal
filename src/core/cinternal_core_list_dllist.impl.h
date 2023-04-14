@@ -37,7 +37,7 @@
 
 CPPUTILS_BEGIN_C
 
-typedef void (*TypeCinternalListItemExtraCleaner)(CinternalDLList_t a_list, struct SCinternalListIterator* a_iter);
+typedef void (*TypeCinternalListItemExtraCleaner)(CinternalDLList_t a_list, struct SCinternalListIterator* a_iter, TypeCinternalDeallocator a_remainingDataCleaner);
 
 
 static void CinternalDefaultDataCleaner(void* a_pData) CPPUTILS_NOEXCEPT  {
@@ -66,8 +66,7 @@ static CINTERNAL_INLINE2 void CInternalListCleanInline(CinternalDLList_t a_list,
 	a_remainingDataCleaner = a_remainingDataCleaner ? a_remainingDataCleaner : (&CinternalDefaultDataCleaner); // if null, then data should not be cleaned
 	while (pItem) {
 		pItemTmp = pItem->next;
-		(*a_remainingDataCleaner)(CInternalDataFromListIterator(pItem));
-		(*a_extraCleaner)(a_list, pItem);
+		(*a_extraCleaner)(a_list, pItem, a_remainingDataCleaner);
 		(*(a_list->deallocator))(pItem);
 		pItem = pItemTmp;
 	}
@@ -134,23 +133,28 @@ static CINTERNAL_INLINE2 void CInternalDLListAddCreatedIteratorAfterIteratorInli
 }
 
 
-static CINTERNAL_INLINE2 void CInternalDLListRemoveDataNoFreeInline(CinternalDLList_t a_list, CinternalListIterator_t a_iterator) CPPUTILS_NOEXCEPT {
-	if (a_iterator->prev) {
-		a_iterator->prev->next = a_iterator->next;
+
+static CINTERNAL_INLINE2 void CInternalListRemoveItertaorInline(struct SCinternalListIterator** a_ppFirst, CinternalListIterator_t a_iter) CPPUTILS_NOEXCEPT {
+	if (a_iter->prev) {
+		a_iter->prev->next = a_iter->next;
 	}
 
-	if (a_iterator->next) {
-		a_iterator->next->prev = a_iterator->prev;
+	if (a_iter->next) {
+		a_iter->next->prev = a_iter->prev;
 	}
 
-	if (a_iterator == a_list->first) {
-		a_list->first = a_iterator->next;
+	if (a_iter == (*a_ppFirst)) {
+		*a_ppFirst = a_iter->next;
 	}
+}
 
-	if (a_iterator == a_list->last) {
-		a_list->last = a_iterator->prev;
+
+
+static CINTERNAL_INLINE2 void CInternalDLListRemoveDataNoFreeInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter) CPPUTILS_NOEXCEPT {
+	CInternalListRemoveItertaorInline(&(a_list->first), a_iter);
+	if (a_iter == a_list->last) {
+		a_list->last = a_iter->prev;
 	}
-
 	--(a_list->m_size);
 }
 
