@@ -60,6 +60,9 @@ jobs:
             - name: Building
               run: ./scripts/unix_build_all.sh
 
+            - name: Building
+              run: ./scripts/unix_run_tests.sh
+
 
     # This is for windows
     windows:
@@ -85,10 +88,7 @@ jobs:
               run: cmd /C .\scripts\windows_build_all.bat
 
             - name: testing test apps
-              run: >
-                .\sys\win_x64\Debug\test\c_raii_test.exe
-                .\sys\win_x64\Debug\test\lhash_test.exe
-                .\sys\win_x64\Debug\test\llist_test.exe
+              run: cmd /C .\scripts\windows_run_tests.bat
 
     mac:
         #needs: prepare-ubuntu18-host

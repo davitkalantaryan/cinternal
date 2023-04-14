@@ -98,5 +98,11 @@
     <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile">
       <Filter>files\workspaces\cinternal_all_mkfl</Filter>
     </None>
+    <None Include="..\..\scripts\unix_run_tests.sh">
+      <Filter>files\scripts</Filter>
+    </None>
+    <None Include="..\..\scripts\windows_run_tests.bat">
+      <Filter>files\scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

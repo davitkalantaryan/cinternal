@@ -324,9 +324,11 @@
     <None Include="..\..\scripts\unix_build_all.sh" />
     <None Include="..\..\scripts\unix_prepare_host.sh" />
     <None Include="..\..\scripts\unix_prepare_repository.sh" />
+    <None Include="..\..\scripts\unix_run_tests.sh" />
     <None Include="..\..\scripts\windows_build_all.bat" />
     <None Include="..\..\scripts\windows_prepare_host.bat" />
     <None Include="..\..\scripts\windows_prepare_repository.bat" />
+    <None Include="..\..\scripts\windows_run_tests.bat" />
     <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

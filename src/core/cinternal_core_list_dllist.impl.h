@@ -74,81 +74,63 @@ static CINTERNAL_INLINE2 void CInternalListCleanInline(CinternalDLList_t a_list,
 }
 
 
-static CINTERNAL_INLINE2 CinternalListIterator_t CInternalDLListAddDataBeforeIteratorInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data) CPPUTILS_NOEXCEPT  {
-	struct SCinternalListIteratorWithData*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalListIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalListIteratorWithData)));
-	if (!pNewItem) {
-		return CPPUTILS_NULL;
-	}
-
-	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
-
+static CINTERNAL_INLINE2 void CInternalDLListAddCreatedIteratorBeforeIteratorInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter, struct SCinternalListIterator* a_pNewIter) CPPUTILS_NOEXCEPT  {
 	if(a_iter){
 		struct SCinternalListIterator* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalListIterator*, a_iter);
-		pNewItem->itr.next = pIterInp;
-		pNewItem->itr.prev = pIterInp->prev;
+		a_pNewIter->next = pIterInp;
+		a_pNewIter->prev = pIterInp->prev;
 		if (pIterInp->prev) {
-			pIterInp->prev->next = CInternalItemToIterator(pNewItem);
+			pIterInp->prev->next = a_pNewIter;
 		}
 
 		if (pIterInp == a_list->first) {
-			a_list->first = CInternalItemToIterator(pNewItem);
+			a_list->first = a_pNewIter;
 		}
 
 	}
 	else {
-		pNewItem->itr.next = a_list->first;
-		pNewItem->itr.prev = CPPUTILS_NULL;
+		a_pNewIter->next = a_list->first;
+		a_pNewIter->prev = CPPUTILS_NULL;
 		if (a_list->first) {
-			a_list->first->prev = CInternalItemToIterator(pNewItem);
+			a_list->first->prev = a_pNewIter;
 		}
 		else {
-			a_list->last = CInternalItemToIterator(pNewItem);
+			a_list->last = a_pNewIter;
 		}
-		a_list->first = CInternalItemToIterator(pNewItem);
+		a_list->first = a_pNewIter;
 	}
 	
 	++(a_list->m_size);
-
-	return CInternalItemToIterator(pNewItem);
 }
 
 
-static CINTERNAL_INLINE2 CinternalListIterator_t CInternalDLListAddDataAfterIteratorInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data) CPPUTILS_NOEXCEPT  {
-	struct SCinternalListIteratorWithData* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalListIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalListIteratorWithData)));
-	if (!pNewItem) {
-		return CPPUTILS_NULL;
-	}
-
-	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
-
+static CINTERNAL_INLINE2 void CInternalDLListAddCreatedIteratorAfterIteratorInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter, struct SCinternalListIterator* a_pNewIter) CPPUTILS_NOEXCEPT  {
 	if (a_iter) {
 		struct SCinternalListIterator* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalListIterator*, a_iter);
-		pNewItem->itr.prev = pIterInp;
-		pNewItem->itr.next = pIterInp->prev;
+		a_pNewIter->prev = pIterInp;
+		a_pNewIter->next = pIterInp->prev;
 		if (pIterInp->next) {
-			pIterInp->next->prev = CInternalItemToIterator(pNewItem);
+			pIterInp->next->prev = a_pNewIter;
 		}
 
 		if (pIterInp == a_list->last) {
-			a_list->last = CInternalItemToIterator(pNewItem);
+			a_list->last = a_pNewIter;
 		}
 
 	}
 	else {
-		pNewItem->itr.prev = a_list->last;
-		pNewItem->itr.next = CPPUTILS_NULL;
+		a_pNewIter->prev = a_list->last;
+		a_pNewIter->next = CPPUTILS_NULL;
 		if (a_list->last) {
-			a_list->last->next = CInternalItemToIterator(pNewItem);
+			a_list->last->next = a_pNewIter;
 		}
 		else {
-			a_list->first = CInternalItemToIterator(pNewItem);
+			a_list->first = a_pNewIter;
 		}
-		a_list->last = CInternalItemToIterator(pNewItem);
+		a_list->last = a_pNewIter;
 	}
 
 	++(a_list->m_size);
-
-	return CInternalItemToIterator(pNewItem);
 }
 
 

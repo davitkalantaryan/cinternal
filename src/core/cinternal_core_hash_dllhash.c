@@ -19,10 +19,7 @@ CPPUTILS_BEGIN_C
 
 
 struct CPPUTILS_DLL_PRIVATE SCinternalLHash {
-	TypeCinternalAllocator				allocator;
-	TypeCinternalDeallocator			deallocator;
-	struct SCinternalListIterator		*first, *last;
-	size_t								m_size;
+	struct SCinternalDLList		lst;
 	
 	struct SCinternalListIterator**		ppTable;
 	size_t								numberOfBaskets;
@@ -109,20 +106,18 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAny(size_t a_numberOfBas
 		return CPPUTILS_NULL;
 	}
 
-	pRet->allocator = a_allocator;
-	pRet->deallocator = a_deallocator ? a_deallocator : (&free);
+	// init the list
+	CInternalDLListInitializeInline(&(pRet->lst), a_allocator, a_deallocator);
+
 	pRet->numberOfBaskets = a_numberOfBaskets ? a_numberOfBaskets : CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS;
 
 	tableMemorySize = pRet->numberOfBaskets * sizeof(struct SCinternalListIterator*);
 	pRet->ppTable = CPPUTILS_STATIC_CAST(struct SCinternalListIterator**, (*a_allocator)(tableMemorySize));
 	if (!(pRet->ppTable)) {
-		(*(pRet->deallocator))(pRet);
+		(*(pRet->lst.deallocator))(pRet);
 		return CPPUTILS_NULL;
 	}
 	memset(pRet->ppTable, 0, tableMemorySize);
-
-	pRet->first = CPPUTILS_NULL;
-	pRet->m_size = 0;
 
 	//pRet->hasher = a_hasher ? a_hasher : (&cinternal_hash1_);
 	//pRet->isEq = a_isEq ? a_isEq : (&CinternaldefaultIsMemoriesIdentical);
@@ -191,7 +186,7 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExSmlInt(size_t a_numberOf
 
 static void CinternalDLListItemExtraCleaner(CinternalDLList_t a_list, struct SCinternalListIterator* a_iter)
 {
-	(*(CInternalDLLHashFromDLLList(a_list)->keyUnstore))(CInternalDLLHashFromDLLList(a_list)->deallocator, 
+	(*(CInternalDLLHashFromDLLList(a_list)->keyUnstore))(a_list->deallocator, 
 		CInternalDLLHashItemFromListIterator(a_iter)->key, CInternalDLLHashItemFromListIterator(a_iter)->keySize);
 }
 
@@ -199,8 +194,8 @@ static void CinternalDLListItemExtraCleaner(CinternalDLList_t a_list, struct SCi
 CINTERNAL_EXPORT void CInternalLHashDestroyEx(CinternalLHash_t a_hashTbl, TypeCinternalDeallocator a_remainingDataCleaner)
 {
 	CInternalListCleanInline(CInternalDLLListFromDLLHash(a_hashTbl), a_remainingDataCleaner, &CinternalDLListItemExtraCleaner);
-	(*(a_hashTbl->deallocator))(a_hashTbl->ppTable);
-	(*(a_hashTbl->deallocator))(a_hashTbl);
+	(*(a_hashTbl->lst.deallocator))(a_hashTbl->ppTable);
+	(*(a_hashTbl->lst.deallocator))(a_hashTbl);
 }
 
 
@@ -260,18 +255,19 @@ CINTERNAL_EXPORT CinternalListIterator_t CInternalLHashAddDataWithKnownHashAfter
 
 CINTERNAL_EXPORT CinternalListIterator_t CInternalLHashAddDataWithKnownHashBeforeIterator(CinternalLHash_t a_hashTbl, CinternalListIterator_t a_iter, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
 {
-	struct SCinternalLHashItem*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalLHashItem)));
+	struct SCinternalLHashItem*const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem*, (*(a_hashTbl->lst.allocator))(sizeof(struct SCinternalLHashItem)));
 	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
 
-	if (!(*(a_hashTbl->keyStore))(a_hashTbl->allocator, &(pNewItem->key), &(pNewItem->keySize), a_key, a_keySize)) {
-		(*(a_hashTbl->deallocator))(pNewItem);
+	if (!(*(a_hashTbl->keyStore))(a_hashTbl->lst.allocator, &(pNewItem->key), &(pNewItem->keySize), a_key, a_keySize)) {
+		(*(a_hashTbl->lst.deallocator))(pNewItem);
 		return CPPUTILS_NULL;
 	}
 
 	// list related part
-	CInternalDLListAddDataBeforeIteratorInline(CInternalDLLListFromDLLHash(a_hashTbl), a_iter, a_data);
+	pNewItem->lst.data = CPPUTILS_CONST_CAST(void*, a_data);
+	CInternalDLListAddCreatedIteratorBeforeIteratorInline(CInternalDLLListFromDLLHash(a_hashTbl), a_iter, &(pNewItem->lst.itr));
 	// end list related part
 
 	pNewItem->tbl.prev = CPPUTILS_NULL;
@@ -282,7 +278,6 @@ CINTERNAL_EXPORT CinternalListIterator_t CInternalLHashAddDataWithKnownHashBefor
 		a_hashTbl->ppTable[a_hash]->prev = &(pNewItem->tbl);
 	}
 	a_hashTbl->ppTable[a_hash] = &(pNewItem->tbl);
-	++(a_hashTbl->m_size);
 
 	return &(pNewItem->lst.itr);
 }
@@ -303,7 +298,7 @@ CINTERNAL_EXPORT CinternalListIterator_t CInternalLHashFind(ConstCinternalLHash_
 
 CINTERNAL_EXPORT CinternalListIterator_t CInternalLHashFirstItem(ConstCinternalLHash_t a_hashTbl)
 {
-	return a_hashTbl->first;
+	return a_hashTbl->lst.first;
 }
 
 
@@ -336,14 +331,14 @@ CINTERNAL_EXPORT void CInternalLHashRemoveDataEx(CinternalLHash_t a_hashTbl, Cin
 	CInternalDLListRemoveDataNoFreeInline(CInternalDLLListFromDLLHash(a_hashTbl), a_iter);
 
 
-	(*(a_hashTbl->keyUnstore))(a_hashTbl->deallocator, CInternalDLLHashItemFromListIterator(a_iter)->key, CInternalDLLHashItemFromListIterator(a_iter)->keySize);
-	(*(a_hashTbl->deallocator))(CPPUTILS_CONST_CAST(struct SCinternalLHashItem*, a_iter));
+	(*(a_hashTbl->keyUnstore))(a_hashTbl->lst.deallocator, CInternalDLLHashItemFromListIterator(a_iter)->key, CInternalDLLHashItemFromListIterator(a_iter)->keySize);
+	(*(a_hashTbl->lst.deallocator))(CPPUTILS_CONST_CAST(struct SCinternalLHashItem*, a_iter));
 }
 
 
 CINTERNAL_EXPORT size_t CInternalLHashSize(ConstCinternalLHash_t a_hashTbl)
 {
-	return a_hashTbl->m_size;
+	return a_hashTbl->lst.m_size;
 }
 
 

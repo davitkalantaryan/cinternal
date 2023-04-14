@@ -45,13 +45,25 @@ CINTERNAL_EXPORT void CInternalDLListDestroyEx(CinternalDLList_t a_list, TypeCin
 
 CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListAddDataBeforeIterator(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data)
 {
-	return CInternalDLListAddDataBeforeIteratorInline(a_list, a_iter, a_data);
+	struct SCinternalListIteratorWithData* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalListIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalListIteratorWithData)));
+	if (!pNewItem) {
+		return CPPUTILS_NULL;
+	}
+	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
+	CInternalDLListAddCreatedIteratorBeforeIteratorInline(a_list, a_iter, &(pNewItem->itr));
+	return &(pNewItem->itr);
 }
 
 
 CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListAddDataAfterIterator(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data)
 {
-	return CInternalDLListAddDataAfterIteratorInline(a_list, a_iter, a_data);
+	struct SCinternalListIteratorWithData* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalListIteratorWithData*, (*(a_list->allocator))(sizeof(struct SCinternalListIteratorWithData)));
+	if (!pNewItem) {
+		return CPPUTILS_NULL;
+	}
+	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
+	CInternalDLListAddCreatedIteratorAfterIteratorInline(a_list, a_iter, &(pNewItem->itr));
+	return &(pNewItem->itr);
 }
 
 
