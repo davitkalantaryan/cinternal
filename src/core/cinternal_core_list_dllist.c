@@ -9,6 +9,7 @@
 
 #include <cinternal/list/dllist.h>
 #define CINTERNAL_SRC_CORE_CINTERNAL_CORE_LIST_DLLIST_IMPL_H_NEEDED
+#define CInternalDLListAddCreatedIteratorAfterIteratorInline_needed
 #include "cinternal_core_list_dllist.impl.h"
 
 

@@ -9,6 +9,7 @@
 #include <cinternal/hash/dllhash.h>
 #define CINTERNAL_SRC_CORE_CINTERNAL_CORE_LIST_DLLIST_IMPL_H_NEEDED
 #include "cinternal_core_list_dllist.impl.h"
+#include <string.h>
 
 #define CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS	4096
 
@@ -138,12 +139,6 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExAnyDefRawMem(size_t a_nu
 	TypeCinternalStoreKey a_keyStore, TypeCinternalUnstoreKey a_keyUnstore,
 	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
 {
-#ifdef __cplusplus
-#ifdef _MSC_VER
-#pragma warning (push)
-#pragma warning (disable:5039)
-#endif
-#endif
 	return CInternalLHashCreateExAny(a_numberOfBaskets,
 		a_hasher ? a_hasher : (&cinternal_hash1_raw_mem), a_isEq ? a_isEq :(&CinternalIsMemoriesIdenticalRawMemory),
 		a_keyStore ? a_keyStore : (&CinternalStoreKeyRawMemory), a_keyUnstore ? a_keyUnstore :(&CinternalUnstoreKeyRawMemory),
@@ -178,11 +173,6 @@ CINTERNAL_EXPORT CinternalLHash_t CInternalLHashCreateExSmlInt(size_t a_numberOf
 		&cinternal_hash1_small_int, &CinternalIsMemoriesIdenticalSmallInt,
 		&CinternalStoreKeySmallInt, &CinternalUnstoreKeySmallInt,
 		a_allocator, a_deallocator);
-#ifdef __cplusplus
-#ifdef _MSC_VER
-#pragma warning (pop)
-#endif
-#endif
 }
 
 
@@ -327,7 +317,7 @@ CINTERNAL_EXPORT void CInternalLHashRemoveDataEx(CinternalLHash_t a_hashTbl, Cin
 	CInternalDLListRemoveDataNoFreeInline(CInternalDLLListFromDLLHash(a_hashTbl), a_iter);
 
 	(*(a_hashTbl->keyUnstore))(a_hashTbl->lst.deallocator, CInternalDLLHashItemFromListIterator2(a_iter)->key, CInternalDLLHashItemFromListIterator2(a_iter)->keySize);
-	(*(a_hashTbl->lst.deallocator))(CPPUTILS_CONST_CAST(struct SCinternalLHashItem*, a_iter));
+	(*(a_hashTbl->lst.deallocator))(CPPUTILS_CONST_CAST(struct SCinternalLHashItem*, CInternalDLLHashItemFromListIterator2(a_iter)));
 }
 
 

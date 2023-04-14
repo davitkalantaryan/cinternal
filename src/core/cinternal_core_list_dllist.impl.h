@@ -26,10 +26,13 @@
 #undef CINTERNAL_INLINE2
 #endif
 
-#define CINTERNAL_INLINE2
+//#define CINTERNAL_INLINE2
+#define CINTERNAL_INLINE2	inline
 
 #ifdef _MSC_VER
+#ifdef __cplusplus
 #pragma warning (disable:5039)
+#endif
 #elif defined(__GNUC__) 
 #pragma GCC diagnostic ignored "-Wattributes"
 #endif
@@ -103,6 +106,8 @@ static CINTERNAL_INLINE2 void CInternalDLListAddCreatedIteratorBeforeIteratorInl
 }
 
 
+#ifdef CInternalDLListAddCreatedIteratorAfterIteratorInline_needed
+
 static CINTERNAL_INLINE2 void CInternalDLListAddCreatedIteratorAfterIteratorInline(CinternalDLList_t a_list, CinternalListIterator_t a_iter, struct SCinternalListIterator* a_pNewIter) CPPUTILS_NOEXCEPT  {
 	if (a_iter) {
 		struct SCinternalListIterator* const pIterInp = CPPUTILS_CONST_CAST(struct SCinternalListIterator*, a_iter);
@@ -131,6 +136,8 @@ static CINTERNAL_INLINE2 void CInternalDLListAddCreatedIteratorAfterIteratorInli
 
 	++(a_list->m_size);
 }
+
+#endif  //  #ifdef CInternalDLListAddCreatedIteratorAfterIteratorInline_needed
 
 
 
