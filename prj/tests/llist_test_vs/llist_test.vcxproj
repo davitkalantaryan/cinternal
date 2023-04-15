@@ -301,13 +301,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\core\cinternal_core_list_dllist.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test.c" />
     <ClCompile Include="..\..\..\src\tests\main_llist_test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\common_data01.h" />
     <ClInclude Include="..\..\..\include\cinternal\common_data02.h" />
     <ClInclude Include="..\..\..\include\cinternal\list\dllist.h" />
+    <ClInclude Include="..\..\..\include\cinternal\unit_test.h" />
     <ClInclude Include="..\..\..\src\core\cinternal_core_list_dllist.impl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\llist_test_mkfl\llist_test.unix.Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

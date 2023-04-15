@@ -7,8 +7,8 @@
 
 
 #include <cinternal/list/dllist.h>
+#include <cinternal/unit_test.h>
 #include <stdio.h>
-#include <assert.h>
 
 int main(void)
 {
@@ -24,7 +24,7 @@ int main(void)
 	CInternalDLListAddDataToFront(aList, (void*)1);
 	CInternalDLListAddDataToFront(aList, (void*)2);
 	CInternalDLListAddDataToFront(aList, (void*)3);
-	assert(CInternalDLListSize(aList) == 3);
+	CinternalUnitTestAssertCheck(CInternalDLListSize(aList) == 3);
 
 	nNumber = 0;
 	pItem = CInternalDLListFirstItem(aList);
@@ -33,15 +33,15 @@ int main(void)
 		pItem = pItem->next;
 	}
 
-	assert(nNumber==3);
+	CinternalUnitTestAssertCheck(nNumber==3);
 	
 	pItem = CInternalDLListFirstItem(aList);
-	assert(pItem);
-	assert(((size_t)CInternalDataFromDLListIterator(pItem))==3);
+	CinternalUnitTestAssertCheck(pItem);
+	CinternalUnitTestAssertCheck(((size_t)CInternalDataFromDLListIterator(pItem))==3);
 
 	pItem = pItem->next;
-	assert(pItem);
-	assert(((size_t)CInternalDataFromDLListIterator(pItem)) == 2);
+	CinternalUnitTestAssertCheck(pItem);
+	CinternalUnitTestAssertCheck(((size_t)CInternalDataFromDLListIterator(pItem)) == 2);
 
 	CInternalDLListDestroy(aList);
 
