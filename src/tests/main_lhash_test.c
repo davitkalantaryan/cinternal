@@ -72,9 +72,9 @@ static void TestHash(CinternalLHash_t a_hash, const void* a_key1, size_t a_keySi
 
 	pItem = CInternalLHashFind(a_hash, a_key1, a_keySize1);
 	CinternalUnitTestAssertCheck(pItem);
-	CinternalUnitTestAssertCheck(((size_t)CInternalDLLHashItemFromListIterator2(pItem)->lst.data) == CINTR_TEST_HASH_DATA1);
+	CinternalUnitTestAssertCheck(((size_t)CInternalDLLHashItemFromListIterator(pItem)->lst.data) == CINTR_TEST_HASH_DATA1);
 
 	pItem = CInternalLHashFind(a_hash, a_key2, a_keySize2);
 	CinternalUnitTestAssertCheck(pItem);
-	CinternalUnitTestAssertCheck(((size_t)CInternalDLLHashItemFromListIterator2(pItem)->lst.data) == CINTR_TEST_HASH_DATA2);
+	CinternalUnitTestAssertCheck(((size_t)CInternalDLLHashItemFromListIterator(pItem)->lst.data) == CINTR_TEST_HASH_DATA2);
 }
