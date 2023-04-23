@@ -66,7 +66,7 @@ int main(int a_argc, char* a_argv[])
 	char vcLdPpostloadEnvBuffer[1024];
 	const char* cpcNextArg;
 	CinternalDLList_t aList;
-	CinternalListIterator_t listIter;
+	CinternalDLListItem_t pItem;
 	int nPid = 0;
 	int nRet;
 
@@ -122,10 +122,10 @@ int main(int a_argc, char* a_argv[])
 		}
 	}  //  if (dwPid < 1) {
 
-	listIter = CInternalDLListFirstItem(aList);
-	while (listIter) {
-		CInternalTokenizer01b((char*)CInternalDataFromDLListIterator(listIter), nPid);
-		listIter = listIter->next;
+	pItem = CInternalDLListFirstItem(aList);
+	while (pItem) {
+		CInternalTokenizer01b((char*)(pItem->data), nPid);
+		pItem = CInternalDLListItemFromDLListIterator(CInternalDLListIteratorFromDLListItem(pItem)->next);
 	}
 	CInternalDLListDestroy(aList);
 

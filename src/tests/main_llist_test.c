@@ -13,7 +13,7 @@
 int main(void)
 {
 	int nNumber;
-	CinternalListIterator_t pItem;
+	CinternalDLListItem_t pItem;
 	CinternalDLList_t aList = CInternalDLListCreate();
 
 	if (!aList) {
@@ -30,18 +30,18 @@ int main(void)
 	pItem = CInternalDLListFirstItem(aList);
 	while (pItem) {
 		++nNumber;
-		pItem = pItem->next;
+		pItem = CInternalDLListItemFromDLListIterator(CInternalDLListIteratorFromDLListItem(pItem)->next);
 	}
 
 	CinternalUnitTestAssertCheck(nNumber==3);
 	
 	pItem = CInternalDLListFirstItem(aList);
 	CinternalUnitTestAssertCheck(pItem);
-	CinternalUnitTestAssertCheck(((size_t)CInternalDataFromDLListIterator(pItem))==3);
+	CinternalUnitTestAssertCheck(((size_t)pItem->data)==3);
 
-	pItem = pItem->next;
+	pItem = CInternalDLListItemFromDLListIterator(CInternalDLListIteratorFromDLListItem(pItem)->next);
 	CinternalUnitTestAssertCheck(pItem);
-	CinternalUnitTestAssertCheck(((size_t)CInternalDataFromDLListIterator(pItem)) == 2);
+	CinternalUnitTestAssertCheck(((size_t)pItem->data) == 2);
 
 	CInternalDLListDestroy(aList);
 

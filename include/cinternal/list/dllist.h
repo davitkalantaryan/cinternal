@@ -16,24 +16,35 @@
 
 CPPUTILS_BEGIN_C
 
-#define CInternalDataFromDLListIterator(_iter_ptr)	cpputils_container_of(_iter_ptr,const struct SCinternalListIteratorWithData,itr)->data
+struct SCinternalDLList;
+typedef struct SCinternalDLList* CinternalDLList_t;
+typedef const struct SCinternalDLList* ConstCinternalDLList_t;
+
+struct SCinternalDLListItem {
+	struct SCinternalDLListIterator	itr;
+	void*							data;
+};
+typedef const struct SCinternalDLListItem* CinternalDLListItem_t;
+
+#define CInternalDLListIteratorFromDLListItem(_item_ptr)	(&((_item_ptr)->itr))
+#define CInternalDLListItemFromDLListIterator(_iter_ptr)	cpputils_container_of(_iter_ptr,const struct SCinternalDLListItem,itr)
 
 CINTERNAL_EXPORT CinternalDLList_t CInternalDLListCreateEx(TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator);
-CINTERNAL_EXPORT void	CInternalDLListDestroyEx(CinternalDLList_t a_list, TypeCinternalDeallocator a_remainingDataCleaner);
-CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListFirstItem(ConstCinternalDLList_t a_list);
-CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListLastItem(ConstCinternalDLList_t a_list);
-CINTERNAL_EXPORT void	CInternalDLListRemoveData(CinternalDLList_t a_list, CinternalListIterator_t a_iterator);
-CINTERNAL_EXPORT size_t CInternalDLListSize(ConstCinternalDLList_t a_list);
-CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListAddDataBeforeIterator(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data);
-CINTERNAL_EXPORT CinternalListIterator_t CInternalDLListAddDataAfterIterator(CinternalDLList_t a_list, CinternalListIterator_t a_iter, const void* a_data);
+CINTERNAL_EXPORT void	CInternalDLListDestroyEx(CinternalDLList_t CPPUTILS_ARG_NN a_list, TypeCinternalDeallocator a_remainingDataCleaner);
+CINTERNAL_EXPORT CinternalDLListItem_t CInternalDLListFirstItem(ConstCinternalDLList_t CPPUTILS_ARG_NN a_list);
+CINTERNAL_EXPORT CinternalDLListItem_t CInternalDLListLastItem(ConstCinternalDLList_t CPPUTILS_ARG_NN a_list);
+CINTERNAL_EXPORT void	CInternalDLListRemoveData(CinternalDLList_t CPPUTILS_ARG_NN a_list, CinternalDLListItem_t CPPUTILS_ARG_NN a_iterator);
+CINTERNAL_EXPORT size_t CInternalDLListSize(ConstCinternalDLList_t CPPUTILS_ARG_NN a_list);
+CINTERNAL_EXPORT CinternalDLListItem_t CInternalDLListAddDataBeforeIterator(CinternalDLList_t CPPUTILS_ARG_NN a_list, CinternalDLListItem_t CPPUTILS_ARG_NN a_iter, const void* a_data);
+CINTERNAL_EXPORT CinternalDLListItem_t CInternalDLListAddDataAfterIterator(CinternalDLList_t CPPUTILS_ARG_NN a_list, CinternalDLListItem_t CPPUTILS_ARG_NN a_iter, const void* a_data);
+CINTERNAL_EXPORT CinternalDLListItem_t CInternalDLListAddDataToFront(CinternalDLList_t CPPUTILS_ARG_NN a_list, const void* a_data);
+CINTERNAL_EXPORT CinternalDLListItem_t CInternalDLListAddDataToBack(CinternalDLList_t CPPUTILS_ARG_NN a_list, const void* a_data);
 
 
 CPPUTILS_END_C
 
 #define CInternalDLListCreate()						CInternalDLListCreateEx(CPPUTILS_NULL,CPPUTILS_NULL)
-#define CInternalDLListDestroy(_hashTbl)			CInternalDLListDestroyEx(_hashTbl,CPPUTILS_NULL)
-#define CInternalDLListAddDataToFront(_list, _data)	CInternalDLListAddDataBeforeIterator(_list,CPPUTILS_NULL,_data)
-#define CInternalDLListAddDataToBack(_list, _data)	CInternalDLListAddDataAfterIterator(_list,CPPUTILS_NULL,_data)
+#define CInternalDLListDestroy(_list)				CInternalDLListDestroyEx(_list,CPPUTILS_NULL)
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_LIST_LLIST_H
