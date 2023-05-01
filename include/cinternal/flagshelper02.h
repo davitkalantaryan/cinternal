@@ -1,14 +1,15 @@
 //
-// file:            flagshelper.h
-// path:			include/cinternal/flagshelper.h
+// file:            flagshelper02.h
+// path:			include/cinternal/flagshelper02.h
 // created on:		2021 Nov 13
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 // if CPPUTILS_FLAGS_UN_RAW macros is used, then for uint64_t include #include <stdint.h>
 //
 
-#ifndef CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER2_H
-#define CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER2_H
+#if !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER02_H) && !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_ANY_H)
+#define CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER02_H
+#define CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_ANY_H
 
 #include <cinternal/internal_header.h>
 #include <cinternal/macroses02.h>
@@ -52,4 +53,4 @@
 #define CPPUTILS_FLAGS_UN_NM(_name,...)    CPPUTILS_FLAGS_UN_RAW(_name,64-2*CPPUTILS_NARGS(__VA_ARGS__),__VA_ARGS__)
 
 
-#endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER2_H
+#endif  //  #if !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER02_H) && !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_ANY_H)

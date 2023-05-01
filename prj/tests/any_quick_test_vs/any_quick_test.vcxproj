@@ -308,6 +308,8 @@
     <ClInclude Include="..\..\..\include\cinternal\endian.h" />
     <ClInclude Include="..\..\..\include\cinternal\export_symbols.h" />
     <ClInclude Include="..\..\..\include\cinternal\flagshelper.h" />
+    <ClInclude Include="..\..\..\include\cinternal\flagshelper01.h" />
+    <ClInclude Include="..\..\..\include\cinternal\flagshelper02.h" />
     <ClInclude Include="..\..\..\include\cinternal\hash\dllhash.h" />
     <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />

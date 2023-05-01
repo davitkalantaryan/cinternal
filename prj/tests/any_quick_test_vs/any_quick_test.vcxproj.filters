@@ -122,5 +122,11 @@
     <ClInclude Include="..\..\..\include\cinternal\hash\dllhash.h">
       <Filter>Header Files\include\cinternal\hash</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\flagshelper01.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\flagshelper02.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
