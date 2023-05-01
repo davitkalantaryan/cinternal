@@ -9,6 +9,7 @@
 #include <cinternal/hash/dllhash.h>
 #define CINTERNAL_SRC_CORE_CINTERNAL_CORE_LIST_DLLIST_IMPL_H_NEEDED
 #define CInternalDLListAddCreatedIteratorFrontInline1_needed	1
+#define	CInternalDLListAddCreatedIteratorFrontInline2_needed	1
 #include "cinternal_core_list_dllist.impl.h"
 #include <string.h>
 
@@ -25,7 +26,7 @@ CPPUTILS_BEGIN_C
 struct CPPUTILS_DLL_PRIVATE SCinternalDLLHash {
 	TypeCinternalAllocator				allocator;
 	TypeCinternalDeallocator			deallocator;
-	struct SCinternalDLListIterator*	first;
+	struct SCinternalDLListIterator		*first,*last;
 	size_t								m_size;
 	
 	struct SCinternalDLListIterator**	ppTable;
@@ -114,7 +115,7 @@ CINTERNAL_EXPORT CinternalDLLHash_t CInternalDLLHashCreateExAny(size_t a_numberO
 	//CInternalDLListInitializeInline(&(pRet->lst), a_allocator, a_deallocator);
 	pRet->allocator = a_allocator;
 	pRet->deallocator = a_deallocator ? a_deallocator : (&free);
-	pRet->first = CPPUTILS_NULL;
+	pRet->last = pRet->first = CPPUTILS_NULL;
 	pRet->m_size = 0;
 
 	pRet->numberOfBaskets = a_numberOfBaskets ? a_numberOfBaskets : CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS;
@@ -243,7 +244,7 @@ CINTERNAL_EXPORT CinternalDLLHashItem_t CInternalDLLHashAddDataWithKnownHash(Cin
 	}
 
 	pNewItem->data = CPPUTILS_CONST_CAST(void*, a_data);
-	CInternalDLListAddCreatedIteratorFrontInline1(&(a_hashTbl->first), CInternalDLListIteratorFromDLLHashItem(pNewItem));
+	CInternalDLListAddCreatedIteratorFrontInline2(&(a_hashTbl->first), &(a_hashTbl->last), CInternalDLListIteratorFromDLLHashItem(pNewItem));
 	CInternalDLListAddCreatedIteratorFrontInline1(&(a_hashTbl->ppTable[a_hash]), &(pNewItem->tbl));
 
 	pNewItem->hash = a_hash;
@@ -269,6 +270,12 @@ CINTERNAL_EXPORT CinternalDLLHashItem_t CInternalDLLHashFind(ConstCinternalDLLHa
 CINTERNAL_EXPORT CinternalDLLHashItem_t CInternalDLLHashFirstItem(ConstCinternalDLLHash_t CPPUTILS_ARG_NN a_hashTbl)
 {
 	return CInternalDLLHashItemFromDLListIterator(a_hashTbl->first);
+}
+
+
+CINTERNAL_EXPORT CinternalDLLHashItem_t CInternalDLLHashLastItem(ConstCinternalDLLHash_t CPPUTILS_ARG_NN a_hashTbl)
+{
+	return CInternalDLLHashItemFromDLListIterator(a_hashTbl->last);
 }
 
 
