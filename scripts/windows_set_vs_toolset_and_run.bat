@@ -18,13 +18,10 @@ echo "repositoryRoot is %repositoryRoot%"
 
 set "PlatformToolsetVarMid=%VCToolsVersion:~0,2%"
 set "PlatformToolsetVarEnd=%VCToolsVersion:~3,1%"
-set "PlatformToolsetVarAll=v%PlatformToolsetVarMid%%PlatformToolsetVarEnd%"
+set "PlatformToolsetVar=v%PlatformToolsetVarMid%%PlatformToolsetVarEnd%"
 
-echo PlatformToolsetVarMid=%PlatformToolsetVarMid%
-echo PlatformToolsetVarEnd=%PlatformToolsetVarEnd%
-echo PlatformToolsetVarAll=%PlatformToolsetVarAll%
+echo PlatformToolsetVar=%PlatformToolsetVar%
 
-set "PlatformToolsetVar=%PlatformToolsetVarAll%"
 
 devenv workspaces\cinternal_all_vs\cinternal_all.sln
 
