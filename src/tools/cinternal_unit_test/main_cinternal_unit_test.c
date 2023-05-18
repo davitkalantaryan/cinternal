@@ -8,6 +8,7 @@
 
 #include <cinternal/list/dllist.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef void (*TypeFunction)(void);
 
@@ -23,6 +24,9 @@ int main(void)
 			(*aFunction)();
 			pItem = CInternalDLListItemFromDLListIterator(CInternalDLListIteratorFromDLListItem(pItem)->next);
 		}
+
+		CInternalDLListDestroy(s_listOfFunctions);
+		s_listOfFunctions = CPPUTILS_NULL;
 	}
 	return 0;
 }
@@ -33,6 +37,8 @@ CPPUTILS_EXTERN_C CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(void (*
 	if (!s_listOfFunctions) {
 		s_listOfFunctions = CInternalDLListCreate();
 		if (!s_listOfFunctions) {
+			fprintf(stderr,"Unable add function to the list!\n");
+			fflush(stderr);
 			exit(1);
 		}
 	}
