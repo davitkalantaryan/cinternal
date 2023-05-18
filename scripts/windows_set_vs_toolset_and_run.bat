@@ -24,4 +24,8 @@ echo PlatformToolsetVarMid=%PlatformToolsetVarMid%
 echo PlatformToolsetVarEnd=%PlatformToolsetVarEnd%
 echo PlatformToolsetVarAll=%PlatformToolsetVarAll%
 
+set "PlatformToolsetVar=%PlatformToolsetVarAll%"
+
+devenv workspaces\cinternal_all_vs\cinternal_all.sln
+
 endlocal
