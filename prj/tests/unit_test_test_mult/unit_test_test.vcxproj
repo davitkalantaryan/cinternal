@@ -301,6 +301,10 @@
     <ClInclude Include="..\..\..\include\cinternal\list\dllist.h" />
     <ClInclude Include="..\..\..\include\cinternal\tool\unit_test_tools.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="unit_test_test.unix.Makefile" />
+    <None Include="unit_test_test.windows.Makefile" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

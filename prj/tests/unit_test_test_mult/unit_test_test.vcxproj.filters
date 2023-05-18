@@ -28,6 +28,9 @@
     <Filter Include="Source Files\unit_test">
       <UniqueIdentifier>{9ac588d8-49cb-4396-af84-4656647055a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{d2772a6a-76d8-48f3-a4b9-cb2c748a485c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\tools\cinternal_unit_test\main_cinternal_unit_test.c">
@@ -50,5 +53,13 @@
     <ClInclude Include="..\..\..\include\cinternal\tool\unit_test_tools.h">
       <Filter>Header Files\include\cinternal\tool</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="unit_test_test.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
+    <None Include="unit_test_test.windows.Makefile">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>
