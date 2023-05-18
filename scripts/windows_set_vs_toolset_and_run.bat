@@ -19,7 +19,6 @@ echo "repositoryRoot is %repositoryRoot%"
 set "PlatformToolsetVarMid=%VCToolsVersion:~0,2%"
 set "PlatformToolsetVarEnd=%VCToolsVersion:~3,1%"
 set "PlatformToolsetVar=v%PlatformToolsetVarMid%%PlatformToolsetVarEnd%"
-
 echo PlatformToolsetVar=%PlatformToolsetVar%
 
 

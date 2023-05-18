@@ -20,6 +20,13 @@ set scriptDirectory=%~dp0
 cd /D "%scriptDirectory%.."
 set "repositoryRoot=%cd%\"
 
+if not defined PlatformToolsetVar (
+	set "PlatformToolsetVarMid=%VCToolsVersion:~0,2%"
+	set "PlatformToolsetVarEnd=%VCToolsVersion:~3,1%"
+	set "PlatformToolsetVar=v%PlatformToolsetVarMid%%PlatformToolsetVarEnd%"
+	echo PlatformToolsetVar=%PlatformToolsetVar%
+)
+
 
 :: handling arguments
 ::set argC=0
