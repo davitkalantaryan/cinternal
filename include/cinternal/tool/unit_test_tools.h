@@ -20,16 +20,11 @@ CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(void (*a_function)(void))
 
 #define CPPUTILS_UTEST_BEFORE_MAIN(_maj,_min)	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_bm_ ## _maj ## _min)
 
-// todo: fix non windows cases
-#ifdef _WIN32
 #define CPPUTILS_UTEST(_maj,_min)	static void cinternal_unit_test_ ## _maj ## _min (void);	\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){						\
 		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);					\
 	}																							\
 	static void cinternal_unit_test_ ## _maj ## _min (void)
-#else
-#define CPPUTILS_UTEST	CPPUTILS_UTEST_BEFORE_MAIN
-#endif
 
 
 CPPUTILS_END_C
