@@ -23,6 +23,10 @@ SUBDIRS		+=	"$${repositoryRoot}/prj/tests/lhash_test_qt/lhash_test.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/llist_test_qt/llist_test.pro"
 SUBDIRS		+=	"$${repositoryRoot}/prj/tests/test_lib01_qt/test_lib01.pro"
 
+unitTestHere{
+    SUBDIRS		+=	"$${repositoryRoot}/prj/tests/unit_test_test_mult/unit_test_test.pro"
+}
+
 OTHER_FILES += $$files($${repositoryRoot}/docs/*.md,true)
 OTHER_FILES += $$files($${repositoryRoot}/docs/*.txt,true)
 OTHER_FILES += $$files($${repositoryRoot}/scripts/*.sh,true)
