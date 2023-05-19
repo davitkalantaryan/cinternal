@@ -11,11 +11,16 @@
 #include <stdbool.h>
 
 
-CPPUTILS_UTEST_BEFORE_MAIN(f_0000, t_0001) {
+CPPUTILS_UTEST_BEFORE_MAIN(f_0000_initial, t_0001) {
 	CinternalUnitTestAssertCheck(true);
 }
 
 
-CPPUTILS_UTEST(f_0000, t_0002) {
+CPPUTILS_UTEST(f_0000_initial, t_0002) {
+	CinternalUnitTestAssertCheck(true);
+}
+
+
+CPPUTILS_UTEST_ALL(f_0000_initial, t_0003) {
 	CinternalUnitTestAssertCheck(true);
 }

@@ -27,6 +27,15 @@ CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(void (*a_function)(void))
 	static void cinternal_unit_test_ ## _maj ## _min (void)
 
 
+#define CPPUTILS_UTEST_ALL(_maj,_min)	static void cinternal_unit_test_ ## _maj ## _min (void);\
+	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){						\
+		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);					\
+		cinternal_unit_test_ ## _maj ## _min ();												\
+	}																							\
+	static void cinternal_unit_test_ ## _maj ## _min (void)
+
+
+
 CPPUTILS_END_C
 
 
