@@ -48,6 +48,12 @@
     <ClCompile Include="..\..\..\src\core\init_libdl\entry_cinternal_core_init_libdl.c">
       <Filter>files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0001_bistate_flags.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0002_fourstate_flags.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\list\dllist.h">
@@ -55,6 +61,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\tool\unit_test_tools.h">
       <Filter>Header Files\include\cinternal\tool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\fourstateflags.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\flagshelper.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\flagshelper01.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\flagshelper02.h">
+      <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
