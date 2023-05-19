@@ -54,93 +54,93 @@ CPPUTILS_UTEST_ALL(f_0002_fourstate_flags, t_0001) {
 
 	aFlags.wr_all = CPPUTILS_FOURSTATE_MAKE_ALL_BITS_FALSE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_TRUE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_FT;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_TF;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_FALSE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	// field2
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_TRUE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 0);
 
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_FT;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 0);
 
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_TF;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 0);
 
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_FALSE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 }
 
@@ -151,92 +151,92 @@ CPPUTILS_UTEST_ALL(f_0002_fourstate_flags, t_0002) {
 
 	aFlags.wr_all = CPPUTILS_FOURSTATE_MAKE_ALL_BITS_FALSE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_TRUE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_FT;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_TF;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	aFlags.wr.field1 = CPPUTILS_FOURSTATE_MAKE_BITS_FALSE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 
 	// field2
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_TRUE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 0);
 
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_FT;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 1);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 0);
 
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_ONGOING_TF;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 1);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 0);
 
 	aFlags.wr.field2 = CPPUTILS_FOURSTATE_MAKE_BITS_FALSE;
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field1_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field1_false == 1);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_true == 0);
-	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_false_to_true == 0);
+	CinternalUnitTestAssertCheck(aFlags.rd1.field2_ongoing_true_to_false == 0);
 	CinternalUnitTestAssertCheck(aFlags.rd1.field2_false == 1);
 }
