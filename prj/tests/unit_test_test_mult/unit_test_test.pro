@@ -21,3 +21,5 @@ SOURCES += $$files($${cinternalRepoRoot}/src/tools/cinternal_unit_test/*.c,true)
 SOURCES += $$files($${cinternalRepoRoot}/src/tools/cinternal_unit_test/*.cpp,true)
 SOURCES += $$files($${cinternalRepoRoot}/src/core/*.c,true)
 SOURCES += $$files($${cinternalRepoRoot}/src/core/*.cpp,true)
+
+OTHER_FILES += $$files($${PWD}/*.Makefile,false)

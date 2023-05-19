@@ -13,8 +13,8 @@ GTEST_SRC_DIR=$(repoRootPath)/src/tests/unit_test
 COMMON_SRC_DIR=$(repoRootPath)/src/core
 TOOLS_SRC_DIR=$(repoRootPath)/src/tools/cinternal_unit_test
 
-GTEST_SRCS_CPP	= $(shell find $(GTEST_SRC_DIR) -name "*.cpp")
-GTEST_SRCS_C	= $(shell find $(GTEST_SRC_DIR) -name "*.c")
+#GTEST_SRCS_CPP	= $(shell find $(GTEST_SRC_DIR) -name "*.cpp")
+#GTEST_SRCS_C	= $(shell find $(GTEST_SRC_DIR) -name "*.c")
 COMMON_SRCS	= $(shell find $(COMMON_SRC_DIR) -name "*.c")
 TOOLS_SRCS	= $(shell find $(TOOLS_SRC_DIR) -name "*.c")
 
@@ -30,8 +30,6 @@ LIBS += -ldl
 all: $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 
 $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/test/$(targetName): \
-			$(GTEST_SRCS_CPP:%=$(repoRootPath)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)	\
-			$(GTEST_SRCS_C:%=$(repoRootPath)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)	\
 			$(COMMON_SRCS:%=$(repoRootPath)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)		\
 			$(TOOLS_SRCS:%=$(repoRootPath)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
 	@mkdir -p $(@D)
