@@ -54,6 +54,9 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0002_fourstate_flags.c">
       <Filter>Source Files\unit_test</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0003_c_raii.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\list\dllist.h">
