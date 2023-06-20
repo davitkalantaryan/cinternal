@@ -22,7 +22,7 @@ repoRootPath=$${PWD}/../../..
 INCLUDEPATH += "$${PWD}/../../../include"
 DEFINES += CPPUTILS_USING_STATIC_LIB_OR_OBJECTS
 
-SOURCES += "$${PWD}/../../../src/tests/main_c_raii_test.c"
+SOURCES += $$files($${PWD}/../../../src/tests/c_raii_ext_test/*.c*,false)
 
 COMMON_HDRS	= $$files($${repoRootPath}/include/*.h,true)
 COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)
