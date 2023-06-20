@@ -24,6 +24,7 @@ CPPFLAGS += -std=c++11
 
 EXTRA_SOURCSES += $(repoRootPath)/src/core/cinternal_core_unit_test.c
 EXTRA_SOURCSES += $(repoRootPath)/src/core/cinternal_core_list_dllist.c
+EXTRA_SOURCSES += $(repoRootPath)/src/core/cinternal_core_lw_mutex_recursive.c
 
 #LIBS += $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/lib/libgtest_main$(nameExtension).a
 #LIBS += $(repoRootPath)/sys/$(lsbCode)/$(Configuration)/lib/libgtest$(nameExtension).a
