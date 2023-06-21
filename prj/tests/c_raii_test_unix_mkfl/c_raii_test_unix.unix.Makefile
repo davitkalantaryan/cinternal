@@ -15,7 +15,7 @@ SOURCES += $(cinternalRepoRoot)/src/tests/c_raii_test_unix/c_raii_test_cpp01.cpp
 all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 
 $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName): \
-        $(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
+		$(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
 	@mkdir -p $(@D)
 	@$(LINK) $^ $(LIBS) $(LFLAGS) -o $@
 

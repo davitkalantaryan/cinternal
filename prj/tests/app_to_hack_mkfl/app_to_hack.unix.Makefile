@@ -14,7 +14,7 @@ SOURCES += $(cinternalRepoRoot)/src/tests/main_app_to_hack.cpp
 all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 
 $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName): \
-        $(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
+		$(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
 	@mkdir -p $(@D)
 	@$(LINK) $^ $(LIBS) $(LFLAGS) -o $@
 

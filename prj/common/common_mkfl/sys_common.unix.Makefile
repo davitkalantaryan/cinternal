@@ -88,6 +88,7 @@ EMXX=em++
 COMMON_FLAGS	+= -I$(cinternalRepoRoot)/include
 
 CPPFLAGS		+=  $(COMMON_FLAGS)
+CFLAGS			+=  $(COMMON_FLAGS)
 
 DEBUG_FLAGS_DEBUG=-O0 -g
 DEBUG_FLAGS_RELEASE=-O3
@@ -125,6 +126,10 @@ $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.cc.o : 
 $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.cpp.o : %.cpp
 	mkdir -p $(@D)
 	$(CXX_IN_USE) -c $(CPPFLAGS) $(DEBUG_FLAGS) -o $@ $<
+	
+$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.c.o : %.c
+	mkdir -p $(@D)
+	$(CC_IN_USE) -c $(CFLAGS) $(DEBUG_FLAGS) -o $@ $<
 
 # webassembly
 $(artifactRoot)/sys/wasm/$(Configuration)/.objects/$(targetName)/%.cc.bc : %.cc
