@@ -139,6 +139,10 @@ $(artifactRoot)/sys/wasm/$(Configuration)/.objects/$(targetName)/%.cc.bc : %.cc
 $(artifactRoot)/sys/wasm/$(Configuration)/.objects/$(targetName)/%.cpp.bc : %.cpp
 	mkdir -p $(@D)
 	$(EMXX) -c $(EMFLAGS) -o $@ $<
+	
+$(artifactRoot)/sys/wasm/$(Configuration)/.objects/$(targetName)/%.c.bc : %.c
+	mkdir -p $(@D)
+	$(EMCC) -c $(EMFLAGS) -o $@ $<
 
 # android
 $(artifactRoot)/sys/android_$(ANDROID_ABI)/$(Configuration)/.objects/$(targetName)/%.cc.ao : %.cc
@@ -148,3 +152,7 @@ $(artifactRoot)/sys/android_$(ANDROID_ABI)/$(Configuration)/.objects/$(targetNam
 $(artifactRoot)/sys/android_$(ANDROID_ABI)/$(Configuration)/.objects/$(targetName)/%.cpp.ao : %.cpp
 	mkdir -p $(@D)
 	$(ANDROID_CXX) -c $(ANDROID_FLAGS) -o $@ $<
+	
+$(artifactRoot)/sys/android_$(ANDROID_ABI)/$(Configuration)/.objects/$(targetName)/%.c.ao : %.c
+	mkdir -p $(@D)
+	$(ANDROID_CC) -c $(ANDROID_FLAGS) -o $@ $<
