@@ -14,12 +14,12 @@ SOURCES += $(cinternalRepoRoot)/src/tests/main_any_quick_test.c
 all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 
 $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName): \
-	$(SOURCES:%=$(repoRootPath)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
+        $(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
 	@mkdir -p $(@D)
 	@$(LINK) $^ $(LIBS) $(LFLAGS) -o $@
 
 .PHONY: clean
 clean:
-        @rm -rf $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)
-        @rm -f  $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
-	@echo "  " cleaning of googletest complete !!!
+	@rm -rf $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)
+	@rm -f  $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
+	@echo "  " cleaning of $(targetName) complete !!!

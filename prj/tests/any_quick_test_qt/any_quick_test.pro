@@ -26,8 +26,8 @@ SOURCES += $$files($${PWD}/../../../src/core/*.cpp,true)
 SOURCES	+=		\
         "$${PWD}/../../../src/tests/main_any_quick_test.c"
 
-COMMON_HDRS	= $$files($${programsInvestigatorRepoRoot}/include/*.h,true)
-COMMON_HDRSPP	= $$files($${programsInvestigatorRepoRoot}/include/*.hpp,true)
+COMMON_HDRS	= $$files($${cinternalRepoRoot}/include/*.h,true)
+COMMON_HDRSPP	= $$files($${cinternalRepoRoot}/include/*.hpp,true)
 
 HEADERS += $$COMMON_HDRS
 HEADERS += $$COMMON_HDRSPP

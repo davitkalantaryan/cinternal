@@ -85,7 +85,7 @@ endif
 #EMXX=env CCACHE_CPP2=1 ccache em++
 EMXX=em++
 
-COMMON_FLAGS	+= -I$(repoRootPathCppUtils)/include
+COMMON_FLAGS	+= -I$(cinternalRepoRoot)/include
 
 CPPFLAGS		+=  $(COMMON_FLAGS)
 
@@ -122,7 +122,7 @@ $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.cc.o : 
 	mkdir -p $(dir $@)
 	$(CXX_IN_USE) -c $(CPPFLAGS) $(DEBUG_FLAGS) -o $@ $<
 
-$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.cpp.o : $(repoRootPath)/src/%.cpp
+$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.cpp.o : %.cpp
 	mkdir -p $(@D)
 	$(CXX_IN_USE) -c $(CPPFLAGS) $(DEBUG_FLAGS) -o $@ $<
 
