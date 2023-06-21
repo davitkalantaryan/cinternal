@@ -93,14 +93,14 @@ CFLAGS			+=  $(COMMON_FLAGS)
 DEBUG_FLAGS_DEBUG=-O0 -g
 DEBUG_FLAGS_RELEASE=-O3
 
-ifdef CPPUTILS_DEBUG
-	DEBUG_FLAGS=$(DEBUG_FLAGS_DEBUG) -DCPPUTILS_DEBUG
-	Configuration=Debug
-	nameExtension=d
-else
+ifdef CPPUTILS_RELEASE
 	DEBUG_FLAGS=$(DEBUG_FLAGS_RELEASE)
 	Configuration=Release
 	nameExtension=
+else
+	DEBUG_FLAGS=$(DEBUG_FLAGS_DEBUG) -DCPPUTILS_DEBUG
+	Configuration=Debug
+	nameExtension=d
 endif
 
 EMFLAGS+=$(COMMON_FLAGS)
