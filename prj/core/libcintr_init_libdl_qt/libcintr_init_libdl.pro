@@ -13,6 +13,8 @@ TARGET = cintr_init_libdl
 include ( "$${PWD}/../../common/common_qt/sys_common.pri" )
 include ( "$${PWD}/../../common/common_qt/flags_common.pri" )
 
+DESTDIR     = "$${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/tlib"
+
 
 QT -= gui
 QT -= core
