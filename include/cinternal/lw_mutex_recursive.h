@@ -9,6 +9,7 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_LW_MUTEX_RECURSIVE_H
 
 #include <cinternal/export_symbols.h>
+#include <cinternal/disable_compiler_warnings.h>
 #ifdef _WIN32
 #include <WinSock2.h>
 #include <WS2tcpip.h>

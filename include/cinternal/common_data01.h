@@ -12,6 +12,11 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#if defined(_MSC_VER)
+#pragma warning(disable: 4152)
+#else
+#endif
+
 
 CPPUTILS_BEGIN_C
 
