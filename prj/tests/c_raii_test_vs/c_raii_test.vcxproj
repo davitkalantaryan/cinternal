@@ -35,12 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\tests\c_raii_test\c_raii_test_cpp01.cpp" />
-    <ClCompile Include="..\..\..\src\tests\c_raii_test\main_c_raii_test.c" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\c_raii.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\tests\main_c_raii_test.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -293,6 +293,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\core\cinternal_core_list_dllist.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_lw_mutex_recursive.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test.c" />
     <ClCompile Include="..\..\..\src\core\init_libdl\entry_cinternal_core_init_libdl.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -307,6 +308,8 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0001_bistate_flags.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0002_fourstate_flags.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0003_c_raii.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0004_lw_mutex_recursive.c" />
     <ClCompile Include="..\..\..\src\tools\cinternal_unit_test\main_cinternal_unit_test.c" />
   </ItemGroup>
   <ItemGroup>

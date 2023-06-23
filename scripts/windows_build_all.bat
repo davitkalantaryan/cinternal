@@ -67,7 +67,7 @@ cd "%repositoryRoot%prj\tests\unit_test_test_mult"
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
 
-nmake -f unit_test_test.windows.Makefile Platform=x64 Configuration=Debug
+call nmake -f unit_test_test.windows.Makefile Platform=x64 Configuration=Debug
 exit /b %ERRORLEVEL%
 
 
