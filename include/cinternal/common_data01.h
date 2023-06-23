@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 #if defined(_MSC_VER)
-#pragma warning(disable: 4152)
+#pragma warning(disable: 4152)  // this will help to keep functions pointers also in the containers
 #else
 #endif
 
