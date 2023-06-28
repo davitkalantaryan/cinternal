@@ -10,6 +10,7 @@
 
 
 message("!!! $${PWD}/sys_common.pri")
+cinternalSysCommonIncluded = 1
 
 STATIC_LIB_EXTENSION	= a
 LIB_PREFIX		= lib
