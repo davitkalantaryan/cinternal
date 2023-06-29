@@ -12,12 +12,14 @@
 message("!!! $${PWD}/sys_common.pri")
 cinternalSysCommonIncluded = 1
 
+isEmpty( cinternalResolveCommonIncluded ) {
+        include("$${PWD}/resolve_common.pri")
+        cinternalResolveCommonIncluded = 1
+}
+
 STATIC_LIB_EXTENSION	= a
 LIB_PREFIX		= lib
 TARGET_PATH_EXTRA	=
-
-
-include ($${PWD}/resolve_common.pri)
 
 
 isEmpty( TARGET_PATH ) {

@@ -11,7 +11,10 @@
 message("!!! $${PWD}/flags_common.pri")
 cinternalFlagsCommonIncluded = 1
 
-include ($${PWD}/resolve_common.pri)
+isEmpty( cinternalResolveCommonIncluded ) {
+        include("$${PWD}/resolve_common.pri")
+        cinternalResolveCommonIncluded = 1
+}
 
 INCLUDEPATH += $${cinternalRepoRoot}/include
 
