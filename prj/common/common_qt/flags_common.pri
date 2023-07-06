@@ -24,7 +24,7 @@ macx {
 	QMAKE_CXXFLAGS += -Werror
 	#LIBS += -framework SystemConfiguration -framework AppKit
 } else:win32 {
-	QMAKE_CXXFLAGS += /Wall /WX
+        QMAKE_CXXFLAGS += /Wall /WX /sdl-
 	contains(QMAKE_TARGET.arch, x86_64) {
 	    message ("!!!!!!!!!! windows 64")
 	} else {
