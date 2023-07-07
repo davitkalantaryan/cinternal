@@ -438,4 +438,16 @@
 #endif
 
 
+#ifdef _MSC_VER
+#define CPPUTILS_WARNINGS_PUSH		__pragma(warning (push))
+#define CPPUTILS_WARNINGS_POP		__pragma(warning (pop))
+#elif defined(CPPUTILS_GCC_FAMILY)
+#define CPPUTILS_WARNINGS_PUSH		_Pragma("GCC diagnostic push")                                                              \
+#define CPPUTILS_WARNINGS_POP		_Pragma("GCC diagnostic pop")
+#else
+#define CPPUTILS_WARNINGS_PUSH
+#define CPPUTILS_WARNINGS_POP
+#endif
+
+
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H

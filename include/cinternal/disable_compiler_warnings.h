@@ -10,6 +10,11 @@
 
 #include <cinternal/internal_header.h>
 
+#ifndef CPPUTILS_COMPILER_WARNINGS_NO_POP
+CPPUTILS_WARNINGS_PUSH
+#endif
+
+
 #if defined(_MSC_VER)
 
 #pragma warning(disable: 4191)
@@ -19,6 +24,7 @@
 #pragma warning(disable:4820)
 #pragma warning(disable:5039) // 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function
 #pragma warning (disable:4061) // enumerator 'MonAppHiderEventNone' in switch of enum
+#pragma warning (disable:4365)
 #ifndef __cplusplus
 #pragma warning(disable:4255)
 #endif
@@ -26,10 +32,15 @@
 #pragma warning(disable:5246)
 #endif
 
-#elif defined(__GNUC__) 
+#elif defined(CPPUTILS_GCC_FAMILY) 
 
 #pragma GCC diagnostic ignored "-Wattributes"
 
+#endif
+
+
+#ifndef CPPUTILS_COMPILER_WARNINGS_NO_POP
+#define CINTERNAL_COMPILER_WARNINGS_DISABLED	1
 #endif
 
 
