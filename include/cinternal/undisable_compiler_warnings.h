@@ -8,8 +8,8 @@
 
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_UNDISABLE_COMPILER_WARNINGS_H
 #define CINTERNAL_INCLUDE_CINTERNAL_UNDISABLE_COMPILER_WARNINGS_H
-
 #include <cinternal/internal_header.h>
+#endif
 
 #if defined(_MSC_VER)
 #pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
@@ -17,7 +17,7 @@
 
 #ifdef CINTERNAL_COMPILER_WARNINGS_DISABLED
 CPPUTILS_WARNINGS_POP
-#undef CINTERNAL_COMPILER_WARNINGS_DISABLED
+//#undef CINTERNAL_COMPILER_WARNINGS_DISABLED
 #endif
 
 
@@ -35,6 +35,3 @@ CPPUTILS_WARNINGS_POP
 #endif
 
 #endif
-
-
-#endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_UNDISABLE_COMPILER_WARNINGS_H
