@@ -322,13 +322,19 @@
     <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />
     <ClInclude Include="..\..\..\include\cinternal\list\dllist.h" />
+    <ClInclude Include="..\..\..\include\cinternal\loadfreelib_on_remote_process_sys.h" />
+    <ClInclude Include="..\..\..\include\cinternal\lw_mutex_recursive.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses02.h" />
     <ClInclude Include="..\..\..\include\cinternal\parser\argparser01.h" />
     <ClInclude Include="..\..\..\include\cinternal\parser\tokenizer01.h" />
     <ClInclude Include="..\..\..\include\cinternal\replace_function.h" />
     <ClInclude Include="..\..\..\include\cinternal\replace_function_sys.h" />
+    <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
+    <ClInclude Include="..\..\..\src\include\private\cinternal\parser\tokenizer01_common_p.h" />
     <ClInclude Include="..\..\..\src\include\private\cinternal\parser\tokenizer01_windows_p.h" />
+    <ClInclude Include="..\..\..\src\include\private\cinternal\parser\tokenizer02_common_p.h" />
+    <ClInclude Include="..\..\..\src\include\private\cinternal\parser\tokenizer02_windows_p.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
