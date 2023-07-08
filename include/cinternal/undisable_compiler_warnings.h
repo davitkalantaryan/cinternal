@@ -24,7 +24,9 @@ CPPUTILS_WARNINGS_POP
 // disable some warnings, those are assumed as errors
 #if defined(_MSC_VER)
 
-
+#ifndef CPPUTILS_DO_NOT_IGNORE_MISSING_SWITCH_CASE
+#pragma warning (disable:4061)
+#endif
 
 #elif defined(CPPUTILS_GCC_FAMILY) 
 

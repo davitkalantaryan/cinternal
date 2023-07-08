@@ -16,6 +16,7 @@ isEmpty( cinternalResolveCommonIncluded ) {
         cinternalResolveCommonIncluded = 1
 }
 
+DEFINES += CPPUTILS_COMPILER_WARNINGS_PUSH_POP
 INCLUDEPATH += $${cinternalRepoRoot}/include
 
 
