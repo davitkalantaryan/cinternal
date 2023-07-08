@@ -8,8 +8,17 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
 #define CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
 #include <cinternal/internal_header.h>
-#endif
+// disable some warnings, those are assumed as errors
+#if defined(_MSC_VER)
+#pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
+#pragma warning (disable:4061)  // enumerator 'MonAppHiderEventNone' in switch of enum
+#elif defined(CPPUTILS_GCC_FAMILY)
+#pragma GCC diagnostic ignored "-Wattributes"
+#endif  //  #if defined(_MSC_VER)
+#endif  //  #ifndef CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
 
+#ifndef CINTERNAL_COMPILER_WARNINGS_DISABLED
+#define CINTERNAL_COMPILER_WARNINGS_DISABLED	1
 
 #ifdef CPPUTILS_COMPILER_WARNINGS_PUSH_POP
 CPPUTILS_WARNINGS_PUSH
@@ -24,7 +33,6 @@ CPPUTILS_WARNINGS_PUSH
 #pragma warning(disable:4668)
 #pragma warning(disable:4820)
 #pragma warning(disable:5039) // 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function
-#pragma warning (disable:4061) // enumerator 'MonAppHiderEventNone' in switch of enum
 #pragma warning (disable:4365)
 #ifndef __cplusplus
 #pragma warning(disable:4255)
@@ -40,6 +48,4 @@ CPPUTILS_WARNINGS_PUSH
 #endif
 
 
-#if defined(CPPUTILS_COMPILER_WARNINGS_PUSH_POP) && (!defined(CINTERNAL_COMPILER_WARNINGS_DISABLED))
-#define CINTERNAL_COMPILER_WARNINGS_DISABLED	1
-#endif
+#endif  //  #ifndef CINTERNAL_COMPILER_WARNINGS_DISABLED
