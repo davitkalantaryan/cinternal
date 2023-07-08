@@ -326,7 +326,9 @@
     <None Include="..\..\.github\workflows\check_merge_to_master_and_develop.yml" />
     <None Include="..\..\.gitignore" />
     <None Include="..\..\LICENSE" />
+    <None Include="..\..\prj\common\common_mkfl\sys_common.unix.Makefile" />
     <None Include="..\..\prj\common\common_mkfl\unix.common.Makefile" />
+    <None Include="..\..\prj\common\common_mkfl\unix.common.tmp.Makefile" />
     <None Include="..\..\prj\common\common_mkfl\windows.common.Makefile" />
     <None Include="..\..\prj\common\common_qt\flags_common.pri" />
     <None Include="..\..\prj\common\common_qt\gui_common.pri" />
