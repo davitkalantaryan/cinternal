@@ -450,4 +450,18 @@
 #endif
 
 
+#ifdef _WIN32
+#ifdef _MSC_VER
+#define CpputilsGetProcAddress(_hModule,_lpProcName)	\
+	__pragma(warning (push))							\
+	__pragma(warning (disable:4191))					\
+	GetProcAddress(_hModule,_lpProcName)				\
+	__pragma(warning (pop))
+	
+#else
+#define CpputilsGetProcAddress	GetProcAddress
+#endif
+#endif
+
+
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
