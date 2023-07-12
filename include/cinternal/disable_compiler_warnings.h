@@ -12,6 +12,7 @@
 #if defined(_MSC_VER)
 #pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
 #pragma warning (disable:4061)  // enumerator 'MonAppHiderEventNone' in switch of enum
+#pragma warning (disable:4820)  // enumerator 'MonAppHiderEventNone' in switch of enum
 #elif defined(CPPUTILS_GCC_FAMILY)
 #pragma GCC diagnostic ignored "-Wattributes"
 #endif  //  #if defined(_MSC_VER)
