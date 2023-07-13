@@ -35,6 +35,7 @@ CPPUTILS_WARNINGS_PUSH
 #pragma warning(disable:4820)
 #pragma warning(disable:5039) // 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function
 #pragma warning (disable:4365)
+#pragma warning (disable:4574)  //  winnt.h(1229,1): warning C4574: '__has_builtin' is defined to be '0': did you mean to use '#if __has_builtin'?
 #ifndef __cplusplus
 #pragma warning(disable:4255)
 #endif
