@@ -242,10 +242,16 @@
 
 #ifdef NDEBUG
 #define CPPUTILS_DO_DEBUG_EXP(_exp)
-#define CPPUTILS_SAFE_CAST(_type,_val)	static_cast<_type>(_val)
+#define CPPUTILS_SAFE_CAST(_type,_val)		static_cast<_type>(_val)
+#ifndef CPPUTILS_RELEASE
+#define CPPUTILS_RELEASE					1
+#endif
 #else
-#define CPPUTILS_DO_DEBUG_EXP(_exp)              _exp ;
-#define CPPUTILS_SAFE_CAST(_type,_val)	dynamic_cast<_type>(_val)
+#define CPPUTILS_DO_DEBUG_EXP(_exp)         _exp ;
+#define CPPUTILS_SAFE_CAST(_type,_val)		dynamic_cast<_type>(_val)
+#ifndef CPPUTILS_DEBUG
+#define CPPUTILS_DEBUG						1
+#endif
 #endif
 
 
