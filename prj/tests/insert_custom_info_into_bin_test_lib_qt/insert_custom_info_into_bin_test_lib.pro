@@ -5,13 +5,14 @@
 # created by:	Davit Kalantaryan
 #
 
+
+message("!!! $${_PRO_FILE_}")
+
 TEMPLATE = lib
 
-include ( "$${PWD}/../../common/common_qt/sys_common.pri" )
-include ( "$${PWD}/../../common/common_qt/flags_common.pri" )
+include ( "$${PWD}/../../common/common_qt/flagsandsys_common.pri" )
 
-
-DESTDIR     = "$${artifactRoot}/$${SYSTEM_PATH}/$$CONFIGURATION/tlib"
+DESTDIR     = "$${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/test"
 
 QT -= gui
 QT -= core
@@ -20,16 +21,10 @@ CONFIG -= qt
 
 LIBS += -pthread
 
-DEFINES += CPPUTILS_USING_STATIC_LIB_OR_OBJECTS
-
 SOURCES	+=		\
         "$${PWD}/../../../src/tests/insert_custom_info_into_bin_test/entry_insert_custom_info_into_bin_test_lib.c" \
         "$${PWD}/../../../src/tests/insert_custom_info_into_bin_test/insert_custom_info_into_bin_test.c"
 
-COMMON_HDRS	= $$files($${cinternalRepoRoot}/include/*.h,true)
-COMMON_HDRSPP	= $$files($${cinternalRepoRoot}/include/*.hpp,true)
-
-HEADERS += $$COMMON_HDRS
-HEADERS += $$COMMON_HDRSPP
+HEADERS += $$files($${cinternalRepoRoot}/include/*.h,true)
 
 OTHER_FILES += $$files($${PWD}/../insert_custom_info_into_bin_test_lib_mkfl/*.Makefile,false)

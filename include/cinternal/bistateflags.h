@@ -5,17 +5,13 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 
-#if !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER02_H) && !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_ANY_H)
-#define CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER02_H
-#define CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_ANY_H
+#ifndef CINTERNAL_INCLUDE_CINTERNAL_BISTATEFLAGS_H
+#define CINTERNAL_INCLUDE_CINTERNAL_BISTATEFLAGS_H
 
 #include <cinternal/internal_header.h>
 #include <cinternal/macroses02.h>
 #include <stdint.h>
 
-#define CPPUTILS_MAKE_BITS_TRUE                 1
-#define CPPUTILS_MAKE_BITS_FALSE                2
-#define CPPUTILS_INIT_BITS                      0xaaaaaaaaaaaaaaaa
 
 #define CPPUTILS_BISTATE_MAKE_BITS_TRUE         1
 #define CPPUTILS_BISTATE_MAKE_BITS_FALSE        2
@@ -39,7 +35,7 @@
 #define CPPUTILS_BISTATE2_ALL(...) CPPUTILS_MACRO02_APPY(CPPUTILS_BISTATE2_2,,__VA_ARGS__)
 
 
-#define CPPUTILS_FLAGS_UN_RAW(_name, _numberOfReserved,...)  \
+#define CPPUTILS_BISTATE_FLAGS_UN_RAW(_name, _numberOfReserved,...)  \
     union _name {  \
         uint64_t  wr_all; \
         struct{ \
@@ -52,8 +48,8 @@
         }wr;    \
     }
 
-#define CPPUTILS_FLAGS_UN(...)              CPPUTILS_FLAGS_UN_RAW(,64-2*CPPUTILS_NARGS(__VA_ARGS__),__VA_ARGS__)
-#define CPPUTILS_FLAGS_UN_NM(_name,...)     CPPUTILS_FLAGS_UN_RAW(_name,64-2*CPPUTILS_NARGS(__VA_ARGS__),__VA_ARGS__)
+#define CPPUTILS_BISTATE_FLAGS_UN(...)              CPPUTILS_BISTATE_FLAGS_UN_RAW(,64-2*CPPUTILS_NARGS(__VA_ARGS__),__VA_ARGS__)
+#define CPPUTILS_BISTATE_FLAGS_UN_NM(_name,...)     CPPUTILS_BISTATE_FLAGS_UN_RAW(_name,64-2*CPPUTILS_NARGS(__VA_ARGS__),__VA_ARGS__)
 
 
-#endif  //  #if !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER02_H) && !defined(CINTERNAL_INCLUDE_CINTERNAL_FLAGSHELPER_ANY_H)
+#endif  //  #ifndef CINTERNAL_INCLUDE_CINTERNAL_BISTATEFLAGS_H

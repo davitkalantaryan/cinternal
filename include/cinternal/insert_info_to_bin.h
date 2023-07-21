@@ -8,7 +8,7 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_INSERT_INO_TO_BIN_H
 #define CINTERNAL_INCLUDE_CINTERNAL_INSERT_INO_TO_BIN_H
 
-#include <cinternal/export_symbols.h>
+#include <cinternal/internal_header.h>
 
 
 #define CPPUTILS_INSERT_COMMENT_TO_BIN_RAW(_sectionName,_comment)	\
