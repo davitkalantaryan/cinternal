@@ -55,14 +55,17 @@ int main(void)
 	printf("s_nData = %d\n", s_nData);
 
     flags.wr_all = CPPUTILS_BISTATE_MAKE_ALL_BITS_FALSE;
+    assert(flags.rd.nm1_true == 0);
     assert(flags.rd.nm1_false == 1);
-    printf("flags.rd.nm1_false = %d\n", (int)flags.rd.nm1_false);
+    assert(flags.rd.nm2_true == 0);
+    assert(flags.rd.nm2_false == 1);
+    printf("flags.rd.nm1_true = %d, flags.rd.nm1_false=%d\n", (int)flags.rd.nm1_true,(int)flags.rd.nm1_false);
 
-    flags.wr.nm1 = CPPUTILS_BISTATE_MAKE_BITS_FALSE;
+    flags.wr.nm1 = CPPUTILS_BISTATE_MAKE_BITS_TRUE;
     assert(flags.rd.nm1_false == 0);
-    printf("flags.rd.nm1_false = %d\n", (int)flags.rd.nm1_false);
+    printf("flags.rd.nm1_true = %d, flags.rd.nm1_false=%d\n", (int)flags.rd.nm1_true,(int)flags.rd.nm1_false);
 
-	while (nCounter < 1000) {
+    while (nCounter < 2) {
 		CintrSleepMsIntr(1000);
 		printf("nCounter = %d\n",++nCounter);
 	}
