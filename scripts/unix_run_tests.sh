@@ -52,6 +52,7 @@ fi
 
 cd ${repositoryRoot}/sys/${lsbCode}/Debug/test
 
-./lhash_test
-./llist_test
-./unittest
+./any_quick_test
+./c_global_initer_test
+./c_raii_test
+./insert_custom_info_into_bin_test_exe
