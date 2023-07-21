@@ -52,6 +52,9 @@ fi
 
 cd ${repositoryRoot}/sys/${lsbCode}/Debug/test
 
+pwd
+ls -al
+
 ./any_quick_test
 ./c_global_initer_test
 ./c_raii_test

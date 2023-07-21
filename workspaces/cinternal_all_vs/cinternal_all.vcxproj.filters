@@ -57,9 +57,6 @@
     <ClCompile Include="..\..\src\tests\main_c_global_initer_test.c">
       <Filter>files\src\tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\main_linux_mimic_of_call_on_remote.cpp">
-      <Filter>files\src\tests</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\.gitattributes">
@@ -77,14 +74,26 @@
     <None Include="..\..\.github\workflows\check_merge_to_master_and_develop.yml">
       <Filter>files\.github\workflows</Filter>
     </None>
-    <None Include="..\..\scripts\windows_build_all.bat">
-      <Filter>files\scripts</Filter>
+    <None Include="..\..\prj\common\common_mkfl\unix.common.Makefile">
+      <Filter>files\prj\common\common_mkfl</Filter>
     </None>
-    <None Include="..\..\scripts\windows_prepare_host.bat">
-      <Filter>files\scripts</Filter>
+    <None Include="..\..\prj\common\common_mkfl\windows.common.Makefile">
+      <Filter>files\prj\common\common_mkfl</Filter>
     </None>
-    <None Include="..\..\scripts\windows_prepare_repository.bat">
-      <Filter>files\scripts</Filter>
+    <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile">
+      <Filter>files\workspaces\cinternal_all_mkfl</Filter>
+    </None>
+    <None Include="..\..\prj\common\common_mkfl\sys_common.unix.Makefile">
+      <Filter>files\prj\common\common_mkfl</Filter>
+    </None>
+    <None Include="..\..\prj\common\common_mkfl\unix.common.tmp.Makefile">
+      <Filter>files\prj\common\common_mkfl</Filter>
+    </None>
+    <None Include="..\..\prj\common\common_qt\flagsandsys_common.pri">
+      <Filter>files\prj\common\common_qt</Filter>
+    </None>
+    <None Include="..\..\prj\common\common_qt\gui_common.pri">
+      <Filter>files\prj\common\common_qt</Filter>
     </None>
     <None Include="..\..\scripts\unix_build_all.sh">
       <Filter>files\scripts</Filter>
@@ -95,16 +104,16 @@
     <None Include="..\..\scripts\unix_prepare_repository.sh">
       <Filter>files\scripts</Filter>
     </None>
-    <None Include="..\..\prj\common\common_mkfl\unix.common.Makefile">
-      <Filter>files\prj\common\common_mkfl</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_mkfl\windows.common.Makefile">
-      <Filter>files\prj\common\common_mkfl</Filter>
-    </None>
-    <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile">
-      <Filter>files\workspaces\cinternal_all_mkfl</Filter>
-    </None>
     <None Include="..\..\scripts\unix_run_tests.sh">
+      <Filter>files\scripts</Filter>
+    </None>
+    <None Include="..\..\scripts\windows_build_all.bat">
+      <Filter>files\scripts</Filter>
+    </None>
+    <None Include="..\..\scripts\windows_prepare_host.bat">
+      <Filter>files\scripts</Filter>
+    </None>
+    <None Include="..\..\scripts\windows_prepare_repository.bat">
       <Filter>files\scripts</Filter>
     </None>
     <None Include="..\..\scripts\windows_run_tests.bat">
@@ -112,24 +121,6 @@
     </None>
     <None Include="..\..\scripts\windows_set_vs_toolset_and_run.bat">
       <Filter>files\scripts</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_qt\flags_common.pri">
-      <Filter>files\prj\common\common_qt</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_qt\gui_common.pri">
-      <Filter>files\prj\common\common_qt</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_qt\resolve_common.pri">
-      <Filter>files\prj\common\common_qt</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_qt\sys_common.pri">
-      <Filter>files\prj\common\common_qt</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_mkfl\sys_common.unix.Makefile">
-      <Filter>files\prj\common\common_mkfl</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_mkfl\unix.common.tmp.Makefile">
-      <Filter>files\prj\common\common_mkfl</Filter>
     </None>
   </ItemGroup>
 </Project>
