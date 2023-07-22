@@ -309,6 +309,7 @@
     <None Include="..\..\.gitattributes" />
     <None Include="..\..\.github\workflows\check_merge_to_master_and_develop.yml" />
     <None Include="..\..\.gitignore" />
+    <None Include="..\..\ENVIRONMENT" />
     <None Include="..\..\LICENSE" />
     <None Include="..\..\prj\common\common_mkfl\sys_common.unix.Makefile" />
     <None Include="..\..\prj\common\common_mkfl\unix.common.Makefile" />
@@ -326,6 +327,7 @@
     <None Include="..\..\scripts\windows_prepare_repository.bat" />
     <None Include="..\..\scripts\windows_run_tests.bat" />
     <None Include="..\..\scripts\windows_set_vs_toolset_and_run.bat" />
+    <None Include="..\..\scripts\windows_source_per_session.bat" />
     <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
