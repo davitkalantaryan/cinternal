@@ -122,5 +122,11 @@
     <None Include="..\..\prj\common\common_mkfl\unix.common.tmp.Makefile">
       <Filter>files\prj\common\common_mkfl</Filter>
     </None>
+    <None Include="..\..\prj\common\common_mkfl\flagsandsys_common_pure.unix.Makefile">
+      <Filter>files\prj\common\common_mkfl</Filter>
+    </None>
+    <None Include="..\..\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile">
+      <Filter>files\prj\common\common_mkfl</Filter>
+    </None>
   </ItemGroup>
 </Project>
