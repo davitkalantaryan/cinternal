@@ -41,6 +41,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\tests\main_c_raii_test.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\c_raii_test_unix_mkfl\c_raii_test_unix.unix.Makefile" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

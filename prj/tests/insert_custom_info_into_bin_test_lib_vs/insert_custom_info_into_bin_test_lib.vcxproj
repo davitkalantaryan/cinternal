@@ -279,6 +279,9 @@
     <ClCompile Include="..\..\..\src\tests\insert_custom_info_into_bin_test\entry_insert_custom_info_into_bin_test_lib.c" />
     <ClCompile Include="..\..\..\src\tests\insert_custom_info_into_bin_test\insert_custom_info_into_bin_test.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\insert_custom_info_into_bin_test_lib_mkfl\insert_custom_info_into_bin_test_lib.unix.Makefile" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

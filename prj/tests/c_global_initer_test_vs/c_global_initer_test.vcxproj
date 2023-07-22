@@ -286,6 +286,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\tests\main_c_global_initer_test.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\c_global_initer_test_mkfl\c_global_initer_test.unix.Makefile" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

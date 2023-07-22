@@ -300,6 +300,9 @@
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\any_quick_test_mkfl\any_quick_test.unix.Makefile" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{744afe94-b9c2-4354-90d6-948dd0477eff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\c_raii.h">
@@ -26,5 +29,10 @@
     <ClCompile Include="..\..\..\src\tests\main_c_raii_test.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\c_raii_test_unix_mkfl\c_raii_test_unix.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>

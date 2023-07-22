@@ -19,6 +19,9 @@
     <Filter Include="Header Files\include\cinternal">
       <UniqueIdentifier>{d7f43aaa-cb20-42b1-8ac2-bf7f7c26ab5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{69439de2-8090-4624-badd-103ae089e29b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\tests\main_any_quick_test.c">
@@ -62,5 +65,10 @@
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\any_quick_test_mkfl\any_quick_test.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>
