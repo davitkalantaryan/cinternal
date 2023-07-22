@@ -13,24 +13,12 @@ message("!!! $${PWD}/flagsandsys_common.pri")
 isEmpty(cinternalFlagsAndSysCommonIncluded){
     cinternalFlagsAndSysCommonIncluded = 1
 
-    isEmpty( cinternalRepoRoot ) {
-            cinternalRepoRoot = $$(cinternalRepoRoot)
-	    isEmpty(cinternalRepoRoot) {
-	        cinternalRepoRoot = $${PWD}/../../..
-	    }
-    }
-
-    isEmpty( repositoryRoot ) {
-            repositoryRoot = $$(repositoryRoot)
-	    isEmpty(repositoryRoot) {
-	        repositoryRoot = $${cinternalRepoRoot}
-	    }
-    }
+    cinternalRepoRoot = $${PWD}/../../..
 
     isEmpty(artifactRoot) {
         artifactRoot = $$(artifactRoot)
 	isEmpty(artifactRoot) {
-	    artifactRoot = $${repositoryRoot}
+	    artifactRoot = $${cinternalRepoRoot}
 	}
     }
 
