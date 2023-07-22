@@ -37,5 +37,11 @@
     <None Include="..\c_raii_test_unix_mkfl\c_raii_test_unix.unix.Makefile">
       <Filter>files</Filter>
     </None>
+    <None Include="..\c_raii_test_unix_qt\c_raii_test_unix.pro">
+      <Filter>files</Filter>
+    </None>
+    <None Include="..\c_raii_test_qt\c_raii_test.pro">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>

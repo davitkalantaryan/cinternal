@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\c_raii_test_mkfl\c_raii_test.unix.Makefile" />
+    <None Include="..\c_raii_test_qt\c_raii_test.pro" />
     <None Include="..\c_raii_test_unix_mkfl\c_raii_test_unix.unix.Makefile" />
+    <None Include="..\c_raii_test_unix_qt\c_raii_test_unix.pro" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

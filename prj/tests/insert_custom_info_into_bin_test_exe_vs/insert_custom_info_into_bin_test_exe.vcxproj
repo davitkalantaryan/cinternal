@@ -289,6 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\insert_custom_info_into_bin_test_exe_mkfl\insert_custom_info_into_bin_test_exe.unix.Makefile" />
+    <None Include="..\insert_custom_info_into_bin_test_exe_qt\insert_custom_info_into_bin_test_exe.pro" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

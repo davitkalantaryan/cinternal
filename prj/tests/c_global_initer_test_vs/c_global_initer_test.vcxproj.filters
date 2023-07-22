@@ -26,5 +26,8 @@
     <None Include="..\c_global_initer_test_mkfl\c_global_initer_test.unix.Makefile">
       <Filter>files</Filter>
     </None>
+    <None Include="..\c_global_initer_test_qt\c_global_initer_test.pro">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>

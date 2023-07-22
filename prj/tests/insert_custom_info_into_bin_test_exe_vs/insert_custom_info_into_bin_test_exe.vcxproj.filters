@@ -29,5 +29,8 @@
     <None Include="..\insert_custom_info_into_bin_test_exe_mkfl\insert_custom_info_into_bin_test_exe.unix.Makefile">
       <Filter>files</Filter>
     </None>
+    <None Include="..\insert_custom_info_into_bin_test_exe_qt\insert_custom_info_into_bin_test_exe.pro">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>
