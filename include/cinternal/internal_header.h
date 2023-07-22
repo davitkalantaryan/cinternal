@@ -469,5 +469,13 @@
 #endif
 #endif
 
+#ifdef _WIN32
+#define CPPUTILS_FILE_DELIM_THS		'\\'
+#define CPPUTILS_FILE_DELIM_OTH		'/'
+#else
+#define CPPUTILS_FILE_DELIM_THS		'/'
+#define CPPUTILS_FILE_DELIM_OTH		'\\'
+#endif
+
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
