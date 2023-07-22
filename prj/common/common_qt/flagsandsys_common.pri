@@ -17,9 +17,9 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
 
     isEmpty(artifactRoot) {
         artifactRoot = $$(artifactRoot)
-	isEmpty(artifactRoot) {
-	    artifactRoot = $${cinternalRepoRoot}
-	}
+		isEmpty(artifactRoot) {
+			artifactRoot = $${cinternalRepoRoot}
+		}
     }
 
     DEFINES += CPPUTILS_COMPILER_WARNINGS_PUSH_POP

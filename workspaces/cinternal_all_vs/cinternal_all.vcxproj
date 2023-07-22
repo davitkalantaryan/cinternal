@@ -311,12 +311,10 @@
     <None Include="..\..\.gitignore" />
     <None Include="..\..\ENVIRONMENT" />
     <None Include="..\..\LICENSE" />
-    <None Include="..\..\prj\common\common_mkfl\sys_common.unix.Makefile" />
-    <None Include="..\..\prj\common\common_mkfl\unix.common.Makefile" />
+    <None Include="..\..\prj\common\common_mkfl\flagsandsys_common.unix.Makefile" />
+    <None Include="..\..\prj\common\common_mkfl\flagsandsys_common.windows.Makefile" />
     <None Include="..\..\prj\common\common_mkfl\unix.common.tmp.Makefile" />
-    <None Include="..\..\prj\common\common_mkfl\windows.common.Makefile" />
     <None Include="..\..\prj\common\common_qt\flagsandsys_common.pri" />
-    <None Include="..\..\prj\common\common_qt\gui_common.pri" />
     <None Include="..\..\README.md" />
     <None Include="..\..\scripts\unix_build_all.sh" />
     <None Include="..\..\scripts\unix_prepare_host.sh" />
