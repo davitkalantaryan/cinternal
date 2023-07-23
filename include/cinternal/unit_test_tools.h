@@ -22,8 +22,13 @@ CPPUTILS_BEGIN_C
 typedef void (*TypeFunction)(void);
 
 // if you need to have tests after main called, then overrwrite below 2 functions
-CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function);
-CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void);
+#ifdef _MSC_VER
+#define CPPUTILS_GCC_STYLE_ATTR_WEAK()
+#else
+#define CPPUTILS_GCC_STYLE_ATTR_WEAK() __attribute__((weak))
+#endif
+CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) CPPUTILS_GCC_STYLE_ATTR_WEAK();
+CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) CPPUTILS_GCC_STYLE_ATTR_WEAK();
 
 
 
