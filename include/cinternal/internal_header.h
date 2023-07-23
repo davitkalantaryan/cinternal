@@ -15,10 +15,12 @@
 #ifdef _MSC_VER
 
 	#if defined(_WIN64) || defined(_M_ARM)
+		#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)		_name
 		#define CPPUTILS_FNAME_PREFIX ""
 		#define CPPUTILS_DS_FNAME_POSTFIX
 		#define CPPUTILS_SEC_CH_FNC_NAME	"__security_check_cookie"
 	#else
+		#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)	_ ## _name
 		#define CPPUTILS_FNAME_PREFIX "_"
 		#define CPPUTILS_DS_FNAME_POSTFIX	"@12"
 		#define CPPUTILS_SEC_CH_FNC_NAME	"@__security_check_cookie@4"
@@ -110,6 +112,12 @@
     #define CPPUTILS_DLL_PRIVATE		__hidden
     #define CPPUTILS_IMPORT_FROM_DLL
 #endif  // #ifdef _MSC_VER
+
+
+#ifndef CPPUTILS_FNAME_PREFIX_NO_STR
+	#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)		_name
+#endif
+
 
 #if defined(_MSC_VER) && defined(_MSVC_LANG)
 	#if (_MSVC_LANG>=201100L)
