@@ -9,39 +9,61 @@
 CC                      = cl 
 CPPC           			= cl -Zc:__cplusplus
 
+# this variable shold be provided 
 !IFNDEF MakeFileDir
-MakeFileDir				= $(MAKEDIR)
+	MakeFileDir			= $(MAKEDIR)
 !ENDIF
 
 !IFNDEF RepoRootDir
-RepoRootDir			= $(MakeFileDir)\..\..\..
+	RepoRootDir			= $(MakeFileDir)\..\..\..
 !ENDIF
 
 !IFNDEF cinternalRepoRoot
-cinternalRepoRoot	= $(RepoRootDir)
+	cinternalRepoRoot	= $(RepoRootDir)
 !ENDIF
 
-
+# better that this variable provided here
 !IFNDEF PDB_FILE_PATH
-PDB_FILE_PATH			= $(TargetDirectory)\$(TargetName).pdb
-!ENDIF
-CFLAGS				= $(CFLAGS) /bigobj /nologo
-!IF "$(Configuration)" == "Debug"
-CFLAGS				= $(CFLAGS) /MDd /Fd"$(PDB_FILE_PATH)"
-LibrariesExtension              = d
-ObjectsExtension		= d
-!ELSE
-CFLAGS				= $(CFLAGS) /MD
-LibrariesExtension              =
-ObjectsExtension		= r
+	PDB_FILE_PATH		= $(TargetDirectory)\$(TargetName).pdb
 !ENDIF
 
-CFLAGS				= $(CFLAGS) /I"$(cinternalRepoRoot)\include"
+!IFNDEF TargetCategory
+	!IF "$(TargetExtension)" == "exe"
+		TargetCategory	= bin
+	!ELIF "$(TargetExtension)" == "dll"
+		TargetCategory	= dll
+	!ELIF "$(TargetExtension)" == "lib"
+		TargetCategory	= lib
+	!ELSE 
+		TargetCategory	= $(TargetExtension)
+	!ENDIF
+!ENDIF
+
+!IFNDEF LINKER
+	!IF ("$(TargetExtension)" == "exe") || ("$(TargetExtension)" == "dll")
+		LINKER			= link
+	!ELSE 
+		LINKER			= $(TargetExtension)
+	!ENDIF
+!ENDIF
+
+!IF "$(Configuration)" == "Debug"
+	CFLAGS				= $(CFLAGS) /MDd /Fd"$(PDB_FILE_PATH)"
+	LibrariesExtension	= d
+	ObjectsExtension	= d
+!ELSE
+	CFLAGS				= $(CFLAGS) /MD
+	LibrariesExtension	=
+	ObjectsExtension	= r
+!ENDIF
+
+CFLAGS					= $(CFLAGS) /bigobj /nologo
+CFLAGS					= $(CFLAGS) /I"$(cinternalRepoRoot)\include"
 TargetFileName			= $(TargetName).$(TargetExtension)
 TargetDirectory			= $(RepoRootDir)\sys\win_$(Platform)\$(Configuration)\$(TargetCategory)
 #ObjectsDirBase			= $(RepoRootDir)\sys\win_$(Platform)\$(Configuration)\.objects
-#ObjectsDir			= $(ObjectsDirBase)\$(TargetName)
-ObjectsDir			= $(SrcBaseDir)
+#ObjectsDir				= $(ObjectsDirBase)\$(TargetName)
+ObjectsDir				= $(SrcBaseDir)
 
 CXXFLAGS			= $(CXXFLAGS) $(CFLAGS)
 CXXFLAGS			= $(CXXFLAGS) /JMC /permissive- /GS /W3 /Zc:wchar_t  /Zi /Gm- /Od /sdl- 

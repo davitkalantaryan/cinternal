@@ -5,27 +5,19 @@
 # created by:	Davit Kalantaryan (davit.kalantaryan@desy.de)
 #
 
-# this is set automatically when needed
 !IFNDEF MakeFileDir
-MakeFileDir			= $(MAKEDIR)
+	MakeFileDir			= $(MAKEDIR)
 !ENDIF
-MakeFileName        = cinternal_unit_test.windows.Makefile
 
+MakeFileName        = cinternal_unit_test.windows.Makefile
 RepoRootDir			= $(MakeFileDir)\..\..\..
 SrcBaseDir			= $(MakeFileDir)\..\..\..\src
 
 TargetName			= cinternal_unit_test
 TargetExtension		= exe
-TargetCategory      = test
+#TargetCategory      = test
 
-LINKER        		= link
-PDB_FILE_PATH		= $(TargetDirectory)\$(TargetName).pdb
-DEFINES       		= $(DEFINES) /D "_WINDLL" /D "_MBCS" /D "CPPUTILS_USING_STATIC_LIB_OR_OBJECTS"
-INCLUDE_PATHS		= $(INCLUDE_PATHS) /I"$(RepoRootDir)\include"
-CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
-CXXFLAGS			= $(CXXFLAGS) $(CFLAGS)
-
-LIBPATHS			= $(LIBPATHS) /LIBPATH:"$(RepoRootDir)\sys\win_$(Platform)\$(Configuration)\lib"
+#LINKER        		= link
 LIBS				=
 LIBS				= $(LIBS) "Ws2_32.lib"
 
@@ -44,8 +36,8 @@ DirectoriesToCompile	=
 DirectoriesToCompile	= tests\unit_test
 #DirectoriesToCompile	= $(DirectoriesToCompile) nr-core
 DirectoriesToCompile	= $(DirectoriesToCompile) core
-DirectoriesToCompile	= $(DirectoriesToCompile) intern
-DirectoriesToCompile	= $(DirectoriesToCompile) tools\cutils_unit_test
+#DirectoriesToCompile	= $(DirectoriesToCompile) intern
+#DirectoriesToCompile	= $(DirectoriesToCompile) tools\cutils_unit_test
 
 default: unittest
 
