@@ -271,6 +271,7 @@
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0001_lw_mutex_recursive.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\bistateflags.h" />
@@ -288,6 +289,11 @@
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test_tools.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cinternal_unit_test.pro" />
+    <None Include="cinternal_unit_test.unix.Makefile" />
+    <None Include="cinternal_unit_test.windows.Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

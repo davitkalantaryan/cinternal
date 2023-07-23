@@ -19,6 +19,9 @@
     <Filter Include="Header Files\include\cinternal">
       <UniqueIdentifier>{415170d9-6a85-49ed-a0e0-9fb5e349255c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{8a73d24f-ff86-4dfc-aaa8-bae3fe1aa5bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c">
@@ -28,6 +31,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0001_lw_mutex_recursive.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,5 +83,16 @@
     <ClInclude Include="..\..\..\include\cinternal\export_symbols.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cinternal_unit_test.pro">
+      <Filter>files</Filter>
+    </None>
+    <None Include="cinternal_unit_test.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
+    <None Include="cinternal_unit_test.windows.Makefile">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>

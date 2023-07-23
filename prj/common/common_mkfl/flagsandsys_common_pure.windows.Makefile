@@ -9,9 +9,8 @@
 CC                      = cl 
 CPPC           			= cl -Zc:__cplusplus
 
-
 !IFNDEF MakeFileDir
-MakeFileDir			= $(MAKEDIR)
+MakeFileDir				= $(MAKEDIR)
 !ENDIF
 
 !IFNDEF RepoRootDir
