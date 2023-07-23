@@ -22,6 +22,7 @@
 	#else
 		#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)	_ ## _name
 		#define CPPUTILS_FNAME_PREFIX "_"
+		#define CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE		1
 		#define CPPUTILS_DS_FNAME_POSTFIX	"@12"
 		#define CPPUTILS_SEC_CH_FNC_NAME	"@__security_check_cookie@4"
 	#endif
@@ -356,6 +357,7 @@
     #endif
 
 	#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)	_ ## _name
+	#define CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE		1
 
 #endif  //  #if defined(__APPLE__) && (defined(__GNUC__)  defined(__xlC__)  defined(__xlc__))
 
