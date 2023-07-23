@@ -263,8 +263,10 @@
 #define CPPUTILS_NO_NULL	CPPUTILS_ARG_NO_NULL
 #define CPPUTILS_ARG_NN		CPPUTILS_ARG_NO_NULL
 
-#define CPPUTILS_STRINGIFY(_x)                CPPUTILS_STRINGIFY_PRIV_RAW(_x)
 #define CPPUTILS_STRINGIFY_PRIV_RAW(_x)		#_x
+#define CPPUTILS_STRINGIFY(_x)                CPPUTILS_STRINGIFY_PRIV_RAW(_x)
+
+#define CPPUTILS_INP_REPEATER(_x)              _x
 
 
 #if defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN) || defined(CPPUTILS_WASM)
@@ -377,7 +379,7 @@
     //_Pragma("GCC diagnostic ignored \"-Wunused-const-variable\"")   
 	// #pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
 //#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	_Pragma("weak" CPPUTILS_STRINGIFY(_weak) "=" CPPUTILS_STRINGIFY(_replace))
-#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	_Pragma("weak" _weak "=" _replace)
+#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	_Pragma(CPPUTILS_INP_REPEATER("weak" _weak "=" _replace))
 #endif
 
 
