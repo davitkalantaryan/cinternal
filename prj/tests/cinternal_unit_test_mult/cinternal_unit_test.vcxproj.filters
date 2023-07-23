@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\include">
+      <UniqueIdentifier>{e9e58265-f1e1-423e-8d10-982e938ae7fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\include\cinternal">
+      <UniqueIdentifier>{415170d9-6a85-49ed-a0e0-9fb5e349255c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\cinternal\bistateflags.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\c_raii.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\c_raii_ext.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\endian.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\fourstateflags.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\internal_header.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\macroses.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\macroses02.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\unit_test.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\unit_test_tools.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\export_symbols.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
