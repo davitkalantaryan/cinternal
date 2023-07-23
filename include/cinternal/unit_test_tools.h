@@ -35,14 +35,14 @@ CPPUTILS_UNIT_TEST_WEAKNESS void CinternalIterateAndCallUnitTestFunctions(void);
 
 #define CPPUTILS_UTEST(_maj,_min)	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT;	\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){						\
-		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);				\
+		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);					\
 	}																							\
 	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT
 
 
 #define CPPUTILS_UTEST_ALL(_maj,_min)	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT;\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){						\
-		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);				\
+		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);					\
 		cinternal_unit_test_ ## _maj ## _min ();												\
 	}																							\
 	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT 

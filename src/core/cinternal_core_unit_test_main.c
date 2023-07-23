@@ -37,20 +37,27 @@ void CinternalIterateAndCallUnitTestFunctions_alternate(void)
 
 #ifdef __clang__
 
-
+#ifndef CinternalAddUnitTestFunction_defined
 CPPUTILS_ONLY_CLANG_ATTR_WEAK void CinternalAddUnitTestFunction(TypeFunction a_function) {
     CinternalAddUnitTestFunction_alternate(a_function);
 }
+#endif
 
 
+#ifndef CinternalIterateAndCallUnitTestFunctions_defined
 CPPUTILS_ONLY_CLANG_ATTR_WEAK void CinternalIterateAndCallUnitTestFunctions(void) {
     CinternalIterateAndCallUnitTestFunctions_alternate();
 }
+#endif
 
 #else   //  #ifndef _MSC_VER
 
+#ifndef CinternalAddUnitTestFunction_defined
 CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalAddUnitTestFunction, CinternalAddUnitTestFunction_alternate)
+#endif
+#ifndef CinternalIterateAndCallUnitTestFunctions_defined
 CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalIterateAndCallUnitTestFunctions, CinternalIterateAndCallUnitTestFunctions_alternate)
+#endif
 
 
 #endif  //  #ifndef _MSC_VER
