@@ -7,10 +7,9 @@
 //
 
 #include <cinternal/internal_header.h>
-#define CPPUTILS_UNIT_TEST_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK
+#define CPPUTILS_UNIT_TEST_WEAKNESS		CPPUTILS_ONLY_CLANG_ATTR_WEAK
 
 #include <cinternal/unit_test_tools.h>
-#include <stdlib.h>
 
 
 CPPUTILS_BEGIN_C
@@ -20,7 +19,7 @@ CPPUTILS_BEGIN_C
 int main(void)
 {
 	CinternalIterateAndCallUnitTestFunctions();
-	exit( 0);
+	return ( 0);
 }
 
 
@@ -36,15 +35,15 @@ void CinternalIterateAndCallUnitTestFunctions_alternate(void)
 }
 
 
-#ifndef _MSC_VER
+#ifdef __clang__
 
 
-CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CinternalAddUnitTestFunction(TypeFunction a_function) {
+CPPUTILS_ONLY_CLANG_ATTR_WEAK void CinternalAddUnitTestFunction(TypeFunction a_function) {
     CinternalAddUnitTestFunction_alternate(a_function);
 }
 
 
-CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CinternalIterateAndCallUnitTestFunctions(void) {
+CPPUTILS_ONLY_CLANG_ATTR_WEAK void CinternalIterateAndCallUnitTestFunctions(void) {
     CinternalIterateAndCallUnitTestFunctions_alternate();
 }
 
