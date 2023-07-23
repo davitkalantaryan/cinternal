@@ -378,7 +378,7 @@
 	// #pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
 #define DO_PRAGMA_(x) _Pragma (#x)
 #define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	DO_PRAGMA_(weak _weak = _replace)
-#define CPPUTILS_WEAK_SYMBOL_ALIAS_STR(_weak,_replace)	_Pragma(CPPUTILS_STR_IMPL_(_weak,_replace))
+#define CPPUTILS_WEAK_SYMBOL_ALIAS_STR(_weak,_replace)	_Pragma((CPPUTILS_STR_IMPL_(_weak,_replace)))
 #endif
 
 

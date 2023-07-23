@@ -56,8 +56,8 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attri
 //CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalAddUnitTestFunction, CinternalAddUnitTestFunction_alternate)
 //CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalIterateAndCallUnitTestFunctions, CinternalIterateAndCallUnitTestFunctions_alternate)
 
-CPPUTILS_WEAK_SYMBOL_ALIAS("CinternalAddUnitTestFunction", "CinternalAddUnitTestFunction_alternate")
-CPPUTILS_WEAK_SYMBOL_ALIAS("CinternalIterateAndCallUnitTestFunctions", "CinternalIterateAndCallUnitTestFunctions_alternate")
+CPPUTILS_WEAK_SYMBOL_ALIAS_STR("CinternalAddUnitTestFunction", "CinternalAddUnitTestFunction_alternate")
+CPPUTILS_WEAK_SYMBOL_ALIAS_STR("CinternalIterateAndCallUnitTestFunctions", "CinternalIterateAndCallUnitTestFunctions_alternate")
 
 #endif
 //#endif
