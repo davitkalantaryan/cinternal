@@ -506,4 +506,11 @@
 #define CPPUTILS_FILE_DELIM_001		CPPUTILS_FILE_DELIM_THS
 
 
+#ifdef __clang__
+#define CPPUTILS_ONLY_CLANG_ATTR_WEAK() __attribute__((weak))
+#else
+#define CPPUTILS_ONLY_CLANG_ATTR_WEAK()
+#endif
+
+
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
