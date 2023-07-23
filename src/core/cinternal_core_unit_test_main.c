@@ -23,13 +23,13 @@ int main(void)
 }
 
 
-CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
+void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
 {
 	CPPUTILS_STATIC_CAST(void,a_function);
 }
 
 
-CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(void)
+void CinternalIterateAndCallUnitTestFunctions_alternate(void)
 {
 	//
 }
@@ -38,12 +38,12 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 #ifndef _MSC_VER
 
 
-CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak)) {
+void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak)) {
     CinternalAddUnitTestFunction_alternate(a_function);
 }
 
 
-CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak)) {
+void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak)) {
     CinternalIterateAndCallUnitTestFunctions_alternate();
 }
 
