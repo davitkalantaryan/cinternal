@@ -376,8 +376,8 @@
 	//_Pragma("GCC diagnostic push")        
     //_Pragma("GCC diagnostic ignored \"-Wunused-const-variable\"")   
 	// #pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
-#define CPPUTILS_STR_IMPL_(_weak, _replace) "weak " _weak "=" _replace
-#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	_Pragma("weak" CPPUTILS_STRINGIFY(_weak) "=" CPPUTILS_STRINGIFY(_replace))
+#define DO_PRAGMA_(x) _Pragma (#x)
+#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	DO_PRAGMA_(weak _weak = _replace)
 #define CPPUTILS_WEAK_SYMBOL_ALIAS_STR(_weak,_replace)	_Pragma(CPPUTILS_STR_IMPL_(_weak,_replace))
 #endif
 
