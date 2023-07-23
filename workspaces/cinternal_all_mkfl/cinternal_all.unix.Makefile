@@ -31,6 +31,7 @@ all_common:
 	make -f $(cinternalRepoRoot)/prj/tests/c_raii_test_mkfl/c_raii_test.unix.Makefile
 	make -f $(cinternalRepoRoot)/prj/tests/c_raii_test_unix_mkfl/c_raii_test_unix.unix.Makefile
 	make -f $(cinternalRepoRoot)/prj/tests/insert_custom_info_into_bin_test_exe_mkfl/insert_custom_info_into_bin_test_exe.unix.Makefile
+	make -f $(cinternalRepoRoot)/prj/tests/cinternal_unit_test_mult/cinternal_unit_test.unix.Makefile
 
 clean_no_mac:
 	make -f $(cinternalRepoRoot)/prj/tests/insert_custom_info_into_bin_test_lib_mkfl/insert_custom_info_into_bin_test_lib.unix.Makefile clean
@@ -40,7 +41,8 @@ clean_common:
 	make -f $(cinternalRepoRoot)/prj/tests/c_global_initer_test_mkfl/c_global_initer_test.unix.Makefile clean
 	make -f $(cinternalRepoRoot)/prj/tests/c_raii_test_mkfl/c_raii_test.unix.Makefile clean
 	make -f $(cinternalRepoRoot)/prj/tests/c_raii_test_unix_mkfl/c_raii_test_unix.unix.Makefile clean
-	make -f $(cinternalRepoRoot)/prj/tests/insert_custom_info_into_bin_test_exe_mkfl/insert_custom_info_into_bin_test_exe.unix.Makefile clean	
+	make -f $(cinternalRepoRoot)/prj/tests/insert_custom_info_into_bin_test_exe_mkfl/insert_custom_info_into_bin_test_exe.unix.Makefile clean
+	make -f $(cinternalRepoRoot)/prj/tests/cinternal_unit_test_mult/cinternal_unit_test.unix.Makefile clean
 
 ifeq ($(osSystem),Darwin)
 

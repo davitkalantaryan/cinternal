@@ -1,4 +1,5 @@
-targetName=unittest
+
+targetName=cinternal_unit_test
 
 mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir		=  $(shell dirname $(mkfile_path))
@@ -8,8 +9,8 @@ firstTarget: all
 
 include $(mkfile_dir)/../../common/common_mkfl/flagsandsys_common.unix.Makefile
 
-UTEST_SRCS_DIR=$(cutilsRepoRoot)/src/tests/unit_test
-CORE_SRCS_DIR=$(cutilsRepoRoot)/src/core
+UTEST_SRCS_DIR=$(cinternalRepoRoot)/src/tests/unit_test
+CORE_SRCS_DIR=$(cinternalRepoRoot)/src/core
 
 UTEST_SRCS_CPP	= $(shell find $(UTEST_SRCS_DIR) -name "*.cpp")
 UTEST_SRCS_C	= $(shell find $(UTEST_SRCS_DIR) -name "*.c")
