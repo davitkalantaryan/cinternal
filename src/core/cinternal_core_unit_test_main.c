@@ -6,6 +6,9 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 
+#include <cinternal/internal_header.h>
+#define CPPUTILS_UNIT_TEST_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK
+
 #include <cinternal/unit_test_tools.h>
 
 
@@ -32,7 +35,7 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 }
 
 
-#ifdef __clang__
+#ifndef _MSC_VER
 
 
 CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak)) {
@@ -44,13 +47,13 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attri
     CinternalIterateAndCallUnitTestFunctions_alternate();
 }
 
-#else   //  #ifdef __clang__
+#else   //  #ifndef _MSC_VER
 
 CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalAddUnitTestFunction, CinternalAddUnitTestFunction_alternate)
 CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalIterateAndCallUnitTestFunctions, CinternalIterateAndCallUnitTestFunctions_alternate)
 
 
-#endif  //  #ifdef __clang__
+#endif  //  #ifndef _MSC_VER
 
 
 CPPUTILS_END_C

@@ -19,11 +19,15 @@ CPPUTILS_BEGIN_C
 #define CPPUTILS_UNIT_TEST_NOEXCEPT CPPUTILS_NOEXCEPT
 #endif
 
+#ifndef CPPUTILS_UNIT_TEST_WEAKNESS
+#define CPPUTILS_UNIT_TEST_WEAKNESS()
+#endif
+
 typedef void (*TypeFunction)(void);
 
 // if you need to have tests after main called, then overrwrite below 2 functions
-CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) CPPUTILS_ONLY_CLANG_ATTR_WEAK();
-CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) CPPUTILS_ONLY_CLANG_ATTR_WEAK();
+CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) CPPUTILS_UNIT_TEST_WEAKNESS();
+CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) CPPUTILS_UNIT_TEST_WEAKNESS();
 
 
 
