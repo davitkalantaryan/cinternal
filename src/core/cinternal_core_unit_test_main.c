@@ -58,7 +58,7 @@ extern CPPUTILS_DLL_PRIVATE void _CinternalIterateAndCallUnitTestFunctions(void)
 
 CPPUTILS_DLL_PRIVATE void CallCinternalAddUnitTestFunction(TypeFunction a_function) {
 #ifdef HAS_ACTIVE_CALL
-    if (CinternalAddUnitTestFunction) {
+    if (&CinternalAddUnitTestFunction) {
         CinternalAddUnitTestFunction(a_function);
     }
     else {
@@ -72,7 +72,7 @@ CPPUTILS_DLL_PRIVATE void CallCinternalAddUnitTestFunction(TypeFunction a_functi
 
 static void CallCinternalIterateAndCallUnitTestFunctions(void) {
 #ifdef HAS_ACTIVE_CALL
-    if (CinternalIterateAndCallUnitTestFunctions) {
+    if (&CinternalIterateAndCallUnitTestFunctions) {
         CinternalIterateAndCallUnitTestFunctions();
     }
     else {
