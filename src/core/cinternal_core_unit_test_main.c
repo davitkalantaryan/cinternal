@@ -41,8 +41,22 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 #ifdef CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE
 
 #define HAS_ACTIVE_CALL
-//extern CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak));
-//extern CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak));
+
+static int s_nCinternalAddUnitTestFunctionMissing = 0;
+static int s_nCinternalIterateAndCallUnitTestFunctions = 0;
+
+CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak))
+{
+    s_nCinternalAddUnitTestFunctionMissing = 1;
+    CinternalAddUnitTestFunction_alternate(a_function);
+}
+
+
+CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak))
+{
+    s_nCinternalIterateAndCallUnitTestFunctions = 1;
+    CinternalIterateAndCallUnitTestFunctions_alternate();
+}
 
 //#pragma clang attribute push ([[weak]], _CinternalAddUnitTestFunction = CinternalAddUnitTestFunction_alternate)
 //#pragma weak _CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
@@ -58,11 +72,11 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 
 CPPUTILS_DLL_PRIVATE void CallCinternalAddUnitTestFunction(TypeFunction a_function) {
 #ifdef HAS_ACTIVE_CALL
-    if (&CinternalAddUnitTestFunction) {
-        CinternalAddUnitTestFunction(a_function);
+    if (s_nCinternalAddUnitTestFunctionMissing) {
+        CinternalAddUnitTestFunction_alternate(a_function);
     }
     else {
-        CinternalAddUnitTestFunction_alternate(a_function);
+        CinternalAddUnitTestFunction(a_function);
     }
 #else
     CinternalAddUnitTestFunction(a_function);
@@ -72,11 +86,11 @@ CPPUTILS_DLL_PRIVATE void CallCinternalAddUnitTestFunction(TypeFunction a_functi
 
 static void CallCinternalIterateAndCallUnitTestFunctions(void) {
 #ifdef HAS_ACTIVE_CALL
-    if (&CinternalIterateAndCallUnitTestFunctions) {
-        CinternalIterateAndCallUnitTestFunctions();
+    if (s_nCinternalIterateAndCallUnitTestFunctions) {
+        CinternalIterateAndCallUnitTestFunctions_alternate();
     }
     else {
-        CinternalIterateAndCallUnitTestFunctions_alternate();
+        CinternalIterateAndCallUnitTestFunctions();
     }
 #else
     CinternalIterateAndCallUnitTestFunctions();
