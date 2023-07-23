@@ -41,8 +41,8 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 #ifdef CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE
 
 #define HAS_ACTIVE_CALL
-extern CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak_import));
-extern CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak_import));
+extern CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak));
+extern CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak));
 
 //#pragma clang attribute push ([[weak]], _CinternalAddUnitTestFunction = CinternalAddUnitTestFunction_alternate)
 //#pragma weak _CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
