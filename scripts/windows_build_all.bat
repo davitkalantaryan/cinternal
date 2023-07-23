@@ -19,6 +19,8 @@ set scriptName=%0
 set scriptDirectory=%~dp0
 cd /D "%scriptDirectory%.."
 set "repositoryRoot=%cd%\"
+echo repositoryRoot = %repositoryRoot%
+
 
 if not defined PlatformToolsetVar (
 	set "PlatformToolsetVarMid=%VCToolsVersion:~0,2%"
@@ -63,6 +65,10 @@ for %%p in (%PlatformTarget%) do (
 	)
 )
 
+cd %repositoryRoot%prj\tests\cinternal_unit_test_mult
+if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
+call nmake -f cinternal_unit_test.windows.Makefile /e Platform=x64 /e Configuration=Debug
+if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
 exit /b 0
 

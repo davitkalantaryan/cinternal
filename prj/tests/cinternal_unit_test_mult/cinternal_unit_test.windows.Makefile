@@ -5,19 +5,16 @@
 # created by:	Davit Kalantaryan (davit.kalantaryan@desy.de)
 #
 
-!IFNDEF MakeFileDir
-	MakeFileDir			= $(MAKEDIR)
-!ENDIF
 
+MakeFileDir			= $(MAKEDIR)
 MakeFileName        = cinternal_unit_test.windows.Makefile
 RepoRootDir			= $(MakeFileDir)\..\..\..
 SrcBaseDir			= $(MakeFileDir)\..\..\..\src
 
 TargetName			= cinternal_unit_test
 TargetExtension		= exe
-#TargetCategory      = test
+TargetCategory      = test
 
-#LINKER        		= link
 LIBS				=
 LIBS				= $(LIBS) "Ws2_32.lib"
 
@@ -49,4 +46,4 @@ __buildGoogleTestLib:
 	@cd $(MakeFileDir)
 	@echo "!!!!!! 'msbuild -t:restore -p:RestorePackagesConfig=true' is not necessary anymore"
 
-!include <$(RepoRootDir)\prj\common\common_mkfl\flagsandsys_common_private.windows.Makefile>
+!include <$(RepoRootDir)\prj\common\common_mkfl\flagsandsys_common.windows.Makefile>
