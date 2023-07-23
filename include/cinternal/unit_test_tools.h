@@ -26,8 +26,8 @@ CPPUTILS_BEGIN_C
 typedef void (*TypeFunction)(void);
 
 // if you need to have tests after main called, then overrwrite below 2 functions
-void CinternalAddUnitTestFunction(TypeFunction a_function) CPPUTILS_UNIT_TEST_WEAKNESS();
-void CinternalIterateAndCallUnitTestFunctions(void) CPPUTILS_UNIT_TEST_WEAKNESS();
+CPPUTILS_UNIT_TEST_WEAKNESS void CinternalAddUnitTestFunction(TypeFunction a_function);
+CPPUTILS_UNIT_TEST_WEAKNESS void CinternalIterateAndCallUnitTestFunctions(void);
 
 
 

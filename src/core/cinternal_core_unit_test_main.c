@@ -38,12 +38,12 @@ void CinternalIterateAndCallUnitTestFunctions_alternate(void)
 #ifndef _MSC_VER
 
 
-void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak)) {
+CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CinternalAddUnitTestFunction(TypeFunction a_function) {
     CinternalAddUnitTestFunction_alternate(a_function);
 }
 
 
-void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak)) {
+CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CinternalIterateAndCallUnitTestFunctions(void) {
     CinternalIterateAndCallUnitTestFunctions_alternate();
 }
 

@@ -507,15 +507,15 @@
 
 
 #ifdef __clang__
-#define CPPUTILS_ONLY_CLANG_ATTR_WEAK() __attribute__((weak))
+#define CPPUTILS_ONLY_CLANG_ATTR_WEAK __attribute__((weak))
 #else
-#define CPPUTILS_ONLY_CLANG_ATTR_WEAK()
+#define CPPUTILS_ONLY_CLANG_ATTR_WEAK
 #endif
 
 #ifdef _MSC_VER
-#define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK()
+#define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK
 #else
-#define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK()	__attribute__((weak))
+#define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK	__attribute__((weak))
 #endif
 
 
