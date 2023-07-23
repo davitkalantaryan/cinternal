@@ -20,7 +20,7 @@ CPPUTILS_BEGIN_C
 #endif
 
 #ifndef CPPUTILS_UNIT_TEST_WEAKNESS
-#define CPPUTILS_UNIT_TEST_WEAKNESS()
+#define CPPUTILS_UNIT_TEST_WEAKNESS
 #endif
 
 typedef void (*TypeFunction)(void);
