@@ -114,11 +114,6 @@
 #endif  // #ifdef _MSC_VER
 
 
-#ifndef CPPUTILS_FNAME_PREFIX_NO_STR
-	#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)		_name
-#endif
-
-
 #if defined(_MSC_VER) && defined(_MSVC_LANG)
 	#if (_MSVC_LANG>=201100L)
 		#define CPPUTILS_CPP_11_DEFINED		1
@@ -359,7 +354,15 @@
     #else
         #error "CPPUTILS has not been ported to this Apple platform"
     #endif
+
+	#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)	_ ## _name
+
 #endif  //  #if defined(__APPLE__) && (defined(__GNUC__)  defined(__xlC__)  defined(__xlc__))
+
+
+#ifndef CPPUTILS_FNAME_PREFIX_NO_STR
+#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)		_name
+#endif
 
 
 #if defined(_CPPUNWIND) || !defined(_MSC_VER)

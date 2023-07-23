@@ -16,8 +16,8 @@ CPPUTILS_BEGIN_C
 #pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction=" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction_alternate")
 #pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions=" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions_alternate")
 #else
-#pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
-#pragma weak CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
+#pragma weak CPPUTILS_FNAME_PREFIX_NO_STR(CinternalAddUnitTestFunction)=CPPUTILS_FNAME_PREFIX_NO_STR(CinternalAddUnitTestFunction_alternate)
+#pragma weak CPPUTILS_FNAME_PREFIX_NO_STR(CinternalIterateAndCallUnitTestFunctions)=CPPUTILS_FNAME_PREFIX_NO_STR(CinternalIterateAndCallUnitTestFunctions_alternate)
 #endif
 
 
