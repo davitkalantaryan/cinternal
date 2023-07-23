@@ -295,8 +295,10 @@
     <ClInclude Include="..\..\..\include\cinternal\fourstateflags.h" />
     <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />
+    <ClInclude Include="..\..\..\include\cinternal\lw_mutex_recursive.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses02.h" />
+    <ClInclude Include="..\..\..\include\cinternal\sync_barrier.h" />
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h" />
   </ItemGroup>
