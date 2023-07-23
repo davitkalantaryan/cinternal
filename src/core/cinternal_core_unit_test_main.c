@@ -12,12 +12,10 @@
 CPPUTILS_BEGIN_C
 
 
-static void CallCinternalIterateAndCallUnitTestFunctions(void);
 
 int main(void)
 {
-	//CinternalIterateAndCallUnitTestFunctions();
-    CallCinternalIterateAndCallUnitTestFunctions();
+	CinternalIterateAndCallUnitTestFunctions();
 	return 0;
 }
 
@@ -38,64 +36,24 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 #pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction=" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction_alternate")
 #pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions=" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions_alternate")
 #else
-#ifdef CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE
 
-#define HAS_ACTIVE_CALL
+#ifdef __clang__
 
-static int s_nCinternalAddUnitTestFunctionMissing = 0;
-static int s_nCinternalIterateAndCallUnitTestFunctions = 0;
 
-CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak))
-{
-    s_nCinternalAddUnitTestFunctionMissing = 1;
+CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak)) {
     CinternalAddUnitTestFunction_alternate(a_function);
 }
 
 
-CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak))
-{
-    s_nCinternalIterateAndCallUnitTestFunctions = 1;
+CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak)) {
     CinternalIterateAndCallUnitTestFunctions_alternate();
 }
 
-//#pragma clang attribute push ([[weak]], _CinternalAddUnitTestFunction = CinternalAddUnitTestFunction_alternate)
-//#pragma weak _CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
-//#pragma weak _CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
-//CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak, alias("CinternalAddUnitTestFunction_alternate")));
-//CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak, alias("CinternalIterateAndCallUnitTestFunctions_alternate")));
-#else
+#else   //  #ifdef __clang__
 #pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
 #pragma weak CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
 #endif
 #endif
-
-
-CPPUTILS_DLL_PRIVATE void CallCinternalAddUnitTestFunction(TypeFunction a_function) {
-#ifdef HAS_ACTIVE_CALL
-    if (s_nCinternalAddUnitTestFunctionMissing) {
-        CinternalAddUnitTestFunction_alternate(a_function);
-    }
-    else {
-        CinternalAddUnitTestFunction(a_function);
-    }
-#else
-    CinternalAddUnitTestFunction(a_function);
-#endif
-}
-
-
-static void CallCinternalIterateAndCallUnitTestFunctions(void) {
-#ifdef HAS_ACTIVE_CALL
-    if (s_nCinternalIterateAndCallUnitTestFunctions) {
-        CinternalIterateAndCallUnitTestFunctions_alternate();
-    }
-    else {
-        CinternalIterateAndCallUnitTestFunctions();
-    }
-#else
-    CinternalIterateAndCallUnitTestFunctions();
-#endif
-}
 
 
 CPPUTILS_END_C

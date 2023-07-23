@@ -32,20 +32,18 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) CPPUTIL
 
 
 
-CPPUTILS_DLL_PRIVATE void CallCinternalAddUnitTestFunction(TypeFunction a_function);
-
 #define CPPUTILS_UTEST_BEFORE_MAIN(_maj,_min)	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_bm_ ## _maj ## _min)
 
 #define CPPUTILS_UTEST(_maj,_min)	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT;	\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){						\
-		CallCinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);				\
+		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);				\
 	}																							\
 	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT
 
 
 #define CPPUTILS_UTEST_ALL(_maj,_min)	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT;\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){						\
-		CallCinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);				\
+		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min);				\
 		cinternal_unit_test_ ## _maj ## _min ();												\
 	}																							\
 	static void cinternal_unit_test_ ## _maj ## _min (void) CPPUTILS_UNIT_TEST_NOEXCEPT 
