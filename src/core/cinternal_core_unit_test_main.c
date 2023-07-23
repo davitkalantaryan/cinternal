@@ -12,20 +12,6 @@
 CPPUTILS_BEGIN_C
 
 
-#ifdef _MSC_VER
-#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction=" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction_alternate")
-#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions=" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions_alternate")
-#else
-#ifdef CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE
-#pragma weak _CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
-#pragma weak _CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
-#else
-#pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
-#pragma weak CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
-#endif
-#endif
-
-
 int main(void)
 {
 	CinternalIterateAndCallUnitTestFunctions();
@@ -33,7 +19,7 @@ int main(void)
 }
 
 
-CPPUTILS_EXTERN_C CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
+CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
 {
 	CPPUTILS_STATIC_CAST(void,a_function);
 }
@@ -43,6 +29,23 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 {
 	//
 }
+
+
+#ifdef _MSC_VER
+#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction=" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction_alternate")
+#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions=" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions_alternate")
+#else
+#ifdef CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE
+//#pragma clang attribute push ([[weak]], _CinternalAddUnitTestFunction = CinternalAddUnitTestFunction_alternate)
+//#pragma weak _CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
+//#pragma weak _CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
+CPPUTILS_DLL_PRIVATE void CinternalAddUnitTestFunction(TypeFunction a_function) __attribute__((weak, alias("CinternalAddUnitTestFunction_alternate")));
+CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attribute__((weak, alias("CinternalIterateAndCallUnitTestFunctions_alternate")));
+#else
+#pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
+#pragma weak CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
+#endif
+#endif
 
 
 CPPUTILS_END_C
