@@ -10,6 +10,7 @@
 #define CPPUTILS_UNIT_TEST_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK
 
 #include <cinternal/unit_test_tools.h>
+#include <stdlib.h>
 
 
 CPPUTILS_BEGIN_C
@@ -19,7 +20,7 @@ CPPUTILS_BEGIN_C
 int main(void)
 {
 	CinternalIterateAndCallUnitTestFunctions();
-	return 0;
+	exit( 0);
 }
 
 
