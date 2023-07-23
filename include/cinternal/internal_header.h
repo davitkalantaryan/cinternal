@@ -367,6 +367,20 @@
 #endif
 
 
+//__pragma(section(_sectionName, read))
+#ifdef _MSC_VER
+// #pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction=" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction_alternate")
+#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	\
+	__pragma(comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX CPPUTILS_STRINGIFY(_weak) "=" CPPUTILS_FNAME_PREFIX CPPUTILS_STRINGIFY(_replace) ))
+#else
+	//_Pragma("GCC diagnostic push")        
+    //_Pragma("GCC diagnostic ignored \"-Wunused-const-variable\"")   
+	// #pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
+#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	\
+	_Pragma("weak" CPPUTILS_STRINGIFY(_weak) "=" CPPUTILS_STRINGIFY(_replace))
+#endif
+
+
 #if defined(_CPPUNWIND) || !defined(_MSC_VER)
 #define CPPUTILS_TRY		try
 #define CPPUTILS_CATCH()	catch(...)

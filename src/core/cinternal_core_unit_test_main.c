@@ -32,10 +32,10 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions_alternate(voi
 }
 
 
-#ifdef _MSC_VER
-#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction=" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction_alternate")
-#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions=" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions_alternate")
-#else
+//#ifdef _MSC_VER
+//#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction=" CPPUTILS_FNAME_PREFIX "CinternalAddUnitTestFunction_alternate")
+//#pragma comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions=" CPPUTILS_FNAME_PREFIX "CinternalIterateAndCallUnitTestFunctions_alternate")
+//#else
 
 #ifdef __clang__
 
@@ -50,10 +50,14 @@ CPPUTILS_DLL_PRIVATE void CinternalIterateAndCallUnitTestFunctions(void) __attri
 }
 
 #else   //  #ifdef __clang__
-#pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
-#pragma weak CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
+//#pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
+//#pragma weak CinternalIterateAndCallUnitTestFunctions=CinternalIterateAndCallUnitTestFunctions_alternate
+
+CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalAddUnitTestFunction, CinternalAddUnitTestFunction_alternate)
+CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalIterateAndCallUnitTestFunctions, CinternalIterateAndCallUnitTestFunctions_alternate)
+
 #endif
-#endif
+//#endif
 
 
 CPPUTILS_END_C
