@@ -517,7 +517,7 @@
 #define CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG
 #else
 #define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK	__attribute__((weak))
-#define CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG	__attribute__((strong))
+#define CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG	
 #endif
 
 
