@@ -23,16 +23,20 @@ int main(void)
 }
 
 
+#ifndef CinternalAddUnitTestFunction_defined
 void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
 {
 	CPPUTILS_STATIC_CAST(void,a_function);
 }
+#endif
 
 
+#ifndef CinternalIterateAndCallUnitTestFunctions_defined
 void CinternalIterateAndCallUnitTestFunctions_alternate(void)
 {
 	//
 }
+#endif
 
 
 #ifdef __clang__
