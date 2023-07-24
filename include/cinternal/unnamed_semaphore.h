@@ -55,7 +55,7 @@ typedef dispatch_semaphore_t	cinternal_unnamed_sema_t;
 
 typedef sem_t	cinternal_unnamed_sema_t;
 
-#define cinternal_unnamed_sema_create(_pSema,_count)	sem_init( _pSema, 0, CPPUTILS_STATIC_CAST(unsigned int,(_count) )
+#define cinternal_unnamed_sema_create(_pSema,_count)	sem_init( _pSema, 0, CPPUTILS_STATIC_CAST(unsigned int,(_count)) )
 #define cinternal_unnamed_sema_destroy(_pSema)			sem_destroy(_pSema)
 #define cinternal_unnamed_sema_post(_pSema)				sem_post( _pSema )
 #define cinternal_unnamed_sema_wait(_pSema)				sem_wait( _pSema )
