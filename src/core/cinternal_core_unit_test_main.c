@@ -10,9 +10,23 @@
 #define CPPUTILS_UNIT_TEST_WEAKNESS		CPPUTILS_ONLY_CLANG_ATTR_WEAK
 
 #include <cinternal/unit_test_tools.h>
+#include <stdlib.h>
 
 
 CPPUTILS_BEGIN_C
+
+
+#if (!defined(CinternalAddUnitTestFunction_defined)) || (!defined(CinternalIterateAndCallUnitTestFunctions_defined))
+
+struct SFunctionsToCall {
+	struct SFunctionsToCall *prev, *next;
+	TypeFunction			func;
+};
+
+
+static struct SFunctionsToCall* s_pFirst = CPPUTILS_NULL;
+
+#endif
 
 
 
@@ -26,7 +40,16 @@ int main(void)
 #ifndef CinternalAddUnitTestFunction_defined
 void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
 {
-	CPPUTILS_STATIC_CAST(void,a_function);
+	struct SFunctionsToCall* pNextFn = (struct SFunctionsToCall*)malloc(sizeof(struct SFunctionsToCall));
+	if (pNextFn) {
+		pNextFn->prev = CPPUTILS_NULL;
+		pNextFn->next = s_pFirst;
+		pNextFn->func = a_function;
+		if (s_pFirst) {
+			s_pFirst->prev = pNextFn;
+		}
+		s_pFirst = pNextFn;
+	}
 }
 #endif
 
@@ -34,7 +57,13 @@ void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
 #ifndef CinternalIterateAndCallUnitTestFunctions_defined
 void CinternalIterateAndCallUnitTestFunctions_alternate(void)
 {
-	//
+	struct SFunctionsToCall* pFnNext, * pFn = s_pFirst;
+	while (pFn) {
+		pFnNext = pFn->next;
+		(*(pFn->func))();
+		free(pFn);
+		pFn = pFnNext;
+	}
 }
 #endif
 
