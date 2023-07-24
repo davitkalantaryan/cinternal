@@ -24,6 +24,11 @@
 
 CPPUTILS_BEGIN_C
 
+//#define __APPLE__
+//#ifndef cinternal_sync_barrier_needed
+//#define cinternal_sync_barrier_needed
+//#endif
+
 #ifdef __APPLE__
 
 typedef struct {
@@ -57,12 +62,12 @@ static inline int cinternal_sync_barrier_create(cinternal_sync_barrier_t* a_pBar
     if (pthread_mutex_init(&(a_pBarrier->mutex), 0) < 0) {
         return errno;
     }
-    if (pthread_cond_init(&(a_pBarrier->mutex), 0) < 0) {
+    if (pthread_cond_init(&(a_pBarrier->cond), 0) < 0) {
         pthread_mutex_destroy(&(a_pBarrier->mutex));
         return -1;
     }
-    barrier->tripCount = a_count;
-    barrier->count = 0;
+    a_pBarrier->tripCount = a_count;
+    a_pBarrier->count = 0;
     return 0;
 }
 #endif  //  #if defined(cinternal_sync_barrier_create_needed) || defined(cinternal_sync_barrier_needed)
@@ -89,7 +94,7 @@ static inline int cinternal_sync_barrier_wait(cinternal_sync_barrier_t* a_pBarri
     if ((a_pBarrier->count) >= (a_pBarrier->tripCount)) {
         a_pBarrier->count = 0;
         if (pthread_cond_broadcast(&(a_pBarrier->cond)) < 0) {
-            pthread_mutex_unlock((&(a_pBarrier->mutex));
+            pthread_mutex_unlock(&(a_pBarrier->mutex));
             return -1;
         }
         if (pthread_mutex_unlock(&(a_pBarrier->mutex)) < 0) {
