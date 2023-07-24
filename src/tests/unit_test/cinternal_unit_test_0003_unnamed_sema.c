@@ -7,7 +7,7 @@
 //
 
 #include <cinternal/unit_test_tools.h>
-#if 0
+#if 1
 #include <cinternal/unit_test.h>
 #define cinternal_unnamed_sema_wait_ms_needed
 #include <cinternal/unnamed_semaphore.h>
