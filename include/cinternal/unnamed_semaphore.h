@@ -53,13 +53,12 @@ typedef dispatch_semaphore_t	cinternal_unnamed_sema_t;
 
 #else   //  #ifdef _WIN32
 
-typedef dispatch_semaphore_t	cinternal_unnamed_sema_t;
+typedef sem_t	cinternal_unnamed_sema_t;
 
 #define cinternal_unnamed_sema_create(_pSema,_count)	sem_init( _pSema, 0, CPPUTILS_STATIC_CAST(unsigned int,(_count) )
 #define cinternal_unnamed_sema_destroy(_pSema)			sem_destroy(_pSema)
 #define cinternal_unnamed_sema_post(_pSema)				sem_post( _pSema )
 #define cinternal_unnamed_sema_wait(_pSema)				sem_wait( _pSema )
-#define cinternal_unnamed_sema_wait_ms(_pSema,_timeMs)	dispatch_semaphore_wait( *(_pSema), CPPUTILS_STATIC_CAST(dispatch_time_t,_timeMs) )
 #ifdef cinternal_unnamed_sema_wait_ms_needed
 #undef cinternal_unnamed_sema_wait_ms_needed
 static inline int cinternal_unnamed_sema_wait_ms(cinternal_unnamed_sema_t* a_pSema) {
