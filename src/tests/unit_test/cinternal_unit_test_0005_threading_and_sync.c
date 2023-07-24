@@ -7,7 +7,6 @@
 //
 
 #include <cinternal/unit_test_tools.h>
-#if 1
 #include <cinternal/unit_test.h>
 #include <cinternal/threading.h>
 #include <cinternal/sync_barrier.h>
@@ -73,5 +72,3 @@ static cinternal_thread_ret_t CPPUTILS_THR_CALL ThreadFunctionSema(void* a_pArg)
     cinternal_unnamed_sema_post(pSema);
     cinternal_thread_exit_thread(CINTERNAL_THREAD_RET_CODE);
 }
-
-#endif
