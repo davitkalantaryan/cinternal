@@ -15,7 +15,7 @@
 CPPUTILS_UTEST_ALL(f_0002_sync_barrier, t_0001) {
 
     cinternal_sync_barrier_t aBarrier;
-    (void)cinternal_sync_barrier_create(&aBarrier,1);
+    CinternalUnitTestAssertCheck(cinternal_sync_barrier_create(&aBarrier, 1)==0);
     CinternalUnitTestAssertCheck(cinternal_sync_barrier_wait(&aBarrier)==1);
     cinternal_sync_barrier_destroy(&aBarrier);
     CinternalUnitTestAssertCheck(true);

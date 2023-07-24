@@ -273,6 +273,9 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0001_lw_mutex_recursive.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0002_sync_barrier.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0003_unnamed_sema.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0004_threading.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0005_threading_and_sync.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\bistateflags.h" />

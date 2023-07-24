@@ -299,8 +299,10 @@
     <ClInclude Include="..\..\..\include\cinternal\macroses.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses02.h" />
     <ClInclude Include="..\..\..\include\cinternal\sync_barrier.h" />
+    <ClInclude Include="..\..\..\include\cinternal\threading.h" />
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h" />
+    <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\any_quick_test_mkfl\any_quick_test.unix.Makefile" />
