@@ -17,6 +17,7 @@ SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/any_quick_test_qt/any_quick_test.pr
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/c_global_initer_test_qt/c_global_initer_test.pro"
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/c_raii_test_qt/c_raii_test.pro"
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/c_raii_test_unix_qt/c_raii_test_unix.pro"
+SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/cinternal_unit_test_mult/cinternal_unit_test.pro"
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/insert_custom_info_into_bin_test_exe_qt/insert_custom_info_into_bin_test_exe.pro"
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/insert_custom_info_into_bin_test_lib_qt/insert_custom_info_into_bin_test_lib.pro"
 

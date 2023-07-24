@@ -16,6 +16,5 @@ HEADERS += $$files($${cinternalRepoRoot}/src/*.h,true)
 SOURCES += $$files($${cinternalRepoRoot}/src/tests/unit_test/*.c,true)
 SOURCES += $$files($${cinternalRepoRoot}/src/tests/unit_test/*.cpp,true)
 SOURCES += $$files($${cinternalRepoRoot}/src/core/*.c,true)
-SOURCES += $$files($${cinternalRepoRoot}/src/core/*.cpp,true)
 
 OTHER_FILES += $$files($${PWD}/*.Makefile,false)
