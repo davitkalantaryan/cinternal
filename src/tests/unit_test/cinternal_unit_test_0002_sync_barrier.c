@@ -8,6 +8,7 @@
 
 #include <cinternal/unit_test_tools.h>
 #include <cinternal/unit_test.h>
+#define cinternal_sync_barrier_needed
 #include <cinternal/sync_barrier.h>
 
 
