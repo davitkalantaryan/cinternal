@@ -7,7 +7,7 @@
 //
 
 #include <cinternal/unit_test_tools.h>
-#if 0
+#if 1
 #include <cinternal/unit_test.h>
 #include <cinternal/threading.h>
 #include <cinternal/sync_barrier.h>

@@ -18,7 +18,6 @@ CPPUTILS_UTEST_ALL(f_0003_unnamed_sema, t_0001) {
 
     cinternal_unnamed_sema_t aSema;
     CinternalUnitTestAssertCheck(cinternal_unnamed_sema_create(&aSema, 0)==0);
-    //cinternal_unnamed_sema_create(&aSema, 0);
     cinternal_unnamed_sema_destroy(&aSema);
     CinternalUnitTestAssertCheck(true);
 }
