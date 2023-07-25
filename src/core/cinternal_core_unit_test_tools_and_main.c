@@ -75,11 +75,12 @@ static inline void PrintSourceInformationInline(enum CinternalLogTypes a_type, c
 	}
 }
 
-#define CINTERNAL_GAP_IN_PRINT	80
+#define CINTERNAL_GAP_IN_PRINT	180
 
 
-static inline void PrintConditionOfTestInline(enum CinternalLogTypes a_type, const char* a_cpcCondition) {
-	int i,nCharacters = CinternalMakeLogNoExtraData(a_type, false, "%s", a_cpcCondition);
+static inline void PrintTestPositionInline(enum CinternalLogTypes a_type, const char* a_testName, int a_subtestNumber) {
+	int i, nCharacters = CinternalMakeLogNoExtraData(a_type, false, "test: \"%s\", subTestNumber: %d", a_testName, a_subtestNumber);
+
 	if (nCharacters < CINTERNAL_GAP_IN_PRINT) {
 		nCharacters = CINTERNAL_GAP_IN_PRINT - nCharacters;
 	}
@@ -89,6 +90,8 @@ static inline void PrintConditionOfTestInline(enum CinternalLogTypes a_type, con
 	for (i = 0; i < nCharacters; ++i) {
 		CinternalMakeLogNoExtraData(a_type, false, " ");
 	}
+
+	CinternalMakeLogNoExtraData(a_type, false, "=> ");
 }
 
 
@@ -108,8 +111,8 @@ static inline int CinternalUnitTestCheckRawFnInline(
 			PrintSourceInformationInline(CinternalLogTypeInfo, a_cpcSrcPath, a_line);
 			break;
 		}  //  switch (a_subtestNumber) {
-		PrintConditionOfTestInline(CinternalLogTypeInfo, a_cpcCondition);
-		CinternalMakeLogNoExtraData(CinternalLogTypeInfo, true, "OK      => test: \"%s\", subTestNumber: %d\n", a_testName, a_subtestNumber);
+		PrintTestPositionInline(CinternalLogTypeInfo, a_testName, a_subtestNumber);
+		CinternalMakeLogNoExtraData(CinternalLogTypeInfo, true, "OK %s\n", a_cpcCondition);
 		return 0;
 	}
 
@@ -122,8 +125,8 @@ static inline int CinternalUnitTestCheckRawFnInline(
 		PrintSourceInformationInline(CinternalLogTypeError, a_cpcSrcPath, a_line);
 		break;
 	}  //  switch (a_subtestNumber) {
-	PrintConditionOfTestInline(CinternalLogTypeError, a_cpcCondition);
-	CinternalMakeLogNoExtraData(CinternalLogTypeError, true, "FAILURE => test: \"%s\", subTestNumber: %d is ok\n", a_testName, a_subtestNumber);
+	PrintTestPositionInline(CinternalLogTypeError, a_testName, a_subtestNumber);
+	CinternalMakeLogNoExtraData(CinternalLogTypeError, true, "OK %s\n", a_cpcCondition);
 	if (a_bExit) {
 		exit(1);
 	}
