@@ -27,12 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c">
       <Filter>Source Files\unit_test</Filter>
     </ClCompile>
@@ -50,6 +44,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0005_threading_and_sync.c">
       <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_tools_and_main.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +92,6 @@
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\unit_test_tools.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\export_symbols.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
@@ -108,6 +105,12 @@
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\fs.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\logger.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
   </ItemGroup>

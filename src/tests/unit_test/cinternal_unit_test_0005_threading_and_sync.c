@@ -6,7 +6,6 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 
-#include <cinternal/unit_test_tools.h>
 #include <cinternal/unit_test.h>
 #include <cinternal/threading.h>
 #define cinternal_unnamed_sema_wait_ms_needed
