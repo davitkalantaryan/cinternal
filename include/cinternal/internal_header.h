@@ -165,10 +165,11 @@
 #define CPPUTILS_REINTERPRET_CAST(_type,_data)	reinterpret_cast<_type>(_data)
 #define CPPUTILS_CONST_CAST(_type,_data)		const_cast<_type>(_data)
 #define CPPUTILS_DYNAMIC_CAST(_type,_data)		dynamic_cast<_type>(_data)
-#define CPPUTILS_GLOBAL	   ::
-#define CPPUTILS_BEGIN_C   extern "C" {
-#define CPPUTILS_END_C     }
-#define CPPUTILS_EXTERN_C  extern "C"
+#define CPPUTILS_GLOBAL							::
+#define CPPUTILS_BEGIN_C						extern "C" {
+#define CPPUTILS_END_C							}
+#define CPPUTILS_EXTERN_C						extern "C"
+#define CPPUTILS_EXTERN_C_DECL					extern "C"
 #else
 #define CPPUTILS_STATIC_CAST(_type,_data)		((_type)(_data))
 #define CPPUTILS_REINTERPRET_CAST(_type,_data)	((_type)(_data))
@@ -178,6 +179,7 @@
 #define CPPUTILS_BEGIN_C
 #define CPPUTILS_END_C
 #define CPPUTILS_EXTERN_C
+#define CPPUTILS_EXTERN_C_DECL					extern
 #endif
 
 
