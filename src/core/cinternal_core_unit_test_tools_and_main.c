@@ -126,7 +126,7 @@ static inline int CinternalUnitTestCheckRawFnInline(
 		break;
 	}  //  switch (a_subtestNumber) {
 	PrintTestPositionInline(CinternalLogTypeError, a_testName, a_subtestNumber);
-	CinternalMakeLogNoExtraData(CinternalLogTypeError, true, "OK %s\n", a_cpcCondition);
+	CinternalMakeLogNoExtraData(CinternalLogTypeError, true, "OK (%s)\n", a_cpcCondition);
 	if (a_bExit) {
 		exit(1);
 	}
