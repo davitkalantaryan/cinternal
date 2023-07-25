@@ -12,8 +12,8 @@
 #include <cinternal/unit_test.h>
 #define FileNameFromPossiblePathInline_needed
 #include <cinternal/fs.h>
+#include <cinternal/logger.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 
 CPPUTILS_BEGIN_C
@@ -65,18 +65,38 @@ CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateA
 CPPUTILS_WEAK_SYMBOL(CinternalIterateAndCallUnitTestFunctions)
 
 
-static inline void PrintSourceInformationInline(FILE* a_file, const char* a_cpcSrcPath, int a_line) {
+static inline void PrintSourceInformationInline(enum CinternalLogTypes a_type, const char* a_cpcSrcPath, int a_line) {
 	if (a_cpcSrcPath[0]) {
 		const char* cpcReturn = FileNameFromPossiblePathInline(a_cpcSrcPath);
-		fprintf(a_file, "src_fl: \"%s\" ", cpcReturn);
+		CinternalMakeLogNoExtraData(a_type,false, "src_fl: \"%s\" ", cpcReturn);
 	}
 	if (a_line >= 0) {
-		fprintf(a_file, "src_ln: %d ", a_line);
+		CinternalMakeLogNoExtraData(a_type, false, "src_ln: %d ", a_line);
+	}
+}
+
+#define CINTERNAL_GAP_IN_PRINT	20
+
+
+static inline void PrintConditionOfTestInline(enum CinternalLogTypes a_type, const char* a_cpcCondition) {
+	int i,nCharacters = CinternalMakeLogNoExtraData(a_type, false, "%s", a_cpcCondition);
+	if (nCharacters < CINTERNAL_GAP_IN_PRINT) {
+		nCharacters = CINTERNAL_GAP_IN_PRINT - nCharacters;
+	}
+	else {
+		nCharacters = 1;
+	}
+	for (i = 0; i < nCharacters; ++i) {
+		CinternalMakeLogNoExtraData(a_type, false, " ");
 	}
 }
 
 
-CINTERNAL_EXPORT int CinternalUnitTestCheckRawFn(bool a_condition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line)
+static inline int CinternalUnitTestCheckRawFnInline(
+	bool a_condition, const char* a_cpcCondition, 
+	const char* a_testName, int a_subtestNumber, 
+	const char* a_cpcSrcPath, int a_line,
+	bool a_bExit)
 {
 	if (a_condition) {
 		switch (a_subtestNumber) {
@@ -85,11 +105,11 @@ CINTERNAL_EXPORT int CinternalUnitTestCheckRawFn(bool a_condition, const char* a
 			a_subtestNumber = a_line;
 			break;
 		default:
-			PrintSourceInformationInline(stdout, a_cpcSrcPath, a_line);
+			PrintSourceInformationInline(CinternalLogTypeInfo, a_cpcSrcPath, a_line);
 			break;
 		}  //  switch (a_subtestNumber) {
-		fprintf(stdout, "OK      => test: \"%s\", subTestNumber: %d\n", a_testName, a_subtestNumber);
-		fflush(stdout);
+		PrintConditionOfTestInline(CinternalLogTypeInfo, a_cpcCondition);
+		CinternalMakeLogNoExtraData(CinternalLogTypeInfo, true, "OK      => test: \"%s\", subTestNumber: %d\n", a_testName, a_subtestNumber);
 		return 0;
 	}
 
@@ -99,44 +119,27 @@ CINTERNAL_EXPORT int CinternalUnitTestCheckRawFn(bool a_condition, const char* a
 		a_subtestNumber = a_line;
 		break;
 	default:
-		PrintSourceInformationInline(stderr, a_cpcSrcPath, a_line);
+		PrintSourceInformationInline(CinternalLogTypeError, a_cpcSrcPath, a_line);
 		break;
 	}  //  switch (a_subtestNumber) {
-	fprintf(stderr, "FAILURE => test: \"%s\", subTestNumber: %d is ok\n", a_testName, a_subtestNumber);
-	fflush(stderr);
+	PrintConditionOfTestInline(CinternalLogTypeError, a_cpcCondition);
+	CinternalMakeLogNoExtraData(CinternalLogTypeError, true, "FAILURE => test: \"%s\", subTestNumber: %d is ok\n", a_testName, a_subtestNumber);
+	if (a_bExit) {
+		exit(1);
+	}
 	return 1;
 }
 
 
-CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line)
+CINTERNAL_EXPORT int CinternalUnitTestCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line)
 {
-	if (a_condition) {
-		switch (a_subtestNumber) {
-		case CUTILS_UNIT_TEST_SPECIAL_SUBTEST_NUMBER:
-			a_testName = FileNameFromPossiblePathInline(a_cpcSrcPath);
-			a_subtestNumber = a_line;
-			break;
-		default:
-			PrintSourceInformationInline(stdout, a_cpcSrcPath, a_line);
-			break;
-		}  //  switch (a_subtestNumber) {
-		fprintf(stdout, "OK      => test: \"%s\", subTestNumber: %d\n", a_testName, a_subtestNumber);
-		fflush(stdout);
-		return;
-	}
+	return CinternalUnitTestCheckRawFnInline(a_condition, a_cpcCondition, a_testName, a_subtestNumber, a_cpcSrcPath, a_line, false);
+}
 
-	switch (a_subtestNumber) {
-	case CUTILS_UNIT_TEST_SPECIAL_SUBTEST_NUMBER:
-		a_testName = FileNameFromPossiblePathInline(a_cpcSrcPath);
-		a_subtestNumber = a_line;
-		break;
-	default:
-		PrintSourceInformationInline(stderr, a_cpcSrcPath, a_line);
-		break;
-	}  //  switch (a_subtestNumber) {
-	fprintf(stderr, "FAILURE => test: \"%s\", subTestNumber: %d is ok\n", a_testName, a_subtestNumber);
-	fflush(stderr);
-	exit(1);
+
+CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line)
+{
+	CinternalUnitTestCheckRawFnInline(a_condition, a_cpcCondition, a_testName, a_subtestNumber, a_cpcSrcPath, a_line, true);
 }
 
 

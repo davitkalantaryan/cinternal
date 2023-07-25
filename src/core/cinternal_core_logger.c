@@ -42,40 +42,44 @@ static void*                    s_userData = CPPUTILS_NULL;
 static TypeCinternalLogger      s_loggerClbk = &CinternalDefaultLoggerFunction;
 
 
-CPPUTILS_CONDITIONAL_WEAKNESS void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, va_list a_argptr)
+CPPUTILS_CONDITIONAL_WEAKNESS int CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, va_list a_argptr)
 {
+    int nRet = 0;
     CPPUTILS_STATIC_CAST(void, a_userData);
     switch (a_type) {
     case CinternalLogTypeInfo:
-        vprintf(a_fmtStr, a_argptr);
+        nRet = vprintf(a_fmtStr, a_argptr);
         if(a_bSync){fflush(stdout);}
         break;
     case CinternalLogTypeDebug:
 #if defined(NDEBUG) || (defined(CUTILS_NO_DEBUG_LOGS) && defined(CUTILS_NO_DEBUG_LOGS_FOR_LIB))
         CPPUTILS_STATIC_CAST(void, a_userData);
 #else
-        vprintf(a_fmtStr, a_argptr);
+        nRet = vprintf(a_fmtStr, a_argptr);
         if(a_bSync){fflush(stdout);}
 #endif
         break;
     default:
-        vfprintf(stderr, a_fmtStr, a_argptr);
+        nRet = vfprintf(stderr, a_fmtStr, a_argptr);
         if(a_bSync){fflush(stderr);}
         break;
     }  //  switch (a_type) {
+    return nRet;
 }
 
 
-static inline void CinternalMakeLogPrivateInlineV(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, va_list* a_argptr_p){
-    (*s_loggerClbk)(s_userData, a_type,a_bSync,a_fmtStr, *a_argptr_p);
+static inline int CinternalMakeLogPrivateInlineV(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, va_list* a_argptr_p){
+    return (*s_loggerClbk)(s_userData, a_type,a_bSync,a_fmtStr, *a_argptr_p);
 }
 
 
-static inline void CinternalMakeLogPrivateInline(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...){
+static inline int CinternalMakeLogPrivateInline(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...){
+    int nRet;
     va_list argptr;
     va_start(argptr, a_fmtStr);
-    CinternalMakeLogPrivateInlineV(a_type,a_bSync,a_fmtStr, &argptr);
+    nRet = CinternalMakeLogPrivateInlineV(a_type,a_bSync,a_fmtStr, &argptr);
     va_end(argptr);
+    return nRet;
 }
 
 
@@ -112,12 +116,14 @@ CINTERNAL_EXPORT void CinternalGetLogger(void** a_pUserData, TypeCinternalLogger
 }
 
 
-CINTERNAL_EXPORT void CinternalMakeLogNoExtraData(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...)
+CINTERNAL_EXPORT int  CinternalMakeLogNoExtraData(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...)
 {
+    int nRet;
     va_list argptr;
     va_start(argptr, a_fmtStr);
-    CinternalMakeLogPrivateInlineV(a_type,a_bSync,a_fmtStr, &argptr);
+    nRet = CinternalMakeLogPrivateInlineV(a_type,a_bSync,a_fmtStr, &argptr);
     va_end(argptr);
+    return nRet;
 }
 
 

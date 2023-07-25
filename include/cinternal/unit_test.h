@@ -26,8 +26,8 @@ typedef void (*TypeFunction)(void);
 CPPUTILS_CONDITIONAL_WEAKNESS void CinternalAddUnitTestFunction(TypeFunction a_function);
 CPPUTILS_CONDITIONAL_WEAKNESS void CinternalIterateAndCallUnitTestFunctions(void);
 
-CINTERNAL_EXPORT int  CinternalUnitTestCheckRawFn(bool a_condition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line);
-CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line);
+CINTERNAL_EXPORT int  CinternalUnitTestCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line);
+CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, int a_subtestNumber, const char* a_cpcSrcPath, int a_line);
 
 #ifndef CPPUTILS_UNIT_TEST_NOEXCEPT
 #define CPPUTILS_UNIT_TEST_NOEXCEPT CPPUTILS_NOEXCEPT
@@ -53,9 +53,11 @@ CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const 
 CPPUTILS_END_C
 
 
-#define CinternalUnitTestCheckRaw(_condition,_testName,_subtestNumber,_cpcSrcPath,_line)	CinternalUnitTestCheckRawFn((_condition)?true:false,_testName,_subtestNumber,_cpcSrcPath,_line)
+#define CinternalUnitTestCheckRaw(_condition,_testName,_subtestNumber,_cpcSrcPath,_line)	\
+			CinternalUnitTestCheckRawFn((_condition)?true:false,#_condition,_testName,_subtestNumber,_cpcSrcPath,_line)
 #define CinternalUnitTestCheck(_condition)	CinternalUnitTestCheckRaw(_condition,"",CUTILS_UNIT_TEST_SPECIAL_SUBTEST_NUMBER,__FILE__,__LINE__)
-#define CinternalUnitTestAssertCheckRaw(_condition,_testName,_subtestNumber,_cpcSrcPath,_line)	CinternalUnitTestAssertCheckRawFn((_condition)?true:false,_testName,_subtestNumber,_cpcSrcPath,_line)
+#define CinternalUnitTestAssertCheckRaw(_condition,_testName,_subtestNumber,_cpcSrcPath,_line)	\
+			CinternalUnitTestAssertCheckRawFn((_condition)?true:false,#_condition,_testName,_subtestNumber,_cpcSrcPath,_line)
 #define CinternalUnitTestAssertCheck(_condition)	CinternalUnitTestAssertCheckRaw(_condition,"",CUTILS_UNIT_TEST_SPECIAL_SUBTEST_NUMBER,__FILE__,__LINE__)
 
 #ifdef CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
