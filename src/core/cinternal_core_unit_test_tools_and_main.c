@@ -28,14 +28,15 @@ struct SFunctionsToCall {
 static struct SFunctionsToCall* s_pFirst = CPPUTILS_NULL;
 
 
-int main(void)
+int CPPUTILS_WEAK_SYMBOL_NAME(main)(void)
 {
 	CinternalIterateAndCallUnitTestFunctions();
 	return ( 0);
 }
+CPPUTILS_WEAK_SYMBOL(main)
 
 
-void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
+void CPPUTILS_WEAK_SYMBOL_NAME(CinternalAddUnitTestFunction)(TypeFunction a_function)
 {
 	struct SFunctionsToCall* pNextFn = (struct SFunctionsToCall*)malloc(sizeof(struct SFunctionsToCall));
 	if (pNextFn) {
@@ -48,9 +49,10 @@ void CinternalAddUnitTestFunction_alternate(TypeFunction a_function)
 		s_pFirst = pNextFn;
 	}
 }
+CPPUTILS_WEAK_SYMBOL(CinternalAddUnitTestFunction)
 
 
-void CinternalIterateAndCallUnitTestFunctions_alternate(void)
+void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateAndCallUnitTestFunctions)(void)
 {
 	struct SFunctionsToCall* pFnNext, * pFn = s_pFirst;
 	while (pFn) {
@@ -60,37 +62,7 @@ void CinternalIterateAndCallUnitTestFunctions_alternate(void)
 		pFn = pFnNext;
 	}
 }
-
-
-#ifdef __clang__
-
-//CPPUTILS_ONLY_CLANG_ATTR_WEAK void CinternalAddUnitTestFunction(TypeFunction a_function) {
-//    CinternalAddUnitTestFunction_alternate(a_function);
-//}
-//
-//
-//CPPUTILS_ONLY_CLANG_ATTR_WEAK void CinternalIterateAndCallUnitTestFunctions(void) {
-//    CinternalIterateAndCallUnitTestFunctions_alternate();
-//}
-
-void CinternalAddUnitTestFunction(TypeFunction a_function) {
-	CinternalAddUnitTestFunction_alternate(a_function);
-}
-#pragma weak CinternalAddUnitTestFunction
-
-
-void CinternalIterateAndCallUnitTestFunctions(void) {
-	CinternalIterateAndCallUnitTestFunctions_alternate();
-}
-#pragma weak CinternalIterateAndCallUnitTestFunctions
-
-
-#else   //  #ifdef __clang__
-
-CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalAddUnitTestFunction, CinternalAddUnitTestFunction_alternate)
-CPPUTILS_WEAK_SYMBOL_ALIAS(CinternalIterateAndCallUnitTestFunctions, CinternalIterateAndCallUnitTestFunctions_alternate)
-
-#endif  //  #ifdef __clang__
+CPPUTILS_WEAK_SYMBOL(CinternalIterateAndCallUnitTestFunctions)
 
 
 static inline void PrintSourceInformationInline(FILE* a_file, const char* a_cpcSrcPath, int a_line) {

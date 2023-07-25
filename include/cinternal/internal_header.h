@@ -374,10 +374,14 @@
 #ifdef _MSC_VER
 #define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	__pragma(comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX CPPUTILS_STRINGIFY(_weak) "=" CPPUTILS_FNAME_PREFIX CPPUTILS_STRINGIFY(_replace) ))
 #define CPPUTILS_WEAK_SYMBOL_ALIAS_STR(_weak,_replace)	__pragma(comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX _weak "=" CPPUTILS_FNAME_PREFIX _replace ))
+#define CPPUTILS_WEAK_SYMBOL(_symbol)	CPPUTILS_WEAK_SYMBOL_ALIAS(_symbol,_symbol ## _weak__)
+#define CPPUTILS_WEAK_SYMBOL_NAME(_symbol)	_symbol ## _weak__
 #else
 // #pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
 #define CPPUTILS_DO_PRAGMA(x)						_Pragma (#x)
 #define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	CPPUTILS_DO_PRAGMA(weak _weak = _replace)
+#define CPPUTILS_WEAK_SYMBOL(_symbol)				CPPUTILS_DO_PRAGMA(weak _symbol)
+#define CPPUTILS_WEAK_SYMBOL_NAME(_symbol)			_symbol
 #endif
 
 
