@@ -75,7 +75,7 @@ static inline void PrintSourceInformationInline(enum CinternalLogTypes a_type, c
 	}
 }
 
-#define CINTERNAL_GAP_IN_PRINT	20
+#define CINTERNAL_GAP_IN_PRINT	80
 
 
 static inline void PrintConditionOfTestInline(enum CinternalLogTypes a_type, const char* a_cpcCondition) {
