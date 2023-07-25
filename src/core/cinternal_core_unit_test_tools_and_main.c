@@ -28,7 +28,7 @@ struct SFunctionsToCall {
 static struct SFunctionsToCall* s_pFirst = CPPUTILS_NULL;
 
 
-int CPPUTILS_WEAK_SYMBOL_NAME(main)(void)
+CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK int CPPUTILS_WEAK_SYMBOL_NAME(main)(void)
 {
 	CinternalIterateAndCallUnitTestFunctions();
 	return ( 0);
@@ -36,7 +36,7 @@ int CPPUTILS_WEAK_SYMBOL_NAME(main)(void)
 CPPUTILS_WEAK_SYMBOL(main)
 
 
-void CPPUTILS_WEAK_SYMBOL_NAME(CinternalAddUnitTestFunction)(TypeFunction a_function)
+CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalAddUnitTestFunction)(TypeFunction a_function)
 {
 	struct SFunctionsToCall* pNextFn = (struct SFunctionsToCall*)malloc(sizeof(struct SFunctionsToCall));
 	if (pNextFn) {
@@ -52,7 +52,7 @@ void CPPUTILS_WEAK_SYMBOL_NAME(CinternalAddUnitTestFunction)(TypeFunction a_func
 CPPUTILS_WEAK_SYMBOL(CinternalAddUnitTestFunction)
 
 
-void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateAndCallUnitTestFunctions)(void)
+CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateAndCallUnitTestFunctions)(void)
 {
 	struct SFunctionsToCall* pFnNext, * pFn = s_pFirst;
 	while (pFn) {
