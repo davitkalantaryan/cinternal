@@ -16,7 +16,7 @@
 CPPUTILS_BEGIN_C
 
 
-#define CINTERNAL_GAP_IN_PRINT	100
+#define CINTERNAL_GAP_IN_PRINT	60
 CINTERNAL_EXPORT bool	g_bHasFailedTest = false;
 
 static inline void PrintTestPositionInline(enum CinternalLogTypes a_type, const char* a_cpcSrcPath, int a_line, const char* a_testName, const char* a_subtestName) {
