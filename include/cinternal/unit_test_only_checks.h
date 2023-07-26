@@ -16,26 +16,15 @@
 CPPUTILS_BEGIN_C
 
 
-#define CINTERNAL_UNIT_TEST_FN_ARG1_NAME		__a_testName
-#define CINTERNAL_UNIT_TEST_FN_ARG2_NAME		__a_subtestName
-
 CINTERNAL_EXPORT int  CinternalUnitTestCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, const char* a_subtestName, const char* a_cpcSrcPath, int a_line);
 CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, const char* a_subtestName, const char* a_cpcSrcPath, int a_line);
 
 #define CinternalUnitTestCheckRaw(_condition,_testName,_subtestName,_cpcSrcPath,_line)	\
 			CinternalUnitTestCheckRawFn((_condition)?true:false,#_condition,_testName,_subtestName,_cpcSrcPath,_line)
 #define CinternalUnitTestCheckSrc(_condition)	CinternalUnitTestCheckRaw(_condition,"","",__FILE__,__LINE__)
-#define CinternalUnitTestCheckTst(_condition)	CinternalUnitTestCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,"",-1)
-#define CinternalUnitTestCheckAll(_condition)	CinternalUnitTestCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,__FILE__,__LINE__)
-
 #define CinternalUnitTestAssertCheckRaw(_condition,_testName,_subtestName,_cpcSrcPath,_line)	\
 			CinternalUnitTestAssertCheckRawFn((_condition)?true:false,#_condition,_testName,_subtestName,_cpcSrcPath,_line)
 #define CinternalUnitTestAssertCheckSrc(_condition)	CinternalUnitTestAssertCheckRaw(_condition,"","",__FILE__,__LINE__)
-#define CinternalUnitTestAssertCheckTst(_condition)	CinternalUnitTestAssertCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,"",-1)
-#define CinternalUnitTestAssertCheckAll(_condition)	CinternalUnitTestAssertCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,__FILE__,__LINE__)
-
-#define CinternalUnitTestCheckOpt CinternalUnitTestCheckTst
-#define CinternalUnitTestAssertCheckOpt CinternalUnitTestAssertCheckTst
 
 
 extern CINTERNAL_EXPORT bool	g_bHasFailedTest;

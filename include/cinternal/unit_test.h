@@ -16,6 +16,9 @@
 
 CPPUTILS_BEGIN_C
 
+#define CINTERNAL_UNIT_TEST_FN_ARG1_NAME		__a_testName
+#define CINTERNAL_UNIT_TEST_FN_ARG2_NAME		__a_subtestName
+
 #ifndef CPPUTILS_CONDITIONAL_WEAKNESS
 #define CPPUTILS_CONDITIONAL_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG
 #endif
@@ -58,6 +61,16 @@ CPPUTILS_CONDITIONAL_WEAKNESS void CinternalIterateAndCallUnitTestFunctions(void
 
 
 CPPUTILS_END_C
+
+
+#define CinternalUnitTestCheckTst(_condition)	CinternalUnitTestCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,"",-1)
+#define CinternalUnitTestCheckAll(_condition)	CinternalUnitTestCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,__FILE__,__LINE__)
+
+#define CinternalUnitTestAssertCheckTst(_condition)	CinternalUnitTestAssertCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,"",-1)
+#define CinternalUnitTestAssertCheckAll(_condition)	CinternalUnitTestAssertCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,__FILE__,__LINE__)
+
+#define CinternalUnitTestCheckOpt CinternalUnitTestCheckTst
+#define CinternalUnitTestAssertCheckOpt CinternalUnitTestAssertCheckTst
 
 
 #ifdef CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
