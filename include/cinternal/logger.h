@@ -31,13 +31,13 @@ CINTERNAL_EXPORT int  CinternalMakeLogNoExtraData(enum CinternalLogTypes a_type,
 CINTERNAL_EXPORT void CinternalLogPrintDateAndTime(enum CinternalLogTypes a_type, bool a_bSync);
 
 
-#define CInternalLogError(...)		CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeError,__VA_ARGS__)
-#define CInternalLogWarning(...)	CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeWarning,__VA_ARGS__)
-#define CInternalLogInfo(...)		CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeInfo,__VA_ARGS__)
+#define CInternalLogError(...)		CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeError,__VA_ARGS__)
+#define CInternalLogWarning(...)	CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeWarning,__VA_ARGS__)
+#define CInternalLogInfo(...)		CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeInfo,__VA_ARGS__)
 #if defined(NDEBUG) || defined(CUTILS_NO_DEBUG_LOGS)
 #define CInternalLogDebug(...)
 #else
-#define CInternalLogDebug(...)		CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeDebug,__VA_ARGS__)
+#define CInternalLogDebug(...)		CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeDebug,__VA_ARGS__)
 #endif
 
 

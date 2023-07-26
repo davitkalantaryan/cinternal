@@ -130,10 +130,11 @@ CINTERNAL_EXPORT int  CinternalMakeLogNoExtraData(enum CinternalLogTypes a_type,
 CINTERNAL_EXPORT void CinternalMakeLog(const char* a_src, int a_line, enum CinternalLogTypes a_type, const char* a_fmtStr, ...)
 {
 	va_list argptr;
+    const char* cpcSrc = FileNameFromPossiblePathInline(a_src);
 
     CinternalMakeLogPrivateInline(a_type, false,"[");
     CinternalLogPrintDateAndTimeInline(a_type, false);
-    CinternalMakeLogPrivateInline(a_type, false,"], src:\"%s\",ln:%d - ", a_src, a_line);
+    CinternalMakeLogPrivateInline(a_type, false,"], src:\"%s\",ln:%d - ", cpcSrc, a_line);
 	va_start(argptr, a_fmtStr);
     CinternalMakeLogPrivateInlineV(a_type, false,a_fmtStr, &argptr);
 	va_end(argptr);
