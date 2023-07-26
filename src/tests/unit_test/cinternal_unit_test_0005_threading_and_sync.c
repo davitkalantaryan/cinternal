@@ -28,15 +28,15 @@ CPPUTILS_UTEST_AFTER_MAIN(f_0005_threading_and_sync, t_0001_barier) {
     cinternal_thread_t aThread;
     cinternal_sync_barrier_t aBarrier;
     
-    CinternalUnitTestAssertCheckAll(cinternal_sync_barrier_create(&aBarrier,2)==0);
-    CinternalUnitTestAssertCheckAll(cinternal_thread_create(&aThread, &ThreadFunctionBarier, &aBarrier) == 0);
+    CinternalUnitTestAssertCheckOpt(cinternal_sync_barrier_create(&aBarrier,2)==0);
+    CinternalUnitTestAssertCheckOpt(cinternal_thread_create(&aThread, &ThreadFunctionBarier, &aBarrier) == 0);
     nRet = cinternal_sync_barrier_wait(&aBarrier);
     if (nRet) {
         s_nBarierReturns += nRet;
     }
     cinternal_thread_wait_and_clean(&aThread,&retCode);
-    CinternalUnitTestAssertCheckAll(retCode== CINTERNAL_THREAD_RET_CODE);
-    CinternalUnitTestAssertCheckAll(s_nBarierReturns == 1);
+    CinternalUnitTestAssertCheckOpt(retCode== CINTERNAL_THREAD_RET_CODE);
+    CinternalUnitTestAssertCheckOpt(s_nBarierReturns == 1);
 
 }
 
@@ -47,11 +47,11 @@ CPPUTILS_UTEST_AFTER_MAIN(f_0005_threading_and_sync, t_0002_sema) {
     cinternal_thread_t aThread;
     cinternal_unnamed_sema_t aSema;
 
-    CinternalUnitTestAssertCheckAll(cinternal_unnamed_sema_create(&aSema,0) == 0);
-    CinternalUnitTestAssertCheckAll(cinternal_thread_create(&aThread, &ThreadFunctionSema, &aSema) == 0);
+    CinternalUnitTestAssertCheckOpt(cinternal_unnamed_sema_create(&aSema,0) == 0);
+    CinternalUnitTestAssertCheckOpt(cinternal_thread_create(&aThread, &ThreadFunctionSema, &aSema) == 0);
     cinternal_unnamed_sema_wait(&aSema);
     cinternal_thread_wait_and_clean(&aThread, &retCode);
-    CinternalUnitTestAssertCheckAll(retCode == CINTERNAL_THREAD_RET_CODE);
+    CinternalUnitTestAssertCheckOpt(retCode == CINTERNAL_THREAD_RET_CODE);
 }
 
 

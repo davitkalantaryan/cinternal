@@ -34,6 +34,9 @@ CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const 
 #define CinternalUnitTestAssertCheckTst(_condition)	CinternalUnitTestAssertCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,"",-1)
 #define CinternalUnitTestAssertCheckAll(_condition)	CinternalUnitTestAssertCheckRaw(_condition,CINTERNAL_UNIT_TEST_FN_ARG1_NAME,CINTERNAL_UNIT_TEST_FN_ARG2_NAME,__FILE__,__LINE__)
 
+#define CinternalUnitTestCheckOpt CinternalUnitTestCheckTst
+#define CinternalUnitTestAssertCheckOpt CinternalUnitTestAssertCheckTst
+
 
 extern CINTERNAL_EXPORT bool	g_bHasFailedTest;
 

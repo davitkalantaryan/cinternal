@@ -25,3 +25,7 @@ CPPUTILS_UTEST_AFTER_MAIN(f_0000_initial, t_0002) {
 CPPUTILS_UTEST_ALL(f_0000_initial, t_0003) {
 	CinternalUnitTestAssertCheckAll(true);
 }
+
+CPPUTILS_UTEST_ALL(f_0000_initial, t_0004) {
+	CinternalUnitTestAssertCheckOpt(true);
+}
