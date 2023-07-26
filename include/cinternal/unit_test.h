@@ -31,28 +31,30 @@ CPPUTILS_CONDITIONAL_WEAKNESS void CinternalIterateAndCallUnitTestFunctions(void
 #define CPPUTILS_UNIT_TEST_NOEXCEPT CPPUTILS_NOEXCEPT
 #endif
 
+#define CINTERNAL_UNIT_TEST_IGNORE_ARGS()	CPPUTILS_STATIC_CAST(void,CINTERNAL_UNIT_TEST_FN_ARG1_NAME);CPPUTILS_STATIC_CAST(void,CINTERNAL_UNIT_TEST_FN_ARG2_NAME)
+
 #define CPPUTILS_UTEST_BEFORE_MAIN(_maj,_min)	\
-	static void cinternal_unit_test_bm_ ## _maj ## _min _raw(const char* a_maj, const char* a_min);	\
+	static void cinternal_unit_test_bm_raw_ ## _maj ## _min (const char* a_maj, const char* a_min);	\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_bm_ ## _maj ## _min){								\
-		cinternal_unit_test_bm_ ## _maj ## _min _raw(# _maj, # _min);								\
+		cinternal_unit_test_bm_raw_ ## _maj ## _min (# _maj, # _min);								\
 	}																								\
-	static void cinternal_unit_test_bm_ ## _maj ## _min _raw(const char* CINTERNAL_UNIT_TEST_FN_ARG1_NAME, const char* CINTERNAL_UNIT_TEST_FN_ARG2_NAME)
+	static void cinternal_unit_test_bm_raw_ ## _maj ## _min (const char* CINTERNAL_UNIT_TEST_FN_ARG1_NAME, const char* CINTERNAL_UNIT_TEST_FN_ARG2_NAME)
 
 #define CPPUTILS_UTEST_AFTER_MAIN(_maj,_min)	\
-	static void cinternal_unit_test_ ## _maj ## _min _raw (const char* a_maj, const char* a_min) CPPUTILS_UNIT_TEST_NOEXCEPT;	\
+	static void cinternal_unit_test_raw_ ## _maj ## _min (const char* a_maj, const char* a_min) CPPUTILS_UNIT_TEST_NOEXCEPT;	\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){														\
-		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min _raw,# _maj, # _min);								\
+		CinternalAddUnitTestFunction(& cinternal_unit_test_raw_ ## _maj ## _min,# _maj, # _min);								\
 	}																															\
-	static void cinternal_unit_test_ ## _maj ## _min _raw (const char* CINTERNAL_UNIT_TEST_FN_ARG1_NAME, const char* CINTERNAL_UNIT_TEST_FN_ARG2_NAME) CPPUTILS_UNIT_TEST_NOEXCEPT
+	static void cinternal_unit_test_raw_ ## _maj ## _min (const char* CINTERNAL_UNIT_TEST_FN_ARG1_NAME, const char* CINTERNAL_UNIT_TEST_FN_ARG2_NAME) CPPUTILS_UNIT_TEST_NOEXCEPT
 
 
 #define CPPUTILS_UTEST_ALL(_maj,_min)	\
-	static void cinternal_unit_test_ ## _maj ## _min _raw (const char* a_maj, const char* a_min) CPPUTILS_UNIT_TEST_NOEXCEPT;	\
+	static void cinternal_unit_test_raw_ ## _maj ## _min (const char* a_maj, const char* a_min) CPPUTILS_UNIT_TEST_NOEXCEPT;	\
 	CPPUTILS_CODE_INITIALIZER(cinternal_unit_test_adder_ ## _maj ## _min){														\
-		CinternalAddUnitTestFunction(& cinternal_unit_test_ ## _maj ## _min _raw,# _maj, # _min);								\
-		cinternal_unit_test_ ## _maj ## _min _raw(# _maj, # _min);																\
+		CinternalAddUnitTestFunction(& cinternal_unit_test_raw_ ## _maj ## _min,# _maj, # _min);								\
+		cinternal_unit_test_raw_ ## _maj ## _min (# _maj, # _min);																\
 	}																															\
-	static void cinternal_unit_test_ ## _maj ## _min _raw (const char* CINTERNAL_UNIT_TEST_FN_ARG1_NAME, const char* CINTERNAL_UNIT_TEST_FN_ARG2_NAME) CPPUTILS_UNIT_TEST_NOEXCEPT 
+	static void cinternal_unit_test_raw_ ## _maj ## _min (const char* CINTERNAL_UNIT_TEST_FN_ARG1_NAME, const char* CINTERNAL_UNIT_TEST_FN_ARG2_NAME) CPPUTILS_UNIT_TEST_NOEXCEPT 
 
 
 CPPUTILS_END_C

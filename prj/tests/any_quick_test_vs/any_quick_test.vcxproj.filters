@@ -89,6 +89,9 @@
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\any_quick_test_mkfl\any_quick_test.unix.Makefile">

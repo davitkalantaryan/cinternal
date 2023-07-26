@@ -306,6 +306,7 @@
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h" />
+    <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h" />
     <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h" />
   </ItemGroup>
   <ItemGroup>

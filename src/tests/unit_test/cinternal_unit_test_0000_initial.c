@@ -12,15 +12,16 @@
 
 
 CPPUTILS_UTEST_BEFORE_MAIN(f_0000_initial, t_0001) {
-	CinternalUnitTestAssertCheck(true);
+	CINTERNAL_UNIT_TEST_IGNORE_ARGS();
+	CinternalUnitTestAssertCheckSrc(true);
 }
 
 
 CPPUTILS_UTEST_AFTER_MAIN(f_0000_initial, t_0002) {
-	CinternalUnitTestAssertCheck(true);
+	CinternalUnitTestAssertCheckTst(true);
 }
 
 
 CPPUTILS_UTEST_ALL(f_0000_initial, t_0003) {
-	CinternalUnitTestAssertCheck(true);
+	CinternalUnitTestAssertCheckAll(true);
 }

@@ -19,31 +19,30 @@ CPPUTILS_UTEST_AFTER_MAIN(f_0004_threading, t_0001) {
 
     cinternal_thread_ret_t retCode;
     cinternal_thread_t aThread;
-    CinternalUnitTestAssertCheck(cinternal_thread_create(&aThread, &ThreadFunction,CPPUTILS_NULL)==0);
+    CinternalUnitTestAssertCheckAll(cinternal_thread_create(&aThread, &ThreadFunction,CPPUTILS_NULL)==0);
     cinternal_thread_wait_and_clean(&aThread,&retCode);
-    CinternalUnitTestAssertCheck(retCode== CINTERNAL_THREAD_RET_CODE);
+    CinternalUnitTestAssertCheckAll(retCode== CINTERNAL_THREAD_RET_CODE);
 
     // now detaching
-    CinternalUnitTestAssertCheck(cinternal_thread_create(&aThread, &ThreadFunction, CPPUTILS_NULL) == 0);
+    CinternalUnitTestAssertCheckAll(cinternal_thread_create(&aThread, &ThreadFunction, CPPUTILS_NULL) == 0);
     cinternal_thread_detach(&aThread);
 
 #ifdef _WIN32  //  #ifdef _WIN32
     
     {
         DWORD dwId;
-        CinternalUnitTestAssertCheck(cinternal_thread_create(&aThread, &ThreadFunction, CPPUTILS_NULL) == 0);
+        CinternalUnitTestAssertCheckAll(cinternal_thread_create(&aThread, &ThreadFunction, CPPUTILS_NULL) == 0);
         dwId = cinternal_thread_thread_id(aThread);
         cinternal_thread_detach(&aThread);
-        CinternalUnitTestAssertCheck(cinternal_thread_attach(&aThread, dwId)==0);
+        CinternalUnitTestAssertCheckAll(cinternal_thread_attach(&aThread, dwId)==0);
         cinternal_thread_wait(aThread);
         cinternal_thread_get_exit_code(aThread ,&retCode);
         cinternal_thread_destroy(&aThread);
-        CinternalUnitTestAssertCheck(retCode == CINTERNAL_THREAD_RET_CODE);
+        CinternalUnitTestAssertCheckAll(retCode == CINTERNAL_THREAD_RET_CODE);
     }
 
 #endif
 
-    CinternalUnitTestAssertCheck(true);
 }
 
 
