@@ -28,6 +28,9 @@ struct SFunctionsToCall {
 
 static struct SFunctionsToCall* s_pFirst = CPPUTILS_NULL;
 
+extern CINTERNAL_EXPORT const char* CINTERNAL_UNIT_TEST_FN_ARG1_NAME = "";
+extern CINTERNAL_EXPORT const char* CINTERNAL_UNIT_TEST_FN_ARG2_NAME = "";
+
 
 CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK int CPPUTILS_WEAK_SYMBOL_NAME(main)(void)
 {
@@ -61,6 +64,8 @@ CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateA
 	struct SFunctionsToCall* pFnNext, * pFn = s_pFirst;
 	while (pFn) {
 		pFnNext = pFn->next;
+		CINTERNAL_UNIT_TEST_FN_ARG1_NAME = pFn->maj;
+		CINTERNAL_UNIT_TEST_FN_ARG2_NAME = pFn->min;
         (*(pFn->func))(pFn->maj, pFn->min);
 		free(pFn);
 		pFn = pFnNext;
