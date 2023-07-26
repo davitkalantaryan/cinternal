@@ -323,6 +323,7 @@
     <None Include="..\..\scripts\unix_prepare_repository.sh" />
     <None Include="..\..\scripts\unix_run_tests.sh" />
     <None Include="..\..\scripts\windows_build_all.bat" />
+    <None Include="..\..\scripts\windows_parse_key_value_pairs_file.bat" />
     <None Include="..\..\scripts\windows_prepare_host.bat" />
     <None Include="..\..\scripts\windows_prepare_repository.bat" />
     <None Include="..\..\scripts\windows_run_tests.bat" />

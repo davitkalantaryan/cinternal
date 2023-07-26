@@ -128,5 +128,8 @@
     <None Include="..\cinternal_all_qt\cinternal_all.pro">
       <Filter>files</Filter>
     </None>
+    <None Include="..\..\scripts\windows_parse_key_value_pairs_file.bat">
+      <Filter>repo_files\scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

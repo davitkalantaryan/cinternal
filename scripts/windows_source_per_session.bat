@@ -12,25 +12,9 @@ setlocal EnableDelayedExpansion enableextensions
 
 set  scriptDirectory=%~dp0
 cd /D "%scriptDirectory%.."
-set "repositoryRootBase=%cd%"
 set "repositoryRoot=%cd%\"
-
-set /p envFileContentBase=<!repositoryRoot!ENVIRONMENT
-
-set "varname="
-set "exportVars="
-
-for %%a in (%envFileContentBase%) do (
-    if not defined varname (
-        set "varname=%%a"
-    ) else (
-	set "!varname!=%%a"
-	set "exportVars=!exportVars! & set "!varname!=%%a""
-	set "varname="
-    )
-)
 
 
 endlocal & (
-    set "focustCommonRepositoryRoot=%repositoryRootBase%"
+    call "%scriptDirectory%windows_parse_key_value_pairs_file.bat" %repositoryRoot%ENVIRONMENT
 ) %exportVars%
