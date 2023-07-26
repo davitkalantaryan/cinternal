@@ -31,6 +31,7 @@ static struct SFunctionsToCall* s_pFirst = CPPUTILS_NULL;
 
 CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK int CPPUTILS_WEAK_SYMBOL_NAME(main)(void)
 {
+	CInternalLogInfo("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	CinternalIterateAndCallUnitTestFunctions();
 	return g_bHasFailedTest?1:0;
 }
