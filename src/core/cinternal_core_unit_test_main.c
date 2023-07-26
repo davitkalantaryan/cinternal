@@ -61,7 +61,7 @@ CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateA
 	struct SFunctionsToCall* pFnNext, * pFn = s_pFirst;
 	while (pFn) {
 		pFnNext = pFn->next;
-		(*(pFn->func))(pFnNext->maj, pFnNext->min);
+        (*(pFn->func))(pFn->maj, pFn->min);
 		free(pFn);
 		pFn = pFnNext;
 	}
