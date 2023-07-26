@@ -85,14 +85,14 @@ CPPUTILS_END_C
 #include <math.h>
 #include <string.h>
 #define TEST						CPPUTILS_UTEST_AFTER_MAIN
-#define EXPECT_EQ(_left,_right)		CinternalUnitTestCheckTst(((_left)==(_right)))
-#define ASSERT_EQ(_left,_right)		CinternalUnitTestAssertCheckTst(((_left)==(_right)))
-#define ASSERT_FALSE(_condition)	CinternalUnitTestAssertCheckTst((!(_condition)))
-#define ASSERT_TRUE					CinternalUnitTestAssertCheckTst
-#define ASSERT_NEAR(_v1,_v2,_acr)	CinternalUnitTestAssertCheckTst(fabs(_v2-_v1)<_acr)
-#define ASSERT_STREQ(_str1,_str2)	CinternalUnitTestAssertCheckTst(strcmp(_str1,_str2)==0)
-#define ASSERT_NE(_left,_right)		CinternalUnitTestAssertCheckTst(((_left)!=(_right)))
-#define ASSERT_GE(_left,_right)		CinternalUnitTestAssertCheckTst(((_left)>=(_right)))
+#define EXPECT_EQ(_left,_right)		CinternalUnitTestCheckOpt(((_left)==(_right)))
+#define ASSERT_EQ(_left,_right)		CinternalUnitTestAssertCheckOpt(((_left)==(_right)))
+#define ASSERT_FALSE(_condition)	CinternalUnitTestAssertCheckOpt((!(_condition)))
+#define ASSERT_TRUE					CinternalUnitTestAssertCheckOpt
+#define ASSERT_NEAR(_v1,_v2,_acr)	CinternalUnitTestAssertCheckOpt(fabs(_v2-_v1)<_acr)
+#define ASSERT_STREQ(_str1,_str2)	CinternalUnitTestAssertCheckOpt(strcmp(_str1,_str2)==0)
+#define ASSERT_NE(_left,_right)		CinternalUnitTestAssertCheckOpt(((_left)!=(_right)))
+#define ASSERT_GE(_left,_right)		CinternalUnitTestAssertCheckOpt(((_left)>=(_right)))
 #endif
 
 
