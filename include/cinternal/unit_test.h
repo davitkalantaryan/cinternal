@@ -74,11 +74,13 @@ CPPUTILS_END_C
 
 
 #ifdef CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
+#include <math.h>
 #define TEST						CPPUTILS_UTEST_AFTER_MAIN
 #define EXPECT_EQ(_left,_right)		CinternalUnitTestCheckTst(((_left)==(_right)))
 #define ASSERT_EQ(_left,_right)		CinternalUnitTestAssertCheckTst(((_left)==(_right)))
 #define ASSERT_FALSE(_condition)	CinternalUnitTestAssertCheckTst((!(_condition)))
 #define ASSERT_TRUE					CinternalUnitTestAssertCheckTst
+#define ASSERT_NEAR(_v1,_v2,_acr)	CinternalUnitTestAssertCheckTst(fabs(_v2-_v1)<_acr)
 #endif
 
 
