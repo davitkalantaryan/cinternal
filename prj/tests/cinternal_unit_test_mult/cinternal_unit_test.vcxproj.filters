@@ -54,6 +54,9 @@
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0006_benchmark.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\bistateflags.h">
@@ -117,6 +120,12 @@
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\time.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\benchmark.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
   </ItemGroup>

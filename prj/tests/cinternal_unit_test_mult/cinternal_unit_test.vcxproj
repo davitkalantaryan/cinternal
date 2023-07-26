@@ -277,8 +277,10 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0003_unnamed_sema.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0004_threading.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0005_threading_and_sync.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0006_benchmark.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\cinternal\benchmark.h" />
     <ClInclude Include="..\..\..\include\cinternal\bistateflags.h" />
     <ClInclude Include="..\..\..\include\cinternal\c_raii.h" />
     <ClInclude Include="..\..\..\include\cinternal\c_raii_ext.h" />
@@ -296,6 +298,7 @@
     <ClInclude Include="..\..\..\include\cinternal\sync_barrier.h" />
     <ClInclude Include="..\..\..\include\cinternal\threading.h" />
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
+    <ClInclude Include="..\..\..\include\cinternal\time.h" />
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h" />
