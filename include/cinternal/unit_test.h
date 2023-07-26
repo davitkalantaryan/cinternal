@@ -18,6 +18,7 @@ CPPUTILS_BEGIN_C
 
 #define CINTERNAL_UNIT_TEST_FN_ARG1_NAME		__a_testName
 #define CINTERNAL_UNIT_TEST_FN_ARG2_NAME		__a_subtestName
+#define CINTERNAL_UNIT_TEST_FN_ARGS_CAPTURE		CINTERNAL_UNIT_TEST_FN_ARG1_NAME , CINTERNAL_UNIT_TEST_FN_ARG2_NAME
 
 #ifndef CPPUTILS_CONDITIONAL_WEAKNESS
 #define CPPUTILS_CONDITIONAL_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG
@@ -82,12 +83,16 @@ CPPUTILS_END_C
 
 #ifdef CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
 #include <math.h>
+#include <string.h>
 #define TEST						CPPUTILS_UTEST_AFTER_MAIN
 #define EXPECT_EQ(_left,_right)		CinternalUnitTestCheckTst(((_left)==(_right)))
 #define ASSERT_EQ(_left,_right)		CinternalUnitTestAssertCheckTst(((_left)==(_right)))
 #define ASSERT_FALSE(_condition)	CinternalUnitTestAssertCheckTst((!(_condition)))
 #define ASSERT_TRUE					CinternalUnitTestAssertCheckTst
 #define ASSERT_NEAR(_v1,_v2,_acr)	CinternalUnitTestAssertCheckTst(fabs(_v2-_v1)<_acr)
+#define ASSERT_STREQ(_str1,_str2)	CinternalUnitTestAssertCheckTst(strcmp(_str1,_str2)==0)
+#define ASSERT_NE(_left,_right)		CinternalUnitTestAssertCheckTst(((_left)!=(_right)))
+#define ASSERT_GE(_left,_right)		CinternalUnitTestAssertCheckTst(((_left)>=(_right)))
 #endif
 
 
