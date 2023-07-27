@@ -1,13 +1,13 @@
 #
-# file:		windows.common.Makefile
-# created on:	2020 Dec 14
-# created by:	
-#
-# This file can be only as include
+# repo:		    cinternal
+# file:		    flagsandsys_common_pure.windows.Makefile
+# created on:	    2020 Dec 14
+# created by:	    Davit Kalantaryan (davit.kalantaryan@desy.de)
+# purpose:	    This file can be only as include
 #
 
 CC                      = cl 
-CPPC           			= cl -Zc:__cplusplus
+CPPC           		= cl -Zc:__cplusplus
 
 # one can redefine this by this nmake /e Platform=x86
 !IFNDEF Platform
@@ -18,17 +18,17 @@ Platform			= x64
 Configuration		= Debug
 !ENDIF
 
-# this variable shold be provided 
+# this variable should be provided
 !IFNDEF MakeFileDir
 MakeFileDir			= $(MAKEDIR)
 !ENDIF
 
-!IFNDEF RepoRootDir
-RepoRootDir			= $(MakeFileDir)\..\..\..
+!IFNDEF cinternalRepoRoot
+cinternalRepoRoot	= $(MakeFileDir)\..\..\..
 !ENDIF
 
-!IFNDEF cinternalRepoRoot
-cinternalRepoRoot	= $(RepoRootDir)
+!IFNDEF artifactRoot
+artifactRoot		= $(artifactRoot)
 !ENDIF
 
 # better that this variable provided here
@@ -37,15 +37,7 @@ PDB_FILE_PATH		= $(TargetDirectory)\$(TargetName).pdb
 !ENDIF
 
 !IFNDEF TargetCategory
-!IF "$(TargetExtension)" == "exe"
-TargetCategory	= bin
-!ELSE IF "$(TargetExtension)" == "dll"
-TargetCategory	= dll
-!ELSE IF "$(TargetExtension)" == "lib"
-TargetCategory	= lib
-!ELSE 
 TargetCategory	= $(TargetExtension)
-!ENDIF
 !ENDIF
 
 !IFNDEF LINKER
@@ -57,22 +49,24 @@ LINKER			= $(TargetExtension)
 !ENDIF
 
 !IF "$(Configuration)" == "Debug"
-CFLAGS				= $(CFLAGS) /MDd /Fd"$(PDB_FILE_PATH)"
+CFLAGS			= $(CFLAGS) /MDd /Fd"$(PDB_FILE_PATH)"
 LibrariesExtension	= d
 ObjectsExtension	= d
 !ELSE
-CFLAGS				= $(CFLAGS) /MD
+CFLAGS			= $(CFLAGS) /MD
 LibrariesExtension	=
 ObjectsExtension	= r
 !ENDIF
 
-CFLAGS					= $(CFLAGS) /bigobj /nologo
-CFLAGS					= $(CFLAGS) /I"$(cinternalRepoRoot)\include"
+CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
+CFLAGS				= $(CFLAGS) /bigobj /nologo
+CFLAGS				= $(CFLAGS) /I"$(cinternalRepoRoot)\include"
 TargetFileName			= $(TargetName).$(TargetExtension)
-TargetDirectory			= $(RepoRootDir)\sys\win_$(Platform)\$(Configuration)\$(TargetCategory)
-#ObjectsDirBase			= $(RepoRootDir)\sys\win_$(Platform)\$(Configuration)\.objects
-#ObjectsDir				= $(ObjectsDirBase)\$(TargetName)
-ObjectsDir				= $(SrcBaseDir)
+TargetDirectory			= $(artifactRoot)\sys\win_$(Platform)\$(Configuration)\$(TargetCategory)
+
+#ObjectsDirBase			= $(artifactRoot)\sys\win_$(Platform)\$(Configuration)\.objects
+#ObjectsDir			= $(ObjectsDirBase)\$(TargetName)
+ObjectsDir			= $(SrcBaseDir)
 
 CXXFLAGS			= $(CXXFLAGS) $(CFLAGS)
 CXXFLAGS			= $(CXXFLAGS) /JMC /permissive- /GS /W3 /Zc:wchar_t  /Zi /Gm- /Od /sdl- 
