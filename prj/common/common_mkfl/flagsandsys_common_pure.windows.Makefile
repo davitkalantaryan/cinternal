@@ -58,11 +58,13 @@ LibrariesExtension	=
 ObjectsExtension	= r
 !ENDIF
 
+LFLAGS				= $(LFLAGS) $(LIBS)
+CFLAGS				= $(CFLAGS)	$(COMMON_FLAGS)
 CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
 CFLAGS				= $(CFLAGS) /bigobj /nologo
 CFLAGS				= $(CFLAGS) /I"$(cinternalRepoRoot)\include"
-TargetFileName			= $(TargetName).$(TargetExtension)
-TargetDirectory			= $(artifactRoot)\sys\win_$(Platform)\$(Configuration)\$(TargetCategory)
+TargetFileName		= $(TargetName).$(TargetExtension)
+TargetDirectory		= $(artifactRoot)\sys\win_$(Platform)\$(Configuration)\$(TargetCategory)
 
 #ObjectsDirBase			= $(artifactRoot)\sys\win_$(Platform)\$(Configuration)\.objects
 #ObjectsDir			= $(ObjectsDirBase)\$(TargetName)
