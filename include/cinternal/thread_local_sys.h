@@ -35,7 +35,7 @@ typedef DWORD           CinternalTlsData;
 
 typedef pthread_key_t   CinternalTlsData;
 
-#define	CINTERNAL_TLS_OUT_OF_INDEXES		CPPUTILS_STATIC_CAST(cpputils_thread_key_t,-1)
+#define	CINTERNAL_TLS_OUT_OF_INDEXES		CPPUTILS_STATIC_CAST(pthread_key_t,-1)
 #define CinternalTlsAlloc           pthread_key_create
 #define CinternalTlsGetSpecific     pthread_getspecific
 #define CinternalTlsSetSpecific     pthread_setspecific
