@@ -365,6 +365,14 @@
 
 #endif  //  #if defined(__APPLE__) && (defined(__GNUC__)  defined(__xlC__)  defined(__xlc__))
 
+#if defined(__linux__) || defined(__linux)
+    #define CPPUTILS_OS_LINUX 1
+#endif
+
+#ifdef _WIN32
+    #define CPPUTILS_OS_WINDOWS 1
+#endif
+
 
 #ifndef CPPUTILS_FNAME_PREFIX_NO_STR
 #define CPPUTILS_FNAME_PREFIX_NO_STR(_name)		_name
