@@ -19,7 +19,10 @@ QT -= core
 QT -= widgets
 CONFIG -= qt
 
-LIBS += -pthread
+win32{
+} else {
+	LIBS += -pthread
+}
 
 SOURCES	+=		\
         "$${PWD}/../../../src/tests/insert_custom_info_into_bin_test/entry_insert_custom_info_into_bin_test_lib.c" \

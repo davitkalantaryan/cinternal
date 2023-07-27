@@ -14,9 +14,13 @@ QT -= gui
 QT -= core
 QT -= widgets
 CONFIG -= qt
+CONFIG += console
 
-LIBS += -pthread
-LIBS += -ldl
+win32{
+} else {
+	LIBS += -pthread
+	LIBS += -ldl
+}
 
 
 SOURCES	+=		\

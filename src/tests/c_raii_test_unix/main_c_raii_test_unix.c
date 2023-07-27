@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <signal.h>
 
+#ifndef _WIN32
 
 extern void dummy_c_raii_test(void);
 
@@ -66,3 +67,15 @@ int main(void)
 
     return 0;
 }
+
+
+#else   //  #ifndef _WIN32
+
+
+int main(void)
+{
+	return 0;
+}
+
+
+#endif  //  #ifndef _WIN32

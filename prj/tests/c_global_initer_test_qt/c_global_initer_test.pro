@@ -15,8 +15,12 @@ QT -= gui
 QT -= core
 QT -= widgets
 CONFIG -= qt
+CONFIG += console
 
-LIBS += -pthread
+win32{
+} else {
+	LIBS += -pthread
+}
 
 SOURCES	+=		\
         "$${cinternalRepoRoot}/src/tests/main_c_global_initer_test.c"

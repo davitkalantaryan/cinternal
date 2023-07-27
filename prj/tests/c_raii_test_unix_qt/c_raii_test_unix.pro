@@ -15,8 +15,12 @@ QT -= gui
 QT -= core
 QT -= widgets
 CONFIG -= qt
+CONFIG += console
 
-LIBS += -pthread
+win32{
+} else {
+	LIBS += -pthread
+}
 
 SOURCES += $$files($${PWD}/../../../src/tests/c_raii_test_unix/*.c*,false)
 

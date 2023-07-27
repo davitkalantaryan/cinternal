@@ -1,14 +1,17 @@
 
 
-CONFIG -= qt
-
 message("!!! $${_PRO_FILE_}")
 include ( "$${PWD}/../../common/common_qt/flagsandsys_common.pri" )
-
 DESTDIR     = "$${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/test"
 
-LIBS += -ldl
-LIBS += -pthread
+CONFIG -= qt
+CONFIG += console
+
+win32{
+} else {
+	LIBS += -pthread
+	LIBS += -ldl
+}
 
 HEADERS += $$files($${cinternalRepoRoot}/include/*.h,true)
 HEADERS += $$files($${cinternalRepoRoot}/src/*.h,true)
