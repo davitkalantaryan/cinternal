@@ -6,24 +6,15 @@
 #
 
 
-MakeFileDir			= $(MAKEDIR)
 MakeFileName        = cinternal_unit_test.windows.Makefile
-RepoRootDir			= $(MakeFileDir)\..\..\..
-SrcBaseDir			= $(MakeFileDir)\..\..\..\src
-
+MakeFileDir			= $(MAKEDIR)
 TargetName			= cinternal_unit_test
 TargetExtension		= exe
 TargetCategory      = test
+SrcBaseDir			= $(MakeFileDir)\..\..\..\src
 
-LIBS				=
 LIBS				= $(LIBS) "Ws2_32.lib"
-
-LFLAGS				= $(LFLAGS) /OUT:"$(TargetDirectory)\$(TargetFileName)" 
-LFLAGS				= $(LFLAGS) /MANIFEST /NXCOMPAT /PDB:"$(TargetDirectory)\$(TargetName).pdb" 
-LFLAGS				= $(LFLAGS) /DYNAMICBASE $(LIBS) 
-LFLAGS				= $(LFLAGS) /DEBUG /MACHINE:$(Platform) /INCREMENTAL  
-LFLAGS				= $(LFLAGS) /SUBSYSTEM:CONSOLE /MANIFESTUAC:"level='asInvoker' uiAccess='false'" 
-LFLAGS				= $(LFLAGS) /ERRORREPORT:PROMPT /NOLOGO $(LIBPATHS) /TLBID:1
+LFLAGS				= $(LFLAGS) /SUBSYSTEM:CONSOLE 
 
 #Objects			= tool\main_cinternal_unit_test.x64_d_obj
 
@@ -38,12 +29,6 @@ DirectoriesToCompile	= $(DirectoriesToCompile) core
 
 default: unittest
 
-
 unittest: __preparationForSetObjects __setObjects
 
-
-__buildGoogleTestLib:
-	@cd $(MakeFileDir)
-	@echo "!!!!!! 'msbuild -t:restore -p:RestorePackagesConfig=true' is not necessary anymore"
-
-!include <$(RepoRootDir)\prj\common\common_mkfl\flagsandsys_common.windows.Makefile>
+!include <$(MakeFileDir)\..\..\common\common_mkfl\flagsandsys_common.windows.Makefile>

@@ -13,7 +13,7 @@
 
 
 
-CPPUTILS_UTEST_ALL(f_0004_lw_mutex_recursive, t_0001) {
+CPPUTILS_UTEST_ALL(f_0001_lw_mutex_recursive, t_0001) {
 
     cinternal_lw_recursive_mutex_t aMutex;
     cinternal_lw_recursive_mutex_create(&aMutex);

@@ -28,7 +28,7 @@ cinternalRepoRoot	= $(MakeFileDir)\..\..\..
 !ENDIF
 
 !IFNDEF artifactRoot
-artifactRoot		= $(artifactRoot)
+artifactRoot		= $(cinternalRepoRoot)
 !ENDIF
 
 # better that this variable provided here
@@ -59,6 +59,12 @@ ObjectsExtension	= r
 !ENDIF
 
 LFLAGS				= $(LFLAGS) $(LIBS)
+LFLAGS				= $(LFLAGS) /OUT:"$(TargetDirectory)\$(TargetFileName)" 
+LFLAGS				= $(LFLAGS) /MANIFEST /NXCOMPAT /PDB:"$(TargetDirectory)\$(TargetName).pdb" 
+LFLAGS				= $(LFLAGS) /DYNAMICBASE $(LIBS) 
+LFLAGS				= $(LFLAGS) /DEBUG /MACHINE:$(Platform) /INCREMENTAL  
+LFLAGS				= $(LFLAGS) /MANIFESTUAC:"level='asInvoker' uiAccess='false'" 
+LFLAGS				= $(LFLAGS) /ERRORREPORT:PROMPT /NOLOGO $(LIBPATHS) /TLBID:1
 CFLAGS				= $(CFLAGS)	$(COMMON_FLAGS)
 CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
 CFLAGS				= $(CFLAGS) /bigobj /nologo
@@ -112,7 +118,7 @@ __preparationForBuildRaw:
 
 __buildRaw: __preparationForBuildRaw $(Objects)
 	@cd $(ObjectsDir)
-	@$(LINKER) $(LFLAGS) $(Objects) /OUT:$(TargetDirectory)\$(TargetName).$(TargetExtension) /MACHINE:$(Platform) /NOLOGO
+	$(LINKER) $(LFLAGS) $(Objects) /OUT:$(TargetDirectory)\$(TargetName).$(TargetExtension) /MACHINE:$(Platform) /NOLOGO
 
 
 clean: __preparationForSetObjectsForClean __setObjects
