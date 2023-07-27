@@ -31,7 +31,7 @@ if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 .\insert_custom_info_into_bin_test_exe.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
-.\cinternal_unit_test.exe
+.\cinternal_unit_test_mkfl.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
 endlocal

@@ -8,7 +8,7 @@
 
 MakeFileName        = cinternal_unit_test.windows.Makefile
 MakeFileDir			= $(MAKEDIR)
-TargetName			= cinternal_unit_test
+TargetName			= cinternal_unit_test_mkfl
 TargetExtension		= exe
 TargetCategory      = test
 SrcBaseDir			= $(MakeFileDir)\..\..\..\src
