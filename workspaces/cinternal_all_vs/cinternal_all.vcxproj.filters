@@ -46,6 +46,9 @@
     <Filter Include="files">
       <UniqueIdentifier>{4d02a798-7cb9-4dcc-8aec-15f48a5bec1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="repo_files\prj\common\common_mkfl\raw">
+      <UniqueIdentifier>{a3cf857f-9109-40a1-88ee-61cc80a8ca66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\utils\entry_cinternal_all.cpp">
@@ -116,12 +119,6 @@
     <None Include="..\..\prj\common\common_mkfl\unix.common.tmp.Makefile">
       <Filter>repo_files\prj\common\common_mkfl</Filter>
     </None>
-    <None Include="..\..\prj\common\common_mkfl\flagsandsys_common_pure.unix.Makefile">
-      <Filter>repo_files\prj\common\common_mkfl</Filter>
-    </None>
-    <None Include="..\..\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile">
-      <Filter>repo_files\prj\common\common_mkfl</Filter>
-    </None>
     <None Include="..\cinternal_all_mkfl\cinternal_all.unix.Makefile">
       <Filter>files</Filter>
     </None>
@@ -130,6 +127,12 @@
     </None>
     <None Include="..\..\scripts\windows_parse_key_value_pairs_file.bat">
       <Filter>repo_files\scripts</Filter>
+    </None>
+    <None Include="..\..\prj\common\common_mkfl\raw\flagsandsys_common_raw.unix.Makefile">
+      <Filter>repo_files\prj\common\common_mkfl\raw</Filter>
+    </None>
+    <None Include="..\..\prj\common\common_mkfl\raw\flagsandsys_common_raw.windows.Makefile">
+      <Filter>repo_files\prj\common\common_mkfl\raw</Filter>
     </None>
   </ItemGroup>
 </Project>

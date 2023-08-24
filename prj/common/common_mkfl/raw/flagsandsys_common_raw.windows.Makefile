@@ -1,12 +1,12 @@
 #
 # repo:		    cinternal
-# file:		    flagsandsys_common_pure.windows.Makefile
+# file:		    flagsandsys_common_raw.windows.Makefile
 # created on:	    2020 Dec 14
 # created by:	    Davit Kalantaryan (davit.kalantaryan@desy.de)
 # purpose:	    This file can be only as include
 #
 
-CC                      = cl 
+CC                  = cl 
 CPPC           		= cl -Zc:__cplusplus
 
 # one can redefine this by this nmake /e Platform=x86

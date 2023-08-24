@@ -6,8 +6,11 @@
 # purpose:	    This file can be only as include
 #
 
+
+!IFNDEF cinternalFlagsAndSysCommonIncluded
+cinternalFlagsAndSysCommonIncluded		= 1
 !IFNDEF cinternalRepoRoot
 cinternalRepoRoot	= $(MAKEDIR)\..\..\..
 !ENDIF
-
-!include <$(cinternalRepoRoot)\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile>
+!include <$(cinternalRepoRoot)\prj\common\common_mkfl\raw\flagsandsys_common_raw.windows.Makefile>
+!ENDIF
