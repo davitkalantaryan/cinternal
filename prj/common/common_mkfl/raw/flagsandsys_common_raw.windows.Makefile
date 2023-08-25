@@ -24,7 +24,7 @@ MakeFileDir			= $(MAKEDIR)
 !ENDIF
 
 !IFNDEF cinternalRepoRoot
-cinternalRepoRoot	= $(MakeFileDir)\..\..\..
+cinternalRepoRoot	= $(MakeFileDir)\..\..\..\..
 !ENDIF
 
 !IFNDEF artifactRoot

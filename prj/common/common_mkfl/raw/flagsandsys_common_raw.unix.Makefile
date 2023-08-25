@@ -9,7 +9,7 @@
 ifndef cinternalRepoRoot
 		mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
 		mkfile_dir		=  $(shell dirname $(mkfile_path))
-        cinternalRepoRoot	:= $(shell curDir=`pwd` && cd $(mkfile_dir)/../../.. && pwd && cd ${curDir})
+        cinternalRepoRoot	:= $(shell curDir=`pwd` && cd $(mkfile_dir)/../../../.. && pwd && cd ${curDir})
 endif
 
 ifndef artifactRoot
