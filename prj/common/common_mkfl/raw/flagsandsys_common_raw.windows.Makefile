@@ -20,11 +20,11 @@ Configuration		= Debug
 
 # this variable should be provided
 !IFNDEF MakeFileDir
-MakeFileDir			= $(MAKEDIR)
+MakeFileDir			= $(MAKEDIR)\..
 !ENDIF
 
 !IFNDEF cinternalRepoRoot
-cinternalRepoRoot	= $(MakeFileDir)\..\..\..\..
+cinternalRepoRoot	= $(MakeFileDir)\..\..\..
 !ENDIF
 
 !IFNDEF artifactRoot
