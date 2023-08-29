@@ -10,11 +10,6 @@
 @echo off
 setlocal EnableDelayedExpansion enableextensions
 
-set  scriptDirectory=%~dp0
-cd /D "%scriptDirectory%.."
-set "repositoryRootBase=%cd%"
-set "repositoryRoot=%cd%\"
-
 set /p envFileContentBase=<%1
 
 set "varname="
@@ -30,7 +25,4 @@ for %%a in (%envFileContentBase%) do (
     )
 )
 
-
-endlocal & (
-    set "focustCommonRepositoryRoot=%repositoryRootBase%"
-) %exportVars%
+endlocal %exportVars%
