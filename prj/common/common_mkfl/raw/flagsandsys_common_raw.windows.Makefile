@@ -65,6 +65,8 @@ LFLAGS				= $(LFLAGS) /DYNAMICBASE $(LIBS)
 LFLAGS				= $(LFLAGS) /DEBUG /MACHINE:$(Platform) /INCREMENTAL  
 LFLAGS				= $(LFLAGS) /MANIFESTUAC:"level='asInvoker' uiAccess='false'" 
 LFLAGS				= $(LFLAGS) /ERRORREPORT:PROMPT /NOLOGO $(LIBPATHS) /TLBID:1
+LFLAGS				= $(LFLAGS) /LIBPATH:"$(cinternalRepoRoot)\sys\win_$(Platform)\$(Configuration)\lib"
+LFLAGS				= $(LFLAGS) /LIBPATH:"$(cinternalRepoRoot)\sys\win_$(Platform)\$(Configuration)\tlib"
 CFLAGS				= $(CFLAGS)	$(COMMON_FLAGS)
 CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
 CFLAGS				= $(CFLAGS) /bigobj /nologo

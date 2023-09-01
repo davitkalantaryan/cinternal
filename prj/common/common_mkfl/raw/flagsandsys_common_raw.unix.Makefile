@@ -85,6 +85,9 @@ endif
 #EMXX=env CCACHE_CPP2=1 ccache em++
 EMXX=em++
 
+LIBS	+= -L$(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/lib
+LIBS	+= -L$(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/tlib
+
 COMMON_FLAGS	+= -I$(cinternalRepoRoot)/include -DCPPUTILS_COMPILER_WARNINGS_PUSH_POP
 
 CPPFLAGS		+=  $(COMMON_FLAGS)

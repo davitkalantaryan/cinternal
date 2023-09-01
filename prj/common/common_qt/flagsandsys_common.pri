@@ -104,4 +104,9 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
     OBJECTS_DIR =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/.other/objects/$${TARGET}
     MOC_DIR     =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/.other/mocs/$${TARGET}
     UI_DIR      =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/.other/uics/$${TARGET}
+
+    LIBS	+= -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
+    LIBS	+= -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
+
+        OTHER_FILES += $$files($${PWD}/../common_mkfl/*.Makefile,true)
 }
