@@ -34,4 +34,7 @@ if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 .\cinternal_unit_test_mkfl.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
+.\hash_test01.exe
+if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
+
 endlocal
