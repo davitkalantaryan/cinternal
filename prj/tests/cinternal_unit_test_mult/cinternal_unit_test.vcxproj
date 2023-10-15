@@ -282,6 +282,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\benchmark.h" />
     <ClInclude Include="..\..\..\include\cinternal\bistateflags.h" />
+    <ClInclude Include="..\..\..\include\cinternal\common_data01.h" />
     <ClInclude Include="..\..\..\include\cinternal\c_raii.h" />
     <ClInclude Include="..\..\..\include\cinternal\c_raii_ext.h" />
     <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h" />
