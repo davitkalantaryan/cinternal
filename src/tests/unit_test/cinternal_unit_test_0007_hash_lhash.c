@@ -1,7 +1,7 @@
 //
 // repo:            cinternal
-// file:			cinternal_unit_test_0007_simple_hash.c
-// path:			src/tests/unit_test/cinternal_unit_test_0007_simple_hash.c
+// file:			cinternal_unit_test_0007_hash_lhash.c
+// path:			src/tests/unit_test/cinternal_unit_test_0007_hash_lhash.c
 // created on:		2023 Oct 15
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
@@ -14,15 +14,15 @@
 #define CINTR_TEST_HASH_DATA2		4
 
 
-static void TestHash(CinternalSHash_t a_hash, const void* a_key1, size_t keySize1, const void* a_key2, size_t keySize2);
+static void TestHash(CinternalLHash_t a_hash, const void* a_key1, size_t keySize1, const void* a_key2, size_t keySize2);
 
 
-CPPUTILS_UTEST_AFTER_MAIN(f_0007_simple_hash, t_0001) {
+CPPUTILS_UTEST_AFTER_MAIN(f_0007_hash_lhash, t_0001) {
 
 	const int key1 = 1;
 	const int key2 = 2;
-	CinternalSHash_t aHash;
-	CinternalSHashItem_t pItem;
+	CinternalLHash_t aHash;
+	CinternalLHashItem_t pItem;
 
 	aHash = CInternalLHashCreateRawMem(1024);
 	CinternalUnitTestCheckOpt(aHash);
@@ -55,9 +55,9 @@ CPPUTILS_UTEST_AFTER_MAIN(f_0007_simple_hash, t_0001) {
 }
 
 
-static void TestHash(CinternalSHash_t a_hash, const void* a_key1, size_t a_keySize1, const void* a_key2, size_t a_keySize2)
+static void TestHash(CinternalLHash_t a_hash, const void* a_key1, size_t a_keySize1, const void* a_key2, size_t a_keySize2)
 {
-	CinternalSHashItem_t pItem;
+	CinternalLHashItem_t pItem;
 	int nNumber;
 
 	CinternalUnitTestAssertCheckSrc(CInternalLHashSize(a_hash) == 2);
@@ -73,10 +73,10 @@ static void TestHash(CinternalSHash_t a_hash, const void* a_key1, size_t a_keySi
 
 	pItem = CInternalLHashFind(a_hash, a_key1, a_keySize1);
 	CinternalUnitTestAssertCheckSrc(pItem);
-	CinternalUnitTestAssertCheckSrc(((size_t)(pItem->data)) == CINTR_TEST_HASH_DATA1);
+	CinternalUnitTestAssertCheckSrc(((size_t)(pItem->hit.data)) == CINTR_TEST_HASH_DATA1);
 
 	pItem = CInternalLHashFind(a_hash, a_key2, a_keySize2);
 	CinternalUnitTestAssertCheckSrc(pItem);
-	CinternalUnitTestAssertCheckSrc(((size_t)(pItem->data)) == CINTR_TEST_HASH_DATA2);
+	CinternalUnitTestAssertCheckSrc(((size_t)(pItem->hit.data)) == CINTR_TEST_HASH_DATA2);
 }
 

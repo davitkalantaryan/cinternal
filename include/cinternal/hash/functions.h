@@ -10,12 +10,54 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_HASH_FUNCTIONS_H
 #define CINTERNAL_INCLUDE_CINTERNAL_HASH_FUNCTIONS_H
 
+#include <cinternal/internal_header.h>
+#include <cinternal/hash/data.h>
 #include <cinternal/common_data01.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 
 CPPUTILS_BEGIN_C
+
+
+#ifdef CInternalHashAddFirstDataWithKnownHashInline_needed
+static inline bool CInternalHashAddFirstDataWithKnownHashInline(
+	struct SCinternalHash* CPPUTILS_ARG_NN a_hashTbl, struct SCinternalHashItem* a_in,
+	const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
+{
+	if (!(*(a_hashTbl->keyStore))(a_hashTbl->allocator, &(a_in->key), &(a_in->keySize), a_key, a_keySize)) {
+		return false;
+	}
+
+	//
+	a_in->data = CPPUTILS_CONST_CAST(void*, a_data);
+	a_in->hash = a_hash;
+	a_in->prevInTheBucket = CPPUTILS_NULL;
+	a_in->nextInTheBucket = CPPUTILS_NULL;
+	//
+	a_hashTbl->ppTable[a_hash] = a_in;
+	a_hashTbl->m_size = 1;
+
+	return true;
+}
+#endif
+
+
+#ifdef CInternalHashFindItemInline_needed
+static inline struct SCinternalHashItem* CInternalHashFindItemInline(const struct SCinternalHash* CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) {
+	struct SCinternalHashItem* pItem;
+	*a_pHash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
+	pItem = a_hashTbl->ppTable[*a_pHash];
+	while (pItem) {
+		if ((*(a_hashTbl->isEq))(pItem->key, pItem->keySize, a_key, a_keySize)) {
+			return pItem;
+		}
+		pItem = pItem->nextInTheBucket;
+	}
+	return CPPUTILS_NULL;
+}
+#endif
+
 
 #ifdef cinternal_hash1_small_int_needed
 static size_t cinternal_hash1_small_int(const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT

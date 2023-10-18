@@ -28,6 +28,9 @@
     <Filter Include="Header Files\include\cinternal\hash">
       <UniqueIdentifier>{0eaf53bf-adae-4b91-96a9-ad05c0e681da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{3f2abc9f-d628-41fe-a396-59a72421dbe0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c">
@@ -48,23 +51,35 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0005_threading_and_sync.c">
       <Filter>Source Files\unit_test</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0006_benchmark.c">
       <Filter>Source Files\unit_test</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_simple_hash.c">
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_phash.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_vhash.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_hash_lhash.c">
       <Filter>Source Files\unit_test</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0008_hash_phash.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0009_hash_vhash.c">
+      <Filter>Source Files\unit_test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +159,15 @@
       <Filter>Header Files\include\cinternal\hash</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\hash\functions.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\phash.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\vhash.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\data.h">
       <Filter>Header Files\include\cinternal\hash</Filter>
     </ClInclude>
   </ItemGroup>
