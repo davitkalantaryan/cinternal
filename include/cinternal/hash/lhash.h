@@ -1,6 +1,6 @@
 //
 // repo:			cinternal
-// file:            shash.h
+// file:            lhash.h
 // path:			include/cinternal/hash/lhash.h
 // created on:		2023 Oct 12
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)

@@ -143,6 +143,9 @@
     <ClInclude Include="..\..\..\include\cinternal\hash\lhash.h">
       <Filter>Header Files\include\cinternal\hash</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\functions.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cinternal_unit_test.pro">
