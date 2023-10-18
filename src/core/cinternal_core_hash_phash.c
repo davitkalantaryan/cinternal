@@ -18,7 +18,7 @@
 #define CinternalStoreKeyRawMemory_needed						1
 #define CinternalUnstoreKeyRawMemory_needed						1
 #define CinternalIsMemoriesIdenticalRawMemory_needed			1
-//#define DefaultRemainingCleaner_needed					1
+#define DefaultRemainingCleaner_needed					1
 #define cinternal_hash1_raw_mem_needed							1
 #include <cinternal/hash/functions.h>
 #include <stdlib.h>
@@ -45,6 +45,8 @@ static inline void CInternalPHashClearExInline(CinternalPHash_t CPPUTILS_ARG_NN 
 {
 	size_t i;
 	struct SCinternalHashItem* pItemTmp, * pItem;
+
+	a_remainingDataCleaner = a_remainingDataCleaner ? a_remainingDataCleaner : &DefaultRemainingCleaner;
 
 	for (i = 0; i < a_hashTbl->hash.numberOfBaskets; ++i) {
 		pItem = a_hashTbl->hash.ppTable[i];

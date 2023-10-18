@@ -18,7 +18,7 @@
 #define CinternalStoreKeyRawMemory_needed						1
 #define CinternalUnstoreKeyRawMemory_needed						1
 #define CinternalIsMemoriesIdenticalRawMemory_needed			1
-//#define DefaultRemainingCleaner_needed							1
+#define DefaultRemainingCleaner_needed							1
 #define cinternal_hash1_raw_mem_needed							1
 #include <cinternal/hash/functions.h>
 #include <stdlib.h>
@@ -47,6 +47,7 @@ struct SCinternalVHash {
 static inline void CInternalVHashClearExInline(CinternalVHash_t CPPUTILS_ARG_NN a_hashTbl, TypeCinternalDeallocator a_remainingDataCleaner)
 {
 	size_t i;
+	a_remainingDataCleaner = a_remainingDataCleaner ? a_remainingDataCleaner : &DefaultRemainingCleaner;
 	for (i = 0; i < a_hashTbl->hash.m_size; ++i) {
 		a_hashTbl->hash.ppTable[a_hashTbl->ppVector[i]->hit.hash] = CPPUTILS_NULL;
 		(*a_remainingDataCleaner)(a_hashTbl->ppVector[i]->hit.data);
