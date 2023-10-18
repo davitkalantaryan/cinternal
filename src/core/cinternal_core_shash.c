@@ -7,7 +7,7 @@
 //
 
 
-#include <cinternal/shash.h>
+#include <cinternal/hash/lhash.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -29,13 +29,13 @@ static void DefaultRemainingCleaner(void* a_pData);
 CPPUTILS_BEGIN_C
 
 
-struct SCinternalSHash {
+struct SCinternalLHash {
 	TypeCinternalAllocator				allocator;
 	TypeCinternalDeallocator			deallocator;
-	struct SCinternalSHashItem			*first, *last;
+	struct SCinternalLHashItem			*first, *last;
 	size_t								m_size;
 
-	struct SCinternalSHashItem**		ppTable;
+	struct SCinternalLHashItem**		ppTable;
 	size_t								numberOfBaskets;
 	TypeCinternalHasher					hasher;
 	TypeCinternalIsMemoriesIdentical	isEq;
@@ -44,8 +44,8 @@ struct SCinternalSHash {
 };
 
 
-static inline struct SCinternalSHashItem* CInternalHashFindItemInline(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) {
-	struct SCinternalSHashItem* pItem;
+static inline struct SCinternalLHashItem* CInternalHashFindItemInline(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) {
+	struct SCinternalLHashItem* pItem;
 	*a_pHash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
 	pItem = a_hashTbl->ppTable[*a_pHash];
 	while (pItem) {
@@ -58,10 +58,10 @@ static inline struct SCinternalSHashItem* CInternalHashFindItemInline(ConstCinte
 }
 
 
-static inline CinternalSHashItem_t CInternalSHashAddFirstDataWithKnownHashInline(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+static inline CinternalSHashItem_t CInternalLHashAddFirstDataWithKnownHashInline(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
 {
-	struct SCinternalSHashItem* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalSHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalSHashItem)));
+	struct SCinternalLHashItem* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalLHashItem)));
 	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
@@ -87,7 +87,7 @@ static inline CinternalSHashItem_t CInternalSHashAddFirstDataWithKnownHashInline
 }
 
 
-CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExAny(size_t a_numberOfBaskets,
+CINTERNAL_EXPORT CinternalSHash_t CInternalLHashCreateExAny(size_t a_numberOfBaskets,
 	TypeCinternalHasher CPPUTILS_ARG_NN a_hasher, TypeCinternalIsMemoriesIdentical CPPUTILS_ARG_NN a_isEq,
 	TypeCinternalStoreKey CPPUTILS_ARG_NN a_keyStore, TypeCinternalUnstoreKey CPPUTILS_ARG_NN a_keyUnstore,
 	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
@@ -97,7 +97,7 @@ CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExAny(size_t a_numberOfBas
 
 	a_allocator = a_allocator ? a_allocator : (&malloc);
 
-	pRet = CPPUTILS_STATIC_CAST(CinternalSHash_t, (*a_allocator)(sizeof(struct SCinternalSHash)));
+	pRet = CPPUTILS_STATIC_CAST(CinternalSHash_t, (*a_allocator)(sizeof(struct SCinternalLHash)));
 	if (!pRet) {
 		return CPPUTILS_NULL;
 	}
@@ -111,8 +111,8 @@ CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExAny(size_t a_numberOfBas
 
 	pRet->numberOfBaskets = (a_numberOfBaskets>0) ? a_numberOfBaskets : CINTERNAL_HASH_DEFAULT_NUMBER_OF_BASKETS;
 
-	tableMemorySize = pRet->numberOfBaskets * sizeof(struct SCinternalSHashItem*);
-	pRet->ppTable = CPPUTILS_STATIC_CAST(struct SCinternalSHashItem**, (*a_allocator)(tableMemorySize));
+	tableMemorySize = pRet->numberOfBaskets * sizeof(struct SCinternalLHashItem*);
+	pRet->ppTable = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem**, (*a_allocator)(tableMemorySize));
 	if (!(pRet->ppTable)) {
 		(*(pRet->deallocator))(pRet);
 		return CPPUTILS_NULL;
@@ -131,51 +131,51 @@ CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExAny(size_t a_numberOfBas
 }
 
 
-CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExAnyDefRawMem(size_t a_numberOfBaskets,
+CINTERNAL_EXPORT CinternalSHash_t CInternalLHashCreateExAnyDefRawMem(size_t a_numberOfBaskets,
 	TypeCinternalHasher a_hasher, TypeCinternalIsMemoriesIdentical a_isEq,
 	TypeCinternalStoreKey a_keyStore, TypeCinternalUnstoreKey a_keyUnstore,
 	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
 {
-	return CInternalSHashCreateExAny(a_numberOfBaskets,
+	return CInternalLHashCreateExAny(a_numberOfBaskets,
 		a_hasher ? a_hasher : (&cinternal_hash1_raw_mem), a_isEq ? a_isEq : (&CinternalIsMemoriesIdenticalRawMemory),
 		a_keyStore ? a_keyStore : (&CinternalStoreKeyRawMemory), a_keyUnstore ? a_keyUnstore : (&CinternalUnstoreKeyRawMemory),
 		a_allocator, a_deallocator);
 }
 
 
-CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExAnyDefSmlInt(size_t a_numberOfBaskets,
+CINTERNAL_EXPORT CinternalSHash_t CInternalLHashCreateExAnyDefSmlInt(size_t a_numberOfBaskets,
 	TypeCinternalHasher a_hasher, TypeCinternalIsMemoriesIdentical a_isEq,
 	TypeCinternalStoreKey a_keyStore, TypeCinternalUnstoreKey a_keyUnstore,
 	TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
 {
-	return CInternalSHashCreateExAny(a_numberOfBaskets,
+	return CInternalLHashCreateExAny(a_numberOfBaskets,
 		a_hasher ? a_hasher : (&cinternal_hash1_small_int), a_isEq ? a_isEq : (&CinternalIsMemoriesIdenticalSmallInt),
 		a_keyStore ? a_keyStore : (&CinternalStoreKeySmallInt), a_keyUnstore ? a_keyUnstore : (&CinternalUnstoreKeySmallInt),
 		a_allocator, a_deallocator);
 }
 
 
-CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExRawMem(size_t a_numberOfBaskets, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
+CINTERNAL_EXPORT CinternalSHash_t CInternalLHashCreateExRawMem(size_t a_numberOfBaskets, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
 {
-	return CInternalSHashCreateExAny(a_numberOfBaskets,
+	return CInternalLHashCreateExAny(a_numberOfBaskets,
 		&cinternal_hash1_raw_mem, &CinternalIsMemoriesIdenticalRawMemory,
 		&CinternalStoreKeyRawMemory, &CinternalUnstoreKeyRawMemory,
 		a_allocator, a_deallocator);
 }
 
 
-CINTERNAL_EXPORT CinternalSHash_t CInternalSHashCreateExSmlInt(size_t a_numberOfBaskets, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
+CINTERNAL_EXPORT CinternalSHash_t CInternalLHashCreateExSmlInt(size_t a_numberOfBaskets, TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator)
 {
-	return CInternalSHashCreateExAny(a_numberOfBaskets,
+	return CInternalLHashCreateExAny(a_numberOfBaskets,
 		&cinternal_hash1_small_int, &CinternalIsMemoriesIdenticalSmallInt,
 		&CinternalStoreKeySmallInt, &CinternalUnstoreKeySmallInt,
 		a_allocator, a_deallocator);
 }
 
 
-CINTERNAL_EXPORT void CInternalSHashDestroyEx(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, TypeCinternalDeallocator a_remainingDataCleaner)
+CINTERNAL_EXPORT void CInternalLHashDestroyEx(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, TypeCinternalDeallocator a_remainingDataCleaner)
 {
-	struct SCinternalSHashItem *pItemTmp, *pItem = a_hashTbl->first;
+	struct SCinternalLHashItem *pItemTmp, *pItem = a_hashTbl->first;
 	a_remainingDataCleaner = a_remainingDataCleaner ? a_remainingDataCleaner : &DefaultRemainingCleaner;
 	while (pItem) {
 		pItemTmp = pItem->next;
@@ -189,10 +189,10 @@ CINTERNAL_EXPORT void CInternalSHashDestroyEx(CinternalSHash_t CPPUTILS_ARG_NN a
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataAfterWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataAfterWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	CinternalSHashItem_t CPPUTILS_ARG_NN a_itemBefore, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
 {
-	struct SCinternalSHashItem* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalSHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalSHashItem)));
+	struct SCinternalLHashItem* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalLHashItem)));
 	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
@@ -226,29 +226,29 @@ CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataAfterWithKnownHash(Ci
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataAfterIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataAfterIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	CinternalSHashItem_t CPPUTILS_ARG_NN a_itemBefore, const void* a_data, const void* a_key, size_t a_keySize)
 {
 	size_t unHash;
 	if (CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, &unHash)) {
 		return CPPUTILS_NULL;
 	}
-	return CInternalSHashAddDataAfterWithKnownHash(a_hashTbl, a_itemBefore,a_data, a_key, a_keySize, unHash);
+	return CInternalLHashAddDataAfterWithKnownHash(a_hashTbl, a_itemBefore,a_data, a_key, a_keySize, unHash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataAfterEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataAfterEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	CinternalSHashItem_t CPPUTILS_ARG_NN a_itemBefore, const void* a_data, const void* a_key, size_t a_keySize)
 {
 	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
-	return CInternalSHashAddDataAfterWithKnownHash(a_hashTbl, a_itemBefore,a_data, a_key, a_keySize, hash);
+	return CInternalLHashAddDataAfterWithKnownHash(a_hashTbl, a_itemBefore,a_data, a_key, a_keySize, hash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataBeforeWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataBeforeWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	CinternalSHashItem_t CPPUTILS_ARG_NN a_itemAfter, const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
 {
-	struct SCinternalSHashItem* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalSHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalSHashItem)));
+	struct SCinternalLHashItem* const pNewItem = CPPUTILS_STATIC_CAST(struct SCinternalLHashItem*, (*(a_hashTbl->allocator))(sizeof(struct SCinternalLHashItem)));
 	if (!pNewItem) {
 		return CPPUTILS_NULL;
 	}
@@ -282,99 +282,99 @@ CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataBeforeWithKnownHash(C
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataBeforeIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataBeforeIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	CinternalSHashItem_t CPPUTILS_ARG_NN a_itemAfter, const void* a_data, const void* a_key, size_t a_keySize)
 {
 	size_t unHash;
 	if (CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, &unHash)) {
 		return CPPUTILS_NULL;
 	}
-	return CInternalSHashAddDataBeforeWithKnownHash(a_hashTbl, a_itemAfter, a_data, a_key, a_keySize, unHash);
+	return CInternalLHashAddDataBeforeWithKnownHash(a_hashTbl, a_itemAfter, a_data, a_key, a_keySize, unHash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataBeforeEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataBeforeEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	CinternalSHashItem_t CPPUTILS_ARG_NN a_itemAfter, const void* a_data, const void* a_key, size_t a_keySize)
 {
 	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
-	return CInternalSHashAddDataBeforeWithKnownHash(a_hashTbl, a_itemAfter, a_data, a_key, a_keySize, hash);
+	return CInternalLHashAddDataBeforeWithKnownHash(a_hashTbl, a_itemAfter, a_data, a_key, a_keySize, hash);
 }
 
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataToBegWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataToBegWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
 {
 	if (a_hashTbl->first) {
-		return CInternalSHashAddDataBeforeWithKnownHash(a_hashTbl, a_hashTbl->first, a_data, a_key, a_keySize, a_hash);
+		return CInternalLHashAddDataBeforeWithKnownHash(a_hashTbl, a_hashTbl->first, a_data, a_key, a_keySize, a_hash);
 	}
 
-	return CInternalSHashAddFirstDataWithKnownHashInline(a_hashTbl, a_data, a_key, a_keySize, a_hash);
+	return CInternalLHashAddFirstDataWithKnownHashInline(a_hashTbl, a_data, a_key, a_keySize, a_hash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataToBegIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataToBegIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	const void* a_data, const void* a_key, size_t a_keySize)
 {
 	size_t unHash;
 	if (CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, &unHash)) {
 		return CPPUTILS_NULL;
 	}
-	return CInternalSHashAddDataToBegWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, unHash);
+	return CInternalLHashAddDataToBegWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, unHash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataToBegEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataToBegEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	const void* a_data, const void* a_key, size_t a_keySize)
 {
 	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
-	return CInternalSHashAddDataToBegWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, hash);
+	return CInternalLHashAddDataToBegWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, hash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataToEndWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataToEndWithKnownHash(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash)
 {
 	if (a_hashTbl->last) {
-		return CInternalSHashAddDataAfterWithKnownHash(a_hashTbl, a_hashTbl->last, a_data, a_key, a_keySize, a_hash);
+		return CInternalLHashAddDataAfterWithKnownHash(a_hashTbl, a_hashTbl->last, a_data, a_key, a_keySize, a_hash);
 	}
 
-	return CInternalSHashAddFirstDataWithKnownHashInline(a_hashTbl, a_data, a_key, a_keySize, a_hash);
+	return CInternalLHashAddFirstDataWithKnownHashInline(a_hashTbl, a_data, a_key, a_keySize, a_hash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataToEndIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataToEndIfNotExists(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	const void* a_data, const void* a_key, size_t a_keySize)
 {
 	size_t unHash;
 	if (CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, &unHash)) {
 		return CPPUTILS_NULL;
 	}
-	return CInternalSHashAddDataToEndWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, unHash);
+	return CInternalLHashAddDataToEndWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, unHash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashAddDataToEndEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashAddDataToEndEvenIfExist(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl,
 	const void* a_data, const void* a_key, size_t a_keySize)
 {
 	const size_t hash = ((*(a_hashTbl->hasher))(a_key, a_keySize)) % (a_hashTbl->numberOfBaskets);
-	return CInternalSHashAddDataToEndWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, hash);
+	return CInternalLHashAddDataToEndWithKnownHash(a_hashTbl, a_data, a_key, a_keySize, hash);
 }
 
 
-CINTERNAL_EXPORT bool CInternalSHashRemoveData(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize)
+CINTERNAL_EXPORT bool CInternalLHashRemoveData(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize)
 {
 	size_t unHash;
-	struct SCinternalSHashItem* pIterator = CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, &unHash);
+	struct SCinternalLHashItem* pIterator = CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, &unHash);
 	if (pIterator) {
-		CInternalSHashRemoveDataEx(a_hashTbl, pIterator);
+		CInternalLHashRemoveDataEx(a_hashTbl, pIterator);
 		return true;
 	}
 	return false;
 }
 
 
-CINTERNAL_EXPORT void CInternalSHashRemoveDataEx(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalSHashItem_t CPPUTILS_ARG_NN a_iter)
+CINTERNAL_EXPORT void CInternalLHashRemoveDataEx(CinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalSHashItem_t CPPUTILS_ARG_NN a_iter)
 {
 	if (a_iter->prev) { a_iter->prev->next = a_iter->next; }
 	if (a_iter->next) { a_iter->next->prev = a_iter->prev; }
@@ -390,32 +390,32 @@ CINTERNAL_EXPORT void CInternalSHashRemoveDataEx(CinternalSHash_t CPPUTILS_ARG_N
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashFindEx(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash)
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashFindEx(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash)
 {
 	return CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, a_pHash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashFind(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize)
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashFind(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize)
 {
 	size_t unHash;
 	return CInternalHashFindItemInline(a_hashTbl, a_key, a_keySize, &unHash);
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashFirstItem(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl)
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashFirstItem(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl)
 {
 	return a_hashTbl->first;
 }
 
 
-CINTERNAL_EXPORT CinternalSHashItem_t CInternalSHashLastItem(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl)
+CINTERNAL_EXPORT CinternalSHashItem_t CInternalLHashLastItem(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl)
 {
 	return a_hashTbl->last;
 }
 
 
-CINTERNAL_EXPORT size_t CInternalSHashSize(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl)
+CINTERNAL_EXPORT size_t CInternalLHashSize(ConstCinternalSHash_t CPPUTILS_ARG_NN a_hashTbl)
 {
 	return a_hashTbl->m_size;
 }
