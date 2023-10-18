@@ -63,7 +63,7 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_simple_hash.c">
       <Filter>Source Files\unit_test</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_shash.c">
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

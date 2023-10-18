@@ -268,8 +268,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c" />
-    <ClCompile Include="..\..\..\src\core\cinternal_core_shash.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c" />
