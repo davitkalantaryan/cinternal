@@ -19,6 +19,8 @@
 CPPUTILS_BEGIN_C
 
 
+#define CInternalSmallIntHashPair(_smallInt)	((void*)((size_t)(_smallInt))),0
+
 struct SCinternalHashItem {
 	struct SCinternalHashItem	*prevInTheBucket, *nextInTheBucket;
 	void* data;
