@@ -73,6 +73,7 @@ static void TestHash(CinternalVHash_t a_hash, const void* a_key1, size_t a_keySi
 		++nNumber;
 		pItem = ppVector[i];
 		CinternalUnitTestAssertCheckSrc(pItem);
+		CinternalUnitTestAssertCheckSrc(pItem->index == i);
 	}
 
 	CinternalUnitTestAssertCheckSrc(nNumber == 2);
