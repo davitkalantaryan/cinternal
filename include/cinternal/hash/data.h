@@ -19,7 +19,7 @@
 CPPUTILS_BEGIN_C
 
 
-#define CInternalSmallIntHashPair(_smallInt)	((void*)((size_t)(_smallInt))),0
+#define CInternalSmallIntHashPair(_smallInt)	CInternalSmallIntHPairFn(_smallInt)
 
 struct SCinternalHashItem {
 	struct SCinternalHashItem	*prevInTheBucket, *nextInTheBucket;
