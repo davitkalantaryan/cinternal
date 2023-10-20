@@ -57,20 +57,12 @@ makeMainJob (){
 
 	case "$LD_LIBRARY_PATH" in
 		${repositoryRoot}/sys/$lsbCode/${configuration}/lib:* )
-			echo "LD_LIBRARY_PATH for protobuf has been already set"
+			echo "LD_LIBRARY_PATH for cinternal has been already set"
 			;;
 		* )
 			export LD_LIBRARY_PATH=${repositoryRoot}/sys/$lsbCode/${configuration}/lib:$LD_LIBRARY_PATH
 			;;
 	esac
-
-	if [ -z "$EMSDK_FOR_CPPUTILS_SET" ]
-	then
-	      source ${repositoryRoot}/contrib/emsdk/emsdk_env.sh
-		  export EMSDK_FOR_CPPUTILS_SET=1
-	else
-	      echo "emscriptian already inited"
-	fi
 
 	cd ${currentDirectory}
 }
