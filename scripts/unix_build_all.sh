@@ -21,6 +21,7 @@ do
 	cd "${scriptDirectory}"
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
+scriptDirectory=`pwd`
 
 source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
 
