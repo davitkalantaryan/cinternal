@@ -22,5 +22,5 @@ do
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
 cd ..
-repositoryRoot=`pwd`
-echo repositoryRoot=$repositoryRoot
+cinternalRepoRoot=`pwd`
+echo cinternalRepoRoot=$cinternalRepoRoot

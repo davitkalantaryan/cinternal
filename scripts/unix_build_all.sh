@@ -24,11 +24,7 @@ done
 
 source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
 
-cd ..
-repositoryRoot=`pwd`
-echo repositoryRoot=$repositoryRoot
-
-cd workspaces/cinternal_all_mkfl
+cd ${cinternalRepoRoot}/workspaces/cinternal_all_mkfl
 unset CPPUTILS_DEBUG
 make -f cinternal_all.unix.Makefile CPPUTILS_RELEASE=1
 unset CPPUTILS_RELEASE
