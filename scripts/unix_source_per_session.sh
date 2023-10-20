@@ -24,21 +24,7 @@ makeMainJob (){
 
 	local currentDirectory=`pwd`
 	echo currentDirectory=$currentDirectory
-
-	if [[ "$(uname)" == "Darwin" ]]; then
-		# Do something under Mac OS X platform
-		lsbCode=mac
-	elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
-		# Do something under GNU/Linux platform
-		lsbCode=`lsb_release -sc`
-	#elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]]; then
-	#	# Do something under 32 bits Windows NT platform
-	#elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
-	#	# Do something under 64 bits Windows NT platform
-	#else
-	fi
-	echo "lsbCode="$lsbCode
-
+	
 	# in mac short directory calculation based on n'readlink' or 'realpath' will not work
 	local scriptDirectory=`dirname "${sourcePath}"`
 	local scriptFileName=`basename "${sourcePath}"`
@@ -52,15 +38,31 @@ makeMainJob (){
 		local fileOrigin=`readlink "${scriptFileName}"`  || :
 	done
 	cd ..
-	local repositoryRoot=`pwd`
-	echo repositoryRoot=$repositoryRoot
+	cinternalRepoRoot=`pwd`
+	export cinternalRepoRoot
+	echo cinternalRepoRoot=$cinternalRepoRoot
+
+	if [[ "$(uname)" == "Darwin" ]]; then
+		# Do something under Mac OS X platform
+		lsbCode=mac
+	elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+		# Do something under GNU/Linux platform
+		lsbCode=`lsb_release -sc`
+	#elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]]; then
+	#	# Do something under 32 bits Windows NT platform
+	#elif [[ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]]; then
+	#	# Do something under 64 bits Windows NT platform
+	#else
+	fi
+	export lsbCode
+	echo "lsbCode="$lsbCode
 
 	case "$LD_LIBRARY_PATH" in
-		${repositoryRoot}/sys/$lsbCode/${configuration}/lib:* )
+		${cinternalRepoRoot}/sys/$lsbCode/Debug/lib:${cinternalRepoRoot}/sys/$lsbCode/Release/lib:* )
 			echo "LD_LIBRARY_PATH for cinternal has been already set"
 			;;
 		* )
-			export LD_LIBRARY_PATH=${repositoryRoot}/sys/$lsbCode/${configuration}/lib:$LD_LIBRARY_PATH
+			export LD_LIBRARY_PATH=${cinternalRepoRoot}/sys/$lsbCode/Debug/lib:${cinternalRepoRoot}/sys/$lsbCode/Release/lib::$LD_LIBRARY_PATH
 			;;
 	esac
 
