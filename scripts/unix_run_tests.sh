@@ -21,6 +21,9 @@ do
 	cd "${scriptDirectory}"
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
+
+source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
+
 cd ..
 repositoryRoot=`pwd`
 echo repositoryRoot=$repositoryRoot

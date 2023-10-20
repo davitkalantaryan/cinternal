@@ -322,6 +322,7 @@
     <None Include="..\..\scripts\unix_prepare_host.sh" />
     <None Include="..\..\scripts\unix_prepare_repository.sh" />
     <None Include="..\..\scripts\unix_run_tests.sh" />
+    <None Include="..\..\scripts\unix_source_per_session.sh" />
     <None Include="..\..\scripts\windows_build_all.bat" />
     <None Include="..\..\scripts\windows_parse_key_value_pairs_file.bat" />
     <None Include="..\..\scripts\windows_prepare_host.bat" />
