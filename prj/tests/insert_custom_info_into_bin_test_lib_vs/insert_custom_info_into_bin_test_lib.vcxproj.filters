@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{7165e90d-9b53-44b1-aadb-e81bde090309}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\tests\insert_custom_info_into_bin_test\entry_insert_custom_info_into_bin_test_lib.c">
@@ -21,5 +24,13 @@
     <ClCompile Include="..\..\..\src\tests\insert_custom_info_into_bin_test\insert_custom_info_into_bin_test.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\insert_custom_info_into_bin_test_lib_mkfl\insert_custom_info_into_bin_test_lib.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
+    <None Include="..\insert_custom_info_into_bin_test_lib_qt\insert_custom_info_into_bin_test_lib.pro">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>

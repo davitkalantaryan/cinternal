@@ -11,7 +11,7 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_ENDIAN_H
 #define CINTERNAL_INCLUDE_CINTERNAL_ENDIAN_H
 
-#include <cinternal/export_symbols.h>
+#include <cinternal/internal_header.h>
 
 
 #if defined(__linux__) || defined(__CYGWIN__) || defined(CPPUTILS_EMSCRIPTEN_IS_USED)

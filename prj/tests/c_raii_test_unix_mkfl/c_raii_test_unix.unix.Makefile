@@ -6,7 +6,7 @@ mkfile_dir		=  $(shell dirname $(mkfile_path))
 
 firstTarget: all
 
-include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
+include $(mkfile_dir)/../../common/common_mkfl/flagsandsys_common.unix.Makefile
 
 
 SOURCES += $(cinternalRepoRoot)/src/tests/c_raii_test_unix/main_c_raii_test_unix.c

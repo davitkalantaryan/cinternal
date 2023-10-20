@@ -6,7 +6,7 @@
 //
 
 
-#include <cinternal/export_symbols.h>
+#include <cinternal/internal_header.h>
 #include <stdio.h>
 #include <assert.h>
 
@@ -14,10 +14,15 @@
 
 static int s_nData = 0;
 
+CPPUTILS_BEGIN_C
+
 CPPUTILS_C_CODE_INITIALIZER(code_init) {
+
     printf("Hello from C global constructor\n");
 	s_nData = CINTERNALS_GLB_CONS_DSGN_VAL;
 }
+
+CPPUTILS_END_C
 
 int main(void)
 {

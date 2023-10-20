@@ -19,16 +19,22 @@ echo "repositoryRoot is %repositoryRoot%"
 cd "%repositoryRoot%sys\win_x64\Debug\test"
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
+.\any_quick_test.exe
+if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
+
+.\c_global_initer_test.exe
+if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
+
 .\c_raii_test.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
-.\lhash_test.exe
+.\insert_custom_info_into_bin_test_exe.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
-.\llist_test.exe
+.\cinternal_unit_test_mkfl.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
-.\unittest.exe
+.\hash_test01.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
 endlocal

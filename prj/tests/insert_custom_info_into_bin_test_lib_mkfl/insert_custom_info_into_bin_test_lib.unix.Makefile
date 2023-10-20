@@ -8,7 +8,7 @@ firstTarget: all
 
 COMMON_FLAGS += -fPIC
 
-include $(mkfile_dir)/../../common/common_mkfl/unix.common.Makefile
+include $(mkfile_dir)/../../common/common_mkfl/flagsandsys_common.unix.Makefile
 
 
 SOURCES += $(cinternalRepoRoot)/src/tests/insert_custom_info_into_bin_test/entry_insert_custom_info_into_bin_test_lib.c

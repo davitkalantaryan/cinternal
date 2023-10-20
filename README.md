@@ -211,12 +211,7 @@ int main(void)
     return 0;
 }
 ```  
-  
-  
-### Some tools  
- 1. Hash table in C. See: [lhash.h](include/cinternal/hash/lhash.h)  
- 2. List in the C. See: [llist.h](include/cinternal/list/llist.h)  
-   
+     
    
 ### Info insertion into binary  
   

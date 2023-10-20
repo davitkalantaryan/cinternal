@@ -15,11 +15,14 @@
 #ifdef _MSC_VER
 
 	#if defined(_WIN64) || defined(_M_ARM)
+		#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)		_name
 		#define CPPUTILS_FNAME_PREFIX ""
 		#define CPPUTILS_DS_FNAME_POSTFIX
 		#define CPPUTILS_SEC_CH_FNC_NAME	"__security_check_cookie"
 	#else
+		#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)	_ ## _name
 		#define CPPUTILS_FNAME_PREFIX "_"
+		#define CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE		1
 		#define CPPUTILS_DS_FNAME_POSTFIX	"@12"
 		#define CPPUTILS_SEC_CH_FNC_NAME	"@__security_check_cookie@4"
 	#endif
@@ -111,6 +114,7 @@
     #define CPPUTILS_IMPORT_FROM_DLL
 #endif  // #ifdef _MSC_VER
 
+
 #if defined(_MSC_VER) && defined(_MSVC_LANG)
 	#if (_MSVC_LANG>=201100L)
 		#define CPPUTILS_CPP_11_DEFINED		1
@@ -161,10 +165,11 @@
 #define CPPUTILS_REINTERPRET_CAST(_type,_data)	reinterpret_cast<_type>(_data)
 #define CPPUTILS_CONST_CAST(_type,_data)		const_cast<_type>(_data)
 #define CPPUTILS_DYNAMIC_CAST(_type,_data)		dynamic_cast<_type>(_data)
-#define CPPUTILS_GLOBAL	   ::
-#define CPPUTILS_BEGIN_C   extern "C" {
-#define CPPUTILS_END_C     }
-#define CPPUTILS_EXTERN_C  extern "C"
+#define CPPUTILS_GLOBAL							::
+#define CPPUTILS_BEGIN_C						extern "C" {
+#define CPPUTILS_END_C							}
+#define CPPUTILS_EXTERN_C						extern "C"
+#define CPPUTILS_EXTERN_C_DECL					extern "C"
 #else
 #define CPPUTILS_STATIC_CAST(_type,_data)		((_type)(_data))
 #define CPPUTILS_REINTERPRET_CAST(_type,_data)	((_type)(_data))
@@ -174,6 +179,7 @@
 #define CPPUTILS_BEGIN_C
 #define CPPUTILS_END_C
 #define CPPUTILS_EXTERN_C
+#define CPPUTILS_EXTERN_C_DECL					extern
 #endif
 
 
@@ -259,8 +265,10 @@
 #define CPPUTILS_NO_NULL	CPPUTILS_ARG_NO_NULL
 #define CPPUTILS_ARG_NN		CPPUTILS_ARG_NO_NULL
 
-#define CPPUTILS_STRINGIFY(_x)                CPPUTILS_STRINGIFY_PRIV_RAW(_x)
 #define CPPUTILS_STRINGIFY_PRIV_RAW(_x)		#_x
+#define CPPUTILS_STRINGIFY(_x)                CPPUTILS_STRINGIFY_PRIV_RAW(_x)
+
+#define CPPUTILS_INP_REPEATER(_x)              _x
 
 
 #if defined(__EMSCRIPTEN__) || defined(EMSCRIPTEN) || defined(CPPUTILS_WASM)
@@ -351,7 +359,38 @@
     #else
         #error "CPPUTILS has not been ported to this Apple platform"
     #endif
+
+	#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)	_ ## _name
+	#define CPPUTILS_FNAME_PREFIX_HAS_UNDERLINE		1
+
 #endif  //  #if defined(__APPLE__) && (defined(__GNUC__)  defined(__xlC__)  defined(__xlc__))
+
+#if defined(__linux__) || defined(__linux)
+    #define CPPUTILS_OS_LINUX 1
+#endif
+
+#ifdef _WIN32
+    #define CPPUTILS_OS_WINDOWS 1
+#endif
+
+
+#ifndef CPPUTILS_FNAME_PREFIX_NO_STR
+#define CPPUTILS_FNAME_PREFIX_NO_STR(_name)		_name
+#endif
+
+
+#ifdef _MSC_VER
+#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	__pragma(comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX CPPUTILS_STRINGIFY(_weak) "=" CPPUTILS_FNAME_PREFIX CPPUTILS_STRINGIFY(_replace) ))
+#define CPPUTILS_WEAK_SYMBOL_ALIAS_STR(_weak,_replace)	__pragma(comment(linker, "/alternatename:" CPPUTILS_FNAME_PREFIX _weak "=" CPPUTILS_FNAME_PREFIX _replace ))
+#define CPPUTILS_WEAK_SYMBOL(_symbol)	CPPUTILS_WEAK_SYMBOL_ALIAS(_symbol,_symbol ## _weak__)
+#define CPPUTILS_WEAK_SYMBOL_NAME(_symbol)	_symbol ## _weak__
+#else
+// #pragma weak CinternalAddUnitTestFunction=CinternalAddUnitTestFunction_alternate
+#define CPPUTILS_DO_PRAGMA(x)						_Pragma (#x)
+#define CPPUTILS_WEAK_SYMBOL_ALIAS(_weak,_replace)	CPPUTILS_DO_PRAGMA(weak _weak = _replace)
+#define CPPUTILS_WEAK_SYMBOL(_symbol)				CPPUTILS_DO_PRAGMA(weak _symbol)
+#define CPPUTILS_WEAK_SYMBOL_NAME(_symbol)			_symbol
+#endif
 
 
 #if defined(_CPPUNWIND) || !defined(_MSC_VER)
@@ -467,6 +506,32 @@
 #else
 #define CpputilsGetProcAddress	GetProcAddress
 #endif
+#endif
+
+#ifdef _WIN32
+#define CPPUTILS_FILE_DELIM_THS		'\\'
+#define CPPUTILS_FILE_DELIM_OTH		'/'
+#define CPPUTILS_FILE_DELIM_002		CPPUTILS_FILE_DELIM_OTH
+#else
+#define CPPUTILS_FILE_DELIM_THS		'/'
+#define CPPUTILS_FILE_DELIM_OTH		'\\'
+#define CPPUTILS_FILE_DELIM_002		CPPUTILS_FILE_DELIM_THS
+#endif
+#define CPPUTILS_FILE_DELIM_001		CPPUTILS_FILE_DELIM_THS
+
+
+#ifdef __clang__
+#define CPPUTILS_ONLY_CLANG_ATTR_WEAK __attribute__((weak))
+#else
+#define CPPUTILS_ONLY_CLANG_ATTR_WEAK
+#endif
+
+#ifdef _MSC_VER
+#define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK
+#define CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG
+#else
+#define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK	__attribute__((weak))
+#define CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG	
 #endif
 
 

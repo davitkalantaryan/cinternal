@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\include">
+      <UniqueIdentifier>{e9e58265-f1e1-423e-8d10-982e938ae7fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\include\cinternal">
+      <UniqueIdentifier>{415170d9-6a85-49ed-a0e0-9fb5e349255c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{8a73d24f-ff86-4dfc-aaa8-bae3fe1aa5bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\unit_test">
+      <UniqueIdentifier>{c5466a44-23ee-4350-858a-64b7e3095ac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\include\cinternal\hash">
+      <UniqueIdentifier>{0eaf53bf-adae-4b91-96a9-ad05c0e681da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{3f2abc9f-d628-41fe-a396-59a72421dbe0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0001_lw_mutex_recursive.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0002_sync_barrier.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0003_unnamed_sema.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0004_threading.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0005_threading_and_sync.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0006_benchmark.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_phash.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_vhash.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_hash_lhash.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0008_hash_phash.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0009_hash_vhash.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\cinternal\bistateflags.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\c_raii.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\c_raii_ext.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\endian.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\fourstateflags.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\internal_header.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\macroses.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\macroses02.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\export_symbols.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\lw_mutex_recursive.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\sync_barrier.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\threading.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\fs.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\logger.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\unit_test.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\time.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\benchmark.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\common_data01.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\lhash.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\functions.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\phash.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\vhash.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash\data.h">
+      <Filter>Header Files\include\cinternal\hash</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cinternal_unit_test.pro">
+      <Filter>files</Filter>
+    </None>
+    <None Include="cinternal_unit_test.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
+    <None Include="cinternal_unit_test.windows.Makefile">
+      <Filter>files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

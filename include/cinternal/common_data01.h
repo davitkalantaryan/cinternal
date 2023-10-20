@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:            common_data01.h
 // path:			include/cinternal/common_data01.h
 // created on:		2023 Feb 25
@@ -8,7 +9,7 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_COMMON_DATA01_H
 #define CINTERNAL_INCLUDE_CINTERNAL_COMMON_DATA01_H
 
-#include <cinternal/export_symbols.h>
+#include <cinternal/internal_header.h>
 #include <stddef.h>
 #include <stdbool.h>
 
@@ -23,6 +24,7 @@ CPPUTILS_BEGIN_C
 
 typedef void(*TypeCinternalDeallocator)(void*);
 typedef void* (*TypeCinternalAllocator)(size_t);
+typedef void* (*TypeCinternalReallocator)(void*,size_t);
 typedef size_t(*TypeCinternalHasher)(const void* key, size_t keySize);
 typedef bool(*TypeCinternalIsMemoriesIdentical)(const void* key1, size_t keySize1, const void* key2, size_t keySize2);
 typedef bool(*TypeCinternalStoreKey)(TypeCinternalAllocator a_allocator, void** a_pKeyStore, size_t* a_pKeySizeStore, const void* key, size_t keySize);
@@ -30,6 +32,9 @@ typedef void(*TypeCinternalUnstoreKey)(TypeCinternalDeallocator a_deallocator, v
 
 
 CPPUTILS_END_C
+
+#define CInternalStrKeyPairFn(_str)												(_str),strlen(_str)  // to use this string.h should be included
+#define CInternalSmallIntHPairFn(_key)											((void*)((size_t)(_key))), 0
 
 
 

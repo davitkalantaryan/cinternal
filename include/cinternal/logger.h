@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:			logger.h
 // path:			src/include/cinternal/logger.h
 // created on:		2023 Mar 30
@@ -15,25 +16,28 @@
 
 CPPUTILS_BEGIN_C
 
-
 enum CinternalLogTypes { CinternalLogTypeError, CinternalLogTypeWarning, CinternalLogTypeInfo, CinternalLogTypeDebug };
-typedef void (*TypeCinternalLogger)(void* a_userData, enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, va_list alist);
+typedef int (*TypeCinternalLogger)(void* a_userData, enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, va_list alist);
+
+#ifndef CPPUTILS_CONDITIONAL_WEAKNESS
+#define CPPUTILS_CONDITIONAL_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG
+#endif
+CPPUTILS_CONDITIONAL_WEAKNESS int CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, va_list a_argptr);
 
 CINTERNAL_EXPORT void CinternalInstallLogger(void* a_userData, TypeCinternalLogger a_clbk);
 CINTERNAL_EXPORT void CinternalGetLogger(void** a_pUserData, TypeCinternalLogger* a_pClbk);
 CINTERNAL_EXPORT void CinternalMakeLog(const char* a_src, int a_line, enum CinternalLogTypes a_type, const char* a_fmtStr, ...);
-CINTERNAL_EXPORT const char* CInternalFileNameFromPath(const char* a_fullPath);
-CINTERNAL_EXPORT void CinternalMakeLogNoExtraData(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...);
+CINTERNAL_EXPORT int  CinternalMakeLogNoExtraData(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...);
 CINTERNAL_EXPORT void CinternalLogPrintDateAndTime(enum CinternalLogTypes a_type, bool a_bSync);
 
 
-#define CInternalLogError(...)		CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeError,__VA_ARGS__)
-#define CInternalLogWarning(...)	CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeWarning,__VA_ARGS__)
-#define CInternalLogInfo(...)		CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeInfo,__VA_ARGS__)
-#if defined(NDEBUG) || defined(CINTERNAL_NO_DEBUG_LOGS)
+#define CInternalLogError(...)		CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeError,__VA_ARGS__)
+#define CInternalLogWarning(...)	CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeWarning,__VA_ARGS__)
+#define CInternalLogInfo(...)		CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeInfo,__VA_ARGS__)
+#if defined(NDEBUG) || defined(CUTILS_NO_DEBUG_LOGS)
 #define CInternalLogDebug(...)
 #else
-#define CInternalLogDebug(...)		CinternalMakeLog(CInternalFileNameFromPath(__FILE__),__LINE__,CinternalLogTypeDebug,__VA_ARGS__)
+#define CInternalLogDebug(...)		CinternalMakeLog(__FILE__,__LINE__,CinternalLogTypeDebug,__VA_ARGS__)
 #endif
 
 

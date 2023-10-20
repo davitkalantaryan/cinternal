@@ -2,6 +2,7 @@
 @echo off
 
 rem
+rem repository:		cinternal
 rem file:			windows_set_vs_toolset_and_run.bat
 rem path:			scripts/windows_set_vs_toolset_and_run.bat
 rem created on:		2023 May 18
