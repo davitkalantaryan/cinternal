@@ -12,6 +12,7 @@
 
 #include <cinternal/replace_function_sys.h>
 #include <string.h>
+#include <stdio.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <Psapi.h>
 #include <cinternal/undisable_compiler_warnings.h>
@@ -60,6 +61,7 @@ static inline void CInternalReplaceFunctionsForModuleInline(HMODULE a_hModule,si
             // Find ntdll.dll
             //if (!strcmp("ntdll.dll", (char*)(pAddress + pIID->Name)))
             //    break;
+            //printf("(char*)(pAddress + pIID->Name) = %s\n", (char*)(moduleData.pAddress + moduleData.pIID->Name));
             MakeHookForModule(moduleData.pAddress, moduleData.pIID, a_count, a_replaceData);
         }  //  for (; moduleData.pIID->Characteristics; ++(moduleData.pIID)) {
     }  // if ((moduleData.pIID->Name) != 0xffff) {
@@ -111,6 +113,9 @@ CINTERNAL_EXPORT void CInternalReplaceFunctions(size_t a_count, struct SCInterna
 }
 
 
+//#pragma warning (disable:4702)
+//#define COMPARE_NAME
+
 static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID, size_t a_count, struct SCInternalReplaceFunctionData* a_replaceData)
 {
     DWORD dwOld, dwOldTmp;
@@ -118,15 +123,22 @@ static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID
     // Search for a_funcname
     PIMAGE_THUNK_DATA pITD;
     PIMAGE_THUNK_DATA pFirstThunkTest;
+#ifdef COMPARE_NAME
     PIMAGE_IMPORT_BY_NAME pIIBM;
+#else
+    bool bNotFound;
+#endif
 
     for (ind = 0; ind < a_count; ++ind) {
         pITD = (PIMAGE_THUNK_DATA)(a_pAddress + a_pIID->OriginalFirstThunk);
         pFirstThunkTest = (PIMAGE_THUNK_DATA)((a_pAddress + a_pIID->FirstThunk));
 
+#ifdef COMPARE_NAME
+
         for (; !(pITD->u1.Ordinal & IMAGE_ORDINAL_FLAG) && pITD->u1.AddressOfData; ++pITD) {
             pIIBM = (PIMAGE_IMPORT_BY_NAME)(a_pAddress + pITD->u1.AddressOfData);
-            if (!strcmp(a_replaceData[ind].funcname, (const char*)(pIIBM->Name))) {
+            if (!strcmp(a_replaceData[ind].funcname, (const char*)(pIIBM->Name))) 
+            {
                 VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), PAGE_READWRITE, &dwOld);
                 if ((((const void*)(pFirstThunkTest->u1.Function)) == a_replaceData[ind].replaceIfAddressIs) || (!(a_replaceData[ind].replaceIfAddressIs))) {
                     a_replaceData[ind].replaceIfAddressIs = (const void*)pFirstThunkTest->u1.Function;
@@ -138,6 +150,25 @@ static void MakeHookForModule(LPBYTE a_pAddress, PIMAGE_IMPORT_DESCRIPTOR a_pIID
             }  //  if (!strcmp(a_replaceData->funcname, (const char*)(pIIBM->Name))) {
             pFirstThunkTest++;
         }  //  for (; !(pITD->u1.Ordinal & IMAGE_ORDINAL_FLAG) && pITD->u1.AddressOfData; pITD++) {
+
+#else
+
+        bNotFound = true;
+
+        for (; bNotFound && (pITD->u1.AddressOfData); ++pITD) {
+            VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), PAGE_READWRITE, &dwOld);
+            if ((((const void*)(pFirstThunkTest->u1.Function)) == a_replaceData[ind].replaceIfAddressIs) || (!(a_replaceData[ind].replaceIfAddressIs))) {
+                a_replaceData[ind].replaceIfAddressIs = (const void*)pFirstThunkTest->u1.Function;
+                pFirstThunkTest->u1.Function = (size_t)a_replaceData[ind].newFuncAddress;
+                a_replaceData[ind].bFound = true;
+                bNotFound = false;
+            }
+            VirtualProtect((LPVOID) & (pFirstThunkTest->u1.Function), sizeof(size_t), dwOld, &dwOldTmp);
+            pFirstThunkTest++;
+        }  //  for (; pITD->u1.AddressOfData; ++pITD) {
+
+#endif
+
     }  //  for (ind = 0; ind < a_count; ++ind) {
 
 }
