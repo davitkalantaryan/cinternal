@@ -1,8 +1,9 @@
 #
-# file:			googletest_getter.pro
-# path:			prj/tests/googletest_mult/googletest_getter.pro
-# created on:	2021 Nov 03
-# created by:	Davit Kalantaryan
+# repo:         cinternal
+# file:		win_requireadministrator_test.pro
+# path:		prj/tests/win_requireadministrator_test_qt/win_requireadministrator_test.pro
+# created on:	2024 Dec 02
+# created by:	Davit Kalantaryan (davit.kalantaryan@desy.de)
 #
 
 
@@ -19,11 +20,4 @@ QT -= widgets
 #CONFIG -= qt
 CONFIG   += CONSOLE
 
-SOURCES_DIR = $${focustP01MonitorRepositoryRoot}/src/tests/windows_manifestfile_test
-
-SOURCES += $$files($${SOURCES_DIR}/*.cpp)
-
-HEADERS += $$files($${SOURCES_DIR}/*.hpp)
-
-OTHER_FILES += $$files($${SOURCES_DIR}/*.manifest)
-OTHER_FILES += $$files($${SOURCES_DIR}/*.rc)
+SOURCES += "$${cinternalRepoRoot}/src/tests/main_win_requireadministrator_test.cpp"
