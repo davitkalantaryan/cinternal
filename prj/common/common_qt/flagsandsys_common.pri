@@ -98,15 +98,16 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
         CONFIGURATION=Release
     }
 
-    DEFINES	+= CpputilsNameExtension=\\\"$${nameExtension}\\\"
-    MAKEFILE	=  Makefile.$${TARGET}.$${CODENAME}.$${CONFIGURATION}
-    DESTDIR     =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/$${TARGET_PATH}$${TARGET_PATH_EXTRA}
-    OBJECTS_DIR =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/.other/objects/$${TARGET}
-    MOC_DIR     =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/.other/mocs/$${TARGET}
-    UI_DIR      =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/.other/uics/$${TARGET}
+    DEFINES         += CpputilsNameExtension=\\\"$${nameExtension}\\\"
+    MAKEFILE        =  Makefile.$${TARGET}.$${CODENAME}.$${CONFIGURATION}
+    ArifactFinal    =  $${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION
+    DESTDIR         =  $${ArifactFinal}/$${TARGET_PATH}$${TARGET_PATH_EXTRA}
+    OBJECTS_DIR     =  $${ArifactFinal}/.other/objects/$${TARGET}
+    MOC_DIR         =  $${ArifactFinal}/.other/mocs/$${TARGET}
+    UI_DIR          =  $${ArifactFinal}/.other/uics/$${TARGET}
 
     LIBS	+= -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
     LIBS	+= -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
 
-        OTHER_FILES += $$files($${PWD}/../common_mkfl/*.Makefile,true)
+    OTHER_FILES += $$files($${PWD}/../common_mkfl/*.Makefile,true)
 }
