@@ -535,4 +535,12 @@
 #endif
 
 
+#define CPPUTILS_TOKENS_CONCAT01(_token1,_token2)     _token1  ## _token2
+#ifdef _MSC_VER
+#define CPPUTILS_TOKENS_CONCAT02(_token1,_token2)     _token1  ## _token2
+#else
+#define CPPUTILS_TOKENS_CONCAT02(_token1,_token2)     _token1  _token2
+#endif
+
+
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
