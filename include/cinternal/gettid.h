@@ -13,6 +13,7 @@
 
 #ifdef cinternal_gettid_needed
 
+#include <cinternal/disable_compiler_warnings.h>
 #ifdef _WIN32
 #include <WinSock2.h>
 #include <WS2tcpip.h>
@@ -31,6 +32,7 @@ static inline int64_t CinternalGetCurrentTid(void){
 #include <sys/syscall.h>
 #define CinternalGetCurrentTid()     CPPUTILS_STATIC_CAST(int64_t,syscall(SYS_gettid))
 #endif
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 #endif  //  #ifdef cinternal_gettid_needed
