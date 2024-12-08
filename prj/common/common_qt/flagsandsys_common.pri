@@ -106,8 +106,12 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
     MOC_DIR         =  $${ArifactFinal}/.other/mocs/$${TARGET}
     UI_DIR          =  $${ArifactFinal}/.other/uics/$${TARGET}
 
-    LIBS	+= -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
-    LIBS	+= -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
+    exists($${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib) {
+	LIBS += -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
+    }
+    exists($${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib) {
+	LIBS += -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
+    }
 
     OTHER_FILES += $$files($${PWD}/../common_mkfl/*.Makefile,true)
 }
