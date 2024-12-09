@@ -7,22 +7,11 @@
 
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
 #define CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
+
 #include <cinternal/internal_header.h>
-// disable some warnings, those are assumed as errors
-#if defined(_MSC_VER)
-#pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
-#pragma warning (disable:4061)  // enumerator 'MonAppHiderEventNone' in switch of enum
-#pragma warning (disable:4820)  // enumerator 'MonAppHiderEventNone' in switch of enum
-#pragma warning (disable:4355)  // 'this': used in base member initializer list
-#elif defined(CPPUTILS_GCC_FAMILY)
-#pragma GCC diagnostic ignored "-Wattributes"
-#endif  //  #if defined(_MSC_VER)
-#endif  //  #ifndef CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
 
-#ifndef CINTERNAL_COMPILER_WARNINGS_DISABLED
-#define CINTERNAL_COMPILER_WARNINGS_DISABLED	1
 
-#ifdef CPPUTILS_COMPILER_WARNINGS_PUSH_POP
+#ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED
 CPPUTILS_WARNINGS_PUSH
 #define CPPUTILS_COMPILER_WARNINGS_PUSHED
 #endif
@@ -30,6 +19,11 @@ CPPUTILS_WARNINGS_PUSH
 
 #if defined(_MSC_VER)
 
+#pragma warning( push, 3 )
+#pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
+#pragma warning (disable:4061)  // enumerator 'MonAppHiderEventNone' in switch of enum
+#pragma warning (disable:4820)  // enumerator 'MonAppHiderEventNone' in switch of enum
+#pragma warning (disable:4355)  // 'this': used in base member initializer list
 #pragma warning(disable: 4191)
 #pragma warning(disable:4710)
 #pragma warning(disable:4711)
@@ -51,7 +45,7 @@ CPPUTILS_WARNINGS_PUSH
 
 #pragma GCC diagnostic ignored "-Wattributes"
 
-#endif
+#endif  //  #if defined(_MSC_VER)
 
 
-#endif  //  #ifndef CINTERNAL_COMPILER_WARNINGS_DISABLED
+#endif  //  #ifndef CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
