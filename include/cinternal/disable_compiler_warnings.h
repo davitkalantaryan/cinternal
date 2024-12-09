@@ -34,6 +34,7 @@ CPPUTILS_WARNINGS_PUSH
 #pragma warning (disable:4574)  //  winnt.h(1229,1): warning C4574: '__has_builtin' is defined to be '0': did you mean to use '#if __has_builtin'?
 #pragma warning (disable:4365)  //  mstcpip.h(1110,26): warning C4365: 'initializing': conversion from 'int' to 'UINT8',
 #pragma warning (disable:4514)  //  mstcpip.h(757,1): warning C4514: 'IN4_IS_UNALIGNED_ADDR_LINKLOCAL': unreferenced inline function has been removed
+#pragma warning (disable:5204)
 #ifndef __cplusplus
 #pragma warning(disable:4255)
 #endif
