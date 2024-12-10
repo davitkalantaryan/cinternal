@@ -1,80 +1,86 @@
 //
-// repo:			cinternal
-// file:            main_hash_test01.c
-// path:			src/tests/main_hash_test01.c
-// created on:		2023 Oct 11
+// file:            main_any_quick_test.c
+// path:			src/tests/main_any_quick_test.c
+// created on:		2023 Feb 25
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
 
-#include <cinternal/hash/lhash.h>
+
+#include <cinternal/hash.h>
 #include <cinternal/unit_test_only_checks.h>
-#include <stdio.h>
+#include <cinternal/disable_compiler_warnings.h>
+#include <stdlib.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define CINTR_TEST_HASH_DATA1		2
 #define CINTR_TEST_HASH_DATA2		4
 
+static void TestHash(ConstCinternalHash_t a_hash, const void* a_key1, size_t keySize1, const void* a_key2, size_t keySize2);
 
-static void TestHash(CinternalLHash_t a_hash, const void* a_key1, size_t keySize1, const void* a_key2, size_t keySize2);
 
 int main(void)
 {
-	const int key1 = 1;
-	const int key2 = 2;
-	CinternalLHash_t aHash;
-	CinternalLHashItem_t pItem;
+    const int key1 = 1;
+    const int key2 = 2;
+    ConstCinternalHash_t aHash;
+    CinternalHashItem_t pItem;
 
-	aHash = CInternalLHashCreateRawMem(1024);
-	if (!aHash) {
-		perror("\n");
-		return 1;
-	}
+    aHash = CInternalHashCreateRawMem(1024);
+    if (!aHash) {
+        perror("\n");
+        return 1;
+    }
 
-	CInternalLHashAddDataToBegEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, &key1, sizeof(int));
-	pItem = CInternalLHashFind(aHash, &key1, sizeof(int));
-	CinternalUnitTestAssertCheckSrc(pItem);
-	CInternalLHashRemoveDataEx(aHash, pItem);
+    CInternalHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, &key1, sizeof(int));
+    pItem = CInternalHashFind(aHash, &key1, sizeof(int));
+    CinternalUnitTestAssertCheckSrc(pItem);
+    CInternalHashRemoveDataEx(aHash, pItem);
 
-	CInternalLHashAddDataToBegEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, &key1, sizeof(int));
-	CInternalLHashAddDataToBegEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA2, &key2, sizeof(int));
-	TestHash(aHash, &key1, sizeof(int), &key2, sizeof(int));
-	CInternalLHashDestroy(aHash);
+    CInternalHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, &key1, sizeof(int));
+    CInternalHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA2, &key2, sizeof(int));
+    TestHash(aHash, &key1, sizeof(int), &key2, sizeof(int));
+    CInternalHashDestroy(aHash);
 
 
-	aHash = CInternalLHashCreateSmlInt(1024);
-	if (!aHash) {
-		perror("\n");
-		return 1;
-	}
-	CInternalLHashAddDataToEndEvenIfExistSmlInt(aHash, (void*)CINTR_TEST_HASH_DATA1, 1);
-	CInternalLHashAddDataToEndEvenIfExistSmlInt(aHash, (void*)CINTR_TEST_HASH_DATA2, 2);
-	TestHash(aHash, CInternalSmallIntHPairFn(1), CInternalSmallIntHPairFn(2));
-	CInternalLHashDestroy(aHash);
+    aHash = CInternalHashCreateSmlInt(1024);
+    if (!aHash) {
+        perror("\n");
+        return 1;
+    }
+    CInternalHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA1, CInternalSmallIntHPairFn(1));
+    CInternalHashAddDataEvenIfExist(aHash, (void*)CINTR_TEST_HASH_DATA2, CInternalSmallIntHPairFn(2));
+    TestHash(aHash, CInternalSmallIntHPairFn(1), CInternalSmallIntHPairFn(2));
+    CInternalHashDestroy(aHash);
 
-	return 0;
+    return 0;
 }
 
 
-static void TestHash(CinternalLHash_t a_hash, const void* a_key1, size_t a_keySize1, const void* a_key2, size_t a_keySize2)
+static bool HashIterStatic(void* a_pData, CinternalHashItem_t a_item)
 {
-	CinternalLHashItem_t pItem;
-	int nNumber;
+    int* const pnNumber = (int*)a_pData;
+    (void)a_item;
+    ++(*pnNumber);
+    return true;
+}
 
-	CinternalUnitTestAssertCheckSrc(CInternalLHashSize(a_hash) == 2);
 
-	nNumber = 0;
-	pItem = CInternalLHashFirstItem(a_hash);
-	while (pItem) {
-		++nNumber;
-		pItem = pItem->next;
-	}
+static void TestHash(ConstCinternalHash_t a_hash, const void* a_key1, size_t a_keySize1, const void* a_key2, size_t a_keySize2)
+{
+    CinternalHashItem_t pItem;
+    int nNumber;
 
-	CinternalUnitTestAssertCheckSrc(nNumber == 2);
+    CinternalUnitTestAssertCheckSrc(a_hash->count == 2);
 
-	pItem = CInternalLHashFind(a_hash, a_key1, a_keySize1);
-	CinternalUnitTestAssertCheckSrc(pItem);
-	CinternalUnitTestAssertCheckSrc(((size_t)(pItem->hit.data)) == CINTR_TEST_HASH_DATA1);
+    nNumber = 0;
+    CInternalHashIterate(a_hash, &HashIterStatic, &nNumber);
+    CinternalUnitTestAssertCheckSrc(nNumber == 2);
 
-	pItem = CInternalLHashFind(a_hash, a_key2, a_keySize2);
-	CinternalUnitTestAssertCheckSrc(pItem);
-	CinternalUnitTestAssertCheckSrc(((size_t)(pItem->hit.data)) == CINTR_TEST_HASH_DATA2);
+    pItem = CInternalHashFind(a_hash, a_key1, a_keySize1);
+    CinternalUnitTestAssertCheckSrc(pItem);
+    CinternalUnitTestAssertCheckSrc(((size_t)(pItem->data)) == CINTR_TEST_HASH_DATA1);
+
+    pItem = CInternalHashFind(a_hash, a_key2, a_keySize2);
+    CinternalUnitTestAssertCheckSrc(pItem);
+    CinternalUnitTestAssertCheckSrc(((size_t)(pItem->data)) == CINTR_TEST_HASH_DATA2);
 }

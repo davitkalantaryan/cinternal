@@ -284,11 +284,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c" />
     <ClCompile Include="..\..\..\src\tests\main_any_quick_test.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\any_quick_test_mkfl\any_quick_test.unix.Makefile" />
     <None Include="..\any_quick_test_qt\any_quick_test.pro" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\cinternal\hash.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
