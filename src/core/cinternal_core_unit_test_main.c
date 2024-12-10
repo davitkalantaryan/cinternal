@@ -10,8 +10,6 @@
 #define CPPUTILS_CONDITIONAL_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK
 
 #include <cinternal/unit_test.h>
-#define FileNameFromPossiblePathInline_needed
-#include <cinternal/fs.h>
 #include <cinternal/logger.h>
 #include <stdlib.h>
 

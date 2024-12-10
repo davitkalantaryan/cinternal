@@ -15,6 +15,7 @@
 #include <cinternal/common_data01.h>
 #ifdef CPPUTILS_CPP_11_DEFINED
 #ifdef _MSC_VER
+#pragma warning(disable:4623)
 #pragma warning(disable:4626)
 #pragma warning(disable:5027)
 #endif
