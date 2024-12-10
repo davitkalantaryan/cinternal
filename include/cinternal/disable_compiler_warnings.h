@@ -11,16 +11,20 @@
 #include <cinternal/internal_header.h>
 
 
+#if defined(_MSC_VER)
+
+#pragma warning(disable:5039) // 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function
+#pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
+
+
 #ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED
 CPPUTILS_WARNINGS_PUSH
 #define CPPUTILS_COMPILER_WARNINGS_PUSHED
 #endif
-
-
-#if defined(_MSC_VER)
-
+#ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED_2
 #pragma warning( push, 3 )
-#pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
+#define CPPUTILS_COMPILER_WARNINGS_PUSHED_2
+#endif
 #pragma warning (disable:4061)  // enumerator 'MonAppHiderEventNone' in switch of enum
 #pragma warning (disable:4820)  // enumerator 'MonAppHiderEventNone' in switch of enum
 #pragma warning (disable:4355)  // 'this': used in base member initializer list
@@ -29,7 +33,6 @@ CPPUTILS_WARNINGS_PUSH
 #pragma warning(disable:4711)
 #pragma warning(disable:4668)
 #pragma warning(disable:4820)
-#pragma warning(disable:5039) // 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function
 #pragma warning (disable:4365)
 #pragma warning (disable:4574)  //  winnt.h(1229,1): warning C4574: '__has_builtin' is defined to be '0': did you mean to use '#if __has_builtin'?
 #pragma warning (disable:4365)  //  mstcpip.h(1110,26): warning C4365: 'initializing': conversion from 'int' to 'UINT8',
@@ -44,6 +47,10 @@ CPPUTILS_WARNINGS_PUSH
 
 #elif defined(CPPUTILS_GCC_FAMILY) 
 
+#ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED
+CPPUTILS_WARNINGS_PUSH
+#define CPPUTILS_COMPILER_WARNINGS_PUSHED
+#endif
 #pragma GCC diagnostic ignored "-Wattributes"
 
 #endif  //  #if defined(_MSC_VER)

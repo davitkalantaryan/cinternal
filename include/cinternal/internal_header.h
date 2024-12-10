@@ -542,5 +542,22 @@
 #define CPPUTILS_TOKENS_CONCAT02(_token1,_token2)     _token1  _token2
 #endif
 
+#ifdef __cplusplus
+#define CPPUTILS_EVALUATE_WHEN_CPP(_expr)   _expr
+#define CPPUTILS_EVALUATE_WHEN_C(_expr)
+#ifdef CPPUTILS_CPP_11_DEFINED
+#define CPPUTILS_MAKE_FNC_DELETED(_fncWithSignature)            _fncWithSignature = delete;
+#define CPPUTILS_MAKE_FNC_DEFAULT(_fncWithSignature,_ret)       _fncWithSignature = default;
+#else
+#define CPPUTILS_MAKE_FNC_DELETED(_fncWithSignature)
+#define CPPUTILS_MAKE_FNC_DEFAULT(_fncWithSignature,_ret)       _fncWithSignature { _ret ; }
+#endif
+#else
+#define CPPUTILS_EVALUATE_WHEN_CPP(_expr)
+#define CPPUTILS_EVALUATE_WHEN_C(_expr) _expr
+#define CPPUTILS_MAKE_FNC_DELETED(_fncWithSignature)
+#define CPPUTILS_MAKE_FNC_DEFAULT(_fncWithSignature,_ret)       
+#endif
+
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
