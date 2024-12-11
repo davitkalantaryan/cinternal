@@ -67,7 +67,7 @@ jobs:
 
             - name: Compiling cinternal all tests
               run: >
-                cmd /C "call .\scripts\windows_build_all.bat"
+                cmd /C "call .\scripts\windows_build_all.bat x64 x86"
 
             - name: testing test apps
               run: cmd /C "call .\scripts\windows_run_tests.bat"
