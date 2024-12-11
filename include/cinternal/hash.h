@@ -77,8 +77,9 @@ CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFind(ConstCinternalHash_t CPPU
 
 CPPUTILS_END_C
 
-#define CInternalStrKeyPairFn(_str)												(_str),(strlen(_str)+1)  // to use this string.h should be included
-#define CInternalSmallIntHPairFn(_key)											((void*)((size_t)(_key))), 0
+#define CInternalSmallIntHKey(_key)         CPPUTILS_REINTERPRET_CAST(void*,CPPUTILS_STATIC_CAST(size_t,_key))
+#define CInternalSmallIntHPairFn(_key)		CInternalSmallIntHKey(_key), 0
+#define CInternalStrKeyPairFn(_str)			(_str),(strlen(_str)+1)  // to use this string.h should be included
 
 #define CInternalHashCreateAny(_numOfBaskets,_hasher,_isEq,_keyStore,_keyUnstore)       CInternalHashCreateAnyEx(_numOfBaskets,_hasher,_isEq,_keyStore,_keyUnstore,CPPUTILS_NULL,CPPUTILS_NULL)
 #define CInternalHashCreateRawMem(_numOfBaskets)                                        CInternalHashCreateRawMemEx(_numOfBaskets,CPPUTILS_NULL,CPPUTILS_NULL)

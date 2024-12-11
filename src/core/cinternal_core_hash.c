@@ -198,7 +198,9 @@ CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataWithKnownHash(ConstCint
     pNewItem->publ.hash = a_hash;
     pNewItem->prev = CPPUTILS_NULL;
     pNewItem->next = pHashTable->ppTable[a_hash];
-    if (pHashTable->ppTable[a_hash]) { pHashTable->ppTable[a_hash]->prev = pNewItem; }
+    if (pHashTable->ppTable[a_hash]) { 
+        pHashTable->ppTable[a_hash]->prev = pNewItem; 
+    }
     pHashTable->ppTable[a_hash] = pNewItem;
 
     ++(pHashTable->publ.count);
