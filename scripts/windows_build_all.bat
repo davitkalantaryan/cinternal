@@ -28,7 +28,7 @@ if not defined PlatformToolsetVar (
 	set "PlatformToolsetVar=v%PlatformToolsetVarMid%%PlatformToolsetVarEnd%"
 
 	rem todo: get rid of below code
-	set "PlatformToolsetVar=v143"
+	set "PlatformToolsetVar=v142"
 	echo PlatformToolsetVar=%PlatformToolsetVar%
 )
 
