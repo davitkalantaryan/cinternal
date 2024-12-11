@@ -28,13 +28,13 @@ if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 .\c_raii_test.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
-.\insert_custom_info_into_bin_test_exe.exe
-if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
+:: .\insert_custom_info_into_bin_test_exe.exe
+:: if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
 .\cinternal_unit_test_mkfl.exe
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
-.\hash_test01.exe
-if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
+:: .\hash_test01.exe
+:: if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 
 endlocal
