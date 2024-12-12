@@ -37,7 +37,7 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
         msvc {
            return (/TC)
         } else {
-            return (-x c)
+            return (-xc)
         }
     }
 
@@ -45,16 +45,8 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
         msvc {
            return (/TP)
         } else {
-            return (-x c++)
+            return (-xc++)
         }
-    }
-
-    defineTest(cinternalUseCCompiler) {
-        QMAKE_CXXFLAGS += cinternalCompileAsC()
-    }
-
-    defineTest(cinternalUseCppCompiler) {
-        QMAKE_CFLAGS += cinternalCompileAsCpp()
     }
 
     defineTest(cinternalSingleFileFlags) {
