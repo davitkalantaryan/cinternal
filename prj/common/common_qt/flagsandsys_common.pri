@@ -33,7 +33,7 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
         return($$replace($$1, ., \U&))
     }
 
-    defineReplace(cinternalCompileAsC) {
+    defineReplace(cinternalFlagsToCompileAsC) {
         msvc {
            return (/TC)
         } else {
@@ -41,7 +41,7 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
         }
     }
 
-    defineReplace(cinternalCompileAsCpp) {
+    defineReplace(cinternalFlagsToCompileAsCpp) {
         msvc {
            return (/TP)
         } else {
@@ -50,7 +50,7 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
     }
 
     defineTest(cinternalSingleFileFlags) {
-        QMAKE_CXXFLAGS_FILE_c.$$1 += $$2
+        QMAKE_CXXFLAGS_$$1 += $$2
     }
 
     isEmpty( TARGET_PATH ) {
