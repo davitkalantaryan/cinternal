@@ -9,7 +9,9 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_GETTID_H
 
 #include <cinternal/internal_header.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdint.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #ifdef cinternal_gettid_needed
 

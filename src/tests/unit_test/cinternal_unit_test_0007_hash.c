@@ -8,8 +8,10 @@
 
 #include <cinternal/unit_test.h>
 #include <cinternal/hash.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define CINTR_TEST_HASH_DATA1		2
 #define CINTR_TEST_HASH_DATA2		4

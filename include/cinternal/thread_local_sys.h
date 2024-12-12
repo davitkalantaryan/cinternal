@@ -10,15 +10,14 @@
 
 
 #include <cinternal/internal_header.h>
+#include <cinternal/disable_compiler_warnings.h>
 
 #ifdef _WIN32
 
-#include <cinternal/disable_compiler_warnings.h>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
 #include <fibersapi.h>
-#include <cinternal/undisable_compiler_warnings.h>
 
 typedef DWORD           CinternalTlsData;
 
@@ -31,9 +30,7 @@ typedef DWORD           CinternalTlsData;
 
 #else
 
-#include <cinternal/disable_compiler_warnings.h>
 #include <pthread.h>
-#include <cinternal/undisable_compiler_warnings.h>
 
 typedef pthread_key_t   CinternalTlsData;
 
@@ -44,6 +41,8 @@ typedef pthread_key_t   CinternalTlsData;
 #define CinternalTlsDelete          pthread_key_delete
 
 #endif
+
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 #endif  //  #ifndef CINTERNAL_INCLUDE_CINTERNAL_THREAD_LOCAL_SYS_H

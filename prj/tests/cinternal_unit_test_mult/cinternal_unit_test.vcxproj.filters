@@ -143,6 +143,12 @@
     <ClInclude Include="..\..\..\include\cinternal\hash.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\gettid.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\signals.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cinternal_unit_test.pro">
