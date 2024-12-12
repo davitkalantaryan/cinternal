@@ -13,6 +13,7 @@
 
 #if defined(_MSC_VER)
 
+#pragma warning(disable: 4355)  // this will help to keep functions pointers also in the containers
 #pragma warning(disable: 4152)  // this will help to keep functions pointers also in the containers
 #pragma warning(disable:5039) // 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function
 #pragma warning(disable:5031)  //  #pragma warning(pop): likely mismatch, popping warning state pushed in different file
