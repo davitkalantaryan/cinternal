@@ -31,7 +31,9 @@ typedef DWORD           CinternalTlsData;
 
 #else
 
+#include <cinternal/disable_compiler_warnings.h>
 #include <pthread.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 typedef pthread_key_t   CinternalTlsData;
 

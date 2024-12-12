@@ -18,8 +18,8 @@
 #else
 #include <sys/time.h>
 #endif
-#include <cinternal/undisable_compiler_warnings.h>
 #include <time.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 CPPUTILS_BEGIN_C

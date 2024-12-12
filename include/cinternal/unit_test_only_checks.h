@@ -10,7 +10,9 @@
 #define CUTILS_INCLUDE_CUTILS_UNIT_TEST_ONLY_CHECKS_H
 
 #include <cinternal/export_symbols.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdbool.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 CPPUTILS_BEGIN_C

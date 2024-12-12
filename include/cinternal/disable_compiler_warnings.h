@@ -8,10 +8,11 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
 #define CINTERNAL_INCLUDE_CINTERNAL_DISABLE_COMPILER_WARNINGS_H
 
-#include <cinternal/internal_header.h>
-
-
 #if defined(_MSC_VER)
+
+#ifndef CPPUTILS_WARNINGS_POP
+#define CPPUTILS_WARNINGS_POP		__pragma(warning (pop))
+#endif
 
 #pragma warning(disable: 4355)  // this will help to keep functions pointers also in the containers
 #pragma warning(disable: 4152)  // this will help to keep functions pointers also in the containers
@@ -20,7 +21,7 @@
 
 
 #ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED
-CPPUTILS_WARNINGS_PUSH
+#pragma warning( push)
 #define CPPUTILS_COMPILER_WARNINGS_PUSHED
 #endif
 #ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED_2
@@ -47,10 +48,17 @@ CPPUTILS_WARNINGS_PUSH
 #pragma warning(disable:5246)
 #endif
 
-#elif defined(CPPUTILS_GCC_FAMILY) 
+#elif defined(__GNUC__) || defined(__clang__) || defined(LINUX_GCC) || defined(__CYGWIN__) || defined(__MINGW64__) || defined(__MINGW32__)
+
+#ifndef CPPUTILS_GCC_FAMILY
+#define CPPUTILS_GCC_FAMILY		1
+#endif
+#ifndef CPPUTILS_WARNINGS_POP
+#define CPPUTILS_WARNINGS_POP		_Pragma("GCC diagnostic push")
+#endif
 
 #ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED
-CPPUTILS_WARNINGS_PUSH
+#pragma GCC diagnostic push
 #define CPPUTILS_COMPILER_WARNINGS_PUSHED
 #endif
 #pragma GCC diagnostic ignored "-Wattributes"

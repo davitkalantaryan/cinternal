@@ -10,7 +10,9 @@
 #define FileNameFromPossiblePathInline_needed
 #include <cinternal/fs.h>
 #include <cinternal/logger.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdlib.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 CPPUTILS_BEGIN_C

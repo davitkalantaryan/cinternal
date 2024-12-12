@@ -10,7 +10,9 @@
 
 #include <cinternal/internal_header.h>
 #include <cinternal/macroses02.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdint.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define CPPUTILS_FOURSTATE_MAKE_ALL_BITS_TRUE       0x1111111111111111
 #define CPPUTILS_FOURSTATE_MAKE_ALL_BITS_ONGOING_FT 0x2222222222222222

@@ -11,9 +11,11 @@
 #include <cinternal/logger.h>
 #define FileNameFromPossiblePathInline_needed
 #include <cinternal/fs.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 CPPUTILS_BEGIN_C

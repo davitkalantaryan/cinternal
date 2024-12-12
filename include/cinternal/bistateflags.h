@@ -10,7 +10,9 @@
 
 #include <cinternal/internal_header.h>
 #include <cinternal/macroses02.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdint.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 #define CPPUTILS_BISTATE_MAKE_BITS_TRUE         1

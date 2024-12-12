@@ -11,7 +11,9 @@
 
 #include <cinternal/export_symbols.h>
 #include <cinternal/unit_test_only_checks.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdbool.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 CPPUTILS_BEGIN_C
