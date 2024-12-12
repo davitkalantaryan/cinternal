@@ -29,6 +29,38 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
     LIB_PREFIX		    = lib
     TARGET_PATH_EXTRA	    =
 
+    defineReplace(cinternalToUpper) {
+        return($$replace($$1, ., \U&))
+    }
+
+    defineReplace(cinternalCompileAsC) {
+        msvc {
+           return (/TC)
+        } else {
+            return (-x c)
+        }
+    }
+
+    defineReplace(cinternalCompileAsCpp) {
+        msvc {
+           return (/TP)
+        } else {
+            return (-x c++)
+        }
+    }
+
+    defineTest(cinternalUseCCompiler) {
+        QMAKE_CXXFLAGS += cinternalCompileAsC()
+    }
+
+    defineTest(cinternalUseCppCompiler) {
+        QMAKE_CFLAGS += cinternalCompileAsCpp()
+    }
+
+    defineTest(cinternalSingleFileFlags) {
+        QMAKE_CXXFLAGS_FILE_c.$$1 += $$2
+    }
+
     isEmpty( TARGET_PATH ) {
         contains( TEMPLATE, lib ) {
 	    TARGET_PATH=lib
