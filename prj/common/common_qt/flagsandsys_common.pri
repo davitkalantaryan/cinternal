@@ -65,6 +65,7 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
         STATIC_LIB_EXTENSION = lib
 	LIB_PREFIX =
 	QMAKE_CXXFLAGS += /Wall /WX /sdl-
+	QMAKE_CFLAGS += /Wall /WX /sdl-
 	contains(QMAKE_TARGET.arch, x86_64) {
 	    message ("!!!!!!!!!! windows 64")
 	    CODENAME = win_x64
@@ -77,6 +78,8 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
 	CODENAME = mac
 	QMAKE_CXXFLAGS += -Wall
 	QMAKE_CXXFLAGS += -Werror
+	QMAKE_CFLAGS += -Wall
+	QMAKE_CFLAGS += -Werror
     } else:android {
         # ANDROID_TARGET_ARCH values 1."armeabi-v7a", 2."arm64-v8a", 3."x86", 4."x86_64"
 	# x86 and x86_64 are simulators
@@ -92,6 +95,8 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
 	CODENAME = ios
 	QMAKE_CXXFLAGS += -Wall
 	QMAKE_CXXFLAGS += -Werror
+	QMAKE_CFLAGS += -Wall
+	QMAKE_CFLAGS += -Werror
     } else:wasm {
         message ("!!!!!!!!!! wasm")
 	STATIC_LIB_EXTENSION	= ba
@@ -99,6 +104,8 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
 	TARGET_PATH_EXTRA = /$${TARGET}
 	QMAKE_CXXFLAGS += -Wall
 	QMAKE_CXXFLAGS += -Werror
+	QMAKE_CFLAGS += -Wall
+	QMAKE_CFLAGS += -Werror
 	QMAKE_CXXFLAGS += -fexceptions
 	#QMAKE_CXXFLAGS += -s DISABLE_EXCEPTION_CATCHING=0 -s ASYNCIFY -O3
 	QMAKE_CXXFLAGS += -s DISABLE_EXCEPTION_CATCHING=0 -O3 $$(EXTRA_WASM_FLAGS)
@@ -107,6 +114,8 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
 	message("!!!!!!!!!! linux: Codename:$${CODENAME}")
 	QMAKE_CXXFLAGS += -Wall
 	QMAKE_CXXFLAGS += -Werror
+	QMAKE_CFLAGS += -Wall
+	QMAKE_CFLAGS += -Werror
     } else {
         message("----------------------- Unknown platform")
     }
