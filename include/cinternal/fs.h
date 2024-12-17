@@ -17,6 +17,14 @@
 
 CPPUTILS_BEGIN_C
 
+#ifdef _MSC_VER
+#define CINTERNAL_FILE_DELIMER01	'\\'
+#define CINTERNAL_FILE_DELIMER02	'/'
+#else
+#define CINTERNAL_FILE_DELIMER01	'/'
+#define CINTERNAL_FILE_DELIMER02	'\\'
+#endif
+
 
 #ifdef FileNameFromPossiblePathInline_needed
 #undef FileNameFromPossiblePathInline_needed

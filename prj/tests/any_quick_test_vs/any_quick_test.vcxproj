@@ -295,6 +295,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\hash.h" />
+    <ClInclude Include="..\..\..\include\cinternal\logger.h" />
+    <ClInclude Include="..\..\..\include\cinternal\rwlock.h" />
+    <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

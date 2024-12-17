@@ -16,6 +16,12 @@
     <Filter Include="files">
       <UniqueIdentifier>{69439de2-8090-4624-badd-103ae089e29b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\include">
+      <UniqueIdentifier>{d2091170-2b5d-4ee9-94b0-457efa39a71a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\include\cinternal">
+      <UniqueIdentifier>{5feca5ad-2d44-4641-967a-297bbbb16be8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\tests\main_any_quick_test.c">
@@ -41,7 +47,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\hash.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\rwlock.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\logger.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h">
+      <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
