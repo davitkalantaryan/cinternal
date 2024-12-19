@@ -11,6 +11,7 @@ include $(mkfile_dir)/../../common/common_mkfl/flagsandsys_common.unix.Makefile
 CORE_SRCS_DIR=$(cinternalRepoRoot)/src/core
 CORE_SRCS	= $(shell find $(CORE_SRCS_DIR) -name "*.c")
 SOURCES += $(cinternalRepoRoot)/src/tests/main_any_quick_test.c
+LIBS += -pthread
 
 all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)
 
