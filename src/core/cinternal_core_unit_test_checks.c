@@ -68,12 +68,12 @@ static inline int CinternalUnitTestCheckRawFnInline(
 {
 	if (a_condition) {
 		PrintTestPositionInline(CinternalLogCategoryInfo, a_cpcSrcPath, a_line,a_testName, a_subtestName);
-        CinternalLoggerMakeLog(0, "", a_cpcSrcPath, a_line, "", CinternalLogTypeFinalize, CinternalLogCategoryInfo, "OK (%s)\n", a_cpcCondition);
+        CinternalLoggerMakeLog(0, "", a_cpcSrcPath, a_line, "", CinternalLogEnumConcat(CinternalLogTypeFinalize, CinternalLogTypeMainText), CinternalLogCategoryInfo, "OK (%s)\n", a_cpcCondition);
 		return 0;
 	}
 
 	PrintTestPositionInline(CinternalLogCategoryError, a_cpcSrcPath, a_line, a_testName, a_subtestName);
-    CInternalLogError("FAILURE (%s)\n", a_cpcCondition);
+    CinternalLoggerMakeLog(0, "", a_cpcSrcPath, a_line, "", CinternalLogEnumConcat(CinternalLogTypeFinalize, CinternalLogTypeMainText), CinternalLogCategoryError, "FAILURE (%s)\n", a_cpcCondition);
 	g_bHasFailedTest = true;
 	if (a_bExit) {
 		exit(1);

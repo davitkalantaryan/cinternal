@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:			endian.hpp
 // path:			include/cinternal/endian.hpp
 // created on:		2021 Mar 24

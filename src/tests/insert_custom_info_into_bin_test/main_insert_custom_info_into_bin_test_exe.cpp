@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:			main_insert_custom_info_into_bin_test02_exe.cpp
 // path:			src/tests/insert_custom_info_into_bin_test02/main_insert_custom_info_into_bin_test02_exe.cpp
 // created on:		2023 Feb 27
