@@ -29,8 +29,8 @@ CPPUTILS_BEGIN_C
 typedef void (*TypeFunction)(const char* a_maj, const char* a_min);
 
 // one can overrwrite below 2 functions
-CPPUTILS_CONDITIONAL_WEAKNESS void CinternalAddUnitTestFunction(TypeFunction a_function, const char* a_maj, const char* a_min);
-CPPUTILS_CONDITIONAL_WEAKNESS void CinternalIterateAndCallUnitTestFunctions(void);
+CPPUTILS_CONDITIONAL_WEAKNESS void CinternalAddUnitTestFunction(TypeFunction a_function, const char* a_maj, const char* a_min) CPPUTILS_NOEXCEPT;
+CPPUTILS_CONDITIONAL_WEAKNESS void CinternalIterateAndCallUnitTestFunctions(void) CPPUTILS_NOEXCEPT;
 
 
 #ifndef CPPUTILS_UNIT_TEST_NOEXCEPT
@@ -84,8 +84,10 @@ CPPUTILS_END_C
 
 
 #ifdef CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
+#include <cinternal/disable_compiler_warnings.h>
 #include <math.h>
 #include <string.h>
+#include <cinternal/undisable_compiler_warnings.h>
 #define TEST						CPPUTILS_UTEST_AFTER_MAIN
 #define EXPECT_EQ(_left,_right)		CinternalUnitTestCheckOpt(((_left)==(_right)))
 #define ASSERT_EQ(_left,_right)		CinternalUnitTestAssertCheckOpt(((_left)==(_right)))

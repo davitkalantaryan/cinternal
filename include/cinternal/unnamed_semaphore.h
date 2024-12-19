@@ -61,7 +61,7 @@ typedef sem_t	cinternal_unnamed_sema_t;
 #define cinternal_unnamed_sema_wait(_pSema)				sem_wait( _pSema )
 #ifdef cinternal_unnamed_sema_wait_ms_needed
 #undef cinternal_unnamed_sema_wait_ms_needed
-static inline int cinternal_unnamed_sema_wait_ms_inline(cinternal_unnamed_sema_t* a_pSema, size_t a_waitTimeMs) {
+static inline int cinternal_unnamed_sema_wait_ms_inline(cinternal_unnamed_sema_t* a_pSema, size_t a_waitTimeMs) CPPUTILS_NOEXCEPT {
     struct timespec finalAbsTime;
     struct timeval currentTime;
     long long int nExtraNanoSeconds;

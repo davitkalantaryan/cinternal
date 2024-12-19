@@ -17,7 +17,7 @@
 #include <WS2tcpip.h>
 #include <Windows.h>
 typedef SRWLOCK CInternalRWLock;
-#define CInternalRWLockInit(_lockPtr)           InitializeSRWLock(_lockPtr)
+#define CInternalRWLockInitNoCheck(_lockPtr)    InitializeSRWLock(_lockPtr)
 #define CInternalRWLockClean(_lockPtr)      
 #define CInternalRWLockWrLock(_lockPtr)         AcquireSRWLockExclusive(_lockPtr)
 #define CInternalRWLockRdLock(_lockPtr)         AcquireSRWLockShared(_lockPtr)
@@ -27,7 +27,7 @@ typedef SRWLOCK CInternalRWLock;
 #define CInternalRWLockRdUnlock(_lockPtr)       ReleaseSRWLockShared(_lockPtr)
 #else
 #include <pthread.h>
-#define CInternalRWLockInit(_lockPtr)           pthread_rwlock_init(_lockPtr)
+#define CInternalRWLockInitNoCheck(_lockPtr)    pthread_rwlock_init(_lockPtr)
 #define CInternalRWLockClean(_lockPtr)          pthread_rwlock_destroy(_lockPtr);
 #define CInternalRWLockWrLock(_lockPtr)         pthread_rwlock_wrlock(_lockPtr)
 #define CInternalRWLockRdLock(_lockPtr)         pthread_rwlock_rdlock(_lockPtr)

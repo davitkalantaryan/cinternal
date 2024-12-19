@@ -95,9 +95,6 @@
     <ClInclude Include="..\..\..\include\cinternal\macroses.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\macroses02.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
@@ -147,6 +144,15 @@
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\signals.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\rwlock.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\wrapper.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\variadic_macroses.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
   </ItemGroup>

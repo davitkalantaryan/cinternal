@@ -18,8 +18,8 @@
 CPPUTILS_BEGIN_C
 
 
-CINTERNAL_EXPORT int  CinternalUnitTestCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, const char* a_subtestName, const char* a_cpcSrcPath, int a_line);
-CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, const char* a_subtestName, const char* a_cpcSrcPath, int a_line);
+CINTERNAL_EXPORT int  CinternalUnitTestCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, const char* a_subtestName, const char* a_cpcSrcPath, int a_line) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT void CinternalUnitTestAssertCheckRawFn(bool a_condition, const char* a_cpcCondition, const char* a_testName, const char* a_subtestName, const char* a_cpcSrcPath, int a_line) CPPUTILS_NOEXCEPT;
 
 #define CinternalUnitTestCheckRaw(_condition,_testName,_subtestName,_cpcSrcPath,_line)	\
 			CinternalUnitTestCheckRawFn((_condition)?true:false,#_condition,_testName,_subtestName,_cpcSrcPath,_line)

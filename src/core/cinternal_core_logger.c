@@ -11,10 +11,13 @@
 #define FileNameFromPossiblePathInline_needed
 #include <cinternal/fs.h>
 #include <cinternal/rwlock.h>
+#include <cinternal/wrapper.h>
+#include <cinternal/bistateflags.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <time.h>
 #include <cinternal/undisable_compiler_warnings.h>
 
@@ -22,25 +25,24 @@
 CPPUTILS_BEGIN_C
 
 #define CINTERNALLOGGER_TIME_BUFF_MIN_SIZE_MIN1  (CINTERNALLOGGER_TIME_BUFF_MIN_SIZE  - 1)
-#define CINTERNALLOGGER_TLS_BUF_SIZE_MIN1        (0xfffff)
-#define CINTERNALLOGGER_TLS_BUF_SIZE             (CINTERNALLOGGER_TLS_BUF_SIZE_MIN1 + 1)
-
-//#ifdef _MSC_VER
-//#pragma warning (disable:4061)
-//#endif
-
-#ifdef _MSC_VER
-#define ctime_s_t(_timep,_buffer,_numberOfElements)     ctime_s(_buffer,_numberOfElements,_timep)
-#define snprintf_cint_t(_buffer,_count,...)             _snprintf_s(_buffer,_count,__VA_ARGS__)
-#else
-#define ctime_s_t(_timep,_buffer,_numberOfElements)     CPPUTILS_STATIC_CAST(void,_numberOfElements);ctime_r(_timep,_buffer)
-#define snprintf_cint_t                                 snprintf
-#endif
-
+#define CINTERNALLOGGER_TLS_BUF_SIZE_MIN4        (0xffffc)
+#define CINTERNALLOGGER_TLS_BUF_SIZE             (CINTERNALLOGGER_TLS_BUF_SIZE_MIN4 + 4)
 
 struct CinternalLoggerItemPrivate {
-    struct CinternalLoggerItem  publ;
-    struct CinternalLoggerItemPrivate *prev, *next;
+    struct CinternalLoggerItem          publ;
+    struct CinternalLoggerItemPrivate   *prev, *next;
+    char*                               endStr;
+    size_t                              endStrLenPlus1;
+};
+
+struct SCInternalLoggerTlsData {
+    char*                       pcBuffer;
+    size_t                      unOffset;
+    CPPUTILS_BISTATE_FLAGS_UN(
+        hasCategory,
+        hasTime,
+        hasPlace
+    )flags;
 };
 
 
@@ -50,10 +52,11 @@ struct SCinternalLoggerData {
     CinternalTlsData                    tlsData;
     int                                 logLevel;
     int                                 filesDeepness;
+    int                                 reserved01;
 };
 
 
-static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogType a_type, enum CinternalLogCategory a_category, const char* a_textToLog) CPPUTILS_NOEXCEPT;
+static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen) CPPUTILS_NOEXCEPT;
 
 
 static struct SCinternalLoggerData  s_loggerData;
@@ -75,13 +78,21 @@ static inline void CinternalCleanAllLoggersInline(void) CPPUTILS_NOEXCEPT {
 }
 
 
-static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCinternalLogger a_fnc, void* a_userData) CPPUTILS_NOEXCEPT
+static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
 {
+    const char* const endStr = a_endStr ? a_endStr : "";
     struct CinternalLoggerItemPrivate* const pRetStr = (struct CinternalLoggerItemPrivate*)calloc(1, sizeof(struct CinternalLoggerItemPrivate));
     if (!pRetStr) {
         return CPPUTILS_NULL;
     }
 
+    pRetStr->endStr = CinternalWrapperStrdup(endStr);
+    if (!(pRetStr->endStr)) {
+        free(pRetStr);
+        return CPPUTILS_NULL;
+    }
+
+    pRetStr->endStrLenPlus1 = strlen(endStr) + 1;
     pRetStr->publ.fnc = a_fnc;
     pRetStr->publ.userData = a_userData;
     pRetStr->prev = CPPUTILS_NULL;
@@ -100,15 +111,131 @@ static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCin
 }
 
 
-static inline void CinternalLoggerCreateTimeLogInline(char* CPPUTILS_ARG_NN a_pEnoughBigBuffer) CPPUTILS_NOEXCEPT {
+static inline size_t CinternalLoggerCreateTimeLogInline(char* CPPUTILS_ARG_NN a_pEnoughBigBuffer) CPPUTILS_NOEXCEPT {
     char* pcTemp;
     time_t currentTime;
 
     currentTime = time(&currentTime);
-    ctime_s_t(&currentTime, a_pEnoughBigBuffer, CINTERNALLOGGER_TIME_BUFF_MIN_SIZE_MIN1);
+    CinternalWrapperCtime_s(&currentTime, a_pEnoughBigBuffer, CINTERNALLOGGER_TIME_BUFF_MIN_SIZE_MIN1);
     pcTemp = strchr(a_pEnoughBigBuffer, '\n');
-    if (pcTemp) { (*pcTemp) = 0; }
+    if (pcTemp) {
+        const size_t retStrLen = CPPUTILS_STATIC_CAST(size_t,(pcTemp - a_pEnoughBigBuffer));
+        (*pcTemp) = 0;
+        return retStrLen;
+    }
+    return strlen(a_pEnoughBigBuffer);
 }
+
+
+static inline void CinternalLoggerSetFileInline(struct SCInternalLoggerTlsData* CPPUTILS_ARG_NN a_pTlsData, const char* CPPUTILS_ARG_NN a_file) CPPUTILS_NOEXCEPT {
+    const char* cpcFileName = a_file;
+    size_t unTemporar;
+
+    if ((s_loggerData.filesDeepness) > 0) {
+        cpcFileName = FileNameFromPossiblePathInline(a_file);
+        if (cpcFileName != a_file) {
+            int cnt = 1;
+            cpcFileName -= 2;
+            for (; cpcFileName != a_file; --cpcFileName) {
+                if (((*cpcFileName) == CINTERNAL_FILE_DELIMER01) || ((*cpcFileName) == CINTERNAL_FILE_DELIMER02)) {
+                    if ((++cnt) >= (s_loggerData.filesDeepness)) {
+                        ++cpcFileName;
+                        break;
+                    }  //  if ((++cnt) >= (s_loggerData.filesDeepness)) {
+                }  //  if (((*cpcFileName) == CINTERNAL_FILE_DELIMER01) || ((*cpcFileName) == CINTERNAL_FILE_DELIMER02)) {
+            }  //  for (; (cnt < (s_loggerData.filesDeepness)) && (cpcFileName != a_file); ++cnt, --cpcFileName) {
+        }  //  if (cpcFileName != a_file) {
+    }  //  if ((s_loggerData.filesDeepness) > 0) {
+
+    a_pTlsData->pcBuffer[a_pTlsData->unOffset++] = 'f';
+    a_pTlsData->pcBuffer[a_pTlsData->unOffset++] = 'l';
+    a_pTlsData->pcBuffer[a_pTlsData->unOffset++] = ':';
+    a_pTlsData->pcBuffer[a_pTlsData->unOffset++] = '\"';
+    unTemporar = strlen(cpcFileName);
+    CinternalWrapperMemcpy((a_pTlsData->pcBuffer) + (a_pTlsData->unOffset), cpcFileName, unTemporar);
+    a_pTlsData->unOffset += unTemporar;
+    a_pTlsData->pcBuffer[a_pTlsData->unOffset++] = '\"';
+}
+
+
+static inline const char* CinternalLoggerGetCategoryStringInline(const char* a_categoryStr, enum CinternalLogCategory a_categoryEnm) CPPUTILS_NOEXCEPT {
+    const char* categoryStr = "unknown";
+    if (a_categoryStr) {
+        categoryStr = a_categoryStr;
+    }
+    else {
+        switch (a_categoryEnm) {
+        case CinternalLogCategoryFatal:
+            categoryStr = "fatal";
+            break;
+        case CinternalLogCategoryCritical:
+            categoryStr = "critical";
+            break;
+        case CinternalLogCategoryWarning:
+            categoryStr = "warning";
+            break;
+        case CinternalLogCategoryInfo:
+            categoryStr = "info";
+            break;
+        case CinternalLogCategoryDebug:
+            categoryStr = "debug";
+            break;
+        default:
+            break;
+        }  //  switch (a_pTlsData->catEnm) {
+    }  //  if (!categoryStr) {
+    return categoryStr;
+}
+
+
+static inline int CinternalLoggerFinalizeLoggingInline(struct SCInternalLoggerTlsData* CPPUTILS_ARG_NN a_pTlsData, const char* CPPUTILS_ARG_NN a_categoryStr, enum CinternalLogCategory a_categoryEnm) CPPUTILS_NOEXCEPT {
+    const struct CinternalLoggerItemPrivate *pLoggerNext, *pLogger;
+    const size_t unOffset = a_pTlsData->unOffset;
+
+    CInternalRWLockRdLock(&(s_loggerData.rwLock));
+    pLogger = s_loggerData.pFirstLogger;
+    while (pLogger) {
+        pLoggerNext = pLogger->next;
+
+        CinternalWrapperMemcpy((a_pTlsData->pcBuffer) + unOffset, pLogger->endStr, pLogger->endStrLenPlus1);
+        //pTlsData->unOffset += unTemporar;
+
+        (*(pLogger->publ.fnc))(pLogger->publ.userData, a_categoryEnm, a_categoryStr, a_pTlsData->pcBuffer, a_pTlsData->unOffset);
+
+        pLogger = pLoggerNext;
+    }  //  while (pLogger) {
+    CInternalRWLockRdUnlock(&(s_loggerData.rwLock));
+
+    a_pTlsData->unOffset = 0;
+    a_pTlsData->flags.wr_all = CPPUTILS_BISTATE_MAKE_ALL_BITS_FALSE;
+    return CPPUTILS_STATIC_CAST(int, unOffset);
+}
+
+
+static inline struct SCInternalLoggerTlsData* CinternalLoggerGetTlsDataInline(void) CPPUTILS_NOEXCEPT {
+    struct SCInternalLoggerTlsData* pTlsData = (struct SCInternalLoggerTlsData*)CinternalTlsGetSpecific(s_loggerData.tlsData);
+    if (pTlsData) {
+        return pTlsData;
+    }
+
+    pTlsData = (struct SCInternalLoggerTlsData*)calloc(1, sizeof(struct SCInternalLoggerTlsData));
+    if (!pTlsData) {
+        return CPPUTILS_NULL;
+    }
+
+    pTlsData->pcBuffer = (char*)malloc(CINTERNALLOGGER_TLS_BUF_SIZE);
+    if (!pTlsData->pcBuffer) {
+        free(pTlsData);
+        return CPPUTILS_NULL;
+    }
+
+    pTlsData->flags.wr_all = CPPUTILS_BISTATE_MAKE_ALL_BITS_FALSE;
+    pTlsData->unOffset = 0;
+    CinternalTlsSetSpecific(s_loggerData.tlsData, pTlsData);
+    return pTlsData;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
 
@@ -119,15 +246,15 @@ CINTERNAL_EXPORT const char* CinternalLoggerCreateTimeLog(char* CPPUTILS_ARG_NN 
 }
 
 
-CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddLogger(TypeCinternalLogger a_fnc, void* a_userData) CPPUTILS_NOEXCEPT
+CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddLogger(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
 {
-    return CinternalLoggerAddLoggerInline(a_fnc,a_userData);
+    return CinternalLoggerAddLoggerInline(a_fnc,a_userData, a_endStr);
 }
 
 
 CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddDefaultLogger(void) CPPUTILS_NOEXCEPT
 {
-    return CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL);
+    return CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL,"\n\r");
 }
 
 
@@ -135,6 +262,8 @@ CINTERNAL_EXPORT void CinternalLoggerRemoveLogger(struct CinternalLoggerItem* a_
 {
     if (a_logger) {
         struct CinternalLoggerItemPrivate* const pRetStr = (struct CinternalLoggerItemPrivate*)a_logger;
+        
+        free(pRetStr->endStr);
 
         CInternalRWLockWrLock(&(s_loggerData.rwLock));
 
@@ -202,153 +331,180 @@ CINTERNAL_EXPORT int CinternalLoggerGetCurrentFilesDeepness(void) CPPUTILS_NOEXC
 }
 
 
-CINTERNAL_EXPORT void CinternalLoggerMakeLog(int a_logLevel, const char* CPPUTILS_ARG_NN a_file, int a_line,
-                                             enum CinternalLogType a_type, enum CinternalLogCategory a_category, const char* CPPUTILS_ARG_NN a_fmtStr, ...) CPPUTILS_NOEXCEPT
+CINTERNAL_EXPORT const char* CinternalLoggerGetEndString(const struct CinternalLoggerItem* CPPUTILS_ARG_NN a_logger) CPPUTILS_NOEXCEPT
 {
-    int i, nSnprintfRet;
-    size_t unRemainingBuf = CINTERNALLOGGER_TLS_BUF_SIZE_MIN1;
-    size_t unOffset = 0;
+    return ((const struct CinternalLoggerItemPrivate*)a_logger)->endStr;
+}
+
+
+CINTERNAL_EXPORT int CinternalLoggerSetEndString(struct CinternalLoggerItem* CPPUTILS_ARG_NN a_logger, const char* a_endStr) CPPUTILS_NOEXCEPT
+{
+    const char* const endStr = a_endStr ? a_endStr : "";
+    char* const pcNewEndStr = CinternalWrapperStrdup(endStr);
+    if (pcNewEndStr) {
+        struct CinternalLoggerItemPrivate* const pRetStr = (struct CinternalLoggerItemPrivate*)a_logger;
+        free(pRetStr->endStr);
+        pRetStr->endStr = pcNewEndStr;
+        pRetStr->endStrLenPlus1 = strlen(endStr) + 1;
+        return 0;
+    }
+    return 1;
+}
+
+
+CINTERNAL_EXPORT size_t CinternalLoggerGetLogSize(void) CPPUTILS_NOEXCEPT
+{
+    struct SCInternalLoggerTlsData* const pTlsData = CinternalLoggerGetTlsDataInline();
+
+    if (pTlsData) {
+        return pTlsData->unOffset;
+    }
+
+    return 0;
+}
+
+
+CINTERNAL_EXPORT int CinternalLoggerMakeLog(int a_logLevel, const char* a_categoryStr, const char* CPPUTILS_ARG_NN a_file, int a_line, const char* CPPUTILS_ARG_NN a_function,
+                                            enum CinternalLogType a_type, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_fmtStr, ...) CPPUTILS_NOEXCEPT
+{
+    const char* const categoryStr = CinternalLoggerGetCategoryStringInline(a_categoryStr,a_categoryEnm);
     const unsigned int logType = CinternalLogEnumToInt(a_type);
-    const char *cpcFileName = a_file;
-    char* pcData = (char*)CinternalTlsGetSpecific(s_loggerData.tlsData);
-    if (!pcData) {
-        pcData = (char*)malloc(CINTERNALLOGGER_TLS_BUF_SIZE);
-        if (!pcData) {
-            // todo: think on error handling
-            return;
+    const unsigned int hasPlace = (logType & CinternalLogEnumToInt(CinternalLogTypeFile)) || (logType & CinternalLogEnumToInt(CinternalLogTypeLine)) || (logType & CinternalLogEnumToInt(CinternalLogTypeFunction));
+    struct SCInternalLoggerTlsData* const pTlsData = CinternalLoggerGetTlsDataInline();
+
+    if (!pTlsData) {
+        return -1;
+    }
+
+    if ((a_categoryEnm == CinternalLogCategoryDebug) && (a_logLevel > (s_loggerData.logLevel))) {
+        return 0;
+    }
+
+    // 1. category
+    if ((logType & CinternalLogEnumToInt(CinternalLogTypeCategory)) && (pTlsData->flags.rd.hasCategory_false)) {
+        size_t unTemporar;
+
+        unTemporar = strlen(categoryStr);
+        CinternalWrapperMemcpy((pTlsData->pcBuffer) + (pTlsData->unOffset), categoryStr, unTemporar);
+        pTlsData->unOffset += unTemporar;
+
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '=';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '>';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+        pTlsData->flags.wr.hasCategory = CPPUTILS_BISTATE_MAKE_BITS_TRUE;
+    }  //  if (logType & CinternalLogEnumToInt(CinternalLogTypeTime)) {
+
+    // 2. time
+    if ((logType & CinternalLogEnumToInt(CinternalLogTypeTime)) && (pTlsData->flags.rd.hasTime_false)) {
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '[';
+        pTlsData->unOffset += CinternalLoggerCreateTimeLogInline((pTlsData->pcBuffer) + (pTlsData->unOffset));
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ']';
+        
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '=';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '>';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+        pTlsData->flags.wr.hasTime = CPPUTILS_BISTATE_MAKE_BITS_TRUE;
+    }  //  if (logType & CinternalLogEnumToInt(CinternalLogTypeTime)) {
+
+    // 3. position (file,line,function)
+    if (hasPlace && (pTlsData->flags.rd.hasPlace_false)) {
+        size_t unTemporar;
+        int nSnprintfRet,hasSmth = 0;
+
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '[';
+
+        if (logType & CinternalLogEnumToInt(CinternalLogTypeFile)) {
+            CinternalLoggerSetFileInline(pTlsData, a_file);
+            hasSmth = 1;
         }
-        CinternalTlsSetSpecific(s_loggerData.tlsData, pcData);
+
+        if (logType & CinternalLogEnumToInt(CinternalLogTypeLine)) {
+            if (hasSmth) {
+                pTlsData->pcBuffer[pTlsData->unOffset++] = ',';
+            }
+            pTlsData->pcBuffer[pTlsData->unOffset++] = 'l';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = 'n';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = ':';
+            unTemporar = (CINTERNALLOGGER_TLS_BUF_SIZE_MIN4 - (pTlsData->unOffset));
+            nSnprintfRet = CinternalWrapperSnprintf((pTlsData->pcBuffer) + (pTlsData->unOffset), unTemporar, "%d", a_line);
+            pTlsData->unOffset += CPPUTILS_STATIC_CAST(size_t, nSnprintfRet);
+        }
+
+        if (logType & CinternalLogEnumToInt(CinternalLogTypeFunction)) {
+            if (hasSmth) {
+                pTlsData->pcBuffer[pTlsData->unOffset++] = ',';
+            }
+            pTlsData->pcBuffer[pTlsData->unOffset++] = 'f';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = 'n';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = ':';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = '`';
+            unTemporar = strlen(a_function);
+            CinternalWrapperMemcpy((pTlsData->pcBuffer) + (pTlsData->unOffset), a_function, unTemporar);
+            pTlsData->unOffset += unTemporar;
+            pTlsData->pcBuffer[pTlsData->unOffset++] = '`';
+        }  //  if (logType & CinternalLogEnumToInt(CinternalLogTypeFunction)) {
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ']';
+        
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '=';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = '>';
+        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+        pTlsData->flags.wr.hasPlace = CPPUTILS_BISTATE_MAKE_BITS_TRUE;
+    }  //  if (hasPlace && (pTlsData->flags.rd.hasPlace_false)) {
+
+    // 4. text itself
+    if (logType & CinternalLogEnumToInt(CinternalLogTypeMainText)) {
+        va_list args;
+        size_t unTemporar;
+        int nSnprintfRet;
+
+        unTemporar = (CINTERNALLOGGER_TLS_BUF_SIZE_MIN4 - (pTlsData->unOffset));
+        va_start(args, a_fmtStr);
+        nSnprintfRet = CinternalWrapperVsnprintf((pTlsData->pcBuffer) + (pTlsData->unOffset), unTemporar, a_fmtStr, args);
+        va_end(args);
+        pTlsData->unOffset += CPPUTILS_STATIC_CAST(size_t, nSnprintfRet);
+    }  //  if (logType & CinternalLogEnumToInt(CinternalLogTypeMainText)) {
+
+    // 5. finalize
+    if (logType & CinternalLogEnumToInt(CinternalLogTypeFinalize)) {
+        return CinternalLoggerFinalizeLoggingInline(pTlsData, categoryStr, a_categoryEnm);
     }
 
-    if (logType & CinternalLogEnumToInt(CinternalLogTypeStartLogging)) {
-        nSnprintfRet = snprintf_cint_t(pcData + unOffset, unRemainingBuf,"[")
-    }
-
-    for (i = 0; i < s_loggerData.filesDeepness; ++i) {
-        cpcFileName = FileNameFromPossiblePathInline(cpcFileName);
-    }
-
-
+    return CPPUTILS_STATIC_CAST(int, pTlsData->unOffset);
 }
 
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
-
-
-
-
-
-
-
-
-
-
-static inline int CinternalMakeLogPrivateInline(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...){
-    int nRet;
-    va_list argptr;
-    va_start(argptr, a_fmtStr);
-    nRet = CinternalMakeLogPrivateInlineV(a_type,a_bSync,a_fmtStr, &argptr);
-    va_end(argptr);
-    return nRet;
-}
-
-
-static inline void CinternalLogPrintDateAndTimeInline(enum CinternalLogTypes a_type, bool a_bSync){
-    char* pcTemp;
-    char vcCurTimeStr[128];
-    time_t currentTime;
-
-    currentTime = time(&currentTime);
-    ctime_s_t(&currentTime,vcCurTimeStr,127);
-    pcTemp = strchr(vcCurTimeStr,'\n');
-    if(pcTemp){(*pcTemp)=0;}
-    CinternalMakeLogPrivateInline(a_type,a_bSync,"%s",vcCurTimeStr);
-}
-
-
-CINTERNAL_EXPORT void CinternalLogPrintDateAndTime(enum CinternalLogTypes a_type, bool a_bSync)
+static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen) CPPUTILS_NOEXCEPT
 {
-    CinternalLogPrintDateAndTimeInline(a_type,a_bSync);
-}
-
-
-CINTERNAL_EXPORT void CinternalInstallLogger(void* a_userData, TypeCinternalLogger a_clbk)
-{
-    s_userData = a_userData;
-    s_loggerClbk = a_clbk ? a_clbk : (&CinternalDefaultLoggerFunction);
-}
-
-
-CINTERNAL_EXPORT void CinternalGetLogger(void** a_pUserData, TypeCinternalLogger* a_pClbk)
-{
-    if (a_pUserData) { *a_pUserData = s_userData; }
-    if (a_pClbk) { *a_pClbk = s_loggerClbk; }
-}
-
-
-CINTERNAL_EXPORT int  CinternalMakeLogNoExtraData(enum CinternalLogTypes a_type, bool a_bSync, const char* a_fmtStr, ...)
-{
-    int nRet;
-    va_list argptr;
-    va_start(argptr, a_fmtStr);
-    nRet = CinternalMakeLogPrivateInlineV(a_type,a_bSync,a_fmtStr, &argptr);
-    va_end(argptr);
-    return nRet;
-}
-
-
-CINTERNAL_EXPORT void CinternalMakeLog(const char* a_src, int a_line, enum CinternalLogTypes a_type, const char* a_fmtStr, ...)
-{
-	va_list argptr;
-    const char* cpcSrc = FileNameFromPossiblePathInline(a_src);
-
-    CinternalMakeLogPrivateInline(a_type, false,"[");
-    CinternalLogPrintDateAndTimeInline(a_type, false);
-    CinternalMakeLogPrivateInline(a_type, false,"], src:\"%s\",ln:%d - ", cpcSrc, a_line);
-	va_start(argptr, a_fmtStr);
-    CinternalMakeLogPrivateInlineV(a_type, false,a_fmtStr, &argptr);
-	va_end(argptr);
-    CinternalMakeLogPrivateInline(a_type, true,"\n");
-}
-
-
-//CPPUTILS_CODE_INITIALIZER(cinternal_core_logger_initialize) {
-//
-//    s_userData = CPPUTILS_NULL;
-//    s_loggerClbk = &CinternalDefaultLoggerFunction;
-//}
-
-
-static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogType a_type, enum CinternalLogCategory a_category, const char* a_textToLog) CPPUTILS_NOEXCEPT
-{
-    int nRet = 0;
+    FILE* fpOut;
     CPPUTILS_STATIC_CAST(void, a_userData);
-    switch (a_type) {
-    case CinternalLogTypeInfo:
-        nRet = vprintf(a_fmtStr, a_argptr);
-        if (a_bSync) { fflush(stdout); }
-        break;
-    case CinternalLogTypeDebug:
-#if defined(NDEBUG) || (defined(CUTILS_NO_DEBUG_LOGS) && defined(CUTILS_NO_DEBUG_LOGS_FOR_LIB))
-        CPPUTILS_STATIC_CAST(void, a_userData);
-#else
-        nRet = vprintf(a_fmtStr, a_argptr);
-        if (a_bSync) { fflush(stdout); }
-#endif
+    CPPUTILS_STATIC_CAST(void, a_categoryStr);
+    switch (a_categoryEnm) {
+    case CinternalLogCategoryFatal:
+    case CinternalLogCategoryCritical:
+    case CinternalLogCategoryWarning:
+        fpOut = stderr;
         break;
     default:
-        nRet = vfprintf(stderr, a_fmtStr, a_argptr);
-        if (a_bSync) { fflush(stderr); }
+        fpOut = stdout;
         break;
-    }  //  switch (a_type) {
-    return nRet;
+    }  //  switch (a_categoryEnm) {
+    fwrite(a_log, 1, (a_logStrLen+1), fpOut);
+    fflush(fpOut);
 }
 
 
 static void CinternalLoggerTlsClean(void* a_data)
 {
-    char* pcData = CPPUTILS_STATIC_CAST(char*,a_data);
-    free(pcData);
+    struct SCInternalLoggerTlsData* const pTlsData = (struct SCInternalLoggerTlsData*)a_data;
+    if (pTlsData) {
+        free(pTlsData->pcBuffer);
+        free(pTlsData);
+    }
 }
 
 
@@ -362,9 +518,12 @@ static void cinternal_core_logger_clean(void) CPPUTILS_NOEXCEPT {
 CPPUTILS_C_CODE_INITIALIZER(cinternal_core_logger_init) {
     s_loggerData.pFirstLogger = CPPUTILS_NULL;
     s_loggerData.logLevel = 0;
-    s_loggerData.filesDeepness = 1;
-    CInternalRWLockInit(&(s_loggerData.rwLock));
+    s_loggerData.filesDeepness = 2;
+    CInternalRWLockInitNoCheck(&(s_loggerData.rwLock));
     CinternalTlsAlloc(&(s_loggerData.tlsData), &CinternalLoggerTlsClean);
+#ifndef CINTERNALLOGGER_NO_DEFAULT
+    CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
+#endif
     atexit(&cinternal_core_logger_clean);
 }
 

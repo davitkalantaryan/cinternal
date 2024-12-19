@@ -296,8 +296,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\hash.h" />
     <ClInclude Include="..\..\..\include\cinternal\logger.h" />
+    <ClInclude Include="..\..\..\include\cinternal\macroses.h" />
     <ClInclude Include="..\..\..\include\cinternal\rwlock.h" />
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
+    <ClInclude Include="..\..\..\include\cinternal\variadic_macroses.h" />
+    <ClInclude Include="..\..\..\include\cinternal\wrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

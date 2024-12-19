@@ -9,7 +9,7 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_BISTATEFLAGS_H
 
 #include <cinternal/internal_header.h>
-#include <cinternal/macroses02.h>
+#include <cinternal/variadic_macroses.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stdint.h>
 #include <cinternal/undisable_compiler_warnings.h>
@@ -28,24 +28,19 @@
 #define CPPUTILS_BISTATE2(_name)      \
     uint64_t _name : 2
 
-
-#define CPPUTILS_BISTATE1_2(_a,_name)  CPPUTILS_BISTATE1(_name) ;
-#define CPPUTILS_BISTATE2_2(_a,_name)  CPPUTILS_BISTATE2(_name) ;
-
-
-#define CPPUTILS_BISTATE1_ALL(...) CPPUTILS_MACRO02_APPY(CPPUTILS_BISTATE1_2,,__VA_ARGS__)
-#define CPPUTILS_BISTATE2_ALL(...) CPPUTILS_MACRO02_APPY(CPPUTILS_BISTATE2_2,,__VA_ARGS__)
+#define CPPUTILS_BISTATE1_ALL(...) CPPUTILS_VAR_MACRO_APPY(CPPUTILS_BISTATE1,;,__VA_ARGS__)
+#define CPPUTILS_BISTATE2_ALL(...) CPPUTILS_VAR_MACRO_APPY(CPPUTILS_BISTATE2,;,__VA_ARGS__)
 
 
 #define CPPUTILS_BISTATE_FLAGS_UN_RAW(_name, _numberOfReserved,...)  \
     union _name {  \
         uint64_t  wr_all; \
         struct{ \
-            CPPUTILS_BISTATE1_ALL(__VA_ARGS__)                \
+            CPPUTILS_BISTATE1_ALL(__VA_ARGS__);                \
             uint64_t    reserved01 : _numberOfReserved; \
         }rd; \
         struct{ \
-            CPPUTILS_BISTATE2_ALL(__VA_ARGS__)               \
+            CPPUTILS_BISTATE2_ALL(__VA_ARGS__);               \
             uint64_t    reserved01 : _numberOfReserved; \
         }wr;    \
     }

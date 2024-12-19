@@ -9,7 +9,7 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_FOURSTATEFLAGS_H
 
 #include <cinternal/internal_header.h>
-#include <cinternal/macroses02.h>
+#include <cinternal/variadic_macroses.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stdint.h>
 #include <cinternal/undisable_compiler_warnings.h>
@@ -46,42 +46,34 @@
 #define CPPUTILS_FOURSTATE4(_name)     \
     uint64_t _name : 4
 
-
-#define CPPUTILS_FOURSTATE1_2(_a,_name)     CPPUTILS_FOURSTATE1(_name) ;
-#define CPPUTILS_FOURSTATE2_2(_a,_name)     CPPUTILS_FOURSTATE2(_name) ;
-#define CPPUTILS_FOURSTATE3a_2(_a,_name)    CPPUTILS_FOURSTATE3a(_name) ;
-#define CPPUTILS_FOURSTATE3b_2(_a,_name)    CPPUTILS_FOURSTATE3b(_name) ;
-#define CPPUTILS_FOURSTATE4_2(_a,_name)     CPPUTILS_FOURSTATE4(_name) ;
-
-
-#define CPPUTILS_FOURSTATE1_ALL(...)    CPPUTILS_MACRO02_APPY(CPPUTILS_FOURSTATE1_2,,__VA_ARGS__)
-#define CPPUTILS_FOURSTATE2_ALL(...)    CPPUTILS_MACRO02_APPY(CPPUTILS_FOURSTATE2_2,,__VA_ARGS__)
-#define CPPUTILS_FOURSTATE3a_ALL(...)   CPPUTILS_MACRO02_APPY(CPPUTILS_FOURSTATE3a_2,,__VA_ARGS__)
-#define CPPUTILS_FOURSTATE3b_ALL(...)   CPPUTILS_MACRO02_APPY(CPPUTILS_FOURSTATE3b_2,,__VA_ARGS__)
-#define CPPUTILS_FOURSTATE4_ALL(...)    CPPUTILS_MACRO02_APPY(CPPUTILS_FOURSTATE4_2,,__VA_ARGS__)
+#define CPPUTILS_FOURSTATE1_ALL(...)    CPPUTILS_VAR_MACRO_APPY(CPPUTILS_FOURSTATE1_2,;,__VA_ARGS__)
+#define CPPUTILS_FOURSTATE2_ALL(...)    CPPUTILS_VAR_MACRO_APPY(CPPUTILS_FOURSTATE2_2,;,__VA_ARGS__)
+#define CPPUTILS_FOURSTATE3a_ALL(...)   CPPUTILS_VAR_MACRO_APPY(CPPUTILS_FOURSTATE3a_2,;,__VA_ARGS__)
+#define CPPUTILS_FOURSTATE3b_ALL(...)   CPPUTILS_VAR_MACRO_APPY(CPPUTILS_FOURSTATE3b_2,;,__VA_ARGS__)
+#define CPPUTILS_FOURSTATE4_ALL(...)    CPPUTILS_VAR_MACRO_APPY(CPPUTILS_FOURSTATE4_2,;,__VA_ARGS__)
 
 
 #define CPPUTILS_FOURSTATE_FLAGS_UN_RAW(_name, _numberOfReserved,...)  \
     union _name {  \
         uint64_t  wr_all; \
         struct{ \
-            CPPUTILS_FOURSTATE1_ALL(__VA_ARGS__)                \
+            CPPUTILS_FOURSTATE1_ALL(__VA_ARGS__);                \
             uint64_t    reserved01 : _numberOfReserved; \
         }rd1; \
         struct{ \
-            CPPUTILS_FOURSTATE2_ALL(__VA_ARGS__)               \
+            CPPUTILS_FOURSTATE2_ALL(__VA_ARGS__);               \
             uint64_t    reserved01 : _numberOfReserved; \
         }rd2;    \
         struct{ \
-            CPPUTILS_FOURSTATE3a_ALL(__VA_ARGS__)               \
+            CPPUTILS_FOURSTATE3a_ALL(__VA_ARGS__);               \
             uint64_t    reserved01 : _numberOfReserved; \
         }rd3a;    \
         struct{ \
-            CPPUTILS_FOURSTATE3b_ALL(__VA_ARGS__)               \
+            CPPUTILS_FOURSTATE3b_ALL(__VA_ARGS__);               \
             uint64_t    reserved01 : _numberOfReserved; \
         }rd3b;    \
         struct{ \
-            CPPUTILS_FOURSTATE4_ALL(__VA_ARGS__)               \
+            CPPUTILS_FOURSTATE4_ALL(__VA_ARGS__);               \
             uint64_t    reserved01 : _numberOfReserved; \
         }wr;    \
     }

@@ -299,7 +299,7 @@
     <ClInclude Include="..\..\..\include\cinternal\logger.h" />
     <ClInclude Include="..\..\..\include\cinternal\lw_mutex_recursive.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses.h" />
-    <ClInclude Include="..\..\..\include\cinternal\macroses02.h" />
+    <ClInclude Include="..\..\..\include\cinternal\rwlock.h" />
     <ClInclude Include="..\..\..\include\cinternal\signals.h" />
     <ClInclude Include="..\..\..\include\cinternal\sync_barrier.h" />
     <ClInclude Include="..\..\..\include\cinternal\threading.h" />
@@ -309,6 +309,8 @@
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h" />
     <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h" />
+    <ClInclude Include="..\..\..\include\cinternal\variadic_macroses.h" />
+    <ClInclude Include="..\..\..\include\cinternal\wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cinternal_unit_test.pro" />

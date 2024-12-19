@@ -23,7 +23,7 @@
 #define CinternalGetCurrentTid()     CPPUTILS_STATIC_CAST(int64_t,GetCurrentThreadId())
 #elif defined(__APPLE__)
 #include <pthread.h>
-static inline int64_t CinternalGetCurrentTid(void){
+static inline int64_t CinternalGetCurrentTid(void) CPPUTILS_NOEXCEPT  {
     uint64_t ullnTid;
     pthread_threadid_np(pthread_self(),&ullnTid);
     return CPPUTILS_STATIC_CAST(int64_t,ullnTid);

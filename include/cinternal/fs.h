@@ -28,7 +28,7 @@ CPPUTILS_BEGIN_C
 
 #ifdef FileNameFromPossiblePathInline_needed
 #undef FileNameFromPossiblePathInline_needed
-static inline const char* FileNameFromPossiblePathInline(const char* a_cpcSrcPath) {
+static inline const char* FileNameFromPossiblePathInline(const char* a_cpcSrcPath) CPPUTILS_NOEXCEPT {
 	const char* cpcTerm = strrchr(a_cpcSrcPath, CPPUTILS_FILE_DELIM_001);
 	if (cpcTerm) { return cpcTerm + 1; }
 	cpcTerm = strrchr(a_cpcSrcPath, CPPUTILS_FILE_DELIM_002);

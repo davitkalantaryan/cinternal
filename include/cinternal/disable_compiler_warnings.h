@@ -14,6 +14,7 @@
 #define CPPUTILS_WARNINGS_POP		__pragma(warning (pop))
 #endif
 
+#pragma warning(disable: 4061)  // enumerator 'Bla' in switch of enum 'CinternalLogCategory' is not explicitly handled by a case label
 #pragma warning(disable: 4355)  // this will help to keep functions pointers also in the containers
 #pragma warning(disable: 4152)  // this will help to keep functions pointers also in the containers
 #pragma warning(disable:5039) // 'TpSetCallbackCleanupGroup': pointer or reference to potentially throwing function
@@ -28,9 +29,7 @@
 #pragma warning( push, 3 )
 #define CPPUTILS_COMPILER_WARNINGS_PUSHED_2
 #endif
-#pragma warning (disable:4061)  // enumerator 'MonAppHiderEventNone' in switch of enum
-#pragma warning (disable:4820)  // enumerator 'MonAppHiderEventNone' in switch of enum
-#pragma warning (disable:4355)  // 'this': used in base member initializer list
+#pragma warning (disable:4820)  // 'bytes' bytes padding added after construct 'member_name'
 #pragma warning(disable: 4191)
 #pragma warning(disable:4710)
 #pragma warning(disable:4711)

@@ -21,7 +21,7 @@ CPPUTILS_BEGIN_C
 #define CINTERNAL_BENCHMARK_START(_nm)	cinternal_gettimeofday(&(__benchmark_st_time_ ## _nm),CPPUTILS_NULL)
 #ifdef CINTERNAL_BENCHMARK_FIN_needed
 #undef CINTERNAL_BENCHMARK_FIN_needed
-static inline void CINTERNAL_BENCHMARK_FIN_inline(const struct timeval* a_pStart, struct timeval* a_pEnd, struct timeval* a_pDiff) {
+static inline void CINTERNAL_BENCHMARK_FIN_inline(const struct timeval* a_pStart, struct timeval* a_pEnd, struct timeval* a_pDiff) CPPUTILS_NOEXCEPT {
 	cinternal_gettimeofday(a_pEnd, CPPUTILS_NULL);
 	if ((a_pEnd->tv_usec) >= (a_pStart->tv_usec)) {
 		a_pDiff->tv_sec = a_pEnd->tv_sec - a_pStart->tv_sec;

@@ -18,5 +18,11 @@
 
 int main(void)
 {
+    CInternalLogCritical("1");
+    CInternalLogError("%d",2);
+    CInternalLogWarning("%d", 3);
+    CInternalLogInfo("%d", 4);
+    CInternalLogDebug("%d", 5);
+
 	return 0;
 }
