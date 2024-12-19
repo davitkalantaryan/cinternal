@@ -294,6 +294,7 @@
     <ClInclude Include="..\..\..\include\cinternal\fs.h" />
     <ClInclude Include="..\..\..\include\cinternal\gettid.h" />
     <ClInclude Include="..\..\..\include\cinternal\hash.h" />
+    <ClInclude Include="..\..\..\include\cinternal\hash_functions.h" />
     <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />
     <ClInclude Include="..\..\..\include\cinternal\logger.h" />

@@ -47,5 +47,11 @@
     <ClInclude Include="..\..\..\include\cinternal\common_data01.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash_functions.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

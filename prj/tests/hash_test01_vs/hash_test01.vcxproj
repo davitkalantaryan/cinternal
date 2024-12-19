@@ -285,6 +285,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\common_data01.h" />
     <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h" />
+    <ClInclude Include="..\..\..\include\cinternal\hash.h" />
+    <ClInclude Include="..\..\..\include\cinternal\hash_functions.h" />
     <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

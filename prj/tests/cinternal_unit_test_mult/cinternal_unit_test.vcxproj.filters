@@ -155,6 +155,9 @@
     <ClInclude Include="..\..\..\include\cinternal\variadic_macroses.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\hash_functions.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cinternal_unit_test.pro">
