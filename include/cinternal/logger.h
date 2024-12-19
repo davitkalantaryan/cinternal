@@ -35,16 +35,16 @@ enum CinternalLogType {
     CinternalLogTypeFunction = 16,
     CinternalLogTypeMainText = 32,
     CinternalLogTypeFinalize = 64, 
-    CinternalLogTypeCategoryWithTime = CinternalLogEnumConcat(CinternalLogTypeCategory,CinternalLogTypeTime),
-    CinternalLogTypePlace = CinternalLogEnumConcat(CinternalLogTypeFile,CinternalLogTypeLine),
-    CinternalLogTypePlaceWithFunc = CinternalLogEnumConcat(CinternalLogTypePlace,CinternalLogTypeFunction),
-    CinternalLogTypeStart = CinternalLogEnumConcat(CinternalLogTypeCategoryWithTime,CinternalLogTypePlace),
-    CinternalLogTypeStartWithFunc = CinternalLogEnumConcat(CinternalLogTypeStart,CinternalLogTypeFunction),
-    CinternalLogTypeStartAndText = CinternalLogEnumConcat(CinternalLogTypeStart,CinternalLogTypeMainText),
-    CinternalLogTypeStartAndTextWithFunc = CinternalLogEnumConcat(CinternalLogTypeStartAndText,CinternalLogTypeFunction),
-    CinternalLogTypeCompleteLogging = CinternalLogEnumConcat(CinternalLogTypeCategoryWithTime,CinternalLogTypeMainText,CinternalLogTypeFinalize),
-    CinternalLogTypeCompleteLoggingWithPlace = CinternalLogEnumConcat(CinternalLogTypeCompleteLogging,CinternalLogTypePlace),
-    CinternalLogTypeCompleteLoggingWithPlaceAndFunc = CinternalLogEnumConcat(CinternalLogTypeCompleteLoggingWithPlace,CinternalLogTypeFunction)
+    CinternalLogTypeCategoryWithTime = CinternalLogEnumConcatToInt(CinternalLogTypeCategory,CinternalLogTypeTime),
+    CinternalLogTypePlace = CinternalLogEnumConcatToInt(CinternalLogTypeFile,CinternalLogTypeLine),
+    CinternalLogTypePlaceWithFunc = CinternalLogEnumConcatToInt(CinternalLogTypePlace,CinternalLogTypeFunction),
+    CinternalLogTypeStart = CinternalLogEnumConcatToInt(CinternalLogTypeCategoryWithTime,CinternalLogTypePlace),
+    CinternalLogTypeStartWithFunc = CinternalLogEnumConcatToInt(CinternalLogTypeStart,CinternalLogTypeFunction),
+    CinternalLogTypeStartAndText = CinternalLogEnumConcatToInt(CinternalLogTypeStart,CinternalLogTypeMainText),
+    CinternalLogTypeStartAndTextWithFunc = CinternalLogEnumConcatToInt(CinternalLogTypeStartAndText,CinternalLogTypeFunction),
+    CinternalLogTypeCompleteLogging = CinternalLogEnumConcatToInt(CinternalLogTypeCategoryWithTime,CinternalLogTypeMainText,CinternalLogTypeFinalize),
+    CinternalLogTypeCompleteLoggingWithPlace = CinternalLogEnumConcatToInt(CinternalLogTypeCompleteLogging,CinternalLogTypePlace),
+    CinternalLogTypeCompleteLoggingWithPlaceAndFunc = CinternalLogEnumConcatToInt(CinternalLogTypeCompleteLoggingWithPlace,CinternalLogTypeFunction)
 };
 
 enum CinternalLogCategory {

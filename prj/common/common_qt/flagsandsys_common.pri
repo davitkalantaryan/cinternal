@@ -64,8 +64,10 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
     win32{
         STATIC_LIB_EXTENSION = lib
 	LIB_PREFIX =
-	QMAKE_CXXFLAGS += /Wall /WX /sdl-
-	QMAKE_CFLAGS += /Wall /WX /sdl-
+	msvc {
+	    QMAKE_CXXFLAGS += /Wall /WX /sdl-
+	    QMAKE_CFLAGS += /Wall /WX /sdl-
+	}
 	contains(QMAKE_TARGET.arch, x86_64) {
 	    message ("!!!!!!!!!! windows 64")
 	    CODENAME = win_x64

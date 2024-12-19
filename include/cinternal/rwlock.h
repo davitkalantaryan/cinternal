@@ -27,7 +27,8 @@ typedef SRWLOCK CInternalRWLock;
 #define CInternalRWLockRdUnlock(_lockPtr)       ReleaseSRWLockShared(_lockPtr)
 #else
 #include <pthread.h>
-#define CInternalRWLockInitNoCheck(_lockPtr)    pthread_rwlock_init(_lockPtr)
+typedef pthread_rwlock_t CInternalRWLock;
+#define CInternalRWLockInitNoCheck(_lockPtr)    pthread_rwlock_init(_lockPtr,CPPUTILS_NULL)
 #define CInternalRWLockClean(_lockPtr)          pthread_rwlock_destroy(_lockPtr);
 #define CInternalRWLockWrLock(_lockPtr)         pthread_rwlock_wrlock(_lockPtr)
 #define CInternalRWLockRdLock(_lockPtr)         pthread_rwlock_rdlock(_lockPtr)
