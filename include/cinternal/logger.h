@@ -20,7 +20,7 @@ CPPUTILS_BEGIN_C
 
 #define CinternalLogIntToEnum(_int)                 CPPUTILS_STATIC_CAST(enum CinternalLogType,_int)
 #define CinternalLogEnumToInt(_enum)                CPPUTILS_STATIC_CAST(unsigned int,_enum)
-#define CinternalLogEnumConcatToInt(...)            CPPUTILS_VAR_MACRO_APPY(CinternalLogEnumToInt, | ,__VA_ARGS__)
+#define CinternalLogEnumConcatToInt(...)            CPPUTILS_VAR_MACRO_APPY_OP(CinternalLogEnumToInt, | ,__VA_ARGS__)
 #define CinternalLogEnumConcat(...)                 CinternalLogIntToEnum( CinternalLogEnumConcatToInt(__VA_ARGS__) )
 #define CINTERNALLOGGER_TIME_BUFF_MIN_SIZE          256
 
