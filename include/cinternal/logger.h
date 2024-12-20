@@ -10,7 +10,7 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_LOGGER_H
 
 #include <cinternal/export_symbols.h>
-#include <cinternal/variadic_macroses.h>
+#include <cinternal/macroses.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
 #include <cinternal/undisable_compiler_warnings.h>

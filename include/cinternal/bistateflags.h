@@ -10,7 +10,7 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_BISTATEFLAGS_H
 
 #include <cinternal/internal_header.h>
-#include <cinternal/variadic_macroses.h>
+#include <cinternal/macroses.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stdint.h>
 #include <cinternal/undisable_compiler_warnings.h>

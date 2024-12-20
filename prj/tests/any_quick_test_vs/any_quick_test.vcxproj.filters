@@ -64,7 +64,10 @@
     <ClInclude Include="..\..\..\include\cinternal\macroses.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\variadic_macroses.h">
+    <ClInclude Include="..\..\..\include\cinternal\macroses_base.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\macroses_variadic.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
   </ItemGroup>
