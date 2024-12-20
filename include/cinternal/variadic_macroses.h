@@ -12,16 +12,16 @@
 #include <cinternal/internal_header.h>
 #include <cinternal/macroses.h>
 
-#define CPPUTILS_VAR_MACRO_A1(_macro01,_op,_x)			_macro01(_x)
-#define CPPUTILS_VAR_MACRO_A2(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A1 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A3(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A2 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A4(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A3 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A5(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A4 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A6(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A5 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A7(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A6 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A8(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A7 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A9(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A8 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
-#define CPPUTILS_VAR_MACRO_A10(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A9 (_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A01(_macro01,_op,_x)			_macro01(_x)
+#define CPPUTILS_VAR_MACRO_A02(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A01(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A03(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A02(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A04(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A03(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A05(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A04(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A06(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A05(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A07(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A06(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A08(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A07(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A09(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A08(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_A10(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A09(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
 #define CPPUTILS_VAR_MACRO_A11(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A10(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
 #define CPPUTILS_VAR_MACRO_A12(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A11(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
 #define CPPUTILS_VAR_MACRO_A13(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A12(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
@@ -113,8 +113,8 @@
 #define CPPUTILS_VAR_MACRO_A99(_macro01,_op,_x,...)		_macro01(_x) CPPUTILS_ID(_op) CPPUTILS_ID(CPPUTILS_VAR_MACRO_A98(_macro01,CPPUTILS_ID(_op),__VA_ARGS__))
 
 
-#define CPPUTILS_VAR_MACRO_COUNT(_count)			    CPPUTILS_VAR_MACRO_A ## _count
-#define CPPUTILS_VAR_MACRO_APPLY_IMPL(_macro01, ...)	CPPUTILS_ID(_macro01(__VA_ARGS__))
+#define CPPUTILS_VAR_MACRO_COUNT(_count)			        CPPUTILS_VAR_MACRO_A ## _count
+#define CPPUTILS_VAR_MACRO_APPLY_IMPL(_macroAnyMacro, ...)	CPPUTILS_ID(_macroAnyMacro(__VA_ARGS__))
 
 #define CPPUTILS_VAR_MACRO_APPY(_macro01,_op, ...) \
     CPPUTILS_ID( \

@@ -18,16 +18,16 @@
 #define CPPUTILS_MACRO_NAME(_name,_arg)			#_arg
 
 
-#define CPPUTILS_MACRO_A1(_macro,_nm,_x)			_macro(_nm,_x)
-#define CPPUTILS_MACRO_A2(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A1 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A3(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A2 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A4(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A3 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A5(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A4 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A6(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A5 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A7(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A6 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A8(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A7 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A9(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A8 (_macro,_nm,__VA_ARGS__))
-#define CPPUTILS_MACRO_A10(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A9 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A01(_macro,_nm,_x)			_macro(_nm,_x)
+#define CPPUTILS_MACRO_A02(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A01 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A03(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A02 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A04(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A03 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A05(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A04 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A06(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A05 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A07(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A06 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A08(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A07 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A09(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A08 (_macro,_nm,__VA_ARGS__))
+#define CPPUTILS_MACRO_A10(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A09 (_macro,_nm,__VA_ARGS__))
 #define CPPUTILS_MACRO_A11(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A10(_macro,_nm,__VA_ARGS__))
 #define CPPUTILS_MACRO_A12(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A11(_macro,_nm,__VA_ARGS__))
 #define CPPUTILS_MACRO_A13(_macro,_nm,_x,...)		_macro(_nm,_x) , CPPUTILS_ID(CPPUTILS_MACRO_A12(_macro,_nm,__VA_ARGS__))
@@ -144,7 +144,7 @@
 		39, 38, 37, 36, 35, 34, 33, 32, 31, 30,								\
 		29, 28, 27, 26, 25, 24, 23, 22, 21, 20,								\
 		19, 18, 17, 16, 15, 14, 13, 12, 11, 10,								\
-		9, 8, 7, 6, 5, 4, 3, 2, 1											\
+		09, 08, 07, 06, 05, 04, 03, 02, 01									\
 	))
 
 
