@@ -24,7 +24,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\tests\main_any_quick_test.c">
+    <ClCompile Include="..\..\..\src\tests\main_any_quick_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\core\cinternal_core_hash.c">
@@ -68,6 +68,9 @@
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\cinternal\macroses_variadic.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\typeinfo.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
   </ItemGroup>

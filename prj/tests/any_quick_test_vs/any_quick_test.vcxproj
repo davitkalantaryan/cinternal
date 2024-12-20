@@ -287,7 +287,7 @@
     <ClCompile Include="..\..\..\src\core\cinternal_core_hash.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c" />
-    <ClCompile Include="..\..\..\src\tests\main_any_quick_test.c" />
+    <ClCompile Include="..\..\..\src\tests\main_any_quick_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\any_quick_test_mkfl\any_quick_test.unix.Makefile" />
@@ -301,6 +301,7 @@
     <ClInclude Include="..\..\..\include\cinternal\macroses_variadic.h" />
     <ClInclude Include="..\..\..\include\cinternal\rwlock.h" />
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
+    <ClInclude Include="..\..\..\include\cinternal\typeinfo.h" />
     <ClInclude Include="..\..\..\include\cinternal\wrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
