@@ -286,6 +286,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\core\cinternal_core_hash.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_typeinfo.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c" />
     <ClCompile Include="..\..\..\src\tests\main_any_quick_test.cpp" />
   </ItemGroup>

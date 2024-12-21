@@ -36,6 +36,9 @@
     <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_typeinfo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\any_quick_test_mkfl\any_quick_test.unix.Makefile">

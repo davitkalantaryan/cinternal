@@ -9,7 +9,7 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_TYPEINFO_H
 #define CINTERNAL_INCLUDE_CINTERNAL_TYPEINFO_H
 
-#include <cinternal/internal_header.h>
+#include <cinternal/export_symbols.h>
 #include <cinternal/macroses.h>
 
 #define CPPUTILS_VAR_MACRO_FOR_TYPE(_x)     CPPUTILS_ID(_x)
@@ -25,6 +25,28 @@
     CPPUTILS_ID(_type) {  \
         CPPUTILS_VAR_MACRO_APPY_COMMA(CPPUTILS_VAR_MACRO_FOR_TYPE,__VA_ARGS__)  \
     }
+
+//#define _MyMacro(type, name) name
+//#define MyMacro(_expr) _MyMacro _expr
+//
+//
+//#define CPPUTILS_STR_TEST(_type,_token)     CPPUTILS_ID(_type) CPPUTILS_ID(_token)
+//#define testMacro2(_type_and_token)         CPPUTILS_ID(_type_and_token)
+//#define testMacro3(...)                     CPPUTILS_VAR_MACRO_APPY_OP(testMacro2,;,__VA_ARGS__)
+
+
+CPPUTILS_BEGIN_C
+
+
+typedef const char* CinternalConstCharPtr;
+struct CInternalTypeinfoEnumNames;
+struct CInternalTypeinfoStructNames;
+
+CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoCreateEnumNames(int a_number, ...) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoCreateStructNames(int a_number, ...) CPPUTILS_NOEXCEPT;
+
+
+CPPUTILS_END_C
 
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_TYPEINFO_H

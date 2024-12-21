@@ -11,11 +11,12 @@
 
 #include <cinternal/internal_header.h>
 
-#define CPPUTILS_ID(_x)							_x
-#define CPPUTILS_MACRO_APPLY_IMPL(_macro, ...)	CPPUTILS_ID(_macro(__VA_ARGS__))
-#define CPPUTILS_CAT_IMPL(_a, _b)				_a ## _b
-#define CPPUTILS_CAT(_a, _b)					CPPUTILS_CAT_IMPL(_a, _b)
-#define CPPUTILS_MACRO_NAME(_arg)			    #_arg
+#define CPPUTILS_ID(_x)							                _x
+#define CPPUTILS_MACRO_APPLY_IMPL(_macro, ...)	                CPPUTILS_ID(_macro(__VA_ARGS__))
+#define CPPUTILS_CAT_IMPL(_a, _b)				                _a ## _b
+#define CPPUTILS_CAT(_a, _b)					                CPPUTILS_CAT_IMPL(_a, _b)
+#define CPPUTILS_MACRO_NAME(_arg)			                    #_arg
+#define CPPUTILS_VAR_MACRO_APPLY_IMPL(_macroAnyMacro, ...)      CPPUTILS_ID(_macroAnyMacro(__VA_ARGS__))
 
 
 

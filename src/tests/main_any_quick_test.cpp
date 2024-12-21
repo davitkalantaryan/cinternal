@@ -11,6 +11,7 @@
 #include <cinternal/bistateflags.h>
 #include <cinternal/fourstateflags.h>
 #include <cinternal/unit_test_only_checks.h>
+#include <cinternal/typeinfo.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -32,12 +33,44 @@ typedef const char* ConstCharPtr;
     EnumNamefield1,             \
     EnumNamefield2 = 5
 
+#define TestStruct \
+    (int,field1)    \
+    (int,field2)
+
 
 TEST_ENUM_MCR(EnumName,TEST_ENUM_FIELDS_MCR);
+
+#define _MyMacro0(type, name) CPPUTILS_ID(type) CPPUTILS_ID(name)
+#define MyMacro0(_expr) _MyMacro0 CPPUTILS_ID(_expr)
+
+#define _MyMacro1(type, name) name
+#define MyMacro1(_expr) _MyMacro1 _expr
+
+#define _MyMacro2(type, name) offsetof(CPPUTILS_ID(type),CPPUTILS_ID(name))
+#define MyMacro2(_expr) _MyMacro2 _expr
+
+#define TestStructMacro(_name,...)  \
+    struct CPPUTILS_ID(_name) { \
+        CPPUTILS_VAR_MACRO_APPY_OP(MyMacro0,;,__VA_ARGS__)  \
+    }
+
+//#define CPPUTILS_VAR_MACRO_HELPER01(_x1,_x2,_op)            CPPUTILS_ID(_x1) CPPUTILS_ID(_op) CPPUTILS_ID(_x2)
+//#define CPPUTILS_VAR_MACRO_APPY_OP(_macro01,_op, ...)       CPPUTILS_VAR_MACRO_APPY_GEN(CPPUTILS_ID(_macro01),CPPUTILS_VAR_MACRO_HELPER01,_op,__VA_ARGS__)
+//
+//#define CPPUTILS_VAR_MACRO_HELPER02(_x1,_x2,_op)            CPPUTILS_ID(_x1) , CPPUTILS_ID(_x2)
+//#define CPPUTILS_VAR_MACRO_APPY_COMMA(_macro01, ...)        CPPUTILS_VAR_MACRO_APPY_GEN(CPPUTILS_ID(_macro01),CPPUTILS_VAR_MACRO_HELPER02, _macro01,__VA_ARGS__)
+
+//#define CPPUTILS_VAR_MACRO_HELPER02(_x1,_x2,_op)            CPPUTILS_ID(_x1) , CPPUTILS_ID(_x2)
+
+#define CPPUTILS_VAR_MACRO_HELPER04(_x1,_x2,_macro)            CPPUTILS_ID(_x1) , CPPUTILS_ID(_x2)
+#define CPPUTILS_VAR_MACRO_APPY_TEST(_macro01, ...)        CPPUTILS_VAR_MACRO_APPY_GEN(CPPUTILS_ID(_macro01),CPPUTILS_VAR_MACRO_HELPER02, _macro01,__VA_ARGS__)
+
+//TestStructMacro(StructName, TestStruct);
 
 int main(void)
 {
     size_t i;
+    //int field1 = 5;
     const ConstCharPtr enumNames[] = { TEST_ENUM_NAMES_MCR(TEST_ENUM_FIELDS_MCR)};
     const size_t cunNamesSize = sizeof(enumNames) / sizeof(ConstCharPtr);
 
@@ -65,6 +98,8 @@ int main(void)
     for (i = 0; i < cunNamesSize; ++i) {
         CInternalLogDebug("%d => %s", (int)i, enumNames[i]);
     }
+
+    //CInternalLogDebug("%d", MyMacro((int,field1)));
 
 	return 0;
 }
