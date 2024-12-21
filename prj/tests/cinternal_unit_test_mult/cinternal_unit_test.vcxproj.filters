@@ -66,6 +66,12 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_hash.c">
       <Filter>Source Files\unit_test</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0008_typeinfo.c">
+      <Filter>Source Files\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_typeinfo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\bistateflags.h">

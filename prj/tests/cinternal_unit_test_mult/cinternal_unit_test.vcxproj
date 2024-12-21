@@ -270,6 +270,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\core\cinternal_core_hash.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_typeinfo.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c" />
@@ -280,6 +281,7 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0005_threading_and_sync.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0006_benchmark.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_hash.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0008_typeinfo.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\benchmark.h" />
