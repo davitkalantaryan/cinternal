@@ -32,7 +32,7 @@
 #define CPPUTILS_ENUM_LIKE_DATA_NAMES(...)                  CPPUTILS_VAR_MACRO_APPY_COMMA(CPPUTILS_MACRO_NAME,__VA_ARGS__)
 
 
-#define CPPUTILS_DEFINE_VARIABLE_HEPLER(_type,_name)        CPPUTILS_ID(_type) CPPUTILS_ID(_name)
+#define CPPUTILS_DEFINE_VARIABLE_HEPLER(_type,_name)        _type _name
 #define CPPUTILS_DEFINE_VARIABLE(_expr)                     CPPUTILS_DEFINE_VARIABLE_HEPLER CPPUTILS_ID(_expr)
 
 #define CPPUTILS_VARIABLE_NAME_HEPLER(_type,_name)          CPPUTILS_ID(_name)
