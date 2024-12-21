@@ -22,7 +22,7 @@ win32{
 }
 
 
-SOURCES	+= "$${cinternalRepoRoot}/src/tests/main_any_quick_test.c"
+SOURCES	+= "$${cinternalRepoRoot}/src/tests/main_any_quick_test.cpp"
 SOURCES += $$files($${cinternalRepoRoot}/src/core/*.c,true)
 
 HEADERS += $$files($${cinternalRepoRoot}/include/*.h,true)
