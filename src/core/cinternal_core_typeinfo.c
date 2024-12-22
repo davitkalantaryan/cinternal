@@ -122,6 +122,7 @@ static inline struct CInternalTypeinfoEnumNames* CInternalTypeinfoCreateEnumName
             CInternalTypeinfoEnumCleanInputDataInline(pInputData, i);
             return CPPUTILS_NULL;
         }  //  if (CInternalTypeinfoEnumParseSingleInliine(defaultValue, nextArg, &pInputData[i])) {
+        defaultValue = (pInputData[i].value+1);
         if (pInputData[i].value > maxVal) {
             maxVal = pInputData[i].value;
         }
