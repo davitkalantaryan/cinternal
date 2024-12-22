@@ -32,6 +32,10 @@ typedef const char* ConstCharPtr;
 CPPUTILS_COMMA_TYPE_MEMBER_MCR_NM(enum,EnumName,TEST_ENUM_FIELDS_MCR);
 CPPUTILS_SEMICOLON_TYPE_MEMBER_MCR_NM(struct,StructName, TestStruct);
 
+CPPUTILS_FOURSTATE_FLAGS_UN_NM(
+    FourstateFlags,
+    loggedIn, clockedIn, inBreak, inIdle);
+
 int main(void)
 {
     size_t i;
