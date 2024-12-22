@@ -13,6 +13,7 @@
 #include <cinternal/macroses.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
+#include <stdarg.h>
 #include <cinternal/undisable_compiler_warnings.h>
 
 #define CINTERNAL_TYPEINFO_NAME_NON_EXIST           "__unknown"
@@ -70,6 +71,8 @@ struct CInternalTypeinfoCollectionStructNames;
 
 CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoCreateEnumNames(int a_number, ...) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoCreateStructNames(int a_number, ...) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoCreateEnumNamesVA(int a_number, va_list a_argList) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoCreateStructNamesVA(int a_number, va_list a_argList) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT void CInternalTypeinfoCleanEnumNames(struct CInternalTypeinfoEnumNames* a_enumNames) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT void CInternalTypeinfoCleanStructNames(struct CInternalTypeinfoStructNames* a_structNames) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT const char* CInternalTypeinfoGetEnumName(const struct CInternalTypeinfoEnumNames* CPPUTILS_ARG_NN a_enumNames, int a_value) CPPUTILS_NOEXCEPT;
@@ -80,6 +83,8 @@ CINTERNAL_EXPORT void CInternalTypeinfoCleanCollectionEnumNames(struct CInternal
 CINTERNAL_EXPORT void CInternalTypeinfoCleanCollectionStructNames(struct CInternalTypeinfoCollectionStructNames* a_collection) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoSetEnumNamesToCollection(struct CInternalTypeinfoCollectionEnumNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number,...) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoSetStructNamesToCollection(struct CInternalTypeinfoCollectionStructNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, ...) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoSetEnumNamesToCollectionVA(struct CInternalTypeinfoCollectionEnumNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoSetStructNamesToCollectionVA(struct CInternalTypeinfoCollectionStructNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT const char* CInternalTypeinfoGetEnumNameFromCollection(const struct CInternalTypeinfoCollectionEnumNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_value) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT const char* CInternalTypeinfoGetStructNameFromCollection(const struct CInternalTypeinfoCollectionStructNames* CPPUTILS_ARG_NN a_collection, size_t a_index, size_t a_offset) CPPUTILS_NOEXCEPT;
 

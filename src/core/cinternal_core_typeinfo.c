@@ -245,6 +245,50 @@ static inline const char* CInternalTypeinfoGetStructNameInline(const struct CInt
 }
 
 
+static inline struct CInternalTypeinfoEnumNames* CInternalTypeinfoSetEnumNamesToCollectionInline(struct CInternalTypeinfoCollectionEnumNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT {
+    struct CInternalTypeinfoEnumNames** pNamesTmp;
+    size_t newSize;
+    while (a_index >= (a_collection->currentSize)) {
+        newSize = (a_collection->currentSize) + CINTERNAL_COLLECTION_RESIZE_STEP;
+        pNamesTmp = (struct CInternalTypeinfoEnumNames**)realloc(a_collection->pNames, newSize * sizeof(struct CInternalTypeinfoEnumNames*));
+        if (!pNamesTmp) {
+            return CPPUTILS_NULL;
+        }  //  if (!pNamesTmp) {
+        memset(((char*)pNamesTmp) + a_collection->currentSize, 0, CINTERNAL_COLLECTION_RESIZE_STEP * sizeof(struct CInternalTypeinfoEnumNames*));
+        a_collection->pNames = pNamesTmp;
+        a_collection->currentSize = newSize;
+    }  //  while (a_index >= (a_collection->currentSize)) {
+
+    // let's free old, if any
+    CInternalTypeinfoCleanEnumNamesInline(a_collection->pNames[a_index]);
+
+    a_collection->pNames[a_index] = CInternalTypeinfoCreateEnumNamesInline(a_number, a_argList);
+    return a_collection->pNames[a_index];
+}
+
+
+static inline struct CInternalTypeinfoStructNames* CInternalTypeinfoSetStructNamesToCollectionInline(struct CInternalTypeinfoCollectionStructNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT {
+    struct CInternalTypeinfoStructNames** pNamesTmp;
+    size_t newSize;
+    while (a_index >= (a_collection->currentSize)) {
+        newSize = (a_collection->currentSize) + CINTERNAL_COLLECTION_RESIZE_STEP;
+        pNamesTmp = (struct CInternalTypeinfoStructNames**)realloc(a_collection->pNames, newSize * sizeof(struct CInternalTypeinfoStructNames*));
+        if (!pNamesTmp) {
+            return CPPUTILS_NULL;
+        }  //  if (!pNamesTmp) {
+        memset(((char*)pNamesTmp) + a_collection->currentSize, 0, CINTERNAL_COLLECTION_RESIZE_STEP * sizeof(struct CInternalTypeinfoStructNames*));
+        a_collection->pNames = pNamesTmp;
+        a_collection->currentSize = newSize;
+    }  //  while (a_index >= (a_collection->currentSize)) {
+
+    // let's free old, if any
+    CInternalTypeinfoCleanStructNamesInline(a_collection->pNames[a_index]);
+
+    a_collection->pNames[a_index] = CInternalTypeinfoCreateStructNamesInline(a_number, a_argList);
+    return a_collection->pNames[a_index];
+}
+
+
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
@@ -256,6 +300,11 @@ CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoCreateEnumN
     pRetStr = CInternalTypeinfoCreateEnumNamesInline(a_number, argList);
     va_end(argList);
     return pRetStr;
+}
+
+CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoCreateEnumNamesVA(int a_number, va_list a_argList) CPPUTILS_NOEXCEPT
+{
+    return CInternalTypeinfoCreateEnumNamesInline(a_number, a_argList);
 }
 
 
@@ -273,6 +322,12 @@ CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoCreateStr
     pRetStr = CInternalTypeinfoCreateStructNamesInline(a_number, argList);
     va_end(argList);
     return pRetStr;
+}
+
+
+CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoCreateStructNamesVA(int a_number, va_list a_argList) CPPUTILS_NOEXCEPT
+{
+    return CInternalTypeinfoCreateStructNamesInline(a_number, a_argList);
 }
 
 
@@ -335,53 +390,35 @@ CINTERNAL_EXPORT void CInternalTypeinfoCleanCollectionStructNames(struct CIntern
 
 CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoSetEnumNamesToCollection(struct CInternalTypeinfoCollectionEnumNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, ...) CPPUTILS_NOEXCEPT
 {
+    struct CInternalTypeinfoEnumNames* pRetStr;
     va_list argList;
-    struct CInternalTypeinfoEnumNames** pNamesTmp;
-    size_t newSize;
-    while (a_index >= (a_collection->currentSize)) {
-        newSize = (a_collection->currentSize) + CINTERNAL_COLLECTION_RESIZE_STEP;
-        pNamesTmp = (struct CInternalTypeinfoEnumNames**)realloc(a_collection->pNames, newSize * sizeof(struct CInternalTypeinfoEnumNames*));
-        if (!pNamesTmp) {
-            return CPPUTILS_NULL;
-        }  //  if (!pNamesTmp) {
-        memset(((char*)pNamesTmp) + a_collection->currentSize, 0, CINTERNAL_COLLECTION_RESIZE_STEP * sizeof(struct CInternalTypeinfoEnumNames*));
-        a_collection->pNames = pNamesTmp;
-        a_collection->currentSize = newSize;
-    }  //  while (a_index >= (a_collection->currentSize)) {
-    
-    // let's free old, if any
-    CInternalTypeinfoCleanEnumNamesInline(a_collection->pNames[a_index]);
-
     va_start(argList, a_number);
-    a_collection->pNames[a_index] = CInternalTypeinfoCreateEnumNamesInline(a_number, argList);
+    pRetStr = CInternalTypeinfoSetEnumNamesToCollectionInline(a_collection, a_index, a_number, argList);
     va_end(argList);
-    return a_collection->pNames[a_index];
+    return pRetStr;
+}
+
+
+CINTERNAL_EXPORT struct CInternalTypeinfoEnumNames* CInternalTypeinfoSetEnumNamesToCollectionVA(struct CInternalTypeinfoCollectionEnumNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT
+{
+    return CInternalTypeinfoSetEnumNamesToCollectionInline(a_collection, a_index, a_number, a_argList);
 }
 
 
 CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoSetStructNamesToCollection(struct CInternalTypeinfoCollectionStructNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, ...) CPPUTILS_NOEXCEPT
 {
+    struct CInternalTypeinfoStructNames* pRetStr;
     va_list argList;
-    struct CInternalTypeinfoStructNames** pNamesTmp;
-    size_t newSize;
-    while (a_index >= (a_collection->currentSize)) {
-        newSize = (a_collection->currentSize) + CINTERNAL_COLLECTION_RESIZE_STEP;
-        pNamesTmp = (struct CInternalTypeinfoStructNames**)realloc(a_collection->pNames, newSize * sizeof(struct CInternalTypeinfoStructNames*));
-        if (!pNamesTmp) {
-            return CPPUTILS_NULL;
-        }  //  if (!pNamesTmp) {
-        memset(((char*)pNamesTmp) + a_collection->currentSize, 0, CINTERNAL_COLLECTION_RESIZE_STEP * sizeof(struct CInternalTypeinfoStructNames*));
-        a_collection->pNames = pNamesTmp;
-        a_collection->currentSize = newSize;
-    }  //  while (a_index >= (a_collection->currentSize)) {
-
-    // let's free old, if any
-    CInternalTypeinfoCleanStructNamesInline(a_collection->pNames[a_index]);
-
     va_start(argList, a_number);
-    a_collection->pNames[a_index] = CInternalTypeinfoCreateStructNamesInline(a_number, argList);
+    pRetStr = CInternalTypeinfoSetStructNamesToCollectionInline(a_collection, a_index, a_number, argList);
     va_end(argList);
-    return a_collection->pNames[a_index];
+    return pRetStr;
+}
+
+
+CINTERNAL_EXPORT struct CInternalTypeinfoStructNames* CInternalTypeinfoSetStructNamesToCollectionVA(struct CInternalTypeinfoCollectionStructNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT
+{
+    return CInternalTypeinfoSetStructNamesToCollectionInline(a_collection, a_index, a_number, a_argList);
 }
 
 
