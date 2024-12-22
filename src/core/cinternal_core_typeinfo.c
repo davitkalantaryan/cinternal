@@ -248,6 +248,11 @@ static inline const char* CInternalTypeinfoGetStructNameInline(const struct CInt
 static inline struct CInternalTypeinfoEnumNames* CInternalTypeinfoSetEnumNamesToCollectionInline(struct CInternalTypeinfoCollectionEnumNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT {
     struct CInternalTypeinfoEnumNames** pNamesTmp;
     size_t newSize;
+
+    if ((a_index < (a_collection->currentSize)) && (a_collection->pNames[a_index])) {
+        return a_collection->pNames[a_index];
+    }
+
     while (a_index >= (a_collection->currentSize)) {
         newSize = (a_collection->currentSize) + CINTERNAL_COLLECTION_RESIZE_STEP;
         pNamesTmp = (struct CInternalTypeinfoEnumNames**)realloc(a_collection->pNames, newSize * sizeof(struct CInternalTypeinfoEnumNames*));
@@ -270,6 +275,11 @@ static inline struct CInternalTypeinfoEnumNames* CInternalTypeinfoSetEnumNamesTo
 static inline struct CInternalTypeinfoStructNames* CInternalTypeinfoSetStructNamesToCollectionInline(struct CInternalTypeinfoCollectionStructNames* CPPUTILS_ARG_NN a_collection, size_t a_index, int a_number, va_list a_argList) CPPUTILS_NOEXCEPT {
     struct CInternalTypeinfoStructNames** pNamesTmp;
     size_t newSize;
+
+    if ((a_index < (a_collection->currentSize)) && (a_collection->pNames[a_index])) {
+        return a_collection->pNames[a_index];
+    }
+
     while (a_index >= (a_collection->currentSize)) {
         newSize = (a_collection->currentSize) + CINTERNAL_COLLECTION_RESIZE_STEP;
         pNamesTmp = (struct CInternalTypeinfoStructNames**)realloc(a_collection->pNames, newSize * sizeof(struct CInternalTypeinfoStructNames*));
