@@ -68,7 +68,9 @@ struct CinternalLoggerItem {
 };
 
 
+CINTERNAL_EXPORT void CinternalLoggerRemoveDefaultlyAddedLogger(void) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT const char* CinternalLoggerCreateTimeLog(char* CPPUTILS_ARG_NN a_pEnoughBigBuffer) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerGetDefaultlyAddedLogger(void) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddLogger(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddDefaultLogger(void) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT void CinternalLoggerRemoveLogger(struct CinternalLoggerItem* a_logger) CPPUTILS_NOEXCEPT;

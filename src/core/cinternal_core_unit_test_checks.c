@@ -6,8 +6,11 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 
+#ifdef FileNameFromPossiblePathInline_needed
+#undef FileNameFromPossiblePathInline_needed
+#endif
+
 #include <cinternal/unit_test_only_checks.h>
-#define FileNameFromPossiblePathInline_needed
 #include <cinternal/fs.h>
 #include <cinternal/logger.h>
 #include <cinternal/disable_compiler_warnings.h>

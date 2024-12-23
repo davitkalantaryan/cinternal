@@ -6,9 +6,12 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
 
+#ifndef FileNameFromPossiblePathInline_needed
+#define FileNameFromPossiblePathInline_needed
+#endif
+
 #include <cinternal/logger.h>
 #include <cinternal/thread_local_sys.h>
-#define FileNameFromPossiblePathInline_needed
 #include <cinternal/fs.h>
 #include <cinternal/rwlock.h>
 #include <cinternal/wrapper.h>
@@ -48,6 +51,7 @@ struct SCInternalLoggerTlsData {
 
 struct SCinternalLoggerData {
     struct CinternalLoggerItemPrivate*  pFirstLogger;
+    struct CinternalLoggerItem*         pDefaultlyAddedLogger;
     CInternalRWLock                     rwLock;
     CinternalTlsData                    tlsData;
     int                                 logLevel;
@@ -224,8 +228,10 @@ static inline int CinternalInitLoggerInline(void) CPPUTILS_NOEXCEPT {
     s_loggerData.filesDeepness = 2;
     CInternalRWLockInitNoCheck(&(s_loggerData.rwLock));
     CinternalTlsAlloc(&(s_loggerData.tlsData), &CinternalLoggerTlsClean);
-#ifndef CINTERNALLOGGER_NO_DEFAULT
-    CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
+#ifdef CINTERNALLOGGER_NO_DEFAULT
+    s_loggerData.pDefaultlyAddedLogger = CPPUTILS_NULL;
+#else
+    s_loggerData.pDefaultlyAddedLogger = CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
 #endif
     atexit(&cinternal_core_logger_clean);
     return 0;
@@ -257,14 +263,52 @@ static inline struct SCInternalLoggerTlsData* CinternalLoggerGetTlsDataInline(vo
     return pTlsData;
 }
 
+
+static inline void CinternalLoggerRemoveLoggerInline(struct CinternalLoggerItem* CPPUTILS_ARG_NN a_logger) CPPUTILS_NOEXCEPT {
+    struct CinternalLoggerItemPrivate* const pRetStr = (struct CinternalLoggerItemPrivate*)a_logger;
+
+    free(pRetStr->endStr);
+
+    CInternalRWLockWrLock(&(s_loggerData.rwLock));
+
+    if (pRetStr->next) {
+        pRetStr->next->prev = pRetStr->prev;
+    }
+
+    if (pRetStr->prev) {
+        pRetStr->prev->next = pRetStr->next;
+    }
+    else {
+        s_loggerData.pFirstLogger = pRetStr->next;
+    }
+
+    CInternalRWLockWrUnlock(&(s_loggerData.rwLock));
+
+    free(pRetStr);
+}
+
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+
+CINTERNAL_EXPORT void CinternalLoggerRemoveDefaultlyAddedLogger(void) CPPUTILS_NOEXCEPT
+{
+    if (s_loggerData.pDefaultlyAddedLogger) {
+        CinternalLoggerRemoveLoggerInline(s_loggerData.pDefaultlyAddedLogger);
+        s_loggerData.pDefaultlyAddedLogger = CPPUTILS_NULL;
+    }  //  if (a_logger) {
+}
 
 
 CINTERNAL_EXPORT const char* CinternalLoggerCreateTimeLog(char* CPPUTILS_ARG_NN a_pEnoughBigBuffer) CPPUTILS_NOEXCEPT
 {
     CinternalLoggerCreateTimeLogInline(a_pEnoughBigBuffer);
     return a_pEnoughBigBuffer;
+}
+
+
+CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerGetDefaultlyAddedLogger(void) CPPUTILS_NOEXCEPT
+{
+    return s_loggerData.pDefaultlyAddedLogger;
 }
 
 
@@ -283,26 +327,10 @@ CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddDefaultLogger(voi
 CINTERNAL_EXPORT void CinternalLoggerRemoveLogger(struct CinternalLoggerItem* a_logger) CPPUTILS_NOEXCEPT
 {
     if (a_logger) {
-        struct CinternalLoggerItemPrivate* const pRetStr = (struct CinternalLoggerItemPrivate*)a_logger;
-        
-        free(pRetStr->endStr);
-
-        CInternalRWLockWrLock(&(s_loggerData.rwLock));
-
-        if (pRetStr->next) {
-            pRetStr->next->prev = pRetStr->prev;
+        CinternalLoggerRemoveLoggerInline(a_logger);
+        if (a_logger == (s_loggerData.pDefaultlyAddedLogger)) {
+            s_loggerData.pDefaultlyAddedLogger = CPPUTILS_NULL;
         }
-
-        if (pRetStr->prev) {
-            pRetStr->prev->next = pRetStr->next;
-        }
-        else {
-            s_loggerData.pFirstLogger = pRetStr->next;
-        }
-
-        CInternalRWLockWrUnlock(&(s_loggerData.rwLock));
-
-        free(pRetStr);
     }  //  if (a_logger) {
 }
 
