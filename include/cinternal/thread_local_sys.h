@@ -11,6 +11,11 @@
 
 
 #include <cinternal/internal_header.h>
+
+#ifdef _MSC_VER
+#pragma warning(disable:4191)
+#endif
+
 #include <cinternal/disable_compiler_warnings.h>
 
 #ifdef _WIN32
