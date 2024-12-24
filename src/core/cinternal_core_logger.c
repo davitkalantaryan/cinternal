@@ -84,15 +84,13 @@ static inline void CinternalCleanAllLoggersInline(void) CPPUTILS_NOEXCEPT {
 }
 
 
-static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
+static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerNoInitInline(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
 {
     const char* const endStr = a_endStr ? a_endStr : "";
     struct CinternalLoggerItemPrivate* const pRetStr = (struct CinternalLoggerItemPrivate*)calloc(1, sizeof(struct CinternalLoggerItemPrivate));
     if (!pRetStr) {
         return CPPUTILS_NULL;
     }
-
-    CinternalInitLoggerInline();
 
     pRetStr->endStr = CinternalWrapperStrdup(endStr);
     if (!(pRetStr->endStr)) {
@@ -116,6 +114,33 @@ static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCin
     CInternalRWLockWrUnlock(&(s_loggerData.rwLock));
 
     return &(pRetStr->publ);
+}
+
+
+static inline int CinternalInitLoggerInline(void) CPPUTILS_NOEXCEPT {
+    if(s_isInited){
+        return 0;
+    }
+    s_isInited = 1;
+    s_loggerData.pFirstLogger = CPPUTILS_NULL;
+    s_loggerData.logLevel = 0;
+    s_loggerData.filesDeepness = 2;
+    CInternalRWLockInitNoCheck(&(s_loggerData.rwLock));
+    CinternalTlsAlloc(&(s_loggerData.tlsData), &CinternalLoggerTlsClean);
+#ifdef CINTERNALLOGGER_NO_DEFAULT
+    s_loggerData.pDefaultlyAddedLogger = CPPUTILS_NULL;
+#else
+    s_loggerData.pDefaultlyAddedLogger = CinternalLoggerAddLoggerNoInitInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
+#endif
+    atexit(&cinternal_core_logger_clean);
+    return 0;
+}
+
+
+static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
+{
+    CinternalInitLoggerInline();
+    return CinternalLoggerAddLoggerNoInitInline(a_fnc,a_userData,a_endStr);
 }
 
 
@@ -217,26 +242,6 @@ static inline int CinternalLoggerFinalizeLoggingInline(struct SCInternalLoggerTl
     a_pTlsData->unOffset = 0;
     a_pTlsData->flags.wr_all = CPPUTILS_BISTATE_MAKE_ALL_BITS_FALSE;
     return CPPUTILS_STATIC_CAST(int, unOffset);
-}
-
-
-static inline int CinternalInitLoggerInline(void) CPPUTILS_NOEXCEPT {
-    if(s_isInited){
-        return 0;
-    }
-    s_isInited = 1;
-    s_loggerData.pFirstLogger = CPPUTILS_NULL;
-    s_loggerData.logLevel = 0;
-    s_loggerData.filesDeepness = 2;
-    CInternalRWLockInitNoCheck(&(s_loggerData.rwLock));
-    CinternalTlsAlloc(&(s_loggerData.tlsData), &CinternalLoggerTlsClean);
-#ifdef CINTERNALLOGGER_NO_DEFAULT
-    s_loggerData.pDefaultlyAddedLogger = CPPUTILS_NULL;
-#else
-    s_loggerData.pDefaultlyAddedLogger = CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
-#endif
-    atexit(&cinternal_core_logger_clean);
-    return 0;
 }
 
 
