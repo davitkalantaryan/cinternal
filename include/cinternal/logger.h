@@ -50,8 +50,8 @@ enum CinternalLogType {
 enum CinternalLogCategory {
     CinternalLogCategoryNone,
     CinternalLogCategoryFatal,
-    CinternalLogCategorySystem = CinternalLogCategoryFatal,
     CinternalLogCategoryCritical,
+    CinternalLogCategorySystem = CinternalLogCategoryCritical,
     CinternalLogCategoryError = CinternalLogCategoryCritical,
     CinternalLogCategoryWarning,
     CinternalLogCategoryInfo,

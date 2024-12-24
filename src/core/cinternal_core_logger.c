@@ -92,6 +92,8 @@ static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCin
         return CPPUTILS_NULL;
     }
 
+    CinternalInitLoggerInline();
+
     pRetStr->endStr = CinternalWrapperStrdup(endStr);
     if (!(pRetStr->endStr)) {
         free(pRetStr);
@@ -166,7 +168,7 @@ static inline void CinternalLoggerSetFileInline(struct SCInternalLoggerTlsData* 
 
 static inline const char* CinternalLoggerGetCategoryStringInline(const char* a_categoryStr, enum CinternalLogCategory a_categoryEnm) CPPUTILS_NOEXCEPT {
     const char* categoryStr = "unknown";
-    if (a_categoryStr) {
+    if (a_categoryStr && a_categoryStr[0]) {
         categoryStr = a_categoryStr;
     }
     else {
@@ -240,7 +242,6 @@ static inline int CinternalInitLoggerInline(void) CPPUTILS_NOEXCEPT {
 
 static inline struct SCInternalLoggerTlsData* CinternalLoggerGetTlsDataInline(void) CPPUTILS_NOEXCEPT {
     struct SCInternalLoggerTlsData* pTlsData;
-    CinternalInitLoggerInline();
     pTlsData = (struct SCInternalLoggerTlsData*)CinternalTlsGetSpecific(s_loggerData.tlsData);
     if (pTlsData) {
         return pTlsData;
@@ -463,45 +464,61 @@ CINTERNAL_EXPORT int CinternalLoggerMakeLog(int a_logLevel, const char* a_catego
         size_t unTemporar;
         int nSnprintfRet,hasSmth = 0;
 
-        pTlsData->pcBuffer[pTlsData->unOffset++] = '[';
-
         if (logType & CinternalLogEnumToInt(CinternalLogTypeFile)) {
-            CinternalLoggerSetFileInline(pTlsData, a_file);
-            hasSmth = 1;
+            if (a_file && a_file[0]) {
+                pTlsData->pcBuffer[pTlsData->unOffset++] = '[';
+                CinternalLoggerSetFileInline(pTlsData, a_file);
+                hasSmth = 1;
+            }
         }
 
         if (logType & CinternalLogEnumToInt(CinternalLogTypeLine)) {
-            if (hasSmth) {
-                pTlsData->pcBuffer[pTlsData->unOffset++] = ',';
+            if (a_line > 0) {
+                if (hasSmth) {
+                    pTlsData->pcBuffer[pTlsData->unOffset++] = ',';
+                }
+                else {
+                    pTlsData->pcBuffer[pTlsData->unOffset++] = '[';
+                    hasSmth = 1;
+                }
+                pTlsData->pcBuffer[pTlsData->unOffset++] = 'l';
+                pTlsData->pcBuffer[pTlsData->unOffset++] = 'n';
+                pTlsData->pcBuffer[pTlsData->unOffset++] = ':';
+                unTemporar = (CINTERNALLOGGER_TLS_BUF_SIZE_MIN4 - (pTlsData->unOffset));
+                nSnprintfRet = CinternalWrapperSnprintf((pTlsData->pcBuffer) + (pTlsData->unOffset), unTemporar, "%d", a_line);
+                pTlsData->unOffset += CPPUTILS_STATIC_CAST(size_t, nSnprintfRet);
             }
-            pTlsData->pcBuffer[pTlsData->unOffset++] = 'l';
-            pTlsData->pcBuffer[pTlsData->unOffset++] = 'n';
-            pTlsData->pcBuffer[pTlsData->unOffset++] = ':';
-            unTemporar = (CINTERNALLOGGER_TLS_BUF_SIZE_MIN4 - (pTlsData->unOffset));
-            nSnprintfRet = CinternalWrapperSnprintf((pTlsData->pcBuffer) + (pTlsData->unOffset), unTemporar, "%d", a_line);
-            pTlsData->unOffset += CPPUTILS_STATIC_CAST(size_t, nSnprintfRet);
         }
 
         if (logType & CinternalLogEnumToInt(CinternalLogTypeFunction)) {
-            if (hasSmth) {
-                pTlsData->pcBuffer[pTlsData->unOffset++] = ',';
+            if (a_function && a_function[0]) {
+                if (hasSmth) {
+                    pTlsData->pcBuffer[pTlsData->unOffset++] = ',';
+                }
+                else {
+                    pTlsData->pcBuffer[pTlsData->unOffset++] = '[';
+                    hasSmth = 1;
+                }
+                pTlsData->pcBuffer[pTlsData->unOffset++] = 'f';
+                pTlsData->pcBuffer[pTlsData->unOffset++] = 'n';
+                pTlsData->pcBuffer[pTlsData->unOffset++] = ':';
+                pTlsData->pcBuffer[pTlsData->unOffset++] = '`';
+                unTemporar = strlen(a_function);
+                CinternalWrapperMemcpy((pTlsData->pcBuffer) + (pTlsData->unOffset), a_function, unTemporar);
+                pTlsData->unOffset += unTemporar;
+                pTlsData->pcBuffer[pTlsData->unOffset++] = '`';
             }
-            pTlsData->pcBuffer[pTlsData->unOffset++] = 'f';
-            pTlsData->pcBuffer[pTlsData->unOffset++] = 'n';
-            pTlsData->pcBuffer[pTlsData->unOffset++] = ':';
-            pTlsData->pcBuffer[pTlsData->unOffset++] = '`';
-            unTemporar = strlen(a_function);
-            CinternalWrapperMemcpy((pTlsData->pcBuffer) + (pTlsData->unOffset), a_function, unTemporar);
-            pTlsData->unOffset += unTemporar;
-            pTlsData->pcBuffer[pTlsData->unOffset++] = '`';
         }  //  if (logType & CinternalLogEnumToInt(CinternalLogTypeFunction)) {
-        pTlsData->pcBuffer[pTlsData->unOffset++] = ']';
-        
-        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
-        pTlsData->pcBuffer[pTlsData->unOffset++] = '=';
-        pTlsData->pcBuffer[pTlsData->unOffset++] = '>';
-        pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
-        pTlsData->flags.wr.hasPlace = CPPUTILS_BISTATE_MAKE_BITS_TRUE;
+
+        if (hasSmth) {
+            pTlsData->pcBuffer[pTlsData->unOffset++] = ']';
+
+            pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = '=';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = '>';
+            pTlsData->pcBuffer[pTlsData->unOffset++] = ' ';
+            pTlsData->flags.wr.hasPlace = CPPUTILS_BISTATE_MAKE_BITS_TRUE;
+        }  //  if (hasSmth) {
     }  //  if (hasPlace && (pTlsData->flags.rd.hasPlace_false)) {
 
     // 4. text itself
