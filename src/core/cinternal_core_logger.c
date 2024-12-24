@@ -84,7 +84,7 @@ static inline void CinternalCleanAllLoggersInline(void) CPPUTILS_NOEXCEPT {
 }
 
 
-static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerNoInitInline(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
+static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
 {
     const char* const endStr = a_endStr ? a_endStr : "";
     struct CinternalLoggerItemPrivate* const pRetStr = (struct CinternalLoggerItemPrivate*)calloc(1, sizeof(struct CinternalLoggerItemPrivate));
@@ -130,17 +130,10 @@ static inline int CinternalInitLoggerInline(void) CPPUTILS_NOEXCEPT {
 #ifdef CINTERNALLOGGER_NO_DEFAULT
     s_loggerData.pDefaultlyAddedLogger = CPPUTILS_NULL;
 #else
-    s_loggerData.pDefaultlyAddedLogger = CinternalLoggerAddLoggerNoInitInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
+    s_loggerData.pDefaultlyAddedLogger = CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
 #endif
     atexit(&cinternal_core_logger_clean);
     return 0;
-}
-
-
-static inline struct CinternalLoggerItem* CinternalLoggerAddLoggerInline(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT
-{
-    CinternalInitLoggerInline();
-    return CinternalLoggerAddLoggerNoInitInline(a_fnc,a_userData,a_endStr);
 }
 
 
@@ -247,6 +240,9 @@ static inline int CinternalLoggerFinalizeLoggingInline(struct SCInternalLoggerTl
 
 static inline struct SCInternalLoggerTlsData* CinternalLoggerGetTlsDataInline(void) CPPUTILS_NOEXCEPT {
     struct SCInternalLoggerTlsData* pTlsData;
+    if (CinternalInitLoggerInline()) {
+        return CPPUTILS_NULL;
+    }
     pTlsData = (struct SCInternalLoggerTlsData*)CinternalTlsGetSpecific(s_loggerData.tlsData);
     if (pTlsData) {
         return pTlsData;
@@ -591,7 +587,9 @@ static void cinternal_core_logger_clean(void) CPPUTILS_NOEXCEPT {
 
 
 CPPUTILS_C_CODE_INITIALIZER(cinternal_core_logger_init) {
-    CinternalInitLoggerInline();
+    if (CinternalInitLoggerInline()) {
+        exit(1);
+    }
 }
 
 
