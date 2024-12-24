@@ -60,7 +60,7 @@ enum CinternalLogCategory {
 };
 
 
-typedef void (*TypeCinternalLogger)(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen);
+typedef void (*TypeCinternalLogger)(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, const char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen);
 typedef int (*TypeCinternalLoggerIterator)(void* a_userData, struct CinternalLoggerItem* CPPUTILS_ARG_NN);  // ret != 0 stops iteration
 
 struct CinternalLoggerItem {

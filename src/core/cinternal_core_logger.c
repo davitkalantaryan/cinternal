@@ -60,7 +60,7 @@ struct SCinternalLoggerData {
 };
 
 
-static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen) CPPUTILS_NOEXCEPT;
+static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, const char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen) CPPUTILS_NOEXCEPT;
 static void cinternal_core_logger_clean(void) CPPUTILS_NOEXCEPT;
 static void CinternalLoggerTlsClean(void* a_data) CPPUTILS_NOEXCEPT;
 
@@ -226,7 +226,7 @@ static inline int CinternalLoggerFinalizeLoggingInline(struct SCInternalLoggerTl
         CinternalWrapperMemcpy((a_pTlsData->pcBuffer) + unOffset, pLogger->endStr, pLogger->endStrLenPlus1);
         //pTlsData->unOffset += unTemporar;
 
-        (*(pLogger->publ.fnc))(pLogger->publ.userData, a_categoryEnm, a_categoryStr, a_pTlsData->pcBuffer, a_pTlsData->unOffset);
+        (*(pLogger->publ.fnc))(pLogger->publ.userData, a_categoryEnm, a_categoryStr, a_pTlsData->pcBuffer, a_pTlsData->unOffset + pLogger->endStrLenPlus1);
 
         pLogger = pLoggerNext;
     }  //  while (pLogger) {
@@ -546,7 +546,7 @@ CINTERNAL_EXPORT int CinternalLoggerMakeLog(int a_logLevel, const char* a_catego
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
-static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen) CPPUTILS_NOEXCEPT
+static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, const char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen) CPPUTILS_NOEXCEPT
 {
     FILE* fpOut;
     CPPUTILS_STATIC_CAST(void, a_userData);
