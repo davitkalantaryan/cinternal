@@ -55,6 +55,7 @@ enum CinternalLogCategory {
     CinternalLogCategoryError = CinternalLogCategoryCritical,
     CinternalLogCategoryWarning,
     CinternalLogCategoryInfo,
+    CinternalLogCategoryCategory,
     CinternalLogCategoryDebug
 };
 
@@ -93,10 +94,11 @@ CINTERNAL_EXPORT int  CinternalLoggerMakeLog(int a_logLevel, const char* a_categ
 #define CInternalLogWarning(...)	            CinternalLoggerMakeLog(0,"warning",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlace,CinternalLogCategoryWarning,__VA_ARGS__)
 #define CInternalLogInfo(...)		            CinternalLoggerMakeLog(0,"info",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLogging,CinternalLogCategoryInfo,__VA_ARGS__)
 #define CInternalLogDebug(...)		            CinternalLoggerMakeLog(0,"debug",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryDebug,__VA_ARGS__)
-#define CInternalLogDebugLogLvl(_logLevel,...)  CinternalLoggerMakeLog(_logLevel,"debug",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryDebug,__VA_ARGS__)
+#define CInternalLogDebugLogLvl(_logLevel,...)  CinternalLoggerMakeLog((_logLevel),"debug",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryDebug,__VA_ARGS__)
+#define CInternalLogCategory(_category,...)     CinternalLoggerMakeLog(0,(_category),__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryCategory,__VA_ARGS__)
+#define CInternalLogDbgCategory(_category,...)  CinternalLoggerMakeLog(0,(_category),__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryDebug,__VA_ARGS__)
 
-
-#define CinternalLoggerMakeLogOnlyText(_logLevel,...)   CinternalLoggerMakeLog(_logLevel,"","",0,"",CinternalLogTypeMainText,CinternalLogCategoryNone,__VA_ARGS__)
+#define CinternalLoggerMakeLogOnlyText(_logLevel,...)   CinternalLoggerMakeLog((_logLevel),"","",0,"",CinternalLogTypeMainText,CinternalLogCategoryNone,__VA_ARGS__)
 
 CPPUTILS_END_C
 
