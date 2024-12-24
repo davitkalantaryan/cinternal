@@ -73,7 +73,7 @@ CINTERNAL_EXPORT void CinternalLoggerRemoveDefaultlyAddedLogger(void) CPPUTILS_N
 CINTERNAL_EXPORT const char* CinternalLoggerCreateTimeLog(char* CPPUTILS_ARG_NN a_pEnoughBigBuffer) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerGetDefaultlyAddedLogger(void) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddLogger(TypeCinternalLogger a_fnc, void* a_userData, const char* a_endStr) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddDefaultLogger(void) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddDefaultLoggerEx(const char* a_endStr) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT void CinternalLoggerRemoveLogger(struct CinternalLoggerItem* a_logger) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT void CinternalLoggerCleanAllLoggers(void) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT void CinternalLoggerIterateOverAllLoggers(TypeCinternalLoggerIterator CPPUTILS_ARG_NN a_iterator, void* a_clbkData) CPPUTILS_NOEXCEPT;
@@ -88,6 +88,7 @@ CINTERNAL_EXPORT int  CinternalLoggerMakeLog(int a_logLevel, const char* a_categ
                                              enum CinternalLogType a_type, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_fmtStr, ...) CPPUTILS_NOEXCEPT;
 
 
+#define CinternalLoggerAddDefaultLogger()       CinternalLoggerAddDefaultLoggerEx("\n\r")
 #define CInternalLogFatal(...)		            CinternalLoggerMakeLog(0,"fatal",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryFatal,__VA_ARGS__)
 #define CInternalLogCritical(...)		        CinternalLoggerMakeLog(0,"critical",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryCritical,__VA_ARGS__)
 #define CInternalLogError(...)		            CinternalLoggerMakeLog(0,"error",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlace,CinternalLogCategoryError,__VA_ARGS__)

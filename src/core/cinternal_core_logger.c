@@ -320,9 +320,9 @@ CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddLogger(TypeCinter
 }
 
 
-CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddDefaultLogger(void) CPPUTILS_NOEXCEPT
+CINTERNAL_EXPORT struct CinternalLoggerItem* CinternalLoggerAddDefaultLoggerEx(const char* a_endStr) CPPUTILS_NOEXCEPT
 {
-    return CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL,"\n\r");
+    return CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, a_endStr);
 }
 
 
