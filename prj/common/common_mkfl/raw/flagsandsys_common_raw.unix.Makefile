@@ -22,11 +22,15 @@ ifeq ($(osSystem),Darwin)
 	DEFAULT_CC	:= clang
 	DEFAULT_CXX	:= clang++
 	DEFAULT_LINK	:= clang++
+	CinternalExport	:= -export_dynamic
+	CinternalLibExt := dylib
 else
 	lsbCode		:= $(shell lsb_release -sc)
 	DEFAULT_CC	:= gcc
 	DEFAULT_CXX	:= g++
 	DEFAULT_LINK	:= g++
+	CinternalExport	:= -E
+	CinternalLibExt := so
 endif
 
 MAKEFLAGS=-j 2

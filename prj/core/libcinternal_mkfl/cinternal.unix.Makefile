@@ -16,15 +16,16 @@ SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_hash.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_logger.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_typeinfo.c
 
-all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).so.1
+all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt)
 
-$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).so.1: \
+$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt): \
         $(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
 	@mkdir -p $(@D)
 	@mkdir -p $(@D)/../lib
-	@$(LINK) $^ -Wl,-E,-soname,lib$(targetName).so.1 -pie -shared $(LIBS) $(LFLAGS) -o $@
-	@rm -f $(@D)/../lib/lib$(targetName).so
-	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).so.1 lib$(targetName).so
+	@mkdir -p $(@D)/../tlib
+	@$(LINK) $^ $(CinternalExport) -Wl -pie -shared $(LIBS) $(LFLAGS) -o $@
+	@rm -f $(@D)/../lib/lib$(targetName).$(CinternalLibExt)
+	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).$(CinternalLibExt) lib$(targetName).$(CinternalLibExt)
 
 .PHONY: clean
 clean:
