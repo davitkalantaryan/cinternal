@@ -18,22 +18,30 @@ endif
 
 osSystem		:= $(shell uname)
 ifeq ($(osSystem),Darwin)
-	lsbCode		:= mac
-	DEFAULT_CC	:= clang
-	DEFAULT_CXX	:= clang++
-	DEFAULT_LINK	:= clang++
-	CinternalExport	:= -export_dynamic
-	CinternalLibExt := dylib
-        CinternalSoname := -install_name
+    lsbCode         := mac
+    DEFAULT_CC      := clang
+    DEFAULT_CXX     := clang++
+    DEFAULT_LINK    := clang++
+    CinternalExport := -export_dynamic
+    CinternalLibExt := dylib
+    CinternalSoname := -install_name
+    define construct_soname
+        -install_name @rpath/lib$(1).$(2).dylib
+    endef
 else
-	lsbCode		:= $(shell lsb_release -sc)
-	DEFAULT_CC	:= gcc
-	DEFAULT_CXX	:= g++
-	DEFAULT_LINK	:= g++
-	CinternalExport	:= -E
-	CinternalLibExt := so
-        CinternalSoname := -soname,
+    lsbCode         := $(shell lsb_release -sc)
+    DEFAULT_CC      := gcc
+    DEFAULT_CXX     := g++
+    DEFAULT_LINK    := g++
+    CinternalExport := -E
+    CinternalLibExt := so
+    CinternalSoname := -soname
+    define construct_soname
+        -Wl,-soname,lib$(1).so.$(2)
+    endef
 endif
+
+
 
 MAKEFLAGS=-j 2
 
