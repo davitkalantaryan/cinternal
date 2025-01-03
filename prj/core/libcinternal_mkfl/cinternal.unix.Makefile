@@ -23,9 +23,9 @@ $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(Cinternal
 	@mkdir -p $(@D)
 	@mkdir -p $(@D)/../lib
 	@mkdir -p $(@D)/../tlib
-	@$(LINK) $^ $(CinternalExport) -Wl -pie -shared $(LIBS) $(LFLAGS) -o $@
+	@$(LINK) $^ -Wl,-soname,lib$(targetName).$(CinternalLibExt).1 -pie -shared $(LIBS) $(LFLAGS) -o $@
 	@rm -f $(@D)/../lib/lib$(targetName).$(CinternalLibExt)
-	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).$(CinternalLibExt) lib$(targetName).$(CinternalLibExt)
+	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).$(CinternalLibExt).1 lib$(targetName).$(CinternalLibExt)
 
 .PHONY: clean
 clean:
