@@ -24,7 +24,7 @@ $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(Cinternal
 	@mkdir -p $(@D)
 	@mkdir -p $(@D)/../lib
 	@mkdir -p $(@D)/../tlib
-	@$(LINK) $^ -Wl,-soname,lib$(targetName).$(CinternalLibExt).$(libraryVersion) -pie -shared $(LIBS) $(LFLAGS) -o $@
+	@$(LINK) $^ -Wl,$(CinternalSoname) lib$(targetName).$(CinternalLibExt).$(libraryVersion) -shared $(LIBS) $(LFLAGS) -o $@
 	@rm -f $(@D)/../lib/lib$(targetName).$(CinternalLibExt)
 	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion) lib$(targetName).$(CinternalLibExt)
 

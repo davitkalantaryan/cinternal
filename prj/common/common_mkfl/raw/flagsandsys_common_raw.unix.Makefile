@@ -24,6 +24,7 @@ ifeq ($(osSystem),Darwin)
 	DEFAULT_LINK	:= clang++
 	CinternalExport	:= -export_dynamic
 	CinternalLibExt := dylib
+        CinternalSoname := -install_name
 else
 	lsbCode		:= $(shell lsb_release -sc)
 	DEFAULT_CC	:= gcc
@@ -31,6 +32,7 @@ else
 	DEFAULT_LINK	:= g++
 	CinternalExport	:= -E
 	CinternalLibExt := so
+        CinternalSoname := -soname,
 endif
 
 MAKEFLAGS=-j 2
