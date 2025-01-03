@@ -1,5 +1,6 @@
 
 targetName=cinternal
+libraryVersion=1
 
 mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir		=  $(shell dirname $(mkfile_path))
@@ -16,16 +17,16 @@ SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_hash.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_logger.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_typeinfo.c
 
-all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt)
+all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion)
 
-$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt): \
+$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion): \
         $(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
 	@mkdir -p $(@D)
 	@mkdir -p $(@D)/../lib
 	@mkdir -p $(@D)/../tlib
-	@$(LINK) $^ -Wl,-soname,lib$(targetName).$(CinternalLibExt).1 -pie -shared $(LIBS) $(LFLAGS) -o $@
+	@$(LINK) $^ -Wl,-soname,lib$(targetName).$(CinternalLibExt).$(libraryVersion) -pie -shared $(LIBS) $(LFLAGS) -o $@
 	@rm -f $(@D)/../lib/lib$(targetName).$(CinternalLibExt)
-	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).$(CinternalLibExt).1 lib$(targetName).$(CinternalLibExt)
+	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion) lib$(targetName).$(CinternalLibExt)
 
 .PHONY: clean
 clean:
