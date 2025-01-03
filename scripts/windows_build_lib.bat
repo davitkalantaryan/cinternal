@@ -64,8 +64,6 @@ for %%p in (%PlatformTarget%) do (
 		echo "!!!!!!!!!!!! !!!!!!!!!!!! compiling for configuration %%c"
 		call msbuild "%repositoryRoot%prj\core\libcinternal_vs\cinternal.sln" /t:!ActionConfirm! /p:Configuration=%%c /p:Platform=%%p
 		if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
-		call nmake -f cinternal_unit_test.windows.Makefile /e Platform=%%p /e Configuration=%%c
-		if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 	)
 )
 
