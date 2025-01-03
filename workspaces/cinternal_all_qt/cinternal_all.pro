@@ -13,6 +13,7 @@ TEMPLATE = subdirs
 #CONFIG += ordered
 
 
+SUBDIRS		+=	"$${cinternalRepoRoot}/prj/core/libcinternal_qt/cinternal.pro"
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/any_quick_test_qt/any_quick_test.pro"
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/c_global_initer_test_qt/c_global_initer_test.pro"
 SUBDIRS		+=	"$${cinternalRepoRoot}/prj/tests/c_raii_test_qt/c_raii_test.pro"
