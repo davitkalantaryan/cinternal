@@ -20,9 +20,9 @@ libWithSonameFlags = $(call construct_soname_flags,$(targetName),$(libraryVersio
 libWithSonameBase = $(call construct_soname,$(targetName),$(libraryVersion))
 libWithSoname = $(strip $(libWithSonameBase))
 
-all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion)
+all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/$(libWithSoname)
 
-$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion): \
+$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/$(libWithSoname): \
         $(SOURCES:%=$(artifactRoot)/sys/$(lsbCode)/$(Configuration)/.objects/$(targetName)/%.o)
 	@mkdir -p $(@D)
 	@mkdir -p $(@D)/../lib
