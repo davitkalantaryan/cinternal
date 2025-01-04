@@ -16,7 +16,9 @@ include $(mkfile_dir)/../../common/common_mkfl/flagsandsys_common.unix.Makefile
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_hash.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_logger.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_typeinfo.c
-libWithSoname = $(call construct_soname,$(targetName),$(libraryVersion))
+libWithSonameFlags = $(call construct_soname_flags,$(targetName),$(libraryVersion))
+libWithSonameBase = $(call construct_soname,$(targetName),$(libraryVersion))
+libWithSoname = $(strip $(libWithSonameBase))
 
 all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion)
 
@@ -25,9 +27,9 @@ $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/dll/lib$(targetName).$(Cinternal
 	@mkdir -p $(@D)
 	@mkdir -p $(@D)/../lib
 	@mkdir -p $(@D)/../tlib
-	@$(LINK) $^ $(libWithSoname) -shared $(LIBS) $(LFLAGS) -o $@
+	@$(LINK) $^ $(libWithSonameFlags) -shared $(LIBS) $(LFLAGS) -o $@
 	@rm -f $(@D)/../lib/lib$(targetName).$(CinternalLibExt)
-	@cd $(@D)/../lib && ln -s ../dll/lib$(targetName).$(CinternalLibExt).$(libraryVersion) lib$(targetName).$(CinternalLibExt)
+	@cd $(@D)/../lib && ln -s ../dll/$(libWithSoname) lib$(targetName).$(CinternalLibExt)
 
 .PHONY: clean
 clean:

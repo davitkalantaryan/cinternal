@@ -25,8 +25,11 @@ ifeq ($(osSystem),Darwin)
     CinternalExport := -export_dynamic
     CinternalLibExt := dylib
     CinternalSoname := -install_name
-    define construct_soname
+    define construct_soname_flags
         -install_name @rpath/lib$(1).$(2).dylib
+    endef
+    define construct_soname
+        lib$(1).$(2).dylib
     endef
 else
     lsbCode         := $(shell lsb_release -sc)
@@ -36,8 +39,11 @@ else
     CinternalExport := -E
     CinternalLibExt := so
     CinternalSoname := -soname
-    define construct_soname
+    define construct_soname_flags
         -Wl,-soname,lib$(1).so.$(2)
+    endef
+    define construct_soname
+        lib$(1).so.$(2)
     endef
 endif
 
