@@ -10,6 +10,9 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_WRAPPER_H
 
 #include <cinternal/internal_header.h>
+#include <cinternal/disable_compiler_warnings.h>
+#include <stdint.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 #ifdef _MSC_VER
@@ -18,12 +21,14 @@
 #define CinternalWrapperVsnprintf(_buffer,_count,_format,_argptr)   vsnprintf_s(_buffer,_count,_count,_format,_argptr)
 #define CinternalWrapperMemcpy(_dest,_src,_count)                   memcpy_s(_dest,_count,_src,_count)
 #define CinternalWrapperStrdup                                      _strdup
+#define CinternalWrapperGetPid()                                    CPPUTILS_STATIC_CAST(int64_t,GetCurrentProcessId())
 #else
 #define CinternalWrapperCtime_s(_timep,_buffer,_numberOfElements)   CPPUTILS_STATIC_CAST(void,_numberOfElements);ctime_r(_timep,_buffer)
 #define CinternalWrapperSnprintf                                    snprintf
 #define CinternalWrapperVsnprintf                                   vsnprintf
 #define CinternalWrapperMemcpy                                      memcpy
 #define CinternalWrapperStrdup                                      strdup
+#define CinternalWrapperGetPid()                                    CPPUTILS_STATIC_CAST(int64_t,getpid())
 #endif
 
 
