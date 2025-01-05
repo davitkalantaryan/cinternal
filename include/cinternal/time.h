@@ -18,8 +18,8 @@
 #else
 #include <sys/time.h>
 #endif
-#include <cinternal/undisable_compiler_warnings.h>
 #include <time.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 CPPUTILS_BEGIN_C
@@ -47,7 +47,7 @@ struct timezone{
 
 #ifdef cinternal_gettimeofday_needed
 #undef cinternal_gettimeofday_needed
-static inline int cinternal_gettimeofday_inline(struct timeval* a_tv, struct timezone* a_tz)
+static inline int cinternal_gettimeofday_inline(struct timeval* a_tv, struct timezone* a_tz) CPPUTILS_NOEXCEPT
 {
 	static void* spPointer = NULL;
 	unsigned __int64 tmpres = 0;

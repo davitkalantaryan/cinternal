@@ -12,7 +12,9 @@
 #include <cinternal/unnamed_semaphore.h>
 #define cinternal_sync_barrier_needed
 #include <cinternal/sync_barrier.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define CINTERNAL_THREAD_RET_CODE     ((cinternal_thread_ret_t)0)
 

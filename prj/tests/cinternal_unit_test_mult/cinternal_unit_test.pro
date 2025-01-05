@@ -2,15 +2,15 @@
 
 message("!!! $${_PRO_FILE_}")
 include ( "$${PWD}/../../common/common_qt/flagsandsys_common.pri" )
-DESTDIR     = "$${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/test"
+DESTDIR = "$${ArifactFinal}/test"
 
 CONFIG -= qt
 CONFIG += console
 
 win32{
 } else {
-	LIBS += -pthread
-	LIBS += -ldl
+    LIBS += -pthread
+    LIBS += -ldl
 }
 
 HEADERS += $$files($${cinternalRepoRoot}/include/*.h,true)

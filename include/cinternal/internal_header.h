@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:			internal_header.h
 // path:			include/cinternal/internal_header.h
 // created on:		2022 Jun 04
@@ -8,7 +9,9 @@
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
 #define CINTERNAL_INCLUDE_CINTERNAL_INTERNAL_HEADER_H
 
+#include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define cpputils_alloca	alloca
 
@@ -62,7 +65,6 @@
 	#endif
 #elif defined(__GNUC__) || defined(__clang__) || defined(LINUX_GCC)
 
-	#define CPPUTILS_GCC_FAMILY		1
 	#define CPPUTILS_C_CODE_INITIALIZER(f)	static void __attribute__ ((__constructor__)) f(void)
 
     #define CPPUTILS_MAY_ALIAS  __attribute__ ((__may_alias__))
@@ -84,7 +86,6 @@
     #define CPPUTILS_IMPORT_FROM_DLL
 #elif defined(__CYGWIN__)
 
-	#define CPPUTILS_GCC_FAMILY		1
 	#define CPPUTILS_C_CODE_INITIALIZER(f)	static void __attribute__ ((__constructor__)) f(void)
 
 	#define CPPUTILS_UNREACHABLE_CODE(_code)	_code ;
@@ -94,7 +95,6 @@
     #define CPPUTILS_IMPORT_FROM_DLL	__attribute__((dllimport))
 #elif defined(__MINGW64__) || defined(__MINGW32__)
 
-	#define CPPUTILS_GCC_FAMILY		1
 	#define CPPUTILS_C_CODE_INITIALIZER(f)	static void __attribute__ ((__constructor__)) f(void)
 
 	#define CPPUTILS_UNREACHABLE_CODE(_code)	_code ;
@@ -485,13 +485,13 @@
 
 #ifdef _MSC_VER
 #define CPPUTILS_WARNINGS_PUSH		__pragma(warning (push))
-#define CPPUTILS_WARNINGS_POP		__pragma(warning (pop))
+//#define CPPUTILS_WARNINGS_POP		__pragma(warning (pop))
 #elif defined(CPPUTILS_GCC_FAMILY)
 #define CPPUTILS_WARNINGS_PUSH      _Pragma("GCC diagnostic push") 
-#define CPPUTILS_WARNINGS_POP       _Pragma("GCC diagnostic pop")  
+//#define CPPUTILS_WARNINGS_POP       _Pragma("GCC diagnostic pop")  
 #else
 #define CPPUTILS_WARNINGS_PUSH
-#define CPPUTILS_WARNINGS_POP
+//#define CPPUTILS_WARNINGS_POP
 #endif
 
 
@@ -532,6 +532,31 @@
 #else
 #define CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK	__attribute__((weak))
 #define CPPUTILS_ONLY_GCCLIKE_ATTR_STRONG	
+#endif
+
+
+#define CPPUTILS_TOKENS_CONCAT01(_token1,_token2)     _token1  ## _token2
+#ifdef _MSC_VER
+#define CPPUTILS_TOKENS_CONCAT02(_token1,_token2)     _token1  ## _token2
+#else
+#define CPPUTILS_TOKENS_CONCAT02(_token1,_token2)     _token1  _token2
+#endif
+
+#ifdef __cplusplus
+#define CPPUTILS_EVALUATE_WHEN_CPP(_expr)   _expr
+#define CPPUTILS_EVALUATE_WHEN_C(_expr)
+#ifdef CPPUTILS_CPP_11_DEFINED
+#define CPPUTILS_MAKE_FNC_DELETED(_fncWithSignature)            _fncWithSignature = delete;
+#define CPPUTILS_MAKE_FNC_DEFAULT(_fncWithSignature,_ret)       _fncWithSignature = default;
+#else
+#define CPPUTILS_MAKE_FNC_DELETED(_fncWithSignature)
+#define CPPUTILS_MAKE_FNC_DEFAULT(_fncWithSignature,_ret)       _fncWithSignature { _ret ; }
+#endif
+#else
+#define CPPUTILS_EVALUATE_WHEN_CPP(_expr)
+#define CPPUTILS_EVALUATE_WHEN_C(_expr) _expr
+#define CPPUTILS_MAKE_FNC_DELETED(_fncWithSignature)
+#define CPPUTILS_MAKE_FNC_DEFAULT(_fncWithSignature,_ret)       
 #endif
 
 

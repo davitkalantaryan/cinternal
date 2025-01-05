@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:            c_raii.h
 // path:			include/cinternal/c_raii.h
 // created on:		2023 Feb 25
@@ -11,9 +12,11 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_C_RAII_EXT_H
 
 #include <cinternal/internal_header.h>
+#include <cinternal/disable_compiler_warnings.h>
 #ifdef _MSC_VER
 #include <excpt.h>
 #endif
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 #ifdef _MSC_VER

@@ -137,5 +137,11 @@
     <None Include="..\..\scripts\unix_source_per_session.sh">
       <Filter>repo_files\scripts</Filter>
     </None>
+    <None Include="..\..\scripts\windows_build_lib.bat">
+      <Filter>repo_files\scripts</Filter>
+    </None>
+    <None Include="..\..\scripts\unix_build_lib.sh">
+      <Filter>repo_files\scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:			thread_local_sys.h
 // path:			include/cinternal/thread_local_sys.h
 // created on:		2023 Mar 24
@@ -11,14 +12,18 @@
 
 #include <cinternal/internal_header.h>
 
-#ifdef _WIN32
+#ifdef _MSC_VER
+#pragma warning(disable:4191)
+#endif
 
 #include <cinternal/disable_compiler_warnings.h>
+
+#ifdef _WIN32
+
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
 #include <fibersapi.h>
-#include <cinternal/undisable_compiler_warnings.h>
 
 typedef DWORD           CinternalTlsData;
 
@@ -42,6 +47,8 @@ typedef pthread_key_t   CinternalTlsData;
 #define CinternalTlsDelete          pthread_key_delete
 
 #endif
+
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 #endif  //  #ifndef CINTERNAL_INCLUDE_CINTERNAL_THREAD_LOCAL_SYS_H

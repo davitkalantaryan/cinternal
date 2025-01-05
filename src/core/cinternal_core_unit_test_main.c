@@ -10,10 +10,10 @@
 #define CPPUTILS_CONDITIONAL_WEAKNESS		CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK
 
 #include <cinternal/unit_test.h>
-#define FileNameFromPossiblePathInline_needed
-#include <cinternal/fs.h>
 #include <cinternal/logger.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdlib.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 
 CPPUTILS_BEGIN_C
@@ -41,7 +41,7 @@ CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK int CPPUTILS_WEAK_SYMBOL_NAME(main)(void)
 CPPUTILS_WEAK_SYMBOL(main)
 
 
-CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalAddUnitTestFunction)(TypeFunction a_function, const char* a_maj, const char* a_min)
+CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalAddUnitTestFunction)(TypeFunction a_function, const char* a_maj, const char* a_min) CPPUTILS_NOEXCEPT
 {
 	struct SFunctionsToCall* pNextFn = (struct SFunctionsToCall*)malloc(sizeof(struct SFunctionsToCall));
 	if (pNextFn) {
@@ -59,7 +59,7 @@ CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalAddUnitT
 CPPUTILS_WEAK_SYMBOL(CinternalAddUnitTestFunction)
 
 
-CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateAndCallUnitTestFunctions)(void)
+CPPUTILS_ONLY_GCCLIKE_ATTR_WEAK void CPPUTILS_WEAK_SYMBOL_NAME(CinternalIterateAndCallUnitTestFunctions)(void) CPPUTILS_NOEXCEPT
 {
 	struct SFunctionsToCall* pFnNext, * pFn = s_pFirst;
 	while (pFn) {

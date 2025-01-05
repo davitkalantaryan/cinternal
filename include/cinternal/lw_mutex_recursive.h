@@ -30,7 +30,7 @@ typedef CRITICAL_SECTION	cinternal_lw_recursive_mutex_t;
 
 #ifdef cinternal_lw_recursive_mutex_create_needed
 #undef cinternal_lw_recursive_mutex_create_needed
-static inline int cinternal_lw_recursive_mutex_createInline(cinternal_lw_recursive_mutex_t* a_pMutex){
+static inline int cinternal_lw_recursive_mutex_createInline(cinternal_lw_recursive_mutex_t* a_pMutex) CPPUTILS_NOEXCEPT {
 	InitializeCriticalSection(a_pMutex);
 	return 0;
 }

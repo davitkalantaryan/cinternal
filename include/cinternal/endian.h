@@ -1,4 +1,5 @@
 //
+// repo:			cinternal
 // file:			endian.hpp
 // path:			include/cinternal/endian.hpp
 // created on:		2021 Mar 24
@@ -12,6 +13,7 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_ENDIAN_H
 
 #include <cinternal/internal_header.h>
+#include <cinternal/disable_compiler_warnings.h>
 
 
 #if defined(__linux__) || defined(__CYGWIN__) || defined(CPPUTILS_EMSCRIPTEN_IS_USED)
@@ -61,11 +63,9 @@
 
 #elif defined(_WIN32)
 
-#include <cinternal/disable_compiler_warnings.h>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
-#include <cinternal/undisable_compiler_warnings.h>
 
 #if REG_DWORD == REG_DWORD_LITTLE_ENDIAN
 
@@ -118,5 +118,7 @@
 #error platform not supported
 
 #endif
+
+#include <cinternal/undisable_compiler_warnings.h>
 
 #endif  // #ifndef CINTERNAL_INCLUDE_CINTERNAL_ENDIAN_H

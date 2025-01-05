@@ -10,14 +10,10 @@
 #define CINTERNAL_INCLUDE_CINTERNAL_COMMON_DATA01_H
 
 #include <cinternal/internal_header.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
 #include <stdbool.h>
-
-#if defined(_MSC_VER)
-#pragma warning(disable: 4152)  // this will help to keep functions pointers also in the containers
-#else
-#endif
-
+#include <cinternal/undisable_compiler_warnings.h>
 
 CPPUTILS_BEGIN_C
 
@@ -32,9 +28,6 @@ typedef void(*TypeCinternalUnstoreKey)(TypeCinternalDeallocator a_deallocator, v
 
 
 CPPUTILS_END_C
-
-#define CInternalStrKeyPairFn(_str)												(_str),strlen(_str)  // to use this string.h should be included
-#define CInternalSmallIntHPairFn(_key)											((void*)((size_t)(_key))), 0
 
 
 

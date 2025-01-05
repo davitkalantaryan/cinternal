@@ -55,7 +55,7 @@ typedef SYNCHRONIZATION_BARRIER	cinternal_sync_barrier_t;
 #ifdef cinternal_sync_barrier_create_needed
 #undef cinternal_sync_barrier_create_needed
 #endif
-static inline int cinternal_sync_barrier_create(cinternal_sync_barrier_t* a_pBarrier, int a_count) {
+static inline int cinternal_sync_barrier_create(cinternal_sync_barrier_t* a_pBarrier, int a_count) CPPUTILS_NOEXCEPT  {
     if (a_count == 0) {
         return EINVAL;
     }
@@ -76,7 +76,7 @@ static inline int cinternal_sync_barrier_create(cinternal_sync_barrier_t* a_pBar
 #ifdef cinternal_sync_barrier_destroy_needed
 #undef cinternal_sync_barrier_destroy_needed
 #endif
-static inline void cinternal_sync_barrier_destroy(cinternal_sync_barrier_t* a_pBarrier) {
+static inline void cinternal_sync_barrier_destroy(cinternal_sync_barrier_t* a_pBarrier) CPPUTILS_NOEXCEPT  {
     pthread_cond_destroy(&(a_pBarrier->cond));
     pthread_mutex_destroy(&(a_pBarrier->mutex));
 }
@@ -86,7 +86,7 @@ static inline void cinternal_sync_barrier_destroy(cinternal_sync_barrier_t* a_pB
 #ifdef cinternal_sync_barrier_wait_needed
 #undef cinternal_sync_barrier_wait_needed
 #endif
-static inline int cinternal_sync_barrier_wait(cinternal_sync_barrier_t* a_pBarrier) {
+static inline int cinternal_sync_barrier_wait(cinternal_sync_barrier_t* a_pBarrier) CPPUTILS_NOEXCEPT  {
     if (pthread_mutex_lock(&(a_pBarrier->mutex)) < 0) {
         return -1;
     }

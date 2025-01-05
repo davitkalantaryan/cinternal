@@ -10,8 +10,10 @@
 #include <cinternal/threading.h>
 #define cinternal_unnamed_sema_wait_ms_needed
 #include <cinternal/unnamed_semaphore.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define CINTERNAL_THREAD_RET_CODE     ((cinternal_thread_ret_t)0)
 

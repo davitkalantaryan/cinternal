@@ -175,6 +175,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -185,6 +186,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,6 +197,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -207,6 +210,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -221,6 +225,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -235,6 +240,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -247,6 +253,7 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -259,6 +266,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -268,10 +276,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_lhash.c" />
-    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_phash.c" />
-    <ClCompile Include="..\..\..\src\core\cinternal_core_hash_vhash.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_hash.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_logger.c" />
+    <ClCompile Include="..\..\..\src\core\cinternal_core_typeinfo.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_checks.c" />
     <ClCompile Include="..\..\..\src\core\cinternal_core_unit_test_main.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0000_initial.c" />
@@ -281,9 +288,8 @@
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0004_threading.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0005_threading_and_sync.c" />
     <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0006_benchmark.c" />
-    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_hash_lhash.c" />
-    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0008_hash_phash.c" />
-    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0009_hash_vhash.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0007_hash.c" />
+    <ClCompile Include="..\..\..\src\tests\unit_test\cinternal_unit_test_0008_typeinfo.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cinternal\benchmark.h" />
@@ -296,17 +302,18 @@
     <ClInclude Include="..\..\..\include\cinternal\export_symbols.h" />
     <ClInclude Include="..\..\..\include\cinternal\fourstateflags.h" />
     <ClInclude Include="..\..\..\include\cinternal\fs.h" />
-    <ClInclude Include="..\..\..\include\cinternal\hash\data.h" />
-    <ClInclude Include="..\..\..\include\cinternal\hash\functions.h" />
-    <ClInclude Include="..\..\..\include\cinternal\hash\lhash.h" />
-    <ClInclude Include="..\..\..\include\cinternal\hash\phash.h" />
-    <ClInclude Include="..\..\..\include\cinternal\hash\vhash.h" />
+    <ClInclude Include="..\..\..\include\cinternal\gettid.h" />
+    <ClInclude Include="..\..\..\include\cinternal\hash.h" />
+    <ClInclude Include="..\..\..\include\cinternal\hash_functions.h" />
     <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h" />
     <ClInclude Include="..\..\..\include\cinternal\internal_header.h" />
     <ClInclude Include="..\..\..\include\cinternal\logger.h" />
     <ClInclude Include="..\..\..\include\cinternal\lw_mutex_recursive.h" />
     <ClInclude Include="..\..\..\include\cinternal\macroses.h" />
-    <ClInclude Include="..\..\..\include\cinternal\macroses02.h" />
+    <ClInclude Include="..\..\..\include\cinternal\macroses_base.h" />
+    <ClInclude Include="..\..\..\include\cinternal\macroses_variadic.h" />
+    <ClInclude Include="..\..\..\include\cinternal\rwlock.h" />
+    <ClInclude Include="..\..\..\include\cinternal\signals.h" />
     <ClInclude Include="..\..\..\include\cinternal\sync_barrier.h" />
     <ClInclude Include="..\..\..\include\cinternal\threading.h" />
     <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h" />
@@ -315,6 +322,7 @@
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h" />
     <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h" />
+    <ClInclude Include="..\..\..\include\cinternal\wrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cinternal_unit_test.pro" />

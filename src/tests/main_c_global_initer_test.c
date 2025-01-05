@@ -7,8 +7,10 @@
 
 
 #include <cinternal/internal_header.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <stdio.h>
 #include <assert.h>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define CINTERNALS_GLB_CONS_DSGN_VAL	1
 
