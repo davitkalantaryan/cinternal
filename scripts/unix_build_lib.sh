@@ -23,12 +23,9 @@ do
 	cd "${scriptDirectory}"
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
-scriptDirectory=`pwd`
+cd ..
+cinternalRepoRoot=`pwd`
+echo cinternalRepoRoot=\"${cinternalRepoRoot}\"
 
-source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
-
-cd ${cinternalRepoRoot}/workspaces/cinternal_all_mkfl
-unset CPPUTILS_DEBUG
-make -f cinternal_all.unix.Makefile CPPUTILS_RELEASE=1
-unset CPPUTILS_RELEASE
-make -f cinternal_all.unix.Makefile CPPUTILS_DEBUG=1
+make -f prj/core/libcinternal_mkfl/cinternal.unix.Makefile CPPUTILS_RELEASE=1
+make -f prj/core/libcinternal_mkfl/cinternal.unix.Makefile CPPUTILS_DEBUG=1
