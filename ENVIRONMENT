@@ -4,4 +4,4 @@ cinternal_version_major=1
 cinternal_version_minor=0
 cinternal_version_patch=2
 Confilguration=Release
-libNameBase=app_and_browser_monitor
+libNameBase=cinternal

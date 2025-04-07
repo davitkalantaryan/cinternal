@@ -48,7 +48,7 @@ fi
 echo "lsbCode=${lsbCode}"
 echo "qtTarget=${qtTarget}"
 
-cd ${repositoryRoot}/prj/core/libinput_monitor_qt
+cd ${repositoryRoot}/prj/core/libcinternal_qt
 rm -rf .qmake.stash
 ${QT_ROOT_DIR}/${qtTarget}/bin/qmake CONFIG+=release CONFIG-=debug
 make -f Makefile.${libNameBase}.$lsbCode.${Confilguration}
