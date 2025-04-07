@@ -131,6 +131,24 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
     MOC_DIR         =  $${ArifactFinal}/.other/mocs/$${TARGET}
     UI_DIR          =  $${ArifactFinal}/.other/uics/$${TARGET}
 
+    isEmpty(extraLibsDir) {
+        extraLibsDir = $$(extraLibsDir)
+    }
+    !isEmpty(extraLibsDir) {
+        exists($${extraLibsDir}) {
+            LIBS += -L$${extraLibsDir}
+        }
+    }
+
+    isEmpty(extraIncludesDir) {
+        extraIncludesDir = $$(extraIncludesDir)
+    }
+    !isEmpty(extraIncludesDir) {
+        exists($${extraIncludesDir}) {
+            INCLUDEPATH += -L$${extraIncludesDir}
+        }
+    }
+
     exists($${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib) {
 	LIBS += -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
     }
