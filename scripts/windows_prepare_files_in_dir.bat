@@ -21,13 +21,13 @@ cd /D "%scriptDirectory%.."
 set "repositoryRoot=%cd%\"
 echo repositoryRoot=%repositoryRoot%
 
-call .\contrib\event_loop_invoker\contrib\cinternal\scripts\windows_parse_key_value_pairs_file.bat ENVIRONMENT
+call .\scripts\windows_parse_key_value_pairs_file.bat ENVIRONMENT
 cd /D "%currentDirectory%"
 
 cd "%destinationPath%"
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
-copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%private_input_monitor_version_major%.dll" .
-copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%private_input_monitor_version_major%.lib" %libNameBase%.lib
+copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%cinternal_version_major%.dll" .
+copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%cinternal_version_major%.lib" %libNameBase%.lib
 
 exit /b !ERRORLEVEL!
 
