@@ -8,9 +8,6 @@
 @echo off
 setlocal EnableDelayedExpansion enableextensions
 
-:: some definations
-set "Platform=x64"
-
 set  scriptDirectory=%~dp0
 set  currentDirectory=%cd%
 cd /D "%scriptDirectory%.."
