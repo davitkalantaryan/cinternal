@@ -12,6 +12,7 @@ setlocal EnableDelayedExpansion enableextensions
 set "Platform=x64"
 
 set "destinationPath=%1"
+set "pdbFilesDir=%2"
 
 echo destinationPath=%destinationPath%
 
@@ -28,6 +29,10 @@ cd "%destinationPath%"
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%cinternal_version_major%.dll" .
 copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%cinternal_version_major%.lib" %libNameBase%.lib
+
+cd /D "%pdbFilesDir%"
+if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
+copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%cinternal_version_major%.pdb" .
 
 exit /b !ERRORLEVEL!
 
