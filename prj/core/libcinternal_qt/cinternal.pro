@@ -25,6 +25,9 @@ DEFINES += CINTERNAL_COMPILING_SHARED_LIB
 
 win32{
 
+    QMAKE_CXXFLAGS += /Brepro
+    QMAKE_CFLAGS += /Brepro
+    QMAKE_LFLAGS += /Brepro
     CONFIG(release, debug|release) {
         QMAKE_CXXFLAGS += /Zi
         QMAKE_CFLAGS += /Zi
