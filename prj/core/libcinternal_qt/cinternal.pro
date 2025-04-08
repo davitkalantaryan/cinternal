@@ -23,6 +23,18 @@ VERSION = $${cinternal_version_major}.$${cinternal_version_minor}.$${cinternal_v
 
 DEFINES += CINTERNAL_COMPILING_SHARED_LIB
 
+win32{
+
+    CONFIG(release, debug|release) {
+        QMAKE_CXXFLAGS += /Zi
+        QMAKE_CFLAGS += /Zi
+        QMAKE_LFLAGS += /DEBUG
+        QMAKE_LFLAGS +=/INCREMENTAL:NO
+    }
+
+} else {
+}
+
 SOURCES	+=		\
         "$${cinternalRepoRoot}/src/core/cinternal_core_hash.c"	    \
         "$${cinternalRepoRoot}/src/core/cinternal_core_logger.c"    \
