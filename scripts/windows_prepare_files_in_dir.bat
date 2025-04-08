@@ -25,7 +25,7 @@ echo repositoryRoot=%repositoryRoot%
 call .\scripts\windows_parse_key_value_pairs_file.bat ENVIRONMENT
 cd /D "%currentDirectory%"
 
-cd "%destinationPath%"
+cd /D "%destinationPath%"
 if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%cinternal_version_major%.dll" .
 copy /Y "%repositoryRoot%sys\win_%Platform%\!Confilguration!\lib\%libNameBase%%cinternal_version_major%.lib" %libNameBase%.lib
