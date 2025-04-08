@@ -10,6 +10,7 @@ message("!!! $${_PRO_FILE_}")
 
 TEMPLATE = lib
 include ( "$${PWD}/../../common/common_qt/flagsandsys_common.pri" )
+include ( "$${cinternalRepoRoot}/prj/common/common_qt/core_lib_flags.pri" )
 include ( $${cinternalRepoRoot}/ENVIRONMENT)
 
 TARGET = $${libNameBase}
@@ -22,21 +23,6 @@ CONFIG -= qt
 VERSION = $${cinternal_version_major}.$${cinternal_version_minor}.$${cinternal_version_patch}
 
 DEFINES += CINTERNAL_COMPILING_SHARED_LIB
-
-win32{
-
-    QMAKE_CXXFLAGS += /Brepro
-    QMAKE_CFLAGS += /Brepro
-    QMAKE_LFLAGS += /Brepro
-    CONFIG(release, debug|release) {
-        QMAKE_CXXFLAGS += /Zi
-        QMAKE_CFLAGS += /Zi
-        QMAKE_LFLAGS += /DEBUG
-        QMAKE_LFLAGS +=/INCREMENTAL:NO
-    }
-
-} else {
-}
 
 SOURCES	+=		\
         "$${cinternalRepoRoot}/src/core/cinternal_core_hash.c"	    \
