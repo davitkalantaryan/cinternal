@@ -130,7 +130,7 @@ static inline int CinternalInitLoggerInline(void) CPPUTILS_NOEXCEPT {
 #ifdef CINTERNALLOGGER_NO_DEFAULT
     s_loggerData.pDefaultlyAddedLogger = CPPUTILS_NULL;
 #else
-    s_loggerData.pDefaultlyAddedLogger = CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\n\r");
+    s_loggerData.pDefaultlyAddedLogger = CinternalLoggerAddLoggerInline(&CinternalDefaultLoggerFunction, CPPUTILS_NULL, "\r\n");
 #endif
     atexit(&cinternal_core_logger_clean);
     return 0;

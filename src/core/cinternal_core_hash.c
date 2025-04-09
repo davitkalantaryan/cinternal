@@ -208,7 +208,7 @@ CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataEvenIfExist(ConstCinter
 }
 
 
-CINTERNAL_EXPORT CinternalHashItem_t CInternalPHashAddDataIfNotExists(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataIfNotExists(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
     const void* a_data, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT
 {
     size_t unHash;

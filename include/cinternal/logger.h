@@ -88,7 +88,7 @@ CINTERNAL_EXPORT int  CinternalLoggerMakeLog(int a_logLevel, const char* a_categ
                                              enum CinternalLogType a_type, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_fmtStr, ...) CPPUTILS_NOEXCEPT;
 
 
-#define CinternalLoggerAddDefaultLogger()       CinternalLoggerAddDefaultLoggerEx("\n\r")
+#define CinternalLoggerAddDefaultLogger()       CinternalLoggerAddDefaultLoggerEx("\r\n")
 #define CInternalLogFatal(...)		            CinternalLoggerMakeLog(0,"fatal",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryFatal,__VA_ARGS__)
 #define CInternalLogCritical(...)		        CinternalLoggerMakeLog(0,"critical",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlaceAndFunc,CinternalLogCategoryCritical,__VA_ARGS__)
 #define CInternalLogError(...)		            CinternalLoggerMakeLog(0,"error",__FILE__,__LINE__,__FUNCTION__,CinternalLogTypeCompleteLoggingWithPlace,CinternalLogCategoryError,__VA_ARGS__)
