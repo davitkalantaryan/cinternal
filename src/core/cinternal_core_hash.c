@@ -56,10 +56,8 @@ static bool CinternalStoreKeySmallInt(TypeCinternalAllocator a_allocator, void**
 static void CinternalUnstoreKeySmallInt(TypeCinternalDeallocator a_deallocator, void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
 static size_t cinternal_hash1_raw_mem(const void* a_pKey, size_t a_unKeySize) CPPUTILS_NOEXCEPT;
 
-static inline struct SCinternalHashItemPrivateFull* CInternalHashFindItemInline(const struct SCinternalHashPrivateFull* CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) CPPUTILS_NOEXCEPT  {
-    struct SCinternalHashItemPrivateFull* pItem;
-    *a_pHash = ((*(a_hashTbl->publ.hasher))(a_key, a_keySize)) % (a_hashTbl->publ.numberOfBaskets);
-    pItem = a_hashTbl->ppTable[*a_pHash];
+static inline struct SCinternalHashItemPrivateFull* CInternalHashFindItemInlineRaw(const struct SCinternalHashPrivateFull* CPPUTILS_ARG_NN a_hashTbl, struct SCinternalHashItemPrivateFull* a_pItem, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT  {
+    struct SCinternalHashItemPrivateFull* pItem = a_pItem;
     while (pItem) {
         if ((*(a_hashTbl->publ.isEq))(pItem->publ.key, pItem->publ.keySize, a_key, a_keySize)) {
             return pItem;
@@ -67,6 +65,14 @@ static inline struct SCinternalHashItemPrivateFull* CInternalHashFindItemInline(
         pItem = pItem->next;
     }
     return CPPUTILS_NULL;
+}
+
+
+static inline struct SCinternalHashItemPrivateFull* CInternalHashFindItemInline(const struct SCinternalHashPrivateFull* CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) CPPUTILS_NOEXCEPT  {
+    struct SCinternalHashItemPrivateFull* pItem;
+    *a_pHash = ((*(a_hashTbl->publ.hasher))(a_key, a_keySize)) % (a_hashTbl->publ.numberOfBaskets);
+    pItem = a_hashTbl->ppTable[*a_pHash];
+    return CInternalHashFindItemInlineRaw(a_hashTbl,pItem,a_key, a_keySize);
 }
 
 
@@ -257,6 +263,18 @@ CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFind(ConstCinternalHash_t CPPU
     size_t unHash;
     const struct SCinternalHashPrivateFull* const pHashTable = CinternalHashFromPublPtr(a_hashTbl);
     struct SCinternalHashItemPrivateFull* const pIterator = CInternalHashFindItemInline(pHashTable, a_key, a_keySize, &unHash);
+    if (pIterator) {
+        return CinternalHashItemFromPrvtPtr(&(pIterator->publ));
+    }
+    return CPPUTILS_NULL;
+}
+
+
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFindNextTheSame(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashItem_t CPPUTILS_ARG_NN a_prev) CPPUTILS_NOEXCEPT
+{
+    const struct SCinternalHashPrivateFull* const pHashTable = CinternalHashFromPublPtr(a_hashTbl);
+    struct SCinternalHashItemPrivateFull* const pItem = CinternalHashItemFromPublPtr(a_prev);
+    struct SCinternalHashItemPrivateFull* const pIterator = CInternalHashFindItemInlineRaw(pHashTable,pItem->next,a_prev->key,a_prev->keySize);
     if (pIterator) {
         return CinternalHashItemFromPrvtPtr(&(pIterator->publ));
     }
