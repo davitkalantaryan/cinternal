@@ -74,6 +74,8 @@ CINTERNAL_EXPORT bool CInternalHashRemoveData(ConstCinternalHash_t CPPUTILS_ARG_
 CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFindEx(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) CPPUTILS_NOEXCEPT;
 CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFind(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
 
+// Functions added on 2025 May 02
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFindNextTheSame(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashItem_t CPPUTILS_ARG_NN a_prev) CPPUTILS_NOEXCEPT;
 
 CPPUTILS_END_C
 
