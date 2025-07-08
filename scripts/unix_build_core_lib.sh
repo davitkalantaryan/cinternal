@@ -32,7 +32,7 @@ source ${repositoryRoot}/ENVIRONMENT
 
 if [[ "$(uname)" == "Darwin" ]]; then
     lsbCode=mac
-    qtTarget=clang_64
+    qtTarget=macos
 elif [[ "$(uname -s)" == Linux* ]]; then
     source /etc/os-release
     if [ -n "$VERSION_CODENAME" ]; then
