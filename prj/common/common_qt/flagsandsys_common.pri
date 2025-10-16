@@ -63,18 +63,30 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
 
     win32{
         STATIC_LIB_EXTENSION = lib
-	LIB_PREFIX =
-	msvc {
+        LIB_PREFIX =
+        msvc {
             CinternalStrongWarings  = /Wall /WX
             CinternalNoSdl = /sdl-
-	}
-	contains(QMAKE_TARGET.arch, x86_64) {
-	    message ("!!!!!!!!!! windows 64")
-	    CODENAME = win_x64
-	} else {
-	    message ("!!!!!!!!!! windows 32")
-	    CODENAME = win_x86
-	}
+        } else {
+            CinternalStrongWarings  = -Wall -Werror
+        }
+        # Architecture detection
+        contains(QMAKE_TARGET.arch, x86_64) {
+            message("!!!!!!!!!! windows 64 (x86_64)")
+            CODENAME = win_x64
+        } else: contains(QMAKE_TARGET.arch, x86) {
+            message("!!!!!!!!!! windows 32 (x86)")
+            CODENAME = win_x86
+        } else: contains(QMAKE_TARGET.arch, arm64) {
+            message("!!!!!!!!!! windows 64 (ARM64)")
+            CODENAME = win_arm64
+        } else: contains(QMAKE_TARGET.arch, arm) {
+            message("!!!!!!!!!! windows 32 (ARM)")
+            CODENAME = win_arm
+        } else {
+            message("!!!!!!!!!! Unknown architecture: $$QMAKE_TARGET.arch")
+            CODENAME = win_unknown
+        }
     } else:mac {
         message ("!!!!!!!!!! mac")
 	CODENAME = mac
