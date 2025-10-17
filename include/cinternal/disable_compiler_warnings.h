@@ -55,14 +55,15 @@
 #define CPPUTILS_GCC_FAMILY		1
 #endif
 #ifndef CPPUTILS_WARNINGS_POP
-#define CPPUTILS_WARNINGS_POP		_Pragma("GCC diagnostic push")
+#define CPPUTILS_WARNINGS_POP		_Pragma("GCC diagnostic pop")
 #endif
+
+#pragma GCC diagnostic ignored "-Wattributes"
 
 #ifndef CPPUTILS_COMPILER_WARNINGS_PUSHED
 #pragma GCC diagnostic push
 #define CPPUTILS_COMPILER_WARNINGS_PUSHED
 #endif
-#pragma GCC diagnostic ignored "-Wattributes"
 
 #endif  //  #if defined(_MSC_VER)
 
