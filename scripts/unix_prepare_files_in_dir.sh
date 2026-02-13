@@ -26,11 +26,19 @@ do
     fileOrigin=`readlink "${scriptFileName}"`  || :
 done
 scriptDirectory=`pwd`
+cd ..
+repositoryRoot=`pwd`
+echo repositoryRoot=$repositoryRoot
 
-source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh 1
-source ${cinternalRepoRoot}/ENVIRONMENT
+source ${repositoryRoot}/ENVIRONMENT
+source ${scriptDirectory}/unix_source_per_session.sh
 
+if [[ "$(uname)" == "Darwin" ]]; then
+    libSoNamePostfix=${cinternal_version_major}.dylib
+elif [[ "$(uname -s)" == Linux* ]]; then
+    libSoNamePostfix=so.${cinternal_version_major}
+fi
 
 cd "${destinationPath}"
-cp ${cinternalRepoRoot}/sys/${lsbCode}/${Confilguration}/lib/lib${libNameBase}.${libSoNamePostfix} .
+cp ${repositoryRoot}/sys/${lsbCode}/${Confilguration}/lib/lib${libNameBase}.${libSoNamePostfix} .
 ln -s lib${libNameBase}.${libSoNamePostfix} lib${libNameBase}.${libNamePostfix}

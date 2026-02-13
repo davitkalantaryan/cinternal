@@ -51,7 +51,6 @@ makeMainJob (){
         		lsbCode=mac_old
     		fi
 		qtTarget=macos
-		libSoNamePostfix=${cinternal_version_major}.dylib
     		libNamePostfix=dylib
 	elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
 		# Do something under GNU/Linux platform
@@ -64,7 +63,6 @@ makeMainJob (){
         		lsbCode="$(echo "$ID-$VERSION_ID" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
     		fi
     		qtTarget=gcc_64
-		libSoNamePostfix=so.${cinternal_version_major}
     		libNamePostfix=so
 		
 		case "$LD_LIBRARY_PATH" in
