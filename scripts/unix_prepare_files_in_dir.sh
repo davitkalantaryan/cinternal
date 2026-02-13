@@ -27,7 +27,7 @@ do
 done
 scriptDirectory=`pwd`
 
-source ${scriptDirectory}/unix_source_per_session.sh
+source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh 1
 source ${cinternalRepoRoot}/ENVIRONMENT
 
 
