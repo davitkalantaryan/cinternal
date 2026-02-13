@@ -89,7 +89,12 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
         }
     } else:mac {
         message ("!!!!!!!!!! mac")
-	CODENAME = mac
+        macVersionMajor = $$system(sw_vers -productVersion | cut -d '.' -f1)
+        greaterThan(macVersionMajor, 12) {
+            CODENAME = mac
+        } else {
+            CODENAME = mac_old
+        }
         CinternalStrongWarings  = -Wall -Werror
     } else:android {
         # ANDROID_TARGET_ARCH values 1."armeabi-v7a", 2."arm64-v8a", 3."x86", 4."x86_64"
