@@ -549,8 +549,10 @@ CINTERNAL_EXPORT int CinternalLoggerMakeLog(int a_logLevel, const char* a_catego
 static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCategory a_categoryEnm, const char* CPPUTILS_ARG_NN a_categoryStr, const char* CPPUTILS_ARG_NN a_log, size_t a_logStrLen) CPPUTILS_NOEXCEPT
 {
     FILE* fpOut;
+    int fputRet;
     CPPUTILS_STATIC_CAST(void, a_userData);
     CPPUTILS_STATIC_CAST(void, a_categoryStr);
+    CPPUTILS_STATIC_CAST(void, a_logStrLen);
     switch (a_categoryEnm) {
     case CinternalLogCategoryFatal:
     case CinternalLogCategoryCritical:
@@ -561,7 +563,8 @@ static void CinternalDefaultLoggerFunction(void* a_userData, enum CinternalLogCa
         fpOut = stdout;
         break;
     }  //  switch (a_categoryEnm) {
-    fwrite(a_log, 1, (a_logStrLen+1), fpOut);
+    fputRet=fputs(a_log,fpOut);
+    CPPUTILS_STATIC_CAST(void, fputRet);
     fflush(fpOut);
 }
 

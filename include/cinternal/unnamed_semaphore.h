@@ -16,8 +16,10 @@
 #include <WS2tcpip.h>
 #include <Windows.h>
 #elif defined(__APPLE__)
+#include <errno.h>
 #include <dispatch/dispatch.h>
 #else
+#include <errno.h>
 #include <semaphore.h>
 #include <sys/time.h>
 #define UNNAMED_SHARING_TYPE	0/* 0 means semaphores is shared between threads in same process */
@@ -38,27 +40,32 @@ typedef HANDLE	cinternal_unnamed_sema_t;
 #define cinternal_unnamed_sema_post(_pSema)								ReleaseSemaphore( *(_pSema), 1, CPPUTILS_NULL  )
 #define cinternal_unnamed_sema_wait(_pSema)								WaitForSingleObjectEx( *(_pSema), INFINITE,TRUE )
 #define cinternal_unnamed_sema_wait_ms(_pSema,_timeMs)					WaitForSingleObjectEx( *(_pSema), CPPUTILS_STATIC_CAST(DWORD,_timeMs),TRUE )
+#define cinternal_unnamed_sema_is_wait_timeout(_waitRet)				( (WAIT_TIMEOUT == (_waitRet))?1:0 )
+#define cinternal_unnamed_sema_is_wait_interrupted(_waitRet)			( (WAIT_IO_COMPLETION == (_waitRet))?1:0 )
 
 
 #elif defined(__APPLE__)
 
 typedef dispatch_semaphore_t	cinternal_unnamed_sema_t;
 
-#define cinternal_unnamed_sema_create(_pSema,_count)	( (*(_pSema) = dispatch_semaphore_create(CPPUTILS_STATIC_CAST(intptr_t,_count)))?0:(-1) )
-#define cinternal_unnamed_sema_destroy(_pSema)			dispatch_release(*(_pSema))
-#define cinternal_unnamed_sema_post(_pSema)				dispatch_semaphore_signal( *(_pSema) )
-#define cinternal_unnamed_sema_wait(_pSema)				dispatch_semaphore_wait( *(_pSema), DISPATCH_TIME_FOREVER )
-#define cinternal_unnamed_sema_wait_ms(_pSema,_timeMs)	dispatch_semaphore_wait( *(_pSema), CPPUTILS_STATIC_CAST(dispatch_time_t,_timeMs) )
+#define cinternal_unnamed_sema_create(_pSema,_count)	        ( (*(_pSema) = dispatch_semaphore_create(CPPUTILS_STATIC_CAST(intptr_t,_count)))?0:(-1) )
+#define cinternal_unnamed_sema_destroy(_pSema)			        dispatch_release(*(_pSema))
+#define cinternal_unnamed_sema_post(_pSema)				        dispatch_semaphore_signal( *(_pSema) )
+#define cinternal_unnamed_sema_wait(_pSema)				        dispatch_semaphore_wait( *(_pSema), DISPATCH_TIME_FOREVER )
+#define cinternal_unnamed_sema_wait_ms(_pSema,_timeMs)	        dispatch_semaphore_wait( *(_pSema), CPPUTILS_STATIC_CAST(dispatch_time_t,_timeMs) )
+#define cinternal_unnamed_sema_is_wait_timeout(_waitRet)	    ( ((_waitRet)!=0) && (errno!=EINTR) )
+#define cinternal_unnamed_sema_is_wait_interrupted(_waitRet)	( ((_waitRet)!=0) && (errno==EINTR) )
 
 
 #else   //  #ifdef _WIN32
 
 typedef sem_t	cinternal_unnamed_sema_t;
 
-#define cinternal_unnamed_sema_create(_pSema,_count)	sem_init( _pSema, 0, CPPUTILS_STATIC_CAST(unsigned int,(_count)) )
-#define cinternal_unnamed_sema_destroy(_pSema)			sem_destroy(_pSema)
-#define cinternal_unnamed_sema_post(_pSema)				sem_post( _pSema )
-#define cinternal_unnamed_sema_wait(_pSema)				sem_wait( _pSema )
+#define cinternal_unnamed_sema_create(_pSema,_count)	        sem_init( _pSema, 0, CPPUTILS_STATIC_CAST(unsigned int,(_count)) )
+#define cinternal_unnamed_sema_destroy(_pSema)			        sem_destroy(_pSema)
+#define cinternal_unnamed_sema_post(_pSema)				        sem_post( _pSema )
+#define cinternal_unnamed_sema_wait(_pSema)				        sem_wait( _pSema )
+#define cinternal_unnamed_sema_is_wait_interrupted(_waitRet)	( ((_waitRet)!=0) && (errno==EINTR) )
 #ifdef cinternal_unnamed_sema_wait_ms_needed
 #undef cinternal_unnamed_sema_wait_ms_needed
 static inline int cinternal_unnamed_sema_wait_ms_inline(cinternal_unnamed_sema_t* a_pSema, size_t a_waitTimeMs) CPPUTILS_NOEXCEPT {
@@ -72,6 +79,7 @@ static inline int cinternal_unnamed_sema_wait_ms_inline(cinternal_unnamed_sema_t
     return sem_timedwait(a_pSema, &finalAbsTime);
 }
 #define cinternal_unnamed_sema_wait_ms(_pSema,_timeMs)  cinternal_unnamed_sema_wait_ms_inline(_pSema,CPPUTILS_STATIC_CAST(size_t,_timeMs))
+#define cinternal_unnamed_sema_is_wait_timeout(_waitRet)	( ((_waitRet)!=0) && (errno==ETIMEDOUT) )
 #endif
 
 #endif  // #ifdef _WIN32
