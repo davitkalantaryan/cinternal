@@ -33,6 +33,7 @@ CPPUTILS_BEGIN_C
 #ifdef _WIN32
 
 typedef HANDLE	cinternal_unnamed_sema_t;
+typedef DWORD	cinternal_sema_wait_ret_t;
 
 #define cinternal_unnamed_sema_create(_pSema,_count)					( (*(_pSema) = CreateSemaphore(CPPUTILS_NULL,CPPUTILS_STATIC_CAST(LONG,_count),1024,CPPUTILS_NULL))?0:(-1) )
 #define cinternal_unnamed_sema_destroy(_pSema)							CloseHandle(*(_pSema))
@@ -48,6 +49,7 @@ typedef HANDLE	cinternal_unnamed_sema_t;
 #elif defined(__APPLE__)
 
 typedef dispatch_semaphore_t	cinternal_unnamed_sema_t;
+typedef int	            cinternal_sema_wait_ret_t;
 
 #define cinternal_unnamed_sema_create(_pSema,_count)	        ( (*(_pSema) = dispatch_semaphore_create(CPPUTILS_STATIC_CAST(intptr_t,_count)))?0:(-1) )
 #define cinternal_unnamed_sema_destroy(_pSema)			        dispatch_release(*(_pSema))
@@ -62,6 +64,7 @@ typedef dispatch_semaphore_t	cinternal_unnamed_sema_t;
 #else   //  #ifdef _WIN32
 
 typedef sem_t	cinternal_unnamed_sema_t;
+typedef int	            cinternal_sema_wait_ret_t;
 
 #define cinternal_unnamed_sema_create(_pSema,_count)	        sem_init( _pSema, 0, CPPUTILS_STATIC_CAST(unsigned int,(_count)) )
 #define cinternal_unnamed_sema_destroy(_pSema)			        sem_destroy(_pSema)
