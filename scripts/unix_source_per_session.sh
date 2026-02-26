@@ -45,11 +45,8 @@ makeMainJob (){
 	if [[ "$(uname)" == "Darwin" ]]; then
 		# Do something under Mac OS X platform
     		macVersionMajor="$(sw_vers -productVersion | cut -d '.' -f1)"
-    		if [ "$macVersionMajor" -gt 12 ]; then
-        		lsbCode=mac
-    		else
-        		lsbCode=mac_old
-    		fi
+		hardwareArch="$(uname -m)"
+		lsbCode=mac_${hardwareArch}
 		qtTarget=macos
     		libNamePostfix=dylib
 	elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then

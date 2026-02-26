@@ -90,10 +90,17 @@ isEmpty(cinternalFlagsAndSysCommonIncluded){
     } else:mac {
         message ("!!!!!!!!!! mac")
         macVersionMajor = $$system(sw_vers -productVersion | cut -d '.' -f1)
-        greaterThan(macVersionMajor, 12) {
-            CODENAME = mac
+        # Architecture detection (target arch)
+        # Typical values: x86_64, arm64
+        contains(QMAKE_TARGET.arch, arm64) {
+            message("!!!!!!!!!! mac (ARM64)")
+            CODENAME = mac_arm64
+        } else: contains(QMAKE_TARGET.arch, x86_64) {
+            message("!!!!!!!!!! mac (x86_64)")
+            CODENAME = mac_x86_64
         } else {
-            CODENAME = mac_old
+            message("!!!!!!!!!! mac Unknown architecture: $$QMAKE_TARGET.arch")
+            CODENAME = mac_unknown
         }
         CinternalStrongWarings  = -Wall -Werror
     } else:android {
