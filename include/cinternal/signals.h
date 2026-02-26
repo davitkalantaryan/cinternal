@@ -18,7 +18,7 @@
 #define CinternalSleepInterruptableMs(_x)     SleepEx(CPPUTILS_STATIC_CAST(DWORD,_x),TRUE)
 #else
 #include <unistd.h>
-#define CinternalSleepInterruptableMs(_x)     sleep(CPPUTILS_STATIC_CAST(unsigned int,(_x)/10000));usleep(CPPUTILS_STATIC_CAST(useconds_t,1000*((_x)%1000)))
+#define CinternalSleepInterruptableMs(_x)     sleep(CPPUTILS_STATIC_CAST(unsigned int,(_x)/1000));usleep(CPPUTILS_STATIC_CAST(useconds_t,1000*((_x)%1000)))
 #endif
 #include <cinternal/undisable_compiler_warnings.h>
 
