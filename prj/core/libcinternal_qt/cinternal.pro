@@ -28,10 +28,3 @@ SOURCES	+=		\
         "$${cinternalRepoRoot}/src/core/cinternal_core_hash.c"	    \
         "$${cinternalRepoRoot}/src/core/cinternal_core_logger.c"    \
 	"$${cinternalRepoRoot}/src/core/cinternal_core_typeinfo.c"
-
-
-OTHER_FILES += $$files($${PWD}/../libcinternal_mkfl/*.Makefile,false)
-OTHER_FILES += "$${cinternalRepoRoot}/scripts/unix_build_core_lib.sh"
-OTHER_FILES += "$${cinternalRepoRoot}/scripts/unix_prepare_files_in_dir.sh"
-OTHER_FILES += "$${cinternalRepoRoot}/scripts/windows_build_core_lib.bat"
-OTHER_FILES += "$${cinternalRepoRoot}/scripts/windows_prepare_files_in_dir.bat"

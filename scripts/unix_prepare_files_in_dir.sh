@@ -25,29 +25,18 @@ do
     cd "${scriptDirectory}"
     fileOrigin=`readlink "${scriptFileName}"`  || :
 done
+scriptDirectory=`pwd`
 cd ..
 repositoryRoot=`pwd`
 echo repositoryRoot=$repositoryRoot
 
 source ${repositoryRoot}/ENVIRONMENT
+source ${scriptDirectory}/unix_source_per_session.sh
 
 if [[ "$(uname)" == "Darwin" ]]; then
-    lsbCode=mac
-    qtTarget=clang_64
     libSoNamePostfix=${cinternal_version_major}.dylib
-    libNamePostfix=dylib
 elif [[ "$(uname -s)" == Linux* ]]; then
-    source /etc/os-release
-    if [ -n "$VERSION_CODENAME" ]; then
-        lsbCode="$VERSION_CODENAME"
-    elif echo "$ID_LIKE" | grep -qE 'rhel|fedora|centos'; then
-        lsbCode="el$(echo "$VERSION_ID" | cut -d. -f1)"
-    else
-        lsbCode="$(echo "$ID-$VERSION_ID" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
-    fi
-    qtTarget=gcc_64
     libSoNamePostfix=so.${cinternal_version_major}
-    libNamePostfix=so
 fi
 
 cd "${destinationPath}"

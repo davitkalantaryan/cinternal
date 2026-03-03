@@ -24,31 +24,15 @@ do
     cd "${scriptDirectory}"
     fileOrigin=`readlink "${scriptFileName}"`  || :
 done
-cd ..
-repositoryRoot=`pwd`
-echo repositoryRoot=$repositoryRoot
+scriptDirectory=`pwd`
 
-source ${repositoryRoot}/ENVIRONMENT
-
-if [[ "$(uname)" == "Darwin" ]]; then
-    lsbCode=mac
-    qtTarget=macos
-elif [[ "$(uname -s)" == Linux* ]]; then
-    source /etc/os-release
-    if [ -n "$VERSION_CODENAME" ]; then
-        lsbCode="$VERSION_CODENAME"
-    elif echo "$ID_LIKE" | grep -qE 'rhel|fedora|centos'; then
-        lsbCode="el$(echo "$VERSION_ID" | cut -d. -f1)"
-    else
-        lsbCode="$(echo "$ID-$VERSION_ID" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
-    fi
-    qtTarget=gcc_64
-fi
+source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh 1
+source ${cinternalRepoRoot}/ENVIRONMENT
 
 echo "lsbCode=${lsbCode}"
 echo "qtTarget=${qtTarget}"
 
-cd ${repositoryRoot}/prj/core/libcinternal_qt
+cd ${cinternalRepoRoot}/prj/core/libcinternal_qt
 rm -rf .qmake.stash
 ${QT_ROOT_DIR}/${qtTarget}/bin/qmake CONFIG+=release CONFIG-=debug
 make -f Makefile.${libNameBase}.$lsbCode.${Confilguration}
