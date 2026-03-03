@@ -18,7 +18,8 @@ endif
 
 osSystem		:= $(shell uname)
 ifeq ($(osSystem),Darwin)
-    lsbCode         := mac
+    hardwareArch    := $(shell uname -m)
+    lsbCode         := mac_$(hardwareArch)
     DEFAULT_CC      := clang
     DEFAULT_CXX     := clang++
     DEFAULT_LINK    := clang++
@@ -105,8 +106,14 @@ endif
 #EMXX=env CCACHE_CPP2=1 ccache em++
 EMXX=em++
 
-LIBS	+= -L$(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/lib
-LIBS	+= -L$(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/tlib
+#LIBS	+= -L$(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/lib
+#LIBS	+= -L$(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/tlib
+LIBDIR1 := $(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/lib
+LIBDIR2 := $(cinternalRepoRoot)/sys/$(lsbCode)/$(Configuration)/tlib
+
+LIBS += $(if $(shell test -d "$(LIBDIR1)" && echo 1),-L$(LIBDIR1),)
+LIBS += $(if $(shell test -d "$(LIBDIR2)" && echo 1),-L$(LIBDIR2),)
+
 
 COMMON_FLAGS	+= -I$(cinternalRepoRoot)/include -DCPPUTILS_COMPILER_WARNINGS_PUSH_POP
 
