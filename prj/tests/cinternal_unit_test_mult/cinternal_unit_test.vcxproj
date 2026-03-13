@@ -322,6 +322,7 @@
     <ClInclude Include="..\..\..\include\cinternal\unit_test.h" />
     <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h" />
     <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h" />
+    <ClInclude Include="..\..\..\include\cinternal\win_threading.h" />
     <ClInclude Include="..\..\..\include\cinternal\wrapper.h" />
   </ItemGroup>
   <ItemGroup>

@@ -6,11 +6,20 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 
+#include <cinternal/internal_header.h>
+#ifndef cinternal_unnamed_sema_wait_ms_needed
+#define cinternal_unnamed_sema_wait_ms_needed
+#endif
+#ifndef cinternal_sync_barrier_needed
+#define cinternal_sync_barrier_needed
+#endif
+#ifndef cinternal_thread_wait_and_clean_needed
+#define cinternal_thread_wait_and_clean_needed
+#endif
+
 #include <cinternal/unit_test.h>
 #include <cinternal/threading.h>
-#define cinternal_unnamed_sema_wait_ms_needed
 #include <cinternal/unnamed_semaphore.h>
-#define cinternal_sync_barrier_needed
 #include <cinternal/sync_barrier.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
@@ -65,6 +74,7 @@ static cinternal_thread_ret_t CPPUTILS_THR_CALL ThreadFunctionBarier(void* a_pAr
         s_nBarierReturns += nRet;
     }
     cinternal_thread_exit_thread(CINTERNAL_THREAD_RET_CODE);
+    CINTERNAL_UNREACH_CODE_AFTER_THR_EXIT(return CINTERNAL_THREAD_RET_CODE)
 }
 
 
@@ -73,4 +83,5 @@ static cinternal_thread_ret_t CPPUTILS_THR_CALL ThreadFunctionSema(void* a_pArg)
     cinternal_unnamed_sema_t* const pSema = (cinternal_unnamed_sema_t*)a_pArg;
     cinternal_unnamed_sema_post(pSema);
     cinternal_thread_exit_thread(CINTERNAL_THREAD_RET_CODE);
+    CINTERNAL_UNREACH_CODE_AFTER_THR_EXIT(return CINTERNAL_THREAD_RET_CODE)
 }
