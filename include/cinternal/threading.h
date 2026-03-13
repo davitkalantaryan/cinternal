@@ -6,6 +6,7 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 //
 
+
 #ifndef CINTERNAL_INCLUDE_CINTERNAL_THREADING_H
 #define CINTERNAL_INCLUDE_CINTERNAL_THREADING_H
 
@@ -15,6 +16,7 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
+#include <cinternal/win_threading.h>
 #else
 #include <pthread.h>
 #endif
@@ -26,25 +28,48 @@ CPPUTILS_BEGIN_C
 
 #ifdef _WIN32
 
-typedef HANDLE	cinternal_thread_t;
-typedef DWORD	cinternal_thread_ret_t;
+typedef cinternal_win_thread_t      cinternal_thread_t;
+typedef cinternal_win_thread_ret_t	cinternal_thread_ret_t;
 
-#define CPPUTILS_THR_CALL											WINAPI
+#define CPPUTILS_THR_CALL											CPPUTILS_WIN_THR_CALL
+#define CINTERNAL_UNREACH_CODE_AFTER_THR_EXIT                       CINTERNAL_UNREACH_CODE_AFTER_WIN_THR_EXIT
 
-#define cinternal_thread_exit_thread								ExitThread
-#define cinternal_thread_create(_pThread,_startFn,_arg)				( ( *(_pThread) = CreateThread(CPPUTILS_NULL,0,_startFn,_arg,0,CPPUTILS_NULL) )?0:(GetLastError()) )
-#define cinternal_thread_wait_and_clean(_pThread,_exitCodePtr)		WaitForSingleObjectEx(*(_pThread),INFINITE,TRUE);GetExitCodeThread(*(_pThread),_exitCodePtr),CloseHandle(*(_pThread))
-#define cinternal_thread_detach(_pThread)							CloseHandle(*(_pThread))
-#define cinternal_thread_attach(_pThread,_thread_id)				( (*(_pThread) = OpenThread(THREAD_ALL_ACCESS,FALSE,_thread_id))?0:(GetLastError()) )
-#define cinternal_thread_thread_id(_thread)							GetThreadId(_thread)
-#define cinternal_thread_destroy(_pThread)							CloseHandle(*(_pThread))
-#define cinternal_thread_wait(_thread)								WaitForSingleObjectEx(_thread,INFINITE,TRUE)
-#define cinternal_thread_get_exit_code(_thread,_exitCodePtr)		GetExitCodeThread(_thread,_exitCodePtr)
+#define cinternal_thread_exit_thread								cinternal_win_thread_exit_thread
+#define cinternal_thread_create(_pThread,_startFn,_arg)				cinternal_win_thread_create(_pThread,_startFn,_arg,CPPUTILS_NULL)
+#define cinternal_thread_detach(_pThread)							CloseHandle((HANDLE)(*(_pThread)))
+#define cinternal_thread_attach(_pThread,_thread_id)				( (*(_pThread) = (cinternal_thread_t)OpenThread(THREAD_ALL_ACCESS,FALSE,(DWORD)(_thread_id)))?0:(GetLastError()) )
+#define cinternal_thread_thread_id(_thread)							GetThreadId((HANDLE)(_thread))
+#define cinternal_thread_destroy(_pThread)							CloseHandle((HANDLE)(*(_pThread)))
+#define cinternal_thread_wait(_thread)								WaitForSingleObjectEx((HANDLE)(_thread),INFINITE,TRUE)
+#ifdef CINTERNAL_CRT_WIN_THREADING_IS_USED
+#if defined(cinternal_thread_wait_and_clean_needed) || defined(cinternal_thread_wait_and_clean_or_getexitcode_needed)
+inline void cinternal_thread_wait_and_clean(cinternal_win_thread_t* CPPUTILS_ARG_NN _pThread, cinternal_win_thread_id_t* CPPUTILS_ARG_NN _exitCodePtr) CPPUTILS_NOEXCEPT {
+    DWORD dwExitCode;
+    WaitForSingleObjectEx((HANDLE)(*(_pThread)), INFINITE, TRUE);
+    if (GetExitCodeThread((HANDLE)(*(_pThread)),&dwExitCode)) {
+        *_exitCodePtr = (cinternal_win_thread_id_t)dwExitCode;
+    }
+    CloseHandle((HANDLE)(*(_pThread)));
+}
+#endif
+#if defined(cinternal_thread_get_exit_code_needed) || defined(cinternal_thread_wait_and_clean_or_getexitcode_needed)
+inline void cinternal_thread_get_exit_code(cinternal_win_thread_t _thread, cinternal_win_thread_id_t* CPPUTILS_ARG_NN _exitCodePtr) CPPUTILS_NOEXCEPT {
+    DWORD dwExitCode;
+    if (GetExitCodeThread((HANDLE)(_thread), &dwExitCode)) {
+        *_exitCodePtr = (cinternal_win_thread_id_t)dwExitCode;
+    }
+}
+#endif
+#else
+#define cinternal_thread_wait_and_clean(_pThread,_exitCodePtr)		WaitForSingleObjectEx((HANDLE)(*(_pThread)),INFINITE,TRUE);GetExitCodeThread((HANDLE)(*(_pThread)),_exitCodePtr),CloseHandle((HANDLE)(*(_pThread)))
+#define cinternal_thread_get_exit_code(_thread,_exitCodePtr)		GetExitCodeThread((HANDLE)(_thread),_exitCodePtr)
+#endif
 
 #else   //  #ifdef _WIN32
 
 
 #define CPPUTILS_THR_CALL
+#define CINTERNAL_UNREACH_CODE_AFTER_THR_EXIT(_retStat)
 
 typedef pthread_t	cinternal_thread_t;
 typedef void*	cinternal_thread_ret_t;

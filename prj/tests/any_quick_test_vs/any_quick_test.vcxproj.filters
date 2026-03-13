@@ -145,5 +145,8 @@
     <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h">
       <Filter>Header Files\include\cinternal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\win_threading.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

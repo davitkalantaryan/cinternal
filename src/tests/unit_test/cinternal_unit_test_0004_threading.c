@@ -6,9 +6,19 @@
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 
+#include <cinternal/internal_header.h>
+#ifndef cinternal_thread_wait_and_clean_needed
+#define cinternal_thread_wait_and_clean_needed
+#endif
+#ifndef cinternal_thread_get_exit_code_needed
+#define cinternal_thread_get_exit_code_needed
+#endif
+#ifndef cinternal_unnamed_sema_wait_ms_needed
+#define cinternal_unnamed_sema_wait_ms_needed
+#endif
+
 #include <cinternal/unit_test.h>
 #include <cinternal/threading.h>
-#define cinternal_unnamed_sema_wait_ms_needed
 #include <cinternal/unnamed_semaphore.h>
 #include <cinternal/disable_compiler_warnings.h>
 #include <stddef.h>
@@ -63,6 +73,7 @@ static cinternal_thread_ret_t CPPUTILS_THR_CALL ThreadFunction(void* a_pArg)
 {
     CPPUTILS_STATIC_CAST(void, a_pArg);
     cinternal_thread_exit_thread(CINTERNAL_THREAD_RET_CODE);
+    CINTERNAL_UNREACH_CODE_AFTER_THR_EXIT(return CINTERNAL_THREAD_RET_CODE)
 }
 
 
@@ -72,5 +83,6 @@ static cinternal_thread_ret_t CPPUTILS_THR_CALL ThreadFunctionOnlyWin(void* a_pA
     cinternal_unnamed_sema_t* pSema = (cinternal_unnamed_sema_t*)a_pArg;
     cinternal_unnamed_sema_wait(pSema);
     cinternal_thread_exit_thread(CINTERNAL_THREAD_RET_CODE);
+    CINTERNAL_UNREACH_CODE_AFTER_THR_EXIT(return CINTERNAL_THREAD_RET_CODE)
 }
 #endif
