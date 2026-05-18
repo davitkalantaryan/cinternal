@@ -35,8 +35,10 @@ CPPUTILS_BEGIN_C
     _typeSize           hash;       \
 }
 
-typedef const struct SCinternalHash*    ConstCinternalHash_t;
-typedef struct SCinternalHashItem*      CinternalHashItem_t;
+typedef struct SCinternalHashFull*          CinternalHash_t;
+typedef const struct SCinternalHashFull*    CinternalHashConst_t;
+typedef const struct SCinternalHash*        CinternalHashConstBasic_t;
+typedef struct SCinternalHashItem*          CinternalHashItem_t;
 
 struct SCinternalHash {
     size_t                                  numberOfBaskets;
@@ -53,29 +55,30 @@ struct SCinternalHashItem SCinternalHashItemBase(const size_t, const void* const
 
 typedef bool (*CinternalHashTypeIter)(void*, CinternalHashItem_t);
 
-CINTERNAL_EXPORT ConstCinternalHash_t CInternalHashCreateAnyEx(size_t a_numberOfBaskets,
+CINTERNAL_EXPORT CinternalHash_t CInternalHashCreateAnyEx(size_t a_numberOfBaskets,
     TypeCinternalHasher CPPUTILS_ARG_NN a_hasher, TypeCinternalIsMemoriesIdentical CPPUTILS_ARG_NN a_isEq,
     TypeCinternalStoreKey CPPUTILS_ARG_NN a_keyStore, TypeCinternalUnstoreKey CPPUTILS_ARG_NN a_keyUnstore,
     TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT ConstCinternalHash_t CInternalHashCreateRawMemEx(size_t a_numberOfBaskets,
+CINTERNAL_EXPORT CinternalHash_t CInternalHashCreateRawMemEx(size_t a_numberOfBaskets,
     TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT ConstCinternalHash_t CInternalHashCreateSmlIntEx(size_t a_numberOfBaskets,
+CINTERNAL_EXPORT CinternalHash_t CInternalHashCreateSmlIntEx(size_t a_numberOfBaskets,
     TypeCinternalAllocator a_allocator, TypeCinternalDeallocator a_deallocator) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT void CInternalHashDestroy(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT void CInternalHashIterate(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashTypeIter CPPUTILS_ARG_NN a_iter, void* a_clbkData) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataWithKnownHash(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalHashConstBasic_t CinternalHashGetBasic(CinternalHashConst_t CPPUTILS_ARG_NN a_hashTbl) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT void CInternalHashDestroy(CinternalHash_t CPPUTILS_ARG_NN a_hashTbl) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT void CInternalHashIterate(CinternalHashConst_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashTypeIter CPPUTILS_ARG_NN a_iter, void* a_clbkData) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataWithKnownHash(CinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
     const void* a_data, const void* a_key, size_t a_keySize, size_t a_hash) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataEvenIfExist(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataEvenIfExist(CinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
     const void* a_data, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataIfNotExists(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashAddDataIfNotExists(CinternalHash_t CPPUTILS_ARG_NN a_hashTbl,
     const void* a_data, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT void CInternalHashRemoveDataEx(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashItem_t CPPUTILS_ARG_NN a_iterator) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT bool CInternalHashRemoveData(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFindEx(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) CPPUTILS_NOEXCEPT;
-CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFind(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT void CInternalHashRemoveDataEx(CinternalHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashItem_t CPPUTILS_ARG_NN a_iterator) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT bool CInternalHashRemoveData(CinternalHash_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFindEx(CinternalHashConst_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize, size_t* CPPUTILS_ARG_NN a_pHash) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFind(CinternalHashConst_t CPPUTILS_ARG_NN a_hashTbl, const void* a_key, size_t a_keySize) CPPUTILS_NOEXCEPT;
 
 // Functions added on 2025 May 02
-CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFindNextTheSame(ConstCinternalHash_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashItem_t CPPUTILS_ARG_NN a_prev) CPPUTILS_NOEXCEPT;
+CINTERNAL_EXPORT CinternalHashItem_t CInternalHashFindNextTheSame(CinternalHashConst_t CPPUTILS_ARG_NN a_hashTbl, CinternalHashItem_t CPPUTILS_ARG_NN a_prev) CPPUTILS_NOEXCEPT;
 
 CPPUTILS_END_C
 
