@@ -57,6 +57,9 @@ jobs:
 
             - name: Setup developer command prompt
               uses: TheMrMilchmann/setup-msvc-dev@v4
+              with:
+                msvc-version: latest
+                architecture: x64
 
             - name: Developer host preparation
               run: cmd /C "call .\scripts\windows_prepare_host.bat"
