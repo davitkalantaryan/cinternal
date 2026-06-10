@@ -56,7 +56,7 @@ jobs:
               uses: microsoft/setup-msbuild@v3
 
             - name: Setup developer command prompt
-              uses: ilammy/msvc-dev-cmd@v1
+              uses: TheMrMilchmann/setup-msvc-dev@v4
 
             - name: Developer host preparation
               run: cmd /C "call .\scripts\windows_prepare_host.bat"
