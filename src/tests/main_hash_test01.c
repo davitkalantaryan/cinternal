@@ -82,7 +82,7 @@ static inline int GenerateNumberInTheRangeInline(int a_min, int a_max) {
 }
 
 
-static inline ConstCinternalHash_t CreateHashInline(int* CPPUTILS_ARG_NN a_pnCase) {
+static inline CinternalHash_t CreateHashInline(int* CPPUTILS_ARG_NN a_pnCase) {
     *a_pnCase = rand() % 2;
     switch (*a_pnCase) {
     case USE_RAW_MEM:
@@ -121,7 +121,7 @@ static inline void CheckKeySizeConsistencyInline(int a_nCase, size_t a_key1Size,
 }
 
 
-static inline void AddDataToHashInline(ConstCinternalHash_t CPPUTILS_ARG_NN a_hash, int a_nCase, struct SCinternalHashAllKeys* CPPUTILS_ARG_NN a_allKeys_p) {
+static inline void AddDataToHashInline(CinternalHash_t CPPUTILS_ARG_NN a_hash, int a_nCase, struct SCinternalHashAllKeys* CPPUTILS_ARG_NN a_allKeys_p) {
     void* pKey;
     struct SCinternalHashSnglKey* const pNextEntry = (struct SCinternalHashSnglKey*)malloc(sizeof(struct SCinternalHashSnglKey));
     CinternalUnitTestAssertCheckSrc(pNextEntry);
@@ -147,12 +147,12 @@ static inline void AddDataToHashInline(ConstCinternalHash_t CPPUTILS_ARG_NN a_ha
 }
 
 
-static void SingleTestOfHashAndCleanData(ConstCinternalHash_t CPPUTILS_ARG_NN a_hash, struct SCinternalHashAllKeys* CPPUTILS_ARG_NN a_allKeys_p, int a_nCase);
+static void SingleTestOfHashAndCleanData(CinternalHash_t CPPUTILS_ARG_NN a_hash, struct SCinternalHashAllKeys* CPPUTILS_ARG_NN a_allKeys_p, int a_nCase);
 
 
 static void WholeTestOfHash(int a_nMinChecks, int a_nMaxChecks, int a_nMinItemsCount, int a_nMaxItemsCount)
 {
-    ConstCinternalHash_t aHash;
+    CinternalHash_t aHash;
     struct SCinternalHashAllKeys allKeys;
     size_t j;
     int i, nCase;
@@ -198,14 +198,15 @@ static inline const void* GetHashKeyInline(const struct SCinternalHashSnglKey* C
 }
 
 
-static void SingleTestOfHashAndCleanData(ConstCinternalHash_t CPPUTILS_ARG_NN a_hash, struct SCinternalHashAllKeys* CPPUTILS_ARG_NN a_allKeys_p, int a_nCase)
+static void SingleTestOfHashAndCleanData(CinternalHash_t CPPUTILS_ARG_NN a_hash, struct SCinternalHashAllKeys* CPPUTILS_ARG_NN a_allKeys_p, int a_nCase)
 {
     CinternalHashItem_t pItem;
     size_t nNumber;
     bool removeResult;
     struct SCinternalHashSnglKey *pSnglData, * pSnglDataNext;
+    const CinternalHashConstBasic_t hashBasic = CinternalHashGetBasic(a_hash);
 
-    CinternalUnitTestAssertCheckSrc(a_hash->count == a_allKeys_p->count);
+    CinternalUnitTestAssertCheckSrc(hashBasic->count == a_allKeys_p->count);
 
     nNumber = 0;
     CInternalHashIterate(a_hash, &HashIterStatic2, &nNumber);
