@@ -25,6 +25,10 @@ VERSION = $${cinternal_version_major}.$${cinternal_version_minor}.$${cinternal_v
 DEFINES += CINTERNAL_COMPILING_SHARED_LIB
 
 SOURCES	+=		\
-        "$${cinternalRepoRoot}/src/core/cinternal_core_hash.c"	    \
-        "$${cinternalRepoRoot}/src/core/cinternal_core_logger.c"    \
-	"$${cinternalRepoRoot}/src/core/cinternal_core_typeinfo.c"
+    "$${cinternalRepoRoot}/src/core/cinternal_core_hash.c"              \
+    "$${cinternalRepoRoot}/src/core/cinternal_core_logger.c"            \
+    "$${cinternalRepoRoot}/src/core/cinternal_core_recursive_rwlock.c"  \
+    "$${cinternalRepoRoot}/src/core/cinternal_core_typeinfo.c"
+
+
+OTHER_FILES += $$files($${PWD}/../libcinternal_mkfl/*.Makefile,true)

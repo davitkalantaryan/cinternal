@@ -15,6 +15,7 @@ include $(mkfile_dir)/../../common/common_mkfl/flagsandsys_common.unix.Makefile
 
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_hash.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_logger.c
+SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_recursive_rwlock.c
 SOURCES += $(cinternalRepoRoot)/src/core/cinternal_core_typeinfo.c
 libWithSonameFlags = $(call construct_soname_flags,$(targetName),$(libraryVersion))
 libWithSonameBase = $(call construct_soname,$(targetName),$(libraryVersion))
