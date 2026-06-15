@@ -71,7 +71,7 @@ CINTERNAL_EXPORT void CinternalRecursiveRWLockDelete(CinternalRecursiveRWLockT a
 {
     if (a_recursive_rw_lock) {
         CinternalTlsDelete(a_recursive_rw_lock->tlsInd);
-        CInternalRWLockClean(&(recursive_rw_lock->rw_lock));
+        CInternalRWLockClean(&(a_recursive_rw_lock->rw_lock));
         free(a_recursive_rw_lock);
     }
 }
