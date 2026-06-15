@@ -30,17 +30,6 @@
 CPPUTILS_BEGIN_C
 
 
-//struct CinternalRecursiveRWLock;
-//typedef struct CinternalRecursiveRWLock* CinternalRecursiveRWLockT;
-//typedef const struct CinternalRecursiveRWLock* ConstCinternalRecursiveRWLockT;
-//
-//CINTERNAL_EXPORT CinternalRecursiveRWLockT CinternalRecursiveRWLockCreate(void) CPPUTILS_NOEXCEPT;
-//CINTERNAL_EXPORT void CinternalRecursiveRWLockDelete(CinternalRecursiveRWLockT a_recursive_rw_lock) CPPUTILS_NOEXCEPT;
-//CINTERNAL_EXPORT void CinternalRecursiveRWLockSharedLock(ConstCinternalRecursiveRWLockT a_recursive_rw_lock) CPPUTILS_NOEXCEPT;
-//CINTERNAL_EXPORT int  CinternalRecursiveRWLockUniqueLock(CinternalRecursiveRWLockT a_recursive_rw_lock) CPPUTILS_NOEXCEPT;
-//CINTERNAL_EXPORT void CinternalRecursiveRWLockUnlock(ConstCinternalRecursiveRWLockT a_recursive_rw_lock) CPPUTILS_NOEXCEPT;
-
-
 struct CinternalRecursiveRWLock{
     int64_t             wr_owner_tid;
     CInternalRWLock     rw_lock;

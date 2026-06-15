@@ -32,112 +32,34 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\cinternal\hash.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\rwlock.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\logger.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\wrapper.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\macroses.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\macroses_base.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\macroses_variadic.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\typeinfo.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\benchmark.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\bistateflags.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\c_raii.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\c_raii_ext.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\common_data01.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\endian.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\export_symbols.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\fourstateflags.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\fs.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\gettid.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\hash_functions.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\insert_info_to_bin.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\internal_header.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\lw_mutex_recursive.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\signals.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\sync_barrier.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\threading.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\time.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\unit_test.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\unit_test_only_checks.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\unnamed_semaphore.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cinternal\win_threading.h">
-      <Filter>Header Files\include\cinternal</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\..\src\tests\main_recursive_rw_lock_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\core\cinternal_core_recursive_rwlock.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\cinternal\recursive_rwlock.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\rwlock.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\thread_local_sys.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\disable_compiler_warnings.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\gettid.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\undisable_compiler_warnings.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\cinternal\export_symbols.h">
+      <Filter>Header Files\include\cinternal</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
