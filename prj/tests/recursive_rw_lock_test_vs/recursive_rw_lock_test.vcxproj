@@ -37,7 +37,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f18a2c2c-4e95-4fc1-bf07-346163e322c5}</ProjectGuid>
+    <ProjectGuid>{878A94CA-A563-4D4E-B2F7-3A3E3B0AD7AA}</ProjectGuid>
     <RootNamespace>anyquicktest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
