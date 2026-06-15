@@ -136,5 +136,8 @@
     <ClCompile Include="..\..\..\src\tests\main_recursive_rw_lock_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_recursive_rwlock.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

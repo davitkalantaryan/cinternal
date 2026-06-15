@@ -323,6 +323,7 @@
     <ClInclude Include="..\..\..\include\cinternal\wrapper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\core\cinternal_core_recursive_rwlock.c" />
     <ClCompile Include="..\..\..\src\tests\main_recursive_rw_lock_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
