@@ -17,7 +17,7 @@ set "repositoryRoot=%cd%\"
 
 echo "repositoryRoot is %repositoryRoot%"
 
-call %scriptDirectory%\windows_source_per_session.bat
+call "%scriptDirectory%windows_source_per_session.bat"
 echo PlatformToolsetVar=%PlatformToolsetVar%
 
 

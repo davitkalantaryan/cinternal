@@ -12,8 +12,8 @@ setlocal EnableDelayedExpansion enableextensions
 
 set  scriptDirectory=%~dp0
 cd /D "%scriptDirectory%.."
-set "repositoryRoot=%cd%\"
-set "cinternalRepoRoot=%repositoryRoot%"
+set "cinternalRepoRoot=%cd%"
+set "repositoryRoot=%cinternalRepoRoot%\"
 
 
 if not defined PlatformToolsetVar (
@@ -30,7 +30,7 @@ if not defined PlatformToolsetVar (
 
 
 endlocal & (
-    call "%scriptDirectory%windows_parse_key_value_pairs_file.bat" "%repositoryRoot%ENVIRONMENT"
+    call "%scriptDirectory%windows_parse_key_value_pairs_file.bat" "%cinternalRepoRoot%\ENVIRONMENT"
     set "PlatformToolsetVar=%PlatformToolsetVar%"
     set "cinternalRepoRoot=%cinternalRepoRoot%"
 )

@@ -22,7 +22,7 @@ set "repositoryRoot=%cd%\"
 echo repositoryRoot = %repositoryRoot%
 
 
-call %scriptDirectory%\windows_source_per_session.bat
+call "%scriptDirectory%windows_source_per_session.bat"
 
 :: handling arguments
 ::set argC=0
