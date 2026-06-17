@@ -13,8 +13,24 @@ setlocal EnableDelayedExpansion enableextensions
 set  scriptDirectory=%~dp0
 cd /D "%scriptDirectory%.."
 set "repositoryRoot=%cd%\"
+set "cinternalRepoRoot=%repositoryRoot%"
+
+
+if not defined PlatformToolsetVar (
+	if /i "%VisualStudioVersion%"=="18.0" set "PlatformToolsetVar=v145"
+    if /i "%VisualStudioVersion%"=="17.0" set "PlatformToolsetVar=v143"
+    if /i "%VisualStudioVersion%"=="16.0" set "PlatformToolsetVar=v142"
+    if /i "%VisualStudioVersion%"=="15.0" set "PlatformToolsetVar=v141"
+
+    if not defined PlatformToolsetVar (
+        echo ERROR: Unsupported or missing VisualStudioVersion="%VisualStudioVersion%"
+        exit /b 1
+    )
+)
 
 
 endlocal & (
-    call "%scriptDirectory%windows_parse_key_value_pairs_file.bat" %repositoryRoot%ENVIRONMENT
-) %exportVars%
+    call "%scriptDirectory%windows_parse_key_value_pairs_file.bat" "%repositoryRoot%ENVIRONMENT"
+    set "PlatformToolsetVar=%PlatformToolsetVar%"
+    set "cinternalRepoRoot=%cinternalRepoRoot%"
+)

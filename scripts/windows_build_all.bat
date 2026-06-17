@@ -22,15 +22,7 @@ set "repositoryRoot=%cd%\"
 echo repositoryRoot = %repositoryRoot%
 
 
-if not defined PlatformToolsetVar (
-	set "PlatformToolsetVarMid=%VCToolsVersion:~0,2%"
-	set "PlatformToolsetVarEnd=%VCToolsVersion:~3,1%"
-	set "PlatformToolsetVar=v%PlatformToolsetVarMid%%PlatformToolsetVarEnd%"
-
-	rem todo: get rid of below code
-	set "PlatformToolsetVar=v143"
-	echo PlatformToolsetVar=%PlatformToolsetVar%
-)
+call %scriptDirectory%\windows_source_per_session.bat
 
 
 :: handling arguments
