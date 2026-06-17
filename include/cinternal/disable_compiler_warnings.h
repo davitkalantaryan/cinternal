@@ -48,6 +48,9 @@
 #if (_MSC_VER>=1929) && (_MSC_FULL_VER>192930100)
 #pragma warning(disable:5246)
 #endif
+#if (_MSC_VER>1945)
+#pragma warning(disable:4865)
+#endif
 
 #elif defined(__GNUC__) || defined(__clang__) || defined(LINUX_GCC) || defined(__CYGWIN__) || defined(__MINGW64__) || defined(__MINGW32__)
 
