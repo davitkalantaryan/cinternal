@@ -34,7 +34,8 @@ typedef cinternal_win_thread_ret_t	cinternal_thread_ret_t;
 #define CPPUTILS_THR_CALL											CPPUTILS_WIN_THR_CALL
 #define CINTERNAL_UNREACH_CODE_AFTER_THR_EXIT                       CINTERNAL_UNREACH_CODE_AFTER_WIN_THR_EXIT
 
-#define cinternal_thread_get_current()                              ((cinternal_thread_t)GetCurrentThread())
+#define cinternal_thread_get_current()                              ((cinternal_thread_t)OpenThread(THREAD_ALL_ACCESS,FALSE,GetCurrentThreadId()))
+#define cinternal_thread_close_cur_thread_handle(_handle)           CloseHandle((HANDLE)(_handle))
 #define cinternal_thread_exit_thread								cinternal_win_thread_exit_thread
 #define cinternal_thread_create(_pThread,_startFn,_arg)				cinternal_win_thread_create(_pThread,_startFn,_arg,CPPUTILS_NULL)
 #define cinternal_thread_detach(_pThread)							CloseHandle((HANDLE)(*(_pThread)))
@@ -76,6 +77,7 @@ typedef pthread_t	cinternal_thread_t;
 typedef void*	cinternal_thread_ret_t;
 
 #define cinternal_thread_get_current								pthread_self
+#define cinternal_thread_close_cur_thread_handle(_handle)           ((void)(_handle))
 #define cinternal_thread_exit_thread								pthread_exit
 #define cinternal_thread_create(_pThread,_startFn,_arg)				pthread_create(_pThread,CPPUTILS_NULL,_startFn,_arg)
 #define cinternal_thread_wait_and_clean(_pThread,_exitCodePtr)		pthread_join(*(_pThread),_exitCodePtr)
