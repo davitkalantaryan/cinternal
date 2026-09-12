@@ -11,14 +11,18 @@
 
 #include <cinternal/internal_header.h>
 #include <cinternal/disable_compiler_warnings.h>
+#include <signal.h>
 #ifdef _WIN32
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <Windows.h>
-#define CinternalSleepInterruptableMs(_x)     SleepEx(CPPUTILS_STATIC_CAST(DWORD,_x),TRUE)
+#define CinternalSleepInterruptableMs(_x)                           SleepEx(CPPUTILS_STATIC_CAST(DWORD,_x),TRUE)
+#define CinternalInterruptThread(_thrHandle,_intrptFnc,_signal)     QueueUserAPC((_intrptFnc),(HANDLE)(_thrHandle),(ULONG_PTR)(_signal))
 #else
 #include <unistd.h>
-#define CinternalSleepInterruptableMs(_x)     sleep(CPPUTILS_STATIC_CAST(unsigned int,(_x)/1000));usleep(CPPUTILS_STATIC_CAST(useconds_t,1000*((_x)%1000)))
+#include <pthread.h>
+#define CinternalSleepInterruptableMs(_x)                           sleep(CPPUTILS_STATIC_CAST(unsigned int,(_x)/1000));usleep(CPPUTILS_STATIC_CAST(useconds_t,1000*((_x)%1000)))
+#define CinternalInterruptThread(_thrHandle,_intrptFnc,_signal)     (void)(_intrptFnc);pthread_kill((pthread_t)(_thrHandle),(_signal))
 #endif
 #include <cinternal/undisable_compiler_warnings.h>
 
