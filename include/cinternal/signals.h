@@ -17,14 +17,18 @@
 #include <WS2tcpip.h>
 #include <Windows.h>
 #define CinternalInterruptArgType1                                  ULONG_PTR
-#define CinternalSignalSIGPIPE                                      SIGSEGV
+#define CinternalSignalForNetworkingFailedPipe                      SIGSEGV
+#define CinternalSignalToSendUsr1                                   1980
+#define CinternalSignalToSendUsr2                                   1981
 #define CinternalSleepInterruptableMs(_x)                           SleepEx(CPPUTILS_STATIC_CAST(DWORD,_x),TRUE)
 #define CinternalInterruptThread(_thrHandle,_signal,_intrptFnc)     QueueUserAPC((_intrptFnc),(HANDLE)(_thrHandle),(ULONG_PTR)(_signal))
 #else
 #include <unistd.h>
 #include <pthread.h>
 #define CinternalInterruptArgType1                                  int
-#define CinternalSignalSIGPIPE                                      SIGPIPE
+#define CinternalSignalForNetworkingFailedPipe                      SIGPIPE
+#define CinternalSignalToSendUsr1                                   SIGUSR1
+#define CinternalSignalToSendUsr2                                   SIGUSR2
 #define CinternalSleepInterruptableMs(_x)                           sleep(CPPUTILS_STATIC_CAST(unsigned int,(_x)/1000));usleep(CPPUTILS_STATIC_CAST(useconds_t,1000*((_x)%1000)))
 #define CinternalInterruptThread(_thrHandle,_signal,_intrptFnc)     (void)(_intrptFnc);pthread_kill((pthread_t)(_thrHandle),(_signal))
 #endif
